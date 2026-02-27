@@ -38,6 +38,7 @@ PACKAGES = {
         "griffe_package": "pathsim_chem",
         "root_modules": [
             "pathsim_chem",
+            "pathsim_chem.thermodynamics",
             "pathsim_chem.tritium",
         ],
     },
