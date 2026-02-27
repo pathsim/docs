@@ -122,24 +122,48 @@ scope.plot()`,
 		id: 'chem',
 		name: 'PathSim-Chem',
 		shortName: 'chem',
-		description: 'Chemical engineering blocks for PathSim, including reactors, heat exchangers, and separation units.',
+		description: 'Chemical engineering blocks for PathSim — IK-CAPE thermodynamic property correlations, activity coefficients, equations of state, and tritium processing.',
 		logo: 'pathsim_chem_logo.png',
 		docs: 'chem',
 		api: 'chem/api',
-		examples: null,
+		examples: 'chem/examples',
 		pypi: `${external.pypi}/pathsim-chem`,
 		conda: null,
 		github: `${external.github}/pathsim-chem`,
-		features: [],
+		features: [
+			{ title: 'IK-CAPE Standard', description: '50+ blocks implementing DECHEMA thermodynamic equations' },
+			{ title: 'Property Correlations', description: 'Antoine, Wagner, DIPPR, and 13 more temperature correlations' },
+			{ title: 'Activity Coefficients', description: 'NRTL, Wilson, UNIQUAC, and Flory-Huggins models' },
+			{ title: 'Equations of State', description: 'Peng-Robinson and Soave-Redlich-Kwong cubic EoS' },
+			{ title: 'Fugacity & Enthalpy', description: 'Fugacity coefficients, excess enthalpy, departure functions' },
+			{ title: 'Tritium Processing', description: 'GLC columns, TCAP cascades, bubblers, and splitters' }
+		],
 		installation: [
 			{ name: 'pip', command: 'pip install pathsim-chem' }
 		],
-		quickstart: null,
+		quickstart: {
+			description: 'PathSim-Chem blocks follow the standard PathSim interface. Set inputs, call update, read outputs.',
+			code: `from pathsim_chem.thermodynamics import Antoine
+
+# Antoine vapor pressure correlation for water
+antoine = Antoine(a0=23.2256, a1=3835.18, a2=-45.343)
+
+# Evaluate at 100 °C (373.15 K)
+antoine.inputs[0] = 373.15
+antoine.update(None)
+P_sat = antoine.outputs[0]  # ≈ 101325 Pa`,
+			title: 'Example'
+		},
 		apiModules: [
-			{ name: 'pathsim_chem.reactors', description: 'CSTR, PFR, batch reactor blocks' },
-			{ name: 'pathsim_chem.heat', description: 'Heat exchangers, heaters, coolers' },
-			{ name: 'pathsim_chem.separation', description: 'Distillation, absorption columns' },
-			{ name: 'pathsim_chem.thermo', description: 'Thermodynamic property calculations' }
+			{ name: 'pathsim_chem.thermodynamics.correlations', description: '16 pure component property correlations' },
+			{ name: 'pathsim_chem.thermodynamics.averages', description: '10 mixing rules for calculation of averages' },
+			{ name: 'pathsim_chem.thermodynamics.activity_coefficients', description: 'NRTL, Wilson, UNIQUAC, Flory-Huggins' },
+			{ name: 'pathsim_chem.thermodynamics.equations_of_state', description: 'Peng-Robinson, Soave-Redlich-Kwong' },
+			{ name: 'pathsim_chem.thermodynamics.corrections', description: 'Poynting correction, Henry\'s law' },
+			{ name: 'pathsim_chem.thermodynamics.fugacity_coefficients', description: 'RKS, PR, and virial fugacity coefficients' },
+			{ name: 'pathsim_chem.thermodynamics.enthalpy', description: 'Excess enthalpy and enthalpy departure' },
+			{ name: 'pathsim_chem.thermodynamics.reactions', description: 'Equilibrium constants, rate constants, power-law rates' },
+			{ name: 'pathsim_chem.tritium', description: 'GLC, TCAP, bubbler, splitter blocks' }
 		]
 	},
 	vehicle: {
