@@ -22,11 +22,6 @@ PACKAGES = {
         "griffe_package": "pathsim",
         "root_modules": [
             "pathsim",
-            "pathsim.blocks",
-            "pathsim.solvers",
-            "pathsim.events",
-            "pathsim.optim",
-            "pathsim.utils",
         ],
     },
     "chem": {
@@ -38,9 +33,6 @@ PACKAGES = {
         "griffe_package": "pathsim_chem",
         "root_modules": [
             "pathsim_chem",
-            "pathsim_chem.thermodynamics",
-            "pathsim_chem.tritium",
-            "pathsim_chem.process",
         ],
     },
     "vehicle": {

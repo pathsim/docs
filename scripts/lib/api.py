@@ -50,7 +50,7 @@ def extract_api(package_id: str, source_path: Path, root_modules: list[str]) -> 
 
 
 def _discover_modules(source_path: Path, root_module: str) -> list[str]:
-    """Discover all modules under a root module path."""
+    """Recursively discover all modules and subpackages under a root module path."""
     modules = []
     parts = root_module.split(".")
     module_dir = source_path / Path(*parts)
@@ -70,6 +70,13 @@ def _discover_modules(source_path: Path, root_module: str) -> list[str]:
             submodule = f"{root_module}.{py_file.stem}"
             if not _should_skip_module(submodule):
                 modules.append(submodule)
+
+        # recurse into subpackages
+        for subdir in sorted(module_dir.iterdir()):
+            if subdir.is_dir() and (subdir / "__init__.py").exists():
+                subpackage = f"{root_module}.{subdir.name}"
+                if not _should_skip_module(subpackage):
+                    modules.extend(_discover_modules(source_path, subpackage))
 
     return modules
 
