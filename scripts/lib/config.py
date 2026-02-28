@@ -40,6 +40,7 @@ PACKAGES = {
             "pathsim_chem",
             "pathsim_chem.thermodynamics",
             "pathsim_chem.tritium",
+            "pathsim_chem.process",
         ],
     },
     "vehicle": {
