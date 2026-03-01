@@ -1,0 +1,1670 @@
+[
+  {
+    "type": "module",
+    "name": "pathsim_chem.process.cstr",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-process-cstr",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.cstr"
+  },
+  {
+    "type": "class",
+    "name": "CSTR",
+    "description": "Continuous stirred-tank reactor with Arrhenius kinetics and energy balance.",
+    "path": "chem/v0.2.1/api#CSTR",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.cstr"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#CSTR.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.cstr",
+    "parentClass": "CSTR"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.process.distillation",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-process-distillation",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.distillation"
+  },
+  {
+    "type": "class",
+    "name": "DistillationTray",
+    "description": "Single equilibrium distillation tray with constant molar overflow.",
+    "path": "chem/v0.2.1/api#DistillationTray",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.distillation"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#DistillationTray.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.distillation",
+    "parentClass": "DistillationTray"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.process.flash_drum",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-process-flash_drum",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.flash_drum"
+  },
+  {
+    "type": "class",
+    "name": "FlashDrum",
+    "description": "Binary isothermal flash drum with Raoult's law vapor-liquid equilibrium.",
+    "path": "chem/v0.2.1/api#FlashDrum",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.flash_drum"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#FlashDrum.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.flash_drum",
+    "parentClass": "FlashDrum"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.process.heat_exchanger",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-process-heat_exchanger",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.heat_exchanger"
+  },
+  {
+    "type": "class",
+    "name": "HeatExchanger",
+    "description": "Counter-current shell and tube heat exchanger with discretized cells.",
+    "path": "chem/v0.2.1/api#HeatExchanger",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.heat_exchanger"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#HeatExchanger.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.process.heat_exchanger",
+    "parentClass": "HeatExchanger"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.thermodynamics.activity_coefficients",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-thermodynamics-activity_coefficients",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients"
+  },
+  {
+    "type": "class",
+    "name": "NRTL",
+    "description": "Non-Random Two-Liquid activity coefficient model (IK-CAPE Chapter 4.1).",
+    "path": "chem/v0.2.1/api#NRTL",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#NRTL.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients",
+    "parentClass": "NRTL"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#NRTL._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients",
+    "parentClass": "NRTL"
+  },
+  {
+    "type": "class",
+    "name": "Wilson",
+    "description": "Wilson activity coefficient model (IK-CAPE Chapter 4.3).",
+    "path": "chem/v0.2.1/api#Wilson",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Wilson.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients",
+    "parentClass": "Wilson"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#Wilson._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients",
+    "parentClass": "Wilson"
+  },
+  {
+    "type": "class",
+    "name": "UNIQUAC",
+    "description": "Universal Quasi-Chemical activity coefficient model (IK-CAPE Chapter 4.2).",
+    "path": "chem/v0.2.1/api#UNIQUAC",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#UNIQUAC.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients",
+    "parentClass": "UNIQUAC"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#UNIQUAC._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients",
+    "parentClass": "UNIQUAC"
+  },
+  {
+    "type": "class",
+    "name": "FloryHuggins",
+    "description": "Flory-Huggins activity coefficient model (IK-CAPE Chapter 4.4).",
+    "path": "chem/v0.2.1/api#FloryHuggins",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#FloryHuggins.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients",
+    "parentClass": "FloryHuggins"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#FloryHuggins._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.activity_coefficients",
+    "parentClass": "FloryHuggins"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.thermodynamics.averages",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-thermodynamics-averages",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "class",
+    "name": "MolarAverage",
+    "description": "Molar average mixing rule (IK-CAPE code: MOLA).",
+    "path": "chem/v0.2.1/api#MolarAverage",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#MolarAverage.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "MolarAverage"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#MolarAverage._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "MolarAverage"
+  },
+  {
+    "type": "class",
+    "name": "MassAverage",
+    "description": "Mass fraction average mixing rule (IK-CAPE code: MASS).",
+    "path": "chem/v0.2.1/api#MassAverage",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#MassAverage.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "MassAverage"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#MassAverage._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "MassAverage"
+  },
+  {
+    "type": "class",
+    "name": "LogMolarAverage",
+    "description": "Logarithmic molar average mixing rule (IK-CAPE code: MOLG).",
+    "path": "chem/v0.2.1/api#LogMolarAverage",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#LogMolarAverage.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "LogMolarAverage"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#LogMolarAverage._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "LogMolarAverage"
+  },
+  {
+    "type": "class",
+    "name": "LogMassAverage",
+    "description": "Logarithmic mass fraction average mixing rule (IK-CAPE code: MALG).",
+    "path": "chem/v0.2.1/api#LogMassAverage",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#LogMassAverage.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "LogMassAverage"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#LogMassAverage._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "LogMassAverage"
+  },
+  {
+    "type": "class",
+    "name": "LambdaAverage",
+    "description": "Thermal conductivity average for gaseous mixtures (IK-CAPE code: LAMB).",
+    "path": "chem/v0.2.1/api#LambdaAverage",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#LambdaAverage.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "LambdaAverage"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#LambdaAverage._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "LambdaAverage"
+  },
+  {
+    "type": "class",
+    "name": "ViscosityAverage",
+    "description": "Viscosity average for gaseous mixtures (IK-CAPE code: VISC).",
+    "path": "chem/v0.2.1/api#ViscosityAverage",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ViscosityAverage.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "ViscosityAverage"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#ViscosityAverage._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "ViscosityAverage"
+  },
+  {
+    "type": "class",
+    "name": "VolumeAverage",
+    "description": "Volume-based density average (IK-CAPE code: VOLU).",
+    "path": "chem/v0.2.1/api#VolumeAverage",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#VolumeAverage.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "VolumeAverage"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#VolumeAverage._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "VolumeAverage"
+  },
+  {
+    "type": "class",
+    "name": "WilkeViscosity",
+    "description": "Wilke mixing rule for gas viscosity (IK-CAPE code: WILK).",
+    "path": "chem/v0.2.1/api#WilkeViscosity",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#WilkeViscosity.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "WilkeViscosity"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#WilkeViscosity._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "WilkeViscosity"
+  },
+  {
+    "type": "class",
+    "name": "WassiljewaMasonSaxena",
+    "description": "Wassiljewa-Mason-Saxena mixing rule for gas thermal conductivity",
+    "path": "chem/v0.2.1/api#WassiljewaMasonSaxena",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#WassiljewaMasonSaxena.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "WassiljewaMasonSaxena"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#WassiljewaMasonSaxena._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "WassiljewaMasonSaxena"
+  },
+  {
+    "type": "class",
+    "name": "DIPPRSurfaceTension",
+    "description": "DIPPR surface tension average (IK-CAPE code: DIST).",
+    "path": "chem/v0.2.1/api#DIPPRSurfaceTension",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#DIPPRSurfaceTension.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "DIPPRSurfaceTension"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#DIPPRSurfaceTension._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "DIPPRSurfaceTension"
+  },
+  {
+    "type": "class",
+    "name": "DIPPRLiquidConductivity",
+    "description": "DIPPR liquid thermal conductivity average (IK-CAPE code: DIKL).",
+    "path": "chem/v0.2.1/api#DIPPRLiquidConductivity",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#DIPPRLiquidConductivity.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "DIPPRLiquidConductivity"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#DIPPRLiquidConductivity._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.averages",
+    "parentClass": "DIPPRLiquidConductivity"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.thermodynamics.corrections",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-thermodynamics-corrections",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.corrections"
+  },
+  {
+    "type": "class",
+    "name": "PoyntingCorrection",
+    "description": "Poynting pressure correction factor (IK-CAPE Chapter 5).",
+    "path": "chem/v0.2.1/api#PoyntingCorrection",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.corrections"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#PoyntingCorrection.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.corrections",
+    "parentClass": "PoyntingCorrection"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#PoyntingCorrection._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.corrections",
+    "parentClass": "PoyntingCorrection"
+  },
+  {
+    "type": "class",
+    "name": "HenryConstant",
+    "description": "Temperature-dependent Henry's law constant (IK-CAPE Chapter 6).",
+    "path": "chem/v0.2.1/api#HenryConstant",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.corrections"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#HenryConstant.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.corrections",
+    "parentClass": "HenryConstant"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#HenryConstant._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.corrections",
+    "parentClass": "HenryConstant"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.thermodynamics.correlations",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-thermodynamics-correlations",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "class",
+    "name": "Polynomial",
+    "description": "Polynomial correlation (IK-CAPE code: POLY).",
+    "path": "chem/v0.2.1/api#Polynomial",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Polynomial.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Polynomial"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#Polynomial._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Polynomial"
+  },
+  {
+    "type": "class",
+    "name": "ExponentialPolynomial",
+    "description": "Exponential polynomial correlation (IK-CAPE code: EPOL).",
+    "path": "chem/v0.2.1/api#ExponentialPolynomial",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExponentialPolynomial.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "ExponentialPolynomial"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExponentialPolynomial._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "ExponentialPolynomial"
+  },
+  {
+    "type": "class",
+    "name": "Watson",
+    "description": "Watson correlation (IK-CAPE code: WATS).",
+    "path": "chem/v0.2.1/api#Watson",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Watson.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Watson"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#Watson._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Watson"
+  },
+  {
+    "type": "class",
+    "name": "Antoine",
+    "description": "Antoine correlation (IK-CAPE code: ANTO).",
+    "path": "chem/v0.2.1/api#Antoine",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Antoine.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Antoine"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#Antoine._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Antoine"
+  },
+  {
+    "type": "class",
+    "name": "ExtendedAntoine",
+    "description": "Extended Antoine correlation (IK-CAPE code: ANT1).",
+    "path": "chem/v0.2.1/api#ExtendedAntoine",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExtendedAntoine.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "ExtendedAntoine"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExtendedAntoine._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "ExtendedAntoine"
+  },
+  {
+    "type": "class",
+    "name": "Kirchhoff",
+    "description": "Kirchhoff correlation (IK-CAPE code: KIRC).",
+    "path": "chem/v0.2.1/api#Kirchhoff",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Kirchhoff.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Kirchhoff"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#Kirchhoff._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Kirchhoff"
+  },
+  {
+    "type": "class",
+    "name": "ExtendedKirchhoff",
+    "description": "Extended Kirchhoff correlation (IK-CAPE code: KIR1).",
+    "path": "chem/v0.2.1/api#ExtendedKirchhoff",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExtendedKirchhoff.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "ExtendedKirchhoff"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExtendedKirchhoff._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "ExtendedKirchhoff"
+  },
+  {
+    "type": "class",
+    "name": "Sutherland",
+    "description": "Sutherland correlation (IK-CAPE code: SUTH).",
+    "path": "chem/v0.2.1/api#Sutherland",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Sutherland.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Sutherland"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#Sutherland._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Sutherland"
+  },
+  {
+    "type": "class",
+    "name": "Wagner",
+    "description": "Wagner correlation (IK-CAPE code: WAGN).",
+    "path": "chem/v0.2.1/api#Wagner",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Wagner.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Wagner"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#Wagner._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Wagner"
+  },
+  {
+    "type": "class",
+    "name": "LiquidHeatCapacity",
+    "description": "Liquid heat capacity correlation (IK-CAPE code: CPL).",
+    "path": "chem/v0.2.1/api#LiquidHeatCapacity",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#LiquidHeatCapacity.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "LiquidHeatCapacity"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#LiquidHeatCapacity._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "LiquidHeatCapacity"
+  },
+  {
+    "type": "class",
+    "name": "ExtendedLiquidHeatCapacity",
+    "description": "Extended liquid heat capacity correlation (IK-CAPE code: ICPL).",
+    "path": "chem/v0.2.1/api#ExtendedLiquidHeatCapacity",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExtendedLiquidHeatCapacity.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "ExtendedLiquidHeatCapacity"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExtendedLiquidHeatCapacity._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "ExtendedLiquidHeatCapacity"
+  },
+  {
+    "type": "class",
+    "name": "DynamicViscosity",
+    "description": "Dynamic viscosity correlation (IK-CAPE code: VISC).",
+    "path": "chem/v0.2.1/api#DynamicViscosity",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#DynamicViscosity.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "DynamicViscosity"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#DynamicViscosity._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "DynamicViscosity"
+  },
+  {
+    "type": "class",
+    "name": "Rackett",
+    "description": "Rackett correlation (IK-CAPE code: RACK).",
+    "path": "chem/v0.2.1/api#Rackett",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Rackett.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Rackett"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#Rackett._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "Rackett"
+  },
+  {
+    "type": "class",
+    "name": "AlyLee",
+    "description": "Aly-Lee correlation (IK-CAPE code: ALYL).",
+    "path": "chem/v0.2.1/api#AlyLee",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#AlyLee.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "AlyLee"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#AlyLee._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "AlyLee"
+  },
+  {
+    "type": "class",
+    "name": "DIPPR4",
+    "description": "DIPPR Equation 4 correlation (IK-CAPE code: DIP4).",
+    "path": "chem/v0.2.1/api#DIPPR4",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#DIPPR4.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "DIPPR4"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#DIPPR4._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "DIPPR4"
+  },
+  {
+    "type": "class",
+    "name": "DIPPR5",
+    "description": "DIPPR Equation 5 correlation (IK-CAPE code: DIP5).",
+    "path": "chem/v0.2.1/api#DIPPR5",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#DIPPR5.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "DIPPR5"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#DIPPR5._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.correlations",
+    "parentClass": "DIPPR5"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.thermodynamics.enthalpy",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-thermodynamics-enthalpy",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy"
+  },
+  {
+    "type": "class",
+    "name": "ExcessEnthalpyNRTL",
+    "description": "Excess enthalpy from the NRTL model (IK-CAPE Chapter 9.6.1).",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyNRTL",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyNRTL.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "ExcessEnthalpyNRTL"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyNRTL._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "ExcessEnthalpyNRTL"
+  },
+  {
+    "type": "class",
+    "name": "ExcessEnthalpyUNIQUAC",
+    "description": "Excess enthalpy from the UNIQUAC model (IK-CAPE Chapter 9.6.2).",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyUNIQUAC",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyUNIQUAC.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "ExcessEnthalpyUNIQUAC"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyUNIQUAC._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "ExcessEnthalpyUNIQUAC"
+  },
+  {
+    "type": "class",
+    "name": "ExcessEnthalpyWilson",
+    "description": "Excess enthalpy from the Wilson model (IK-CAPE Chapter 9.6.3).",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyWilson",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyWilson.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "ExcessEnthalpyWilson"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyWilson._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "ExcessEnthalpyWilson"
+  },
+  {
+    "type": "class",
+    "name": "ExcessEnthalpyRedlichKister",
+    "description": "Excess enthalpy from the Redlich-Kister expansion (IK-CAPE Chapter 9.6.5).",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyRedlichKister",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyRedlichKister.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "ExcessEnthalpyRedlichKister"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#ExcessEnthalpyRedlichKister._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "ExcessEnthalpyRedlichKister"
+  },
+  {
+    "type": "class",
+    "name": "EnthalpyDepartureRKS",
+    "description": "Isothermal enthalpy departure from the SRK EoS (IK-CAPE Chapter 9.7.1).",
+    "path": "chem/v0.2.1/api#EnthalpyDepartureRKS",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#EnthalpyDepartureRKS.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "EnthalpyDepartureRKS"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#EnthalpyDepartureRKS._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "EnthalpyDepartureRKS"
+  },
+  {
+    "type": "class",
+    "name": "EnthalpyDeparturePR",
+    "description": "Isothermal enthalpy departure from the Peng-Robinson EoS (IK-CAPE Chapter 9.7.2).",
+    "path": "chem/v0.2.1/api#EnthalpyDeparturePR",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#EnthalpyDeparturePR.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "EnthalpyDeparturePR"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#EnthalpyDeparturePR._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.enthalpy",
+    "parentClass": "EnthalpyDeparturePR"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.thermodynamics.equations_of_state",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-thermodynamics-equations_of_state",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.equations_of_state"
+  },
+  {
+    "type": "class",
+    "name": "PengRobinson",
+    "description": "Peng-Robinson cubic equation of state (IK-CAPE Chapter 7.2).",
+    "path": "chem/v0.2.1/api#PengRobinson",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.equations_of_state"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#PengRobinson.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.equations_of_state",
+    "parentClass": "PengRobinson"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#PengRobinson._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.equations_of_state",
+    "parentClass": "PengRobinson"
+  },
+  {
+    "type": "class",
+    "name": "RedlichKwongSoave",
+    "description": "Soave-Redlich-Kwong cubic equation of state (IK-CAPE Chapter 7.1).",
+    "path": "chem/v0.2.1/api#RedlichKwongSoave",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.equations_of_state"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#RedlichKwongSoave.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.equations_of_state",
+    "parentClass": "RedlichKwongSoave"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#RedlichKwongSoave._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.equations_of_state",
+    "parentClass": "RedlichKwongSoave"
+  },
+  {
+    "type": "function",
+    "name": "_solve_cubic_eos",
+    "description": "Solve cubic equation in Z and return the appropriate root.",
+    "path": "chem/v0.2.1/api#_solve_cubic_eos",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.equations_of_state"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.thermodynamics.fugacity_coefficients",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-thermodynamics-fugacity_coefficients",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients"
+  },
+  {
+    "type": "class",
+    "name": "FugacityRKS",
+    "description": "Fugacity coefficients from the Soave-Redlich-Kwong EoS (IK-CAPE Chapter 8.1).",
+    "path": "chem/v0.2.1/api#FugacityRKS",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#FugacityRKS.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients",
+    "parentClass": "FugacityRKS"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#FugacityRKS._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients",
+    "parentClass": "FugacityRKS"
+  },
+  {
+    "type": "class",
+    "name": "FugacityPR",
+    "description": "Fugacity coefficients from the Peng-Robinson EoS (IK-CAPE Chapter 8.2).",
+    "path": "chem/v0.2.1/api#FugacityPR",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#FugacityPR.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients",
+    "parentClass": "FugacityPR"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#FugacityPR._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients",
+    "parentClass": "FugacityPR"
+  },
+  {
+    "type": "class",
+    "name": "FugacityVirial",
+    "description": "Fugacity coefficients from the truncated virial equation (IK-CAPE Chapter 8.3).",
+    "path": "chem/v0.2.1/api#FugacityVirial",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#FugacityVirial.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients",
+    "parentClass": "FugacityVirial"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#FugacityVirial._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.fugacity_coefficients",
+    "parentClass": "FugacityVirial"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.thermodynamics.reactions",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-thermodynamics-reactions",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions"
+  },
+  {
+    "type": "class",
+    "name": "EquilibriumConstant",
+    "description": "Temperature-dependent chemical equilibrium constant (IK-CAPE Chapter 10.1).",
+    "path": "chem/v0.2.1/api#EquilibriumConstant",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#EquilibriumConstant.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions",
+    "parentClass": "EquilibriumConstant"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#EquilibriumConstant._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions",
+    "parentClass": "EquilibriumConstant"
+  },
+  {
+    "type": "class",
+    "name": "KineticRateConstant",
+    "description": "Temperature-dependent kinetic rate constant (IK-CAPE Chapter 10.2).",
+    "path": "chem/v0.2.1/api#KineticRateConstant",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#KineticRateConstant.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions",
+    "parentClass": "KineticRateConstant"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#KineticRateConstant._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions",
+    "parentClass": "KineticRateConstant"
+  },
+  {
+    "type": "class",
+    "name": "PowerLawRate",
+    "description": "Power-law reaction rate expression (IK-CAPE Chapter 10.2 KILM/KIVM).",
+    "path": "chem/v0.2.1/api#PowerLawRate",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#PowerLawRate.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions",
+    "parentClass": "PowerLawRate"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "chem/v0.2.1/api#PowerLawRate._eval",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.thermodynamics.reactions",
+    "parentClass": "PowerLawRate"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.tritium.bubbler",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-tritium-bubbler",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.bubbler"
+  },
+  {
+    "type": "class",
+    "name": "Bubbler4",
+    "description": "Tritium bubbling system with sequential vial collection stages.",
+    "path": "chem/v0.2.1/api#Bubbler4",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.bubbler"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Bubbler4.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.bubbler",
+    "parentClass": "Bubbler4"
+  },
+  {
+    "type": "method",
+    "name": "_create_reset_event_vial",
+    "description": "Define event action function and return a `ScheduleList` event",
+    "path": "chem/v0.2.1/api#Bubbler4._create_reset_event_vial",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.bubbler",
+    "parentClass": "Bubbler4"
+  },
+  {
+    "type": "method",
+    "name": "_create_reset_events",
+    "description": "Create reset events for all vials based on the replacement times.",
+    "path": "chem/v0.2.1/api#Bubbler4._create_reset_events",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.bubbler",
+    "parentClass": "Bubbler4"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.tritium.glc",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-tritium-glc",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "class",
+    "name": "GLC",
+    "description": "Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.",
+    "path": "chem/v0.2.1/api#GLC",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#GLC.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "parentClass": "GLC"
+  },
+  {
+    "type": "method",
+    "name": "func",
+    "description": "",
+    "path": "chem/v0.2.1/api#GLC.func",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "parentClass": "GLC"
+  },
+  {
+    "type": "function",
+    "name": "_calculate_properties",
+    "description": "Calculate temperature-dependent and geometry-dependent physical properties.",
+    "path": "chem/v0.2.1/api#_calculate_properties",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "function",
+    "name": "_calculate_dimensionless_groups",
+    "description": "Calculate the dimensionless groups for the ODE system.",
+    "path": "chem/v0.2.1/api#_calculate_dimensionless_groups",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "function",
+    "name": "_solve_bvp_system",
+    "description": "Set up and solve the Boundary Value Problem for tritium extraction.",
+    "path": "chem/v0.2.1/api#_solve_bvp_system",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "function",
+    "name": "_process_results",
+    "description": "Process the BVP solution to produce dimensional results.",
+    "path": "chem/v0.2.1/api#_process_results",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "function",
+    "name": "solve",
+    "description": "Main solver function for the bubble column model.",
+    "path": "chem/v0.2.1/api#solve",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.tritium.residencetime",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-tritium-residencetime",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.residencetime"
+  },
+  {
+    "type": "class",
+    "name": "ResidenceTime",
+    "description": "Chemical process block with residence time model.",
+    "path": "chem/v0.2.1/api#ResidenceTime",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.residencetime"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#ResidenceTime.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.residencetime",
+    "parentClass": "ResidenceTime"
+  },
+  {
+    "type": "class",
+    "name": "Process",
+    "description": "Simplified version of the `ResidenceTime` model block",
+    "path": "chem/v0.2.1/api#Process",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.residencetime"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Process.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.residencetime",
+    "parentClass": "Process"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.tritium.splitter",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-tritium-splitter",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.splitter"
+  },
+  {
+    "type": "class",
+    "name": "Splitter",
+    "description": "Splitter block that splits the input signal into multiple",
+    "path": "chem/v0.2.1/api#Splitter",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.splitter"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "chem/v0.2.1/api#Splitter.__init__",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.splitter",
+    "parentClass": "Splitter"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_chem.tritium.tcap",
+    "description": "",
+    "path": "chem/v0.2.1/api#pathsim_chem-tritium-tcap",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.tcap"
+  },
+  {
+    "type": "class",
+    "name": "TCAP1D",
+    "description": "This block models the Thermal Cycle Absorption Process (TCAP) in 1d.",
+    "path": "chem/v0.2.1/api#TCAP1D",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.tcap"
+  },
+  {
+    "type": "example",
+    "name": "Activity Coefficients",
+    "description": "Simulating how NRTL activity coefficients for the ethanol-water system evolve with temperature using PathSim blocks and connections.",
+    "path": "chem/v0.2.1/examples/vle-calculation",
+    "packageId": "chem",
+    "moduleName": "chemical",
+    "tags": [
+      "thermodynamics",
+      "vle"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Continuous Stirred-Tank Reactor",
+    "description": "Simulating the startup transient of an exothermic first-order reaction in a cooled CSTR, showing the dynamic interaction between concentration decay and temperature rise.",
+    "path": "chem/v0.2.1/examples/cstr-reaction",
+    "packageId": "chem",
+    "moduleName": "chemical",
+    "tags": [
+      "cstr",
+      "reaction",
+      "dynamics"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Counter-Current Heat Exchanger",
+    "description": "Simulating the startup transient of a counter-current shell-and-tube heat exchanger, showing how temperature profiles develop along the exchanger length.",
+    "path": "chem/v0.2.1/examples/heat-exchanger",
+    "packageId": "chem",
+    "moduleName": "chemical",
+    "tags": [
+      "heat-transfer",
+      "dynamics"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Cubic Equations of State",
+    "description": "Simulating the compressibility factor of methane across a pressure sweep using the Peng-Robinson and Soave-Redlich-Kwong equations of state wired into a PathSim simulation.",
+    "path": "chem/v0.2.1/examples/equation-of-state",
+    "packageId": "chem",
+    "moduleName": "chemical",
+    "tags": [
+      "thermodynamics",
+      "eos"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Flash Drum and Distillation Column",
+    "description": "Simulating two fundamental separation processes: an isothermal binary flash drum and a multi-tray distillation column built from individual  blocks wired in series.",
+    "path": "chem/v0.2.1/examples/flash-distillation",
+    "packageId": "chem",
+    "moduleName": "chemical",
+    "tags": [
+      "separation",
+      "vle",
+      "distillation"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Vapor Pressure Curves",
+    "description": "Comparing vapor pressure correlations for water by sweeping temperature through Antoine, Kirchhoff, and Wagner blocks wired into a PathSim simulation.",
+    "path": "chem/v0.2.1/examples/vapor-pressure-curves",
+    "packageId": "chem",
+    "moduleName": "chemical",
+    "tags": [
+      "thermodynamics",
+      "vle"
+    ]
+  }
+]

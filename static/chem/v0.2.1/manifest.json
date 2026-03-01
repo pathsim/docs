@@ -1,0 +1,122 @@
+{
+  "package": "chem",
+  "tag": "v0.2.1",
+  "notebooks": [
+    {
+      "slug": "vle-calculation",
+      "file": "vle_calculation.ipynb",
+      "title": "Activity Coefficients",
+      "description": "Simulating how NRTL activity coefficients for the ethanol-water system evolve with temperature using PathSim blocks and connections.",
+      "category": "chemical",
+      "tags": [
+        "thermodynamics",
+        "vle"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "cstr-reaction",
+      "file": "cstr_reaction.ipynb",
+      "title": "Continuous Stirred-Tank Reactor",
+      "description": "Simulating the startup transient of an exothermic first-order reaction in a cooled CSTR, showing the dynamic interaction between concentration decay and temperature rise.",
+      "category": "chemical",
+      "tags": [
+        "cstr",
+        "reaction",
+        "dynamics"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "heat-exchanger",
+      "file": "heat_exchanger.ipynb",
+      "title": "Counter-Current Heat Exchanger",
+      "description": "Simulating the startup transient of a counter-current shell-and-tube heat exchanger, showing how temperature profiles develop along the exchanger length.",
+      "category": "chemical",
+      "tags": [
+        "heat-transfer",
+        "dynamics"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "equation-of-state",
+      "file": "equation_of_state.ipynb",
+      "title": "Cubic Equations of State",
+      "description": "Simulating the compressibility factor of methane across a pressure sweep using the Peng-Robinson and Soave-Redlich-Kwong equations of state wired into a PathSim simulation.",
+      "category": "chemical",
+      "tags": [
+        "thermodynamics",
+        "eos"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "flash-distillation",
+      "file": "flash_distillation.ipynb",
+      "title": "Flash Drum and Distillation Column",
+      "description": "Simulating two fundamental separation processes: an isothermal binary flash drum and a multi-tray distillation column built from individual  blocks wired in series.",
+      "category": "chemical",
+      "tags": [
+        "separation",
+        "vle",
+        "distillation"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "vapor-pressure-curves",
+      "file": "vapor_pressure_curves.ipynb",
+      "title": "Vapor Pressure Curves",
+      "description": "Comparing vapor pressure correlations for water by sweeping temperature through Antoine, Kirchhoff, and Wagner blocks wired into a PathSim simulation.",
+      "category": "chemical",
+      "tags": [
+        "thermodynamics",
+        "vle"
+      ],
+      "executable": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "getting-started",
+      "title": "Getting Started",
+      "order": 1
+    },
+    {
+      "id": "control",
+      "title": "Control Systems",
+      "order": 2
+    },
+    {
+      "id": "mechanics",
+      "title": "Mechanics",
+      "order": 3
+    },
+    {
+      "id": "electronics",
+      "title": "Electronics",
+      "order": 4
+    },
+    {
+      "id": "signal-processing",
+      "title": "Signal Processing",
+      "order": 5
+    },
+    {
+      "id": "chemical",
+      "title": "Chemical Engineering",
+      "order": 6
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced Topics",
+      "order": 7
+    },
+    {
+      "id": "fmu",
+      "title": "FMU Integration",
+      "order": 8
+    }
+  ]
+}
