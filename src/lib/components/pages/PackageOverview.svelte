@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
 	import { base } from '$app/paths';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
@@ -6,6 +7,7 @@
 	import { packages, type PackageId, type InstallOption } from '$lib/config/packages';
 	import { copyToClipboard } from '$lib/utils/clipboard';
 	import { type PackageManifest, versionHasExamples } from '$lib/api/versions';
+	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 
 	/**
 	 * Compare semantic version strings (without 'v' prefix).
@@ -33,6 +35,28 @@
 
 	let pkg = $derived(packages[packageId]);
 	let featureCols = $derived(pkg.features.length > 4 ? 'cols-3' : 'cols-2');
+
+	// Set package config for Pyodide so quickstart cells can execute
+	$effect(() => {
+		if (pkg.quickstart && pkg.pyodidePackages.length > 0) {
+			const versionNumber = selectedTag?.replace(/^v/, '');
+			const pipName = pkg.installation.find((i) => i.name.toLowerCase() === 'pip')?.command.split(' ').pop() || packageId;
+			const versions: Record<string, string> = versionNumber ? { [pipName]: versionNumber } : {};
+
+			packageVersionsStore.set({
+				packages: pkg.pyodidePackages,
+				versions
+			});
+		}
+
+		return () => {
+			packageVersionsStore.clear();
+		};
+	});
+
+	onDestroy(() => {
+		packageVersionsStore.clear();
+	});
 
 	// Track copy state for each install option
 	let copiedStates = $state<Record<string, boolean>>({});
