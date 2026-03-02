@@ -1,6 +1,136 @@
 {
   "package": "chem",
   "modules": {
+    "pathsim_chem.neutronics.point_kinetics": {
+      "name": "pathsim_chem.neutronics.point_kinetics",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "PointKinetics",
+          "description": "Reactor point kinetics equations with delayed neutron precursors.",
+          "docstring_html": "<p>Reactor point kinetics equations with delayed neutron precursors.</p>\n<p>Models the time-dependent neutron population in a nuclear reactor using\nthe point kinetics equations (PKE). The neutron density responds to\nreactivity changes through prompt fission and delayed neutron emission\nfrom G precursor groups.</p>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<p>The state vector is <tt class=\"math\">[n, C_1, C_2, \\ldots, C_G]</tt> where <tt class=\"math\">n</tt>\nis the neutron density (or power) and <tt class=\"math\">C_i</tt> are the delayed neutron\nprecursor concentrations.</p>\n<pre class=\"math\">\n\\frac{dn}{dt} = \\frac{\\rho - \\beta}{\\Lambda} \\, n\n    + \\sum_{i=1}^{G} \\lambda_i \\, C_i + S\n</pre>\n<pre class=\"math\">\n\\frac{dC_i}{dt} = \\frac{\\beta_i}{\\Lambda} \\, n\n    - \\lambda_i \\, C_i \\qquad i = 1, \\ldots, G\n</pre>\n<p>where <tt class=\"math\">\\beta = \\sum_i \\beta_i</tt> is the total delayed neutron\nfraction and <tt class=\"math\">\\Lambda</tt> is the prompt neutron generation time.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>n0 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Initial neutron density [-]. Default 1.0 (normalized).</dd>\n<dt>Lambda <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Prompt neutron generation time [s].</dd>\n<dt>beta <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">array_like</span></dt>\n<dd>Delayed neutron fractions per group [-].</dd>\n<dt>lam <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">array_like</span></dt>\n<dd>Precursor decay constants per group [1/s].</dd>\n</dl>\n</div>\n",
+          "source": "class PointKinetics(DynamicalSystem):\n    \"\"\"Reactor point kinetics equations with delayed neutron precursors.\n\n    Models the time-dependent neutron population in a nuclear reactor using\n    the point kinetics equations (PKE). The neutron density responds to\n    reactivity changes through prompt fission and delayed neutron emission\n    from G precursor groups.\n\n    Mathematical Formulation\n    -------------------------\n    The state vector is :math:`[n, C_1, C_2, \\\\ldots, C_G]` where :math:`n`\n    is the neutron density (or power) and :math:`C_i` are the delayed neutron\n    precursor concentrations.\n\n    .. math::\n\n        \\\\frac{dn}{dt} = \\\\frac{\\\\rho - \\\\beta}{\\\\Lambda} \\\\, n\n            + \\\\sum_{i=1}^{G} \\\\lambda_i \\\\, C_i + S\n\n    .. math::\n\n        \\\\frac{dC_i}{dt} = \\\\frac{\\\\beta_i}{\\\\Lambda} \\\\, n\n            - \\\\lambda_i \\\\, C_i \\\\qquad i = 1, \\\\ldots, G\n\n    where :math:`\\\\beta = \\\\sum_i \\\\beta_i` is the total delayed neutron\n    fraction and :math:`\\\\Lambda` is the prompt neutron generation time.\n\n    Parameters\n    ----------\n    n0 : float\n        Initial neutron density [-]. Default 1.0 (normalized).\n    Lambda : float\n        Prompt neutron generation time [s].\n    beta : array_like\n        Delayed neutron fractions per group [-].\n    lam : array_like\n        Precursor decay constants per group [1/s].\n    \"\"\"\n\n    input_port_labels = {\n        \"rho\": 0,\n        \"S\":   1,\n    }\n\n    output_port_labels = {\n        \"n\": 0,\n    }\n\n    def __init__(self, n0=1.0, Lambda=1e-5,\n                 beta=None, lam=None):\n\n        # defaults\n        if beta is None:\n            beta = BETA_U235\n        if lam is None:\n            lam = LAMBDA_U235\n\n        beta = np.asarray(beta, dtype=float)\n        lam = np.asarray(lam, dtype=float)\n\n        # input validation\n        if Lambda <= 0:\n            raise ValueError(f\"'Lambda' must be positive but is {Lambda}\")\n        if len(beta) != len(lam):\n            raise ValueError(\n                f\"'beta' and 'lam' must have the same length \"\n                f\"but got {len(beta)} and {len(lam)}\"\n            )\n        if len(beta) == 0:\n            raise ValueError(\"'beta' and 'lam' must have at least one group\")\n\n        # store parameters\n        G = len(beta)\n        beta_total = float(np.sum(beta))\n\n        self.n0 = n0\n        self.Lambda = Lambda\n        self.beta = beta\n        self.lam = lam\n        self.G = G\n        self.beta_total = beta_total\n\n        # initial conditions: steady state at rho = 0\n        x0 = np.empty(G + 1)\n        x0[0] = n0\n        for i in range(G):\n            x0[1 + i] = beta[i] / (Lambda * lam[i]) * n0\n\n        # rhs of point kinetics ode system\n        def _fn_d(x, u, t):\n            n = x[0]\n            C = x[1:]\n\n            rho = u[0]\n            S = u[1] if len(u) > 1 else 0.0\n\n            dn = (rho - beta_total) / Lambda * n + np.dot(lam, C) + S\n\n            dC = beta / Lambda * n - lam * C\n\n            return np.concatenate(([dn], dC))\n\n        # jacobian of rhs wrt state [n, C_1, ..., C_G]\n        def _jc_d(x, u, t):\n            rho = u[0]\n\n            J = np.zeros((G + 1, G + 1))\n\n            J[0, 0] = (rho - beta_total) / Lambda\n            for i in range(G):\n                J[0, 1 + i] = lam[i]\n                J[1 + i, 0] = beta[i] / Lambda\n                J[1 + i, 1 + i] = -lam[i]\n\n            return J\n\n        # output function: neutron density only\n        def _fn_a(x, u, t):\n            return x[:1].copy()\n\n        super().__init__(\n            func_dyn=_fn_d,\n            jac_dyn=_jc_d,\n            func_alg=_fn_a,\n            initial_value=x0,\n        )",
+          "bases": [
+            "pathsim.blocks.dynsys.DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, n0=1.0, Lambda=1e-5,\n             beta=None, lam=None):\n\n    # defaults\n    if beta is None:\n        beta = BETA_U235\n    if lam is None:\n        lam = LAMBDA_U235\n\n    beta = np.asarray(beta, dtype=float)\n    lam = np.asarray(lam, dtype=float)\n\n    # input validation\n    if Lambda <= 0:\n        raise ValueError(f\"'Lambda' must be positive but is {Lambda}\")\n    if len(beta) != len(lam):\n        raise ValueError(\n            f\"'beta' and 'lam' must have the same length \"\n            f\"but got {len(beta)} and {len(lam)}\"\n        )\n    if len(beta) == 0:\n        raise ValueError(\"'beta' and 'lam' must have at least one group\")\n\n    # store parameters\n    G = len(beta)\n    beta_total = float(np.sum(beta))\n\n    self.n0 = n0\n    self.Lambda = Lambda\n    self.beta = beta\n    self.lam = lam\n    self.G = G\n    self.beta_total = beta_total\n\n    # initial conditions: steady state at rho = 0\n    x0 = np.empty(G + 1)\n    x0[0] = n0\n    for i in range(G):\n        x0[1 + i] = beta[i] / (Lambda * lam[i]) * n0\n\n    # rhs of point kinetics ode system\n    def _fn_d(x, u, t):\n        n = x[0]\n        C = x[1:]\n\n        rho = u[0]\n        S = u[1] if len(u) > 1 else 0.0\n\n        dn = (rho - beta_total) / Lambda * n + np.dot(lam, C) + S\n\n        dC = beta / Lambda * n - lam * C\n\n        return np.concatenate(([dn], dC))\n\n    # jacobian of rhs wrt state [n, C_1, ..., C_G]\n    def _jc_d(x, u, t):\n        rho = u[0]\n\n        J = np.zeros((G + 1, G + 1))\n\n        J[0, 0] = (rho - beta_total) / Lambda\n        for i in range(G):\n            J[0, 1 + i] = lam[i]\n            J[1 + i, 0] = beta[i] / Lambda\n            J[1 + i, 1 + i] = -lam[i]\n\n        return J\n\n    # output function: neutron density only\n    def _fn_a(x, u, t):\n        return x[:1].copy()\n\n    super().__init__(\n        func_dyn=_fn_d,\n        jac_dyn=_jc_d,\n        func_alg=_fn_a,\n        initial_value=x0,\n    )",
+              "signature": "(n0 = 1.0, Lambda = 1e-05, beta = None, lam = None)",
+              "parameters": [
+                {
+                  "name": "n0",
+                  "type": null,
+                  "default": "1.0",
+                  "description": ""
+                },
+                {
+                  "name": "Lambda",
+                  "type": null,
+                  "default": "1e-05",
+                  "description": ""
+                },
+                {
+                  "name": "beta",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "lam",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'rho': 0, 'S': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'n': 0}"
+            },
+            {
+              "name": "n0",
+              "description": "",
+              "type": null,
+              "value": "n0"
+            },
+            {
+              "name": "Lambda",
+              "description": "",
+              "type": null,
+              "value": "Lambda"
+            },
+            {
+              "name": "beta",
+              "description": "",
+              "type": null,
+              "value": "beta"
+            },
+            {
+              "name": "lam",
+              "description": "",
+              "type": null,
+              "value": "lam"
+            },
+            {
+              "name": "G",
+              "description": "",
+              "type": null,
+              "value": "G"
+            },
+            {
+              "name": "beta_total",
+              "description": "",
+              "type": null,
+              "value": "beta_total"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "n0",
+              "type": null,
+              "default": "1.0",
+              "description": "Initial neutron density [-]. Default 1.0 (normalized)."
+            },
+            {
+              "name": "Lambda",
+              "type": null,
+              "default": "1e-05",
+              "description": "Prompt neutron generation time [s]."
+            },
+            {
+              "name": "beta",
+              "type": null,
+              "default": "None",
+              "description": "Delayed neutron fractions per group [-]."
+            },
+            {
+              "name": "lam",
+              "type": null,
+              "default": "None",
+              "description": "Precursor decay constants per group [1/s]."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
     "pathsim_chem.process.cstr": {
       "name": "pathsim_chem.process.cstr",
       "description": "",
@@ -701,6 +831,669 @@
               "type": null,
               "default": "300.0",
               "description": "Initial cold-side temperature [K]."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_chem.process.heater": {
+      "name": "pathsim_chem.process.heater",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "Heater",
+          "description": "Algebraic duty-specified heater/cooler with no thermal mass.",
+          "docstring_html": "<p>Algebraic duty-specified heater/cooler with no thermal mass.</p>\n<p>Raises or lowers the stream temperature by a specified heat duty.\nFlow passes through unchanged.</p>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<pre class=\"math\">\nT_{out} = T_{in} + \\frac{Q}{F \\, \\rho \\, C_p}\n</pre>\n<pre class=\"math\">\nF_{out} = F_{in}\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>rho <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Fluid density [kg/m³].</dd>\n<dt>Cp <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Fluid heat capacity [J/(kg·K)].</dd>\n</dl>\n</div>\n",
+          "source": "class Heater(Function):\n    \"\"\"Algebraic duty-specified heater/cooler with no thermal mass.\n\n    Raises or lowers the stream temperature by a specified heat duty.\n    Flow passes through unchanged.\n\n    Mathematical Formulation\n    -------------------------\n    .. math::\n\n        T_{out} = T_{in} + \\\\frac{Q}{F \\\\, \\\\rho \\\\, C_p}\n\n    .. math::\n\n        F_{out} = F_{in}\n\n    Parameters\n    ----------\n    rho : float\n        Fluid density [kg/m³].\n    Cp : float\n        Fluid heat capacity [J/(kg·K)].\n    \"\"\"\n\n    input_port_labels = {\n        \"F\":   0,\n        \"T_in\": 1,\n        \"Q\":   2,\n    }\n\n    output_port_labels = {\n        \"F_out\": 0,\n        \"T_out\": 1,\n    }\n\n    def __init__(self, rho=1000.0, Cp=4184.0):\n        if rho <= 0:\n            raise ValueError(f\"'rho' must be positive but is {rho}\")\n        if Cp <= 0:\n            raise ValueError(f\"'Cp' must be positive but is {Cp}\")\n\n        self.rho = rho\n        self.Cp = Cp\n        super().__init__(func=self._eval)\n\n    def _eval(self, F, T_in, Q):\n        if F > 0:\n            T_out = T_in + Q / (F * self.rho * self.Cp)\n        else:\n            T_out = T_in\n        return (F, T_out)",
+          "bases": [
+            "pathsim.blocks.function.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, rho=1000.0, Cp=4184.0):\n    if rho <= 0:\n        raise ValueError(f\"'rho' must be positive but is {rho}\")\n    if Cp <= 0:\n        raise ValueError(f\"'Cp' must be positive but is {Cp}\")\n\n    self.rho = rho\n    self.Cp = Cp\n    super().__init__(func=self._eval)",
+              "signature": "(rho = 1000.0, Cp = 4184.0)",
+              "parameters": [
+                {
+                  "name": "rho",
+                  "type": null,
+                  "default": "1000.0",
+                  "description": ""
+                },
+                {
+                  "name": "Cp",
+                  "type": null,
+                  "default": "4184.0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _eval(self, F, T_in, Q):\n    if F > 0:\n        T_out = T_in + Q / (F * self.rho * self.Cp)\n    else:\n        T_out = T_in\n    return (F, T_out)",
+              "signature": "(F, T_in, Q)",
+              "parameters": [
+                {
+                  "name": "F",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "Q",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'F': 0, 'T_in': 1, 'Q': 2}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'F_out': 0, 'T_out': 1}"
+            },
+            {
+              "name": "rho",
+              "description": "",
+              "type": null,
+              "value": "rho"
+            },
+            {
+              "name": "Cp",
+              "description": "",
+              "type": null,
+              "value": "Cp"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "rho",
+              "type": null,
+              "default": "1000.0",
+              "description": "Fluid density [kg/m³]."
+            },
+            {
+              "name": "Cp",
+              "type": null,
+              "default": "4184.0",
+              "description": "Fluid heat capacity [J/(kg·K)]."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_chem.process.mixer": {
+      "name": "pathsim_chem.process.mixer",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "Mixer",
+          "description": "Algebraic 2-stream mixer with mass and energy balance.",
+          "docstring_html": "<p>Algebraic 2-stream mixer with mass and energy balance.</p>\n<p>Mixes two streams by mass balance (additive flows) and energy balance\n(flow-weighted temperature mixing). No phase change or reaction.</p>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<pre class=\"math\">\nF_{out} = F_1 + F_2\n</pre>\n<pre class=\"math\">\nT_{out} = \\frac{F_1 \\, T_1 + F_2 \\, T_2}{F_{out}}\n</pre>\n<p><strong>Parameters</strong></p>\n<p>None — this is a purely algebraic block.</p>\n</div>\n",
+          "source": "class Mixer(Function):\n    \"\"\"Algebraic 2-stream mixer with mass and energy balance.\n\n    Mixes two streams by mass balance (additive flows) and energy balance\n    (flow-weighted temperature mixing). No phase change or reaction.\n\n    Mathematical Formulation\n    -------------------------\n    .. math::\n\n        F_{out} = F_1 + F_2\n\n    .. math::\n\n        T_{out} = \\\\frac{F_1 \\\\, T_1 + F_2 \\\\, T_2}{F_{out}}\n\n    Parameters\n    ----------\n    None — this is a purely algebraic block.\n    \"\"\"\n\n    input_port_labels = {\n        \"F_1\": 0,\n        \"T_1\": 1,\n        \"F_2\": 2,\n        \"T_2\": 3,\n    }\n\n    output_port_labels = {\n        \"F_out\": 0,\n        \"T_out\": 1,\n    }\n\n    def __init__(self):\n        super().__init__(func=self._eval)\n\n    def _eval(self, F_1, T_1, F_2, T_2):\n        F_out = F_1 + F_2\n        if F_out > 0:\n            T_out = (F_1 * T_1 + F_2 * T_2) / F_out\n        else:\n            T_out = 0.5 * (T_1 + T_2)\n        return (F_out, T_out)",
+          "bases": [
+            "pathsim.blocks.function.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self):\n    super().__init__(func=self._eval)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _eval(self, F_1, T_1, F_2, T_2):\n    F_out = F_1 + F_2\n    if F_out > 0:\n        T_out = (F_1 * T_1 + F_2 * T_2) / F_out\n    else:\n        T_out = 0.5 * (T_1 + T_2)\n    return (F_out, T_out)",
+              "signature": "(F_1, T_1, F_2, T_2)",
+              "parameters": [
+                {
+                  "name": "F_1",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T_1",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "F_2",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T_2",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'F_1': 0, 'T_1': 1, 'F_2': 2, 'T_2': 3}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'F_out': 0, 'T_out': 1}"
+            }
+          ],
+          "parameters": []
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_chem.process.multicomponent_flash": {
+      "name": "pathsim_chem.process.multicomponent_flash",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "MultiComponentFlash",
+          "description": "Generalized isothermal flash drum for N components with Raoult's law VLE.",
+          "docstring_html": "<p>Generalized isothermal flash drum for N components with Raoult's law VLE.</p>\n<p>Models a flash drum with liquid holdup for an N-component mixture. Feed enters\nas liquid, vapor and liquid streams exit. Temperature and pressure are specified\nas inputs. VLE is computed using K-values from Raoult's law with Antoine\nequation vapor pressures.</p>\n<p>The Rachford-Rice equation is solved iteratively using Brent's method:</p>\n<pre class=\"math\">\nf(\\beta) = \\sum_i \\frac{z_i (K_i - 1)}{1 + \\beta (K_i - 1)} = 0\n</pre>\n<p>K-values from Raoult's law:</p>\n<pre class=\"math\">\nK_i = \\frac{\\exp(A_i - B_i / (T + C_i))}{P}\n</pre>\n<div class=\"section\" id=\"dynamic-states\">\n<h4>Dynamic States</h4>\n<p>The holdup moles of each component in the liquid phase:</p>\n<pre class=\"math\">\n\\frac{dN_i}{dt} = F z_i - V y_i - L x_i\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>N_comp <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int</span></dt>\n<dd>Number of components (must be &gt;= 2).</dd>\n<dt>holdup <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Total liquid holdup [mol]. Assumed approximately constant.</dd>\n<dt>antoine_A <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">array_like</span></dt>\n<dd>Antoine A parameters for each component [ln(Pa)].</dd>\n<dt>antoine_B <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">array_like</span></dt>\n<dd>Antoine B parameters for each component [K].</dd>\n<dt>antoine_C <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">array_like</span></dt>\n<dd>Antoine C parameters for each component [K].</dd>\n<dt>N0 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">array_like or None</span></dt>\n<dd>Initial component holdup moles [mol]. If None, equal split assumed.</dd>\n</dl>\n</div>\n",
+          "source": "class MultiComponentFlash(DynamicalSystem):\n    \"\"\"Generalized isothermal flash drum for N components with Raoult's law VLE.\n\n    Models a flash drum with liquid holdup for an N-component mixture. Feed enters\n    as liquid, vapor and liquid streams exit. Temperature and pressure are specified\n    as inputs. VLE is computed using K-values from Raoult's law with Antoine\n    equation vapor pressures.\n\n    The Rachford-Rice equation is solved iteratively using Brent's method:\n\n    .. math::\n\n        f(\\\\beta) = \\\\sum_i \\\\frac{z_i (K_i - 1)}{1 + \\\\beta (K_i - 1)} = 0\n\n    K-values from Raoult's law:\n\n    .. math::\n\n        K_i = \\\\frac{\\\\exp(A_i - B_i / (T + C_i))}{P}\n\n    Dynamic States\n    ---------------\n    The holdup moles of each component in the liquid phase:\n\n    .. math::\n\n        \\\\frac{dN_i}{dt} = F z_i - V y_i - L x_i\n\n    Parameters\n    ----------\n    N_comp : int\n        Number of components (must be >= 2).\n    holdup : float\n        Total liquid holdup [mol]. Assumed approximately constant.\n    antoine_A : array_like\n        Antoine A parameters for each component [ln(Pa)].\n    antoine_B : array_like\n        Antoine B parameters for each component [K].\n    antoine_C : array_like\n        Antoine C parameters for each component [K].\n    N0 : array_like or None\n        Initial component holdup moles [mol]. If None, equal split assumed.\n    \"\"\"\n\n    def __init__(self, N_comp=3, holdup=100.0,\n                 antoine_A=None, antoine_B=None, antoine_C=None,\n                 N0=None):\n\n        # input validation\n        if N_comp < 2:\n            raise ValueError(f\"'N_comp' must be >= 2 but is {N_comp}\")\n        if holdup <= 0:\n            raise ValueError(f\"'holdup' must be positive but is {holdup}\")\n\n        self.N_comp = int(N_comp)\n        self.holdup = holdup\n        nc = self.N_comp\n\n        # default Antoine parameters: benzene / toluene / p-xylene (ln(Pa), K)\n        if antoine_A is not None:\n            self.antoine_A = np.array(antoine_A, dtype=float)\n        else:\n            self.antoine_A = np.array([20.7936, 20.9064, 20.9891])[:nc]\n\n        if antoine_B is not None:\n            self.antoine_B = np.array(antoine_B, dtype=float)\n        else:\n            self.antoine_B = np.array([2788.51, 3096.52, 3346.65])[:nc]\n\n        if antoine_C is not None:\n            self.antoine_C = np.array(antoine_C, dtype=float)\n        else:\n            self.antoine_C = np.array([-52.36, -53.67, -57.84])[:nc]\n\n        if len(self.antoine_A) != nc:\n            raise ValueError(f\"Antoine parameters must have length {nc}\")\n        if len(self.antoine_B) != nc:\n            raise ValueError(f\"Antoine parameters must have length {nc}\")\n        if len(self.antoine_C) != nc:\n            raise ValueError(f\"Antoine parameters must have length {nc}\")\n\n        # initial holdup (equal moles by default)\n        if N0 is not None:\n            x0 = np.array(N0, dtype=float)\n        else:\n            x0 = np.full(nc, holdup / nc)\n\n        if len(x0) != nc:\n            raise ValueError(f\"'N0' must have length {nc}\")\n\n        # dynamic port labels: set before super().__init__()\n        # inputs: F, z_1, ..., z_{nc-1}, T, P\n        inp = {\"F\": 0}\n        for i in range(1, nc):\n            inp[f\"z_{i}\"] = i\n        inp[\"T\"] = nc\n        inp[\"P\"] = nc + 1\n        self.input_port_labels = inp\n\n        n_inputs = nc + 2\n\n        # outputs: V_rate, L_rate, y_1, ..., y_{nc-1}, x_1, ..., x_{nc-1}\n        out = {\"V_rate\": 0, \"L_rate\": 1}\n        for i in range(1, nc):\n            out[f\"y_{i}\"] = 1 + i\n        for i in range(1, nc):\n            out[f\"x_{i}\"] = nc + i\n        self.output_port_labels = out\n\n        # shared VLE computation\n        def _solve_vle(z, T, P):\n            \"\"\"Solve N-component Rachford-Rice, return (beta, y, x).\"\"\"\n            P_sat = np.exp(self.antoine_A - self.antoine_B / (T + self.antoine_C))\n            K = P_sat / P\n\n            # bubble/dew point checks\n            bubble = np.sum(z * K)\n            K_safe = np.where(K > 1e-12, K, 1e-12)\n            dew = np.sum(z / K_safe)\n\n            if bubble <= 1.0:\n                # subcooled: all liquid\n                beta = 0.0\n                y = z * K\n                y_s = y.sum()\n                if y_s > 0:\n                    y = y / y_s\n                return beta, y, z.copy()\n\n            if dew <= 1.0:\n                # superheated: all vapor\n                beta = 1.0\n                x_eq = z / K_safe\n                x_s = x_eq.sum()\n                if x_s > 0:\n                    x_eq = x_eq / x_s\n                return beta, z.copy(), x_eq\n\n            # two-phase: solve Rachford-Rice via Brent's method\n            Km1 = K - 1.0\n\n            def rr_func(beta):\n                return np.sum(z * Km1 / (1.0 + beta * Km1))\n\n            # Whitson & Michelsen bounds\n            K_max = K.max()\n            K_min = K.min()\n            beta_min = max(0.0, 1.0 / (1.0 - K_max)) if K_max != 1.0 else 0.0\n            beta_max = min(1.0, 1.0 / (1.0 - K_min)) if K_min != 1.0 else 1.0\n\n            # ensure valid bracket\n            beta_min = max(beta_min, 0.0)\n            beta_max = min(beta_max, 1.0)\n            if beta_min >= beta_max:\n                beta_min, beta_max = 0.0, 1.0\n\n            try:\n                beta = brentq(rr_func, beta_min, beta_max, xtol=1e-12)\n            except ValueError:\n                # fallback: try full [0, 1] bracket\n                try:\n                    beta = brentq(rr_func, 0.0, 1.0, xtol=1e-12)\n                except ValueError:\n                    beta = 0.5\n\n            beta = np.clip(beta, 0.0, 1.0)\n\n            y = z * K / (1.0 + beta * Km1)\n            x_eq = z / (1.0 + beta * Km1)\n\n            # normalize for numerical safety\n            y_s = y.sum()\n            x_s = x_eq.sum()\n            if y_s > 0:\n                y = y / y_s\n            if x_s > 0:\n                x_eq = x_eq / x_s\n\n            return beta, y, x_eq\n\n        def _pad_u(u):\n            u = np.atleast_1d(u)\n            if len(u) < n_inputs:\n                padded = np.zeros(n_inputs)\n                padded[:len(u)] = u\n                return padded\n            return u\n\n        def _extract_z(u):\n            \"\"\"Extract full composition vector from inputs (last component inferred).\"\"\"\n            z_partial = u[1:nc]  # z_1 ... z_{nc-1}\n            z_last = 1.0 - np.sum(z_partial)\n            return np.append(z_partial, z_last)\n\n        # rhs of flash drum ode\n        def _fn_d(x, u, t):\n            u = _pad_u(u)\n            F_in = u[0]\n            z = _extract_z(u)\n            T = u[nc]\n            P = u[nc + 1]\n\n            beta, y, x_eq = _solve_vle(z, T, P)\n\n            V_rate = beta * F_in\n            L_rate = (1.0 - beta) * F_in\n\n            return F_in * z - V_rate * y - L_rate * x_eq\n\n        # algebraic output\n        def _fn_a(x, u, t):\n            u = _pad_u(u)\n            F_in = u[0]\n            z = _extract_z(u)\n            T = u[nc]\n            P = u[nc + 1]\n\n            beta, y, x_eq = _solve_vle(z, T, P)\n\n            V_rate = beta * F_in\n            L_rate = (1.0 - beta) * F_in\n\n            # output: V_rate, L_rate, y_1..y_{nc-1}, x_1..x_{nc-1}\n            result = np.empty(2 + 2 * (nc - 1))\n            result[0] = V_rate\n            result[1] = L_rate\n            result[2:2 + nc - 1] = y[:nc - 1]\n            result[2 + nc - 1:] = x_eq[:nc - 1]\n\n            return result\n\n        super().__init__(\n            func_dyn=_fn_d,\n            func_alg=_fn_a,\n            initial_value=x0,\n        )",
+          "bases": [
+            "pathsim.blocks.dynsys.DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, N_comp=3, holdup=100.0,\n             antoine_A=None, antoine_B=None, antoine_C=None,\n             N0=None):\n\n    # input validation\n    if N_comp < 2:\n        raise ValueError(f\"'N_comp' must be >= 2 but is {N_comp}\")\n    if holdup <= 0:\n        raise ValueError(f\"'holdup' must be positive but is {holdup}\")\n\n    self.N_comp = int(N_comp)\n    self.holdup = holdup\n    nc = self.N_comp\n\n    # default Antoine parameters: benzene / toluene / p-xylene (ln(Pa), K)\n    if antoine_A is not None:\n        self.antoine_A = np.array(antoine_A, dtype=float)\n    else:\n        self.antoine_A = np.array([20.7936, 20.9064, 20.9891])[:nc]\n\n    if antoine_B is not None:\n        self.antoine_B = np.array(antoine_B, dtype=float)\n    else:\n        self.antoine_B = np.array([2788.51, 3096.52, 3346.65])[:nc]\n\n    if antoine_C is not None:\n        self.antoine_C = np.array(antoine_C, dtype=float)\n    else:\n        self.antoine_C = np.array([-52.36, -53.67, -57.84])[:nc]\n\n    if len(self.antoine_A) != nc:\n        raise ValueError(f\"Antoine parameters must have length {nc}\")\n    if len(self.antoine_B) != nc:\n        raise ValueError(f\"Antoine parameters must have length {nc}\")\n    if len(self.antoine_C) != nc:\n        raise ValueError(f\"Antoine parameters must have length {nc}\")\n\n    # initial holdup (equal moles by default)\n    if N0 is not None:\n        x0 = np.array(N0, dtype=float)\n    else:\n        x0 = np.full(nc, holdup / nc)\n\n    if len(x0) != nc:\n        raise ValueError(f\"'N0' must have length {nc}\")\n\n    # dynamic port labels: set before super().__init__()\n    # inputs: F, z_1, ..., z_{nc-1}, T, P\n    inp = {\"F\": 0}\n    for i in range(1, nc):\n        inp[f\"z_{i}\"] = i\n    inp[\"T\"] = nc\n    inp[\"P\"] = nc + 1\n    self.input_port_labels = inp\n\n    n_inputs = nc + 2\n\n    # outputs: V_rate, L_rate, y_1, ..., y_{nc-1}, x_1, ..., x_{nc-1}\n    out = {\"V_rate\": 0, \"L_rate\": 1}\n    for i in range(1, nc):\n        out[f\"y_{i}\"] = 1 + i\n    for i in range(1, nc):\n        out[f\"x_{i}\"] = nc + i\n    self.output_port_labels = out\n\n    # shared VLE computation\n    def _solve_vle(z, T, P):\n        \"\"\"Solve N-component Rachford-Rice, return (beta, y, x).\"\"\"\n        P_sat = np.exp(self.antoine_A - self.antoine_B / (T + self.antoine_C))\n        K = P_sat / P\n\n        # bubble/dew point checks\n        bubble = np.sum(z * K)\n        K_safe = np.where(K > 1e-12, K, 1e-12)\n        dew = np.sum(z / K_safe)\n\n        if bubble <= 1.0:\n            # subcooled: all liquid\n            beta = 0.0\n            y = z * K\n            y_s = y.sum()\n            if y_s > 0:\n                y = y / y_s\n            return beta, y, z.copy()\n\n        if dew <= 1.0:\n            # superheated: all vapor\n            beta = 1.0\n            x_eq = z / K_safe\n            x_s = x_eq.sum()\n            if x_s > 0:\n                x_eq = x_eq / x_s\n            return beta, z.copy(), x_eq\n\n        # two-phase: solve Rachford-Rice via Brent's method\n        Km1 = K - 1.0\n\n        def rr_func(beta):\n            return np.sum(z * Km1 / (1.0 + beta * Km1))\n\n        # Whitson & Michelsen bounds\n        K_max = K.max()\n        K_min = K.min()\n        beta_min = max(0.0, 1.0 / (1.0 - K_max)) if K_max != 1.0 else 0.0\n        beta_max = min(1.0, 1.0 / (1.0 - K_min)) if K_min != 1.0 else 1.0\n\n        # ensure valid bracket\n        beta_min = max(beta_min, 0.0)\n        beta_max = min(beta_max, 1.0)\n        if beta_min >= beta_max:\n            beta_min, beta_max = 0.0, 1.0\n\n        try:\n            beta = brentq(rr_func, beta_min, beta_max, xtol=1e-12)\n        except ValueError:\n            # fallback: try full [0, 1] bracket\n            try:\n                beta = brentq(rr_func, 0.0, 1.0, xtol=1e-12)\n            except ValueError:\n                beta = 0.5\n\n        beta = np.clip(beta, 0.0, 1.0)\n\n        y = z * K / (1.0 + beta * Km1)\n        x_eq = z / (1.0 + beta * Km1)\n\n        # normalize for numerical safety\n        y_s = y.sum()\n        x_s = x_eq.sum()\n        if y_s > 0:\n            y = y / y_s\n        if x_s > 0:\n            x_eq = x_eq / x_s\n\n        return beta, y, x_eq\n\n    def _pad_u(u):\n        u = np.atleast_1d(u)\n        if len(u) < n_inputs:\n            padded = np.zeros(n_inputs)\n            padded[:len(u)] = u\n            return padded\n        return u\n\n    def _extract_z(u):\n        \"\"\"Extract full composition vector from inputs (last component inferred).\"\"\"\n        z_partial = u[1:nc]  # z_1 ... z_{nc-1}\n        z_last = 1.0 - np.sum(z_partial)\n        return np.append(z_partial, z_last)\n\n    # rhs of flash drum ode\n    def _fn_d(x, u, t):\n        u = _pad_u(u)\n        F_in = u[0]\n        z = _extract_z(u)\n        T = u[nc]\n        P = u[nc + 1]\n\n        beta, y, x_eq = _solve_vle(z, T, P)\n\n        V_rate = beta * F_in\n        L_rate = (1.0 - beta) * F_in\n\n        return F_in * z - V_rate * y - L_rate * x_eq\n\n    # algebraic output\n    def _fn_a(x, u, t):\n        u = _pad_u(u)\n        F_in = u[0]\n        z = _extract_z(u)\n        T = u[nc]\n        P = u[nc + 1]\n\n        beta, y, x_eq = _solve_vle(z, T, P)\n\n        V_rate = beta * F_in\n        L_rate = (1.0 - beta) * F_in\n\n        # output: V_rate, L_rate, y_1..y_{nc-1}, x_1..x_{nc-1}\n        result = np.empty(2 + 2 * (nc - 1))\n        result[0] = V_rate\n        result[1] = L_rate\n        result[2:2 + nc - 1] = y[:nc - 1]\n        result[2 + nc - 1:] = x_eq[:nc - 1]\n\n        return result\n\n    super().__init__(\n        func_dyn=_fn_d,\n        func_alg=_fn_a,\n        initial_value=x0,\n    )",
+              "signature": "(N_comp = 3, holdup = 100.0, antoine_A = None, antoine_B = None, antoine_C = None, N0 = None)",
+              "parameters": [
+                {
+                  "name": "N_comp",
+                  "type": null,
+                  "default": "3",
+                  "description": ""
+                },
+                {
+                  "name": "holdup",
+                  "type": null,
+                  "default": "100.0",
+                  "description": ""
+                },
+                {
+                  "name": "antoine_A",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "antoine_B",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "antoine_C",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "N0",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "N_comp",
+              "description": "",
+              "type": null,
+              "value": "int(N_comp)"
+            },
+            {
+              "name": "holdup",
+              "description": "",
+              "type": null,
+              "value": "holdup"
+            },
+            {
+              "name": "antoine_A",
+              "description": "",
+              "type": null,
+              "value": "np.array(antoine_A, dtype=float)"
+            },
+            {
+              "name": "antoine_B",
+              "description": "",
+              "type": null,
+              "value": "np.array(antoine_B, dtype=float)"
+            },
+            {
+              "name": "antoine_C",
+              "description": "",
+              "type": null,
+              "value": "np.array(antoine_C, dtype=float)"
+            },
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "inp"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "out"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "N_comp",
+              "type": null,
+              "default": "3",
+              "description": "Number of components (must be >= 2)."
+            },
+            {
+              "name": "holdup",
+              "type": null,
+              "default": "100.0",
+              "description": "Total liquid holdup [mol]. Assumed approximately constant."
+            },
+            {
+              "name": "antoine_A",
+              "type": null,
+              "default": "None",
+              "description": "Antoine A parameters for each component [ln(Pa)]."
+            },
+            {
+              "name": "antoine_B",
+              "type": null,
+              "default": "None",
+              "description": "Antoine B parameters for each component [K]."
+            },
+            {
+              "name": "antoine_C",
+              "type": null,
+              "default": "None",
+              "description": "Antoine C parameters for each component [K]."
+            },
+            {
+              "name": "N0",
+              "type": null,
+              "default": "None",
+              "description": "Initial component holdup moles [mol]. If None, equal split assumed."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_chem.process.pfr": {
+      "name": "pathsim_chem.process.pfr",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "PFR",
+          "description": "Plug flow reactor with Arrhenius kinetics and energy balance.",
+          "docstring_html": "<p>Plug flow reactor with Arrhenius kinetics and energy balance.</p>\n<p>Discretized tubular reactor divided into N cells along its length.\nEach cell has concentration and temperature states with nth-order\nkinetics and an energy balance including heat of reaction.</p>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<p>For each cell <tt class=\"math\">i = 1, \\ldots, N</tt>:</p>\n<pre class=\"math\">\n\\frac{dC_i}{dt} = \\frac{F}{V_{cell}} (C_{i-1} - C_i) - k(T_i) \\, C_i^n\n</pre>\n<pre class=\"math\">\n\\frac{dT_i}{dt} = \\frac{F}{V_{cell}} (T_{i-1} - T_i)\n    + \\frac{(-\\Delta H_{rxn})}{\\rho \\, C_p} \\, k(T_i) \\, C_i^n\n</pre>\n<p>where the Arrhenius rate constant is:</p>\n<pre class=\"math\">\nk(T) = k_0 \\, \\exp\\!\\left(-\\frac{E_a}{R \\, T}\\right)\n</pre>\n<p>The state vector is ordered as\n<tt class=\"math\">[C_1, T_1, C_2, T_2, \\ldots, C_N, T_N]</tt>.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>N_cells <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int</span></dt>\n<dd>Number of discretization cells [-].</dd>\n<dt>V <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Total reactor volume [m³].</dd>\n<dt>F <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Volumetric flow rate [m³/s].</dd>\n<dt>k0 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Pre-exponential Arrhenius factor [1/s for n=1].</dd>\n<dt>Ea <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Activation energy [J/mol].</dd>\n<dt>n <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Reaction order [-].</dd>\n<dt>dH_rxn <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Heat of reaction [J/mol]. Negative for exothermic.</dd>\n<dt>rho <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Fluid density [kg/m³].</dd>\n<dt>Cp <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Fluid heat capacity [J/(kg·K)].</dd>\n<dt>C0 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Initial concentration [mol/m³].</dd>\n<dt>T0 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Initial temperature [K].</dd>\n</dl>\n</div>\n",
+          "source": "class PFR(DynamicalSystem):\n    \"\"\"Plug flow reactor with Arrhenius kinetics and energy balance.\n\n    Discretized tubular reactor divided into N cells along its length.\n    Each cell has concentration and temperature states with nth-order\n    kinetics and an energy balance including heat of reaction.\n\n    Mathematical Formulation\n    -------------------------\n    For each cell :math:`i = 1, \\\\ldots, N`:\n\n    .. math::\n\n        \\\\frac{dC_i}{dt} = \\\\frac{F}{V_{cell}} (C_{i-1} - C_i) - k(T_i) \\\\, C_i^n\n\n    .. math::\n\n        \\\\frac{dT_i}{dt} = \\\\frac{F}{V_{cell}} (T_{i-1} - T_i)\n            + \\\\frac{(-\\\\Delta H_{rxn})}{\\\\rho \\\\, C_p} \\\\, k(T_i) \\\\, C_i^n\n\n    where the Arrhenius rate constant is:\n\n    .. math::\n\n        k(T) = k_0 \\\\, \\\\exp\\\\!\\\\left(-\\\\frac{E_a}{R \\\\, T}\\\\right)\n\n    The state vector is ordered as\n    :math:`[C_1, T_1, C_2, T_2, \\\\ldots, C_N, T_N]`.\n\n    Parameters\n    ----------\n    N_cells : int\n        Number of discretization cells [-].\n    V : float\n        Total reactor volume [m³].\n    F : float\n        Volumetric flow rate [m³/s].\n    k0 : float\n        Pre-exponential Arrhenius factor [1/s for n=1].\n    Ea : float\n        Activation energy [J/mol].\n    n : float\n        Reaction order [-].\n    dH_rxn : float\n        Heat of reaction [J/mol]. Negative for exothermic.\n    rho : float\n        Fluid density [kg/m³].\n    Cp : float\n        Fluid heat capacity [J/(kg·K)].\n    C0 : float\n        Initial concentration [mol/m³].\n    T0 : float\n        Initial temperature [K].\n    \"\"\"\n\n    input_port_labels = {\n        \"C_in\": 0,\n        \"T_in\": 1,\n    }\n\n    output_port_labels = {\n        \"C_out\": 0,\n        \"T_out\": 1,\n    }\n\n    def __init__(self, N_cells=5, V=1.0, F=0.1, k0=1e6, Ea=50000.0, n=1.0,\n                 dH_rxn=-50000.0, rho=1000.0, Cp=4184.0,\n                 C0=0.0, T0=300.0):\n\n        # input validation\n        if N_cells < 1:\n            raise ValueError(f\"'N_cells' must be >= 1 but is {N_cells}\")\n        if V <= 0:\n            raise ValueError(f\"'V' must be positive but is {V}\")\n        if F <= 0:\n            raise ValueError(f\"'F' must be positive but is {F}\")\n        if rho <= 0:\n            raise ValueError(f\"'rho' must be positive but is {rho}\")\n        if Cp <= 0:\n            raise ValueError(f\"'Cp' must be positive but is {Cp}\")\n\n        # store parameters\n        self.N_cells = int(N_cells)\n        self.V = V\n        self.F = F\n        self.k0 = k0\n        self.Ea = Ea\n        self.n = n\n        self.dH_rxn = dH_rxn\n        self.rho = rho\n        self.Cp = Cp\n\n        N = self.N_cells\n\n        # initial state: interleaved [C_1, T_1, C_2, T_2, ...]\n        x0 = np.empty(2 * N)\n        x0[0::2] = C0\n        x0[1::2] = T0\n\n        # ensure u has expected 2 elements (handles framework probing)\n        def _pad_u(u):\n            u = np.atleast_1d(u)\n            if len(u) < 2:\n                padded = np.zeros(2)\n                padded[:len(u)] = u\n                return padded\n            return u\n\n        # rhs of PFR ode (vectorized)\n        def _fn_d(x, u, t):\n            u = _pad_u(u)\n            C_in, T_in = u\n            N = self.N_cells\n\n            V_cell = self.V / N\n            f_flow = self.F / V_cell\n            rcp = (-self.dH_rxn) / (self.rho * self.Cp)\n\n            C = x[0::2]\n            T = x[1::2]\n\n            # upstream values with boundary conditions\n            C_prev = np.empty(N)\n            C_prev[0] = C_in\n            C_prev[1:] = C[:-1]\n\n            T_prev = np.empty(N)\n            T_prev[0] = T_in\n            T_prev[1:] = T[:-1]\n\n            # Arrhenius rate per cell\n            k = self.k0 * np.exp(-self.Ea / (R_GAS * T))\n            r = k * np.abs(C)**self.n  # abs for numerical safety\n\n            dx = np.empty(2 * N)\n            dx[0::2] = f_flow * (C_prev - C) - r\n            dx[1::2] = f_flow * (T_prev - T) + rcp * r\n\n            return dx\n\n        # analytical jacobian (block-tridiagonal structure)\n        def _jc_d(x, u, t):\n            N = self.N_cells\n\n            V_cell = self.V / N\n            f_flow = self.F / V_cell\n            rcp = (-self.dH_rxn) / (self.rho * self.Cp)\n\n            C = x[0::2]\n            T = x[1::2]\n\n            k = self.k0 * np.exp(-self.Ea / (R_GAS * T))\n            dk_dT = k * self.Ea / (R_GAS * T**2)\n\n            dim = 2 * N\n            J = np.zeros((dim, dim))\n\n            for i in range(N):\n                ci = 2 * i      # concentration index\n                ti = 2 * i + 1  # temperature index\n\n                C_i = max(abs(C[i]), 1e-30)\n                dr_dC = k[i] * self.n * C_i**(self.n - 1) if C_i > 0 else 0.0\n                dr_dT = dk_dT[i] * C_i**self.n\n\n                # dC_i/dC_i, dC_i/dT_i\n                J[ci, ci] = -f_flow - dr_dC\n                J[ci, ti] = -dr_dT\n\n                # dT_i/dC_i, dT_i/dT_i\n                J[ti, ci] = rcp * dr_dC\n                J[ti, ti] = -f_flow + rcp * dr_dT\n\n                # upstream coupling: dC_i/dC_{i-1}, dT_i/dT_{i-1}\n                if i > 0:\n                    J[ci, 2*(i-1)] = f_flow\n                    J[ti, 2*(i-1) + 1] = f_flow\n\n            return J\n\n        # output: last cell values\n        def _fn_a(x, u, t):\n            N = self.N_cells\n            return np.array([x[2*(N-1)], x[2*(N-1) + 1]])\n\n        super().__init__(\n            func_dyn=_fn_d,\n            jac_dyn=_jc_d,\n            func_alg=_fn_a,\n            initial_value=x0,\n        )",
+          "bases": [
+            "pathsim.blocks.dynsys.DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, N_cells=5, V=1.0, F=0.1, k0=1e6, Ea=50000.0, n=1.0,\n             dH_rxn=-50000.0, rho=1000.0, Cp=4184.0,\n             C0=0.0, T0=300.0):\n\n    # input validation\n    if N_cells < 1:\n        raise ValueError(f\"'N_cells' must be >= 1 but is {N_cells}\")\n    if V <= 0:\n        raise ValueError(f\"'V' must be positive but is {V}\")\n    if F <= 0:\n        raise ValueError(f\"'F' must be positive but is {F}\")\n    if rho <= 0:\n        raise ValueError(f\"'rho' must be positive but is {rho}\")\n    if Cp <= 0:\n        raise ValueError(f\"'Cp' must be positive but is {Cp}\")\n\n    # store parameters\n    self.N_cells = int(N_cells)\n    self.V = V\n    self.F = F\n    self.k0 = k0\n    self.Ea = Ea\n    self.n = n\n    self.dH_rxn = dH_rxn\n    self.rho = rho\n    self.Cp = Cp\n\n    N = self.N_cells\n\n    # initial state: interleaved [C_1, T_1, C_2, T_2, ...]\n    x0 = np.empty(2 * N)\n    x0[0::2] = C0\n    x0[1::2] = T0\n\n    # ensure u has expected 2 elements (handles framework probing)\n    def _pad_u(u):\n        u = np.atleast_1d(u)\n        if len(u) < 2:\n            padded = np.zeros(2)\n            padded[:len(u)] = u\n            return padded\n        return u\n\n    # rhs of PFR ode (vectorized)\n    def _fn_d(x, u, t):\n        u = _pad_u(u)\n        C_in, T_in = u\n        N = self.N_cells\n\n        V_cell = self.V / N\n        f_flow = self.F / V_cell\n        rcp = (-self.dH_rxn) / (self.rho * self.Cp)\n\n        C = x[0::2]\n        T = x[1::2]\n\n        # upstream values with boundary conditions\n        C_prev = np.empty(N)\n        C_prev[0] = C_in\n        C_prev[1:] = C[:-1]\n\n        T_prev = np.empty(N)\n        T_prev[0] = T_in\n        T_prev[1:] = T[:-1]\n\n        # Arrhenius rate per cell\n        k = self.k0 * np.exp(-self.Ea / (R_GAS * T))\n        r = k * np.abs(C)**self.n  # abs for numerical safety\n\n        dx = np.empty(2 * N)\n        dx[0::2] = f_flow * (C_prev - C) - r\n        dx[1::2] = f_flow * (T_prev - T) + rcp * r\n\n        return dx\n\n    # analytical jacobian (block-tridiagonal structure)\n    def _jc_d(x, u, t):\n        N = self.N_cells\n\n        V_cell = self.V / N\n        f_flow = self.F / V_cell\n        rcp = (-self.dH_rxn) / (self.rho * self.Cp)\n\n        C = x[0::2]\n        T = x[1::2]\n\n        k = self.k0 * np.exp(-self.Ea / (R_GAS * T))\n        dk_dT = k * self.Ea / (R_GAS * T**2)\n\n        dim = 2 * N\n        J = np.zeros((dim, dim))\n\n        for i in range(N):\n            ci = 2 * i      # concentration index\n            ti = 2 * i + 1  # temperature index\n\n            C_i = max(abs(C[i]), 1e-30)\n            dr_dC = k[i] * self.n * C_i**(self.n - 1) if C_i > 0 else 0.0\n            dr_dT = dk_dT[i] * C_i**self.n\n\n            # dC_i/dC_i, dC_i/dT_i\n            J[ci, ci] = -f_flow - dr_dC\n            J[ci, ti] = -dr_dT\n\n            # dT_i/dC_i, dT_i/dT_i\n            J[ti, ci] = rcp * dr_dC\n            J[ti, ti] = -f_flow + rcp * dr_dT\n\n            # upstream coupling: dC_i/dC_{i-1}, dT_i/dT_{i-1}\n            if i > 0:\n                J[ci, 2*(i-1)] = f_flow\n                J[ti, 2*(i-1) + 1] = f_flow\n\n        return J\n\n    # output: last cell values\n    def _fn_a(x, u, t):\n        N = self.N_cells\n        return np.array([x[2*(N-1)], x[2*(N-1) + 1]])\n\n    super().__init__(\n        func_dyn=_fn_d,\n        jac_dyn=_jc_d,\n        func_alg=_fn_a,\n        initial_value=x0,\n    )",
+              "signature": "(N_cells = 5, V = 1.0, F = 0.1, k0 = 1000000.0, Ea = 50000.0, n = 1.0, dH_rxn = -50000.0, rho = 1000.0, Cp = 4184.0, C0 = 0.0, T0 = 300.0)",
+              "parameters": [
+                {
+                  "name": "N_cells",
+                  "type": null,
+                  "default": "5",
+                  "description": ""
+                },
+                {
+                  "name": "V",
+                  "type": null,
+                  "default": "1.0",
+                  "description": ""
+                },
+                {
+                  "name": "F",
+                  "type": null,
+                  "default": "0.1",
+                  "description": ""
+                },
+                {
+                  "name": "k0",
+                  "type": null,
+                  "default": "1000000.0",
+                  "description": ""
+                },
+                {
+                  "name": "Ea",
+                  "type": null,
+                  "default": "50000.0",
+                  "description": ""
+                },
+                {
+                  "name": "n",
+                  "type": null,
+                  "default": "1.0",
+                  "description": ""
+                },
+                {
+                  "name": "dH_rxn",
+                  "type": null,
+                  "default": "-50000.0",
+                  "description": ""
+                },
+                {
+                  "name": "rho",
+                  "type": null,
+                  "default": "1000.0",
+                  "description": ""
+                },
+                {
+                  "name": "Cp",
+                  "type": null,
+                  "default": "4184.0",
+                  "description": ""
+                },
+                {
+                  "name": "C0",
+                  "type": null,
+                  "default": "0.0",
+                  "description": ""
+                },
+                {
+                  "name": "T0",
+                  "type": null,
+                  "default": "300.0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'C_in': 0, 'T_in': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'C_out': 0, 'T_out': 1}"
+            },
+            {
+              "name": "N_cells",
+              "description": "",
+              "type": null,
+              "value": "int(N_cells)"
+            },
+            {
+              "name": "V",
+              "description": "",
+              "type": null,
+              "value": "V"
+            },
+            {
+              "name": "F",
+              "description": "",
+              "type": null,
+              "value": "F"
+            },
+            {
+              "name": "k0",
+              "description": "",
+              "type": null,
+              "value": "k0"
+            },
+            {
+              "name": "Ea",
+              "description": "",
+              "type": null,
+              "value": "Ea"
+            },
+            {
+              "name": "n",
+              "description": "",
+              "type": null,
+              "value": "n"
+            },
+            {
+              "name": "dH_rxn",
+              "description": "",
+              "type": null,
+              "value": "dH_rxn"
+            },
+            {
+              "name": "rho",
+              "description": "",
+              "type": null,
+              "value": "rho"
+            },
+            {
+              "name": "Cp",
+              "description": "",
+              "type": null,
+              "value": "Cp"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "N_cells",
+              "type": null,
+              "default": "5",
+              "description": "Number of discretization cells [-]."
+            },
+            {
+              "name": "V",
+              "type": null,
+              "default": "1.0",
+              "description": "Total reactor volume [m³]."
+            },
+            {
+              "name": "F",
+              "type": null,
+              "default": "0.1",
+              "description": "Volumetric flow rate [m³/s]."
+            },
+            {
+              "name": "k0",
+              "type": null,
+              "default": "1000000.0",
+              "description": "Pre-exponential Arrhenius factor [1/s for n=1]."
+            },
+            {
+              "name": "Ea",
+              "type": null,
+              "default": "50000.0",
+              "description": "Activation energy [J/mol]."
+            },
+            {
+              "name": "n",
+              "type": null,
+              "default": "1.0",
+              "description": "Reaction order [-]."
+            },
+            {
+              "name": "dH_rxn",
+              "type": null,
+              "default": "-50000.0",
+              "description": "Heat of reaction [J/mol]. Negative for exothermic."
+            },
+            {
+              "name": "rho",
+              "type": null,
+              "default": "1000.0",
+              "description": "Fluid density [kg/m³]."
+            },
+            {
+              "name": "Cp",
+              "type": null,
+              "default": "4184.0",
+              "description": "Fluid heat capacity [J/(kg·K)]."
+            },
+            {
+              "name": "C0",
+              "type": null,
+              "default": "0.0",
+              "description": "Initial concentration [mol/m³]."
+            },
+            {
+              "name": "T0",
+              "type": null,
+              "default": "300.0",
+              "description": "Initial temperature [K]."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_chem.process.valve": {
+      "name": "pathsim_chem.process.valve",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "Valve",
+          "description": "Algebraic pressure-drop valve with standard flow equation.",
+          "docstring_html": "<p>Algebraic pressure-drop valve with standard flow equation.</p>\n<p>Models an isenthalpic valve (no temperature change for liquids)\nwith flow proportional to the square root of the pressure drop.</p>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<pre class=\"math\">\nF = C_v \\sqrt{|P_{in} - P_{out}|} \\cdot \\mathrm{sign}(P_{in} - P_{out})\n</pre>\n<pre class=\"math\">\nT_{out} = T_{in}\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>Cv <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Valve flow coefficient. Must be positive.</dd>\n</dl>\n</div>\n",
+          "source": "class Valve(Function):\n    \"\"\"Algebraic pressure-drop valve with standard flow equation.\n\n    Models an isenthalpic valve (no temperature change for liquids)\n    with flow proportional to the square root of the pressure drop.\n\n    Mathematical Formulation\n    -------------------------\n    .. math::\n\n        F = C_v \\\\sqrt{|P_{in} - P_{out}|} \\\\cdot \\\\mathrm{sign}(P_{in} - P_{out})\n\n    .. math::\n\n        T_{out} = T_{in}\n\n    Parameters\n    ----------\n    Cv : float\n        Valve flow coefficient. Must be positive.\n    \"\"\"\n\n    input_port_labels = {\n        \"P_in\":  0,\n        \"P_out\": 1,\n        \"T_in\":  2,\n    }\n\n    output_port_labels = {\n        \"F\":     0,\n        \"T_out\": 1,\n    }\n\n    def __init__(self, Cv=1.0):\n        if Cv <= 0:\n            raise ValueError(f\"'Cv' must be positive but is {Cv}\")\n\n        self.Cv = Cv\n        super().__init__(func=self._eval)\n\n    def _eval(self, P_in, P_out, T_in):\n        dP = P_in - P_out\n        F = self.Cv * np.sqrt(np.abs(dP)) * np.sign(dP)\n        return (F, T_in)",
+          "bases": [
+            "pathsim.blocks.function.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, Cv=1.0):\n    if Cv <= 0:\n        raise ValueError(f\"'Cv' must be positive but is {Cv}\")\n\n    self.Cv = Cv\n    super().__init__(func=self._eval)",
+              "signature": "(Cv = 1.0)",
+              "parameters": [
+                {
+                  "name": "Cv",
+                  "type": null,
+                  "default": "1.0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _eval(self, P_in, P_out, T_in):\n    dP = P_in - P_out\n    F = self.Cv * np.sqrt(np.abs(dP)) * np.sign(dP)\n    return (F, T_in)",
+              "signature": "(P_in, P_out, T_in)",
+              "parameters": [
+                {
+                  "name": "P_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "P_out",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'P_in': 0, 'P_out': 1, 'T_in': 2}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'F': 0, 'T_out': 1}"
+            },
+            {
+              "name": "Cv",
+              "description": "",
+              "type": null,
+              "value": "Cv"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Cv",
+              "type": null,
+              "default": "1.0",
+              "description": "Valve flow coefficient. Must be positive."
             }
           ]
         }

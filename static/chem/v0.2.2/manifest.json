@@ -1,6 +1,6 @@
 {
   "package": "chem",
-  "tag": "v0.2.1",
+  "tag": "v0.2.2",
   "notebooks": [
     {
       "slug": "vle-calculation",
@@ -74,6 +74,42 @@
         "thermodynamics",
         "vle"
       ],
+      "executable": true
+    },
+    {
+      "slug": "multicomponent-flash",
+      "file": "multicomponent_flash.ipynb",
+      "title": "Multi-Component Flash Separation (BTX)",
+      "description": "Simulating an isothermal flash drum for a ternary benzene–toluene–p-xylene (BTX) mixture.",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    },
+    {
+      "slug": "process-flowsheet",
+      "file": "process_flowsheet.ipynb",
+      "title": "Process Flowsheet: Mixer → Heater → CSTR",
+      "description": "A simple process combining multiple unit operations into a flowsheet:",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    },
+    {
+      "slug": "point-kinetics",
+      "file": "point_kinetics.ipynb",
+      "title": "Reactor Point Kinetics",
+      "description": "Simulating the transient neutron population in a nuclear reactor using the point kinetics equations (PKE) with six delayed neutron precursor groups.",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    },
+    {
+      "slug": "valve-characteristics",
+      "file": "valve_characteristics.ipynb",
+      "title": "Valve Flow Characteristics",
+      "description": "Exploring the flow behaviour of the  block under varying pressure drop conditions.",
+      "category": "advanced",
+      "tags": [],
       "executable": true
     }
   ],
