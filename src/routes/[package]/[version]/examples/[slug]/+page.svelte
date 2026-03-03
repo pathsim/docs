@@ -43,7 +43,8 @@
 	$effect(() => {
 		const slug = data.meta.slug;
 
-		// Reset namespace and notebook state when switching examples
+		// Reset namespace when switching examples
+		// Note: {#key} on Notebook handles component destruction and store cleanup
 		return async () => {
 			try {
 				const { reset } = await import('$lib/pyodide');
@@ -51,7 +52,7 @@
 			} catch {
 				// Ignore if Pyodide not loaded
 			}
-			notebookStore.resetAllCells();
+			notebookStore.reset();
 		};
 	});
 
@@ -88,14 +89,16 @@
 		downloadUrl={`${versionBasePath}/notebooks/${data.meta.file}`}
 	/>
 
-	<Notebook
-		notebook={data.notebook}
-		basePath={versionBasePath}
-		precomputedOutputs={data.outputs}
-		{figuresBasePath}
-		showStaticOutputs={true}
-		executable={data.meta.executable}
-	/>
+	{#key data.meta.slug}
+		<Notebook
+			notebook={data.notebook}
+			basePath={versionBasePath}
+			precomputedOutputs={data.outputs}
+			{figuresBasePath}
+			showStaticOutputs={true}
+			executable={data.meta.executable}
+		/>
+	{/key}
 </div>
 
 <style>
