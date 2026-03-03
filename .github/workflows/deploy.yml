@@ -40,10 +40,11 @@ jobs:
           git clone https://github.com/pathsim/pathsim.git ../pathsim || { echo "Failed to clone pathsim"; exit 1; }
           git clone https://github.com/pathsim/pathsim-chem.git ../pathsim-chem || { echo "Failed to clone pathsim-chem"; exit 1; }
           git clone https://github.com/pathsim/pathsim-vehicle.git ../pathsim-vehicle || { echo "Failed to clone pathsim-vehicle"; exit 1; }
+          git clone https://github.com/pathsim/pathsim-flight.git ../pathsim-flight || { echo "Failed to clone pathsim-flight"; exit 1; }
 
       - name: Fetch all tags
         run: |
-          for repo in pathsim pathsim-chem pathsim-vehicle; do
+          for repo in pathsim pathsim-chem pathsim-vehicle pathsim-flight; do
             git -C ../$repo fetch --tags
             latest_tag=$(git -C ../$repo describe --tags --abbrev=0 2>/dev/null || echo 'no tags')
             echo "✓ $repo: latest_tag=$latest_tag"

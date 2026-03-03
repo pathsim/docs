@@ -11,7 +11,7 @@ export const external = {
 	consulting: 'https://milanrother.com/#services'
 };
 
-export type PackageId = 'pathsim' | 'chem' | 'vehicle';
+export type PackageId = 'pathsim' | 'chem' | 'vehicle' | 'flight';
 
 export interface Feature {
 	title: string;
@@ -215,11 +215,32 @@ scope.plot()`,
 			{ pip: 'pathsim', import: 'pathsim', pre: true },
 			{ pip: 'pathsim-vehicle', import: 'pathsim_vehicle', pre: true }
 		]
+	},
+	flight: {
+		id: 'flight',
+		name: 'PathSim-Flight',
+		shortName: 'flight',
+		description: 'Flight dynamics blocks for PathSim — aircraft models, 6DoF equations of motion, aerodynamics, and propulsion.',
+		logo: 'pathsim_flight_logo.png',
+		docs: 'flight',
+		api: 'flight/api',
+		examples: null,
+		pypi: null,
+		conda: null,
+		github: `${external.github}/pathsim-flight`,
+		features: [],
+		installation: [],
+		quickstart: null,
+		apiModules: [],
+		pyodidePackages: [
+			{ pip: 'pathsim', import: 'pathsim', pre: true },
+			{ pip: 'pathsim-flight', import: 'pathsim_flight', pre: true }
+		]
 	}
 };
 
 // Ordered list for tabs/navigation
-export const packageOrder: PackageId[] = ['pathsim', 'chem', 'vehicle'];
+export const packageOrder: PackageId[] = ['pathsim', 'chem', 'vehicle', 'flight'];
 
 // Sidebar navigation (auto-generated from package config)
 export interface SidebarItem {

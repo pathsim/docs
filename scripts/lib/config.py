@@ -46,6 +46,17 @@ PACKAGES = {
             "pathsim_vehicle",
         ],
     },
+    "flight": {
+        "repo": ROOT_DIR / "pathsim-flight",
+        "source": ROOT_DIR / "pathsim-flight" / "src",
+        "notebooks": ROOT_DIR / "pathsim-flight" / "docs" / "source" / "examples",
+        "figures": ROOT_DIR / "pathsim-flight" / "docs" / "source" / "examples" / "figures",
+        "display_name": "PathSim-Flight",
+        "griffe_package": "pathsim_flight",
+        "root_modules": [
+            "pathsim_flight",
+        ],
+    },
 }
 
 # Minimum supported versions per package
@@ -54,6 +65,7 @@ MIN_SUPPORTED_VERSIONS = {
     "pathsim": "0.7",
     "chem": "0.1",
     "vehicle": "0.1",
+    "flight": "0.1",
 }
 
 # Patterns to skip during API extraction
