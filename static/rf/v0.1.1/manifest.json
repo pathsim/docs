@@ -1,0 +1,103 @@
+{
+  "package": "rf",
+  "tag": "v0.1.1",
+  "notebooks": [
+    {
+      "slug": "rf-amplifier-compression",
+      "file": "rf_amplifier_compression.ipynb",
+      "title": "RF Amplifier Compression",
+      "description": "Simulation of an RF amplifier with gain compression demonstrating the third-order nonlinearity model. We sweep the input power and observe the 1 dB compression point and gain saturation behavior.",
+      "category": "rf-engineering",
+      "tags": [
+        "amplifier",
+        "nonlinear",
+        "compression"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "rf-mixer-downconversion",
+      "file": "rf_mixer_downconversion.ipynb",
+      "title": "RF Mixer Downconversion",
+      "description": "Simulation of a superheterodyne downconversion stage using the  block. A high-frequency RF signal is mixed with a local oscillator (LO) to produce an intermediate frequency (IF) output.",
+      "category": "rf-engineering",
+      "tags": [
+        "mixer",
+        "frequency",
+        "downconversion"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "superheterodyne-receiver",
+      "file": "superheterodyne_receiver.ipynb",
+      "title": "Superheterodyne Receiver Chain",
+      "description": "Simulation of a basic superheterodyne receiver front-end combining multiple PathSim-RF blocks: an RF amplifier (LNA), a mixer for downconversion, and an IF amplifier. This demonstrates how the bloc...",
+      "category": "rf-engineering",
+      "tags": [
+        "receiver",
+        "system"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "transmission-line-reflection",
+      "file": "transmission_line_reflection.ipynb",
+      "title": "Transmission Line Pulse Propagation",
+      "description": "Simulation of pulse propagation through a lossy transmission line using the  block. We observe the propagation delay and attenuation of a Gaussian pulse traveling through the line.",
+      "category": "rf-engineering",
+      "tags": [
+        "transmission-line",
+        "propagation"
+      ],
+      "executable": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "getting-started",
+      "title": "Getting Started",
+      "order": 1
+    },
+    {
+      "id": "control",
+      "title": "Control Systems",
+      "order": 2
+    },
+    {
+      "id": "mechanics",
+      "title": "Mechanics",
+      "order": 3
+    },
+    {
+      "id": "electronics",
+      "title": "Electronics",
+      "order": 4
+    },
+    {
+      "id": "signal-processing",
+      "title": "Signal Processing",
+      "order": 5
+    },
+    {
+      "id": "chemical",
+      "title": "Chemical Engineering",
+      "order": 6
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced Topics",
+      "order": 7
+    },
+    {
+      "id": "rf-engineering",
+      "title": "RF Engineering",
+      "order": 8
+    },
+    {
+      "id": "fmu",
+      "title": "FMU Integration",
+      "order": 9
+    }
+  ]
+}
