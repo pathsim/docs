@@ -1,0 +1,589 @@
+{
+  "package": "rf",
+  "modules": {
+    "pathsim_rf.amplifier": {
+      "name": "pathsim_rf.amplifier",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "RFAmplifier",
+          "description": "RF amplifier with optional nonlinearity (IP3 / P1dB compression).",
+          "docstring_html": "<p>RF amplifier with optional nonlinearity (IP3 / P1dB compression).</p>\n<p>In the linear regime the amplifier scales the input signal by the\nvoltage gain derived from the specified gain in dB:</p>\n<pre class=\"math\">\ny(t) = a_1 \\cdot x(t)\n</pre>\n<p>When nonlinearity is specified via IIP3 or P1dB, a third-order\npolynomial model is used:</p>\n<pre class=\"math\">\ny(t) = a_1 x(t) + a_3 x^3(t)\n</pre>\n<p>where <tt class=\"math\">a_3 = -a_1 / A_{\\mathrm{IIP3}}^2</tt> and\n<tt class=\"math\">A_{\\mathrm{IIP3}}</tt> is the input-referred IP3 voltage\namplitude.  The output is hard-clipped at the gain compression\npeak to prevent unphysical sign reversal.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>gain <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Small-signal voltage gain [dB]. Default 20.0.</dd>\n<dt>P1dB <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float or None</span></dt>\n<dd>Input-referred 1 dB compression point [dBm]. If given without\n<em>IIP3</em>, the intercept is estimated as IIP3 = P1dB + 9.6 dB.</dd>\n<dt>IIP3 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float or None</span></dt>\n<dd>Input-referred third-order intercept point [dBm].  Takes\nprecedence over <em>P1dB</em> if both are given.</dd>\n<dt>Z0 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Reference impedance [Ohm]. Default 50.0.</dd>\n</dl>\n",
+          "source": "class RFAmplifier(Function):\n    \"\"\"RF amplifier with optional nonlinearity (IP3 / P1dB compression).\n\n    In the linear regime the amplifier scales the input signal by the\n    voltage gain derived from the specified gain in dB:\n\n    .. math::\n\n        y(t) = a_1 \\\\cdot x(t)\n\n    When nonlinearity is specified via IIP3 or P1dB, a third-order\n    polynomial model is used:\n\n    .. math::\n\n        y(t) = a_1 x(t) + a_3 x^3(t)\n\n    where :math:`a_3 = -a_1 / A_{\\\\mathrm{IIP3}}^2` and\n    :math:`A_{\\\\mathrm{IIP3}}` is the input-referred IP3 voltage\n    amplitude.  The output is hard-clipped at the gain compression\n    peak to prevent unphysical sign reversal.\n\n    Parameters\n    ----------\n    gain : float\n        Small-signal voltage gain [dB]. Default 20.0.\n    P1dB : float or None\n        Input-referred 1 dB compression point [dBm]. If given without\n        *IIP3*, the intercept is estimated as IIP3 = P1dB + 9.6 dB.\n    IIP3 : float or None\n        Input-referred third-order intercept point [dBm].  Takes\n        precedence over *P1dB* if both are given.\n    Z0 : float\n        Reference impedance [Ohm]. Default 50.0.\n    \"\"\"\n\n    input_port_labels = {\n        \"rf_in\": 0,\n    }\n\n    output_port_labels = {\n        \"rf_out\": 0,\n    }\n\n    def __init__(self, gain=20.0, P1dB=None, IIP3=None, Z0=50.0):\n\n        # input validation\n        if Z0 <= 0:\n            raise ValueError(f\"'Z0' must be positive but is {Z0}\")\n\n        # store user-facing parameters\n        self.gain = gain\n        self.Z0 = Z0\n\n        # linear voltage gain\n        self._a1 = 10.0 ** (gain / 20.0)\n\n        # resolve nonlinearity specification\n        if IIP3 is not None:\n            self.IIP3 = float(IIP3)\n            self.P1dB = self.IIP3 - 9.6\n        elif P1dB is not None:\n            self.P1dB = float(P1dB)\n            self.IIP3 = self.P1dB + 9.6\n        else:\n            self.IIP3 = None\n            self.P1dB = None\n\n        # derive polynomial coefficients\n        if self.IIP3 is not None:\n            A_iip3 = _dbm_to_vpeak(self.IIP3, Z0)\n            self._a3 = -self._a1 / A_iip3 ** 2\n            # clip at gain compression peak (dy/dx = 0)\n            self._x_sat = A_iip3 / np.sqrt(3.0)\n            self._y_sat = 2.0 * self._a1 * A_iip3 / (3.0 * np.sqrt(3.0))\n        else:\n            self._a3 = 0.0\n            self._x_sat = None\n            self._y_sat = None\n\n        super().__init__(func=self._eval)\n\n    def _eval(self, rf_in):\n        x = rf_in\n        if self._x_sat is not None and abs(x) > self._x_sat:\n            return np.copysign(self._y_sat, x)\n        return self._a1 * x + self._a3 * x ** 3",
+          "bases": [
+            "pathsim.blocks.function.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, gain=20.0, P1dB=None, IIP3=None, Z0=50.0):\n\n    # input validation\n    if Z0 <= 0:\n        raise ValueError(f\"'Z0' must be positive but is {Z0}\")\n\n    # store user-facing parameters\n    self.gain = gain\n    self.Z0 = Z0\n\n    # linear voltage gain\n    self._a1 = 10.0 ** (gain / 20.0)\n\n    # resolve nonlinearity specification\n    if IIP3 is not None:\n        self.IIP3 = float(IIP3)\n        self.P1dB = self.IIP3 - 9.6\n    elif P1dB is not None:\n        self.P1dB = float(P1dB)\n        self.IIP3 = self.P1dB + 9.6\n    else:\n        self.IIP3 = None\n        self.P1dB = None\n\n    # derive polynomial coefficients\n    if self.IIP3 is not None:\n        A_iip3 = _dbm_to_vpeak(self.IIP3, Z0)\n        self._a3 = -self._a1 / A_iip3 ** 2\n        # clip at gain compression peak (dy/dx = 0)\n        self._x_sat = A_iip3 / np.sqrt(3.0)\n        self._y_sat = 2.0 * self._a1 * A_iip3 / (3.0 * np.sqrt(3.0))\n    else:\n        self._a3 = 0.0\n        self._x_sat = None\n        self._y_sat = None\n\n    super().__init__(func=self._eval)",
+              "signature": "(gain = 20.0, P1dB = None, IIP3 = None, Z0 = 50.0)",
+              "parameters": [
+                {
+                  "name": "gain",
+                  "type": null,
+                  "default": "20.0",
+                  "description": ""
+                },
+                {
+                  "name": "P1dB",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "IIP3",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "Z0",
+                  "type": null,
+                  "default": "50.0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _eval(self, rf_in):\n    x = rf_in\n    if self._x_sat is not None and abs(x) > self._x_sat:\n        return np.copysign(self._y_sat, x)\n    return self._a1 * x + self._a3 * x ** 3",
+              "signature": "(rf_in)",
+              "parameters": [
+                {
+                  "name": "rf_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'rf_in': 0}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'rf_out': 0}"
+            },
+            {
+              "name": "gain",
+              "description": "",
+              "type": null,
+              "value": "gain"
+            },
+            {
+              "name": "Z0",
+              "description": "",
+              "type": null,
+              "value": "Z0"
+            },
+            {
+              "name": "_a1",
+              "description": "",
+              "type": null,
+              "value": "10.0 ** (gain / 20.0)"
+            },
+            {
+              "name": "IIP3",
+              "description": "",
+              "type": null,
+              "value": "float(IIP3)"
+            },
+            {
+              "name": "P1dB",
+              "description": "",
+              "type": null,
+              "value": "self.IIP3 - 9.6"
+            },
+            {
+              "name": "_a3",
+              "description": "",
+              "type": null,
+              "value": "-self._a1 / A_iip3 ** 2"
+            },
+            {
+              "name": "_x_sat",
+              "description": "",
+              "type": null,
+              "value": "A_iip3 / np.sqrt(3.0)"
+            },
+            {
+              "name": "_y_sat",
+              "description": "",
+              "type": null,
+              "value": "2.0 * self._a1 * A_iip3 / (3.0 * np.sqrt(3.0))"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "gain",
+              "type": null,
+              "default": "20.0",
+              "description": "Small-signal voltage gain [dB]. Default 20.0."
+            },
+            {
+              "name": "P1dB",
+              "type": null,
+              "default": "None",
+              "description": "Input-referred 1 dB compression point [dBm]. If given without *IIP3*, the intercept is estimated as IIP3 = P1dB + 9.6 dB."
+            },
+            {
+              "name": "IIP3",
+              "type": null,
+              "default": "None",
+              "description": "Input-referred third-order intercept point [dBm]. Takes precedence over *P1dB* if both are given."
+            },
+            {
+              "name": "Z0",
+              "type": null,
+              "default": "50.0",
+              "description": "Reference impedance [Ohm]. Default 50.0."
+            }
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "_dbm_to_vpeak",
+          "description": "Convert power in dBm to peak voltage amplitude.",
+          "docstring_html": "<p>Convert power in dBm to peak voltage amplitude.</p>\n",
+          "source": "def _dbm_to_vpeak(p_dbm, z0):\n    \"\"\"Convert power in dBm to peak voltage amplitude.\"\"\"\n    p_watts = 10.0 ** (p_dbm / 10.0) * 1e-3\n    return np.sqrt(2.0 * z0 * p_watts)",
+          "signature": "(p_dbm, z0)",
+          "parameters": [
+            {
+              "name": "p_dbm",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "z0",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        }
+      ]
+    },
+    "pathsim_rf.mixer": {
+      "name": "pathsim_rf.mixer",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "RFMixer",
+          "description": "Ideal RF mixer (frequency converter).",
+          "docstring_html": "<p>Ideal RF mixer (frequency converter).</p>\n<p>Performs time-domain multiplication of the RF and local-oscillator\n(LO) signals, which corresponds to frequency translation:</p>\n<pre class=\"math\">\ny(t) = G_{\\mathrm{conv}} \\cdot x_{\\mathrm{RF}}(t) \\cdot x_{\\mathrm{LO}}(t)\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>conversion_gain <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Conversion gain [dB]. Default 0.0.  Negative values represent\nconversion loss (typical for passive mixers).</dd>\n<dt>Z0 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Reference impedance [Ohm]. Default 50.0.</dd>\n</dl>\n",
+          "source": "class RFMixer(Function):\n    \"\"\"Ideal RF mixer (frequency converter).\n\n    Performs time-domain multiplication of the RF and local-oscillator\n    (LO) signals, which corresponds to frequency translation:\n\n    .. math::\n\n        y(t) = G_{\\\\mathrm{conv}} \\\\cdot x_{\\\\mathrm{RF}}(t) \\\\cdot x_{\\\\mathrm{LO}}(t)\n\n    Parameters\n    ----------\n    conversion_gain : float\n        Conversion gain [dB]. Default 0.0.  Negative values represent\n        conversion loss (typical for passive mixers).\n    Z0 : float\n        Reference impedance [Ohm]. Default 50.0.\n    \"\"\"\n\n    input_port_labels = {\n        \"rf\": 0,\n        \"lo\": 1,\n    }\n\n    output_port_labels = {\n        \"if_out\": 0,\n    }\n\n    def __init__(self, conversion_gain=0.0, Z0=50.0):\n\n        if Z0 <= 0:\n            raise ValueError(f\"'Z0' must be positive but is {Z0}\")\n\n        self.conversion_gain = conversion_gain\n        self.Z0 = Z0\n\n        # linear voltage gain (can be < 1 for conversion loss)\n        self._gain_linear = 10.0 ** (conversion_gain / 20.0)\n\n        super().__init__(func=self._eval)\n\n    def _eval(self, rf, lo):\n        return self._gain_linear * rf * lo",
+          "bases": [
+            "pathsim.blocks.function.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, conversion_gain=0.0, Z0=50.0):\n\n    if Z0 <= 0:\n        raise ValueError(f\"'Z0' must be positive but is {Z0}\")\n\n    self.conversion_gain = conversion_gain\n    self.Z0 = Z0\n\n    # linear voltage gain (can be < 1 for conversion loss)\n    self._gain_linear = 10.0 ** (conversion_gain / 20.0)\n\n    super().__init__(func=self._eval)",
+              "signature": "(conversion_gain = 0.0, Z0 = 50.0)",
+              "parameters": [
+                {
+                  "name": "conversion_gain",
+                  "type": null,
+                  "default": "0.0",
+                  "description": ""
+                },
+                {
+                  "name": "Z0",
+                  "type": null,
+                  "default": "50.0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _eval(self, rf, lo):\n    return self._gain_linear * rf * lo",
+              "signature": "(rf, lo)",
+              "parameters": [
+                {
+                  "name": "rf",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "lo",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'rf': 0, 'lo': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'if_out': 0}"
+            },
+            {
+              "name": "conversion_gain",
+              "description": "",
+              "type": null,
+              "value": "conversion_gain"
+            },
+            {
+              "name": "Z0",
+              "description": "",
+              "type": null,
+              "value": "Z0"
+            },
+            {
+              "name": "_gain_linear",
+              "description": "",
+              "type": null,
+              "value": "10.0 ** (conversion_gain / 20.0)"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "conversion_gain",
+              "type": null,
+              "default": "0.0",
+              "description": "Conversion gain [dB]. Default 0.0. Negative values represent conversion loss (typical for passive mixers)."
+            },
+            {
+              "name": "Z0",
+              "type": null,
+              "default": "50.0",
+              "description": "Reference impedance [Ohm]. Default 50.0."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_rf.network": {
+      "name": "pathsim_rf.network",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "RFNetwork",
+          "description": "N-port RF network linear time invariant (LTI) MIMO state-space model.",
+          "docstring_html": "<p>N-port RF network linear time invariant (LTI) MIMO state-space model.</p>\n<p>Uses Vector Fitting for rational approximation of the frequency response\nusing poles and residues. The resulting approximation has guaranteed stable\npoles that are real or come in complex conjugate pairs.</p>\n<p>Assumes N inputs and N outputs, where N is the number of ports of the\nRF network.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>ntwk <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">:py:class:`~skrf.network.Network`, str, or Path</span></dt>\n<dd>scikit-rf RF Network object, or file to load information from.\nSupported formats are touchstone file V1 (.s?p) or V2 (.ts).</dd>\n<dt>auto_fit <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>If True (default), use <tt class=\"docutils literal\">skrf.VectorFitting.auto_fit</tt> for automatic\npole selection. If False, use <tt class=\"docutils literal\">skrf.VectorFitting.vector_fit</tt>.</dd>\n<dt>**kwargs</dt>\n<dd>Additional keyword arguments forwarded to the vector fitting function.</dd>\n</dl>\n<p><strong>References</strong></p>\n<table class=\"docutils citation\" frame=\"void\" id=\"skrf\" rules=\"none\">\n<colgroup><col class=\"label\" /><col /></colgroup>\n<tbody valign=\"top\">\n<tr><td class=\"label\">[skrf]</td><td>scikit-rf webpage <a class=\"reference external\" href=\"https://scikit-rf.org/\">https://scikit-rf.org/</a></td></tr>\n</tbody>\n</table>\n",
+          "source": "class RFNetwork(StateSpace):\n    \"\"\"N-port RF network linear time invariant (LTI) MIMO state-space model.\n\n    Uses Vector Fitting for rational approximation of the frequency response\n    using poles and residues. The resulting approximation has guaranteed stable\n    poles that are real or come in complex conjugate pairs.\n\n    Assumes N inputs and N outputs, where N is the number of ports of the\n    RF network.\n\n    Parameters\n    ----------\n    ntwk : :py:class:`~skrf.network.Network`, str, or Path\n        scikit-rf RF Network object, or file to load information from.\n        Supported formats are touchstone file V1 (.s?p) or V2 (.ts).\n    auto_fit : bool\n        If True (default), use ``skrf.VectorFitting.auto_fit`` for automatic\n        pole selection. If False, use ``skrf.VectorFitting.vector_fit``.\n    **kwargs\n        Additional keyword arguments forwarded to the vector fitting function.\n\n    References\n    ----------\n    .. [skrf] scikit-rf webpage https://scikit-rf.org/\n    \"\"\"\n\n    def __init__(self, ntwk: rf.Network | str | Path, auto_fit: bool = True, **kwargs):\n\n        if isinstance(ntwk, (Path, str)):\n            ntwk = rf.Network(ntwk)\n\n        # select the vector fitting function from scikit-rf\n        vf_fun_name = \"auto_fit\" if auto_fit else \"vector_fit\"\n        vf_fun = getattr(rf.VectorFitting, vf_fun_name)\n\n        # filter kwargs for the selected vf function\n        vf_fun_keys = signature(vf_fun).parameters\n        vf_kwargs = {k: v for k, v in kwargs.items() if k in vf_fun_keys}\n\n        # apply vector fitting\n        vf = rf.VectorFitting(ntwk)\n        getattr(vf, vf_fun_name)(**vf_kwargs)\n        A, B, C, D, _ = vf._get_ABCDE()\n\n        # keep a copy of the network and VF\n        self.network = ntwk\n        self.vf = vf\n\n        super().__init__(A, B, C, D)\n\n    def s(self, freqs: np.ndarray) -> np.ndarray:\n        \"\"\"S-matrix of the vector fitted N-port model from its state-space representation.\n\n        Parameters\n        ----------\n        freqs : :py:class:`~numpy.ndarray`\n            Frequencies (in Hz) at which to calculate the S-matrices.\n\n        Returns\n        -------\n        s : :py:class:`~numpy.ndarray`\n            Complex-valued S-matrices (fxNxN) calculated at frequencies ``freqs``.\n        \"\"\"\n        return rf.VectorFitting._get_s_from_ABCDE(\n            freqs, self.A, self.B, self.C, self.D, 0\n        )",
+          "bases": [
+            "pathsim.blocks.lti.StateSpace"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, ntwk: rf.Network | str | Path, auto_fit: bool = True, **kwargs):\n\n    if isinstance(ntwk, (Path, str)):\n        ntwk = rf.Network(ntwk)\n\n    # select the vector fitting function from scikit-rf\n    vf_fun_name = \"auto_fit\" if auto_fit else \"vector_fit\"\n    vf_fun = getattr(rf.VectorFitting, vf_fun_name)\n\n    # filter kwargs for the selected vf function\n    vf_fun_keys = signature(vf_fun).parameters\n    vf_kwargs = {k: v for k, v in kwargs.items() if k in vf_fun_keys}\n\n    # apply vector fitting\n    vf = rf.VectorFitting(ntwk)\n    getattr(vf, vf_fun_name)(**vf_kwargs)\n    A, B, C, D, _ = vf._get_ABCDE()\n\n    # keep a copy of the network and VF\n    self.network = ntwk\n    self.vf = vf\n\n    super().__init__(A, B, C, D)",
+              "signature": "(ntwk: rf.Network | str | Path, auto_fit: bool = True, kwargs = {})",
+              "parameters": [
+                {
+                  "name": "ntwk",
+                  "type": "rf.Network | str | Path",
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "auto_fit",
+                  "type": "bool",
+                  "default": "True",
+                  "description": ""
+                },
+                {
+                  "name": "kwargs",
+                  "type": null,
+                  "default": "{}",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "s",
+              "description": "S-matrix of the vector fitted N-port model from its state-space representation.",
+              "docstring_html": "<p>S-matrix of the vector fitted N-port model from its state-space representation.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>freqs <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">:py:class:`~numpy.ndarray`</span></dt>\n<dd>Frequencies (in Hz) at which to calculate the S-matrices.</dd>\n</dl>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>s <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">:py:class:`~numpy.ndarray`</span></dt>\n<dd>Complex-valued S-matrices (fxNxN) calculated at frequencies <tt class=\"docutils literal\">freqs</tt>.</dd>\n</dl>\n",
+              "source": "def s(self, freqs: np.ndarray) -> np.ndarray:\n    \"\"\"S-matrix of the vector fitted N-port model from its state-space representation.\n\n    Parameters\n    ----------\n    freqs : :py:class:`~numpy.ndarray`\n        Frequencies (in Hz) at which to calculate the S-matrices.\n\n    Returns\n    -------\n    s : :py:class:`~numpy.ndarray`\n        Complex-valued S-matrices (fxNxN) calculated at frequencies ``freqs``.\n    \"\"\"\n    return rf.VectorFitting._get_s_from_ABCDE(\n        freqs, self.A, self.B, self.C, self.D, 0\n    )",
+              "signature": "(freqs: np.ndarray)",
+              "parameters": [
+                {
+                  "name": "freqs",
+                  "type": "np.ndarray",
+                  "default": null,
+                  "description": "Frequencies (in Hz) at which to calculate the S-matrices."
+                }
+              ],
+              "returns": "np.ndarray",
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "network",
+              "description": "",
+              "type": null,
+              "value": "ntwk"
+            },
+            {
+              "name": "vf",
+              "description": "",
+              "type": null,
+              "value": "vf"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "ntwk",
+              "type": "rf.Network | str | Path",
+              "default": null,
+              "description": "scikit-rf RF Network object, or file to load information from. Supported formats are touchstone file V1 (.s?p) or V2 (.ts)."
+            },
+            {
+              "name": "auto_fit",
+              "type": "bool",
+              "default": "True",
+              "description": "If True (default), use ``skrf.VectorFitting.auto_fit`` for automatic pole selection. If False, use ``skrf.VectorFitting.vector_fit``. **kwargs Additional keyword arguments forwarded to the vector fitting function."
+            },
+            {
+              "name": "kwargs",
+              "type": null,
+              "default": "{}",
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_rf.transmission_line": {
+      "name": "pathsim_rf.transmission_line",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "TransmissionLine",
+          "description": "Lossy transmission line modeled as a delayed scattering two-port.",
+          "docstring_html": "<p>Lossy transmission line modeled as a delayed scattering two-port.</p>\n<p>In the scattering (wave) domain, the transmission line crosses incident\nwaves from one port to the other with a propagation delay and attenuation:</p>\n<pre class=\"math\">\nb_1(t) = T \\cdot a_2(t - \\tau)\n</pre>\n<pre class=\"math\">\nb_2(t) = T \\cdot a_1(t - \\tau)\n</pre>\n<p>where <tt class=\"math\">\\tau = L / v_p</tt> is the one-way propagation delay,\n<tt class=\"math\">v_p = c_0 / \\sqrt{\\varepsilon_r}</tt> is the phase velocity,\nand <tt class=\"math\">T = 10^{-\\alpha L / 20}</tt> is the voltage transmission\ncoefficient for attenuation <tt class=\"math\">\\alpha</tt> in dB/m.</p>\n<p>The block uses a single vector-valued adaptive interpolating buffer\nto delay both wave directions simultaneously.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>length <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Physical length of the line [m].</dd>\n<dt>er <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Effective relative permittivity [-]. Default 1.0 (free space).</dd>\n<dt>attenuation <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Attenuation constant [dB/m]. Default 0.0 (lossless).</dd>\n<dt>Z0 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Characteristic impedance [Ohm]. Stored for reference, does not\naffect the scattering computation (matched-line assumption).</dd>\n</dl>\n",
+          "source": "class TransmissionLine(Block):\n    \"\"\"Lossy transmission line modeled as a delayed scattering two-port.\n\n    In the scattering (wave) domain, the transmission line crosses incident\n    waves from one port to the other with a propagation delay and attenuation:\n\n    .. math::\n\n        b_1(t) = T \\\\cdot a_2(t - \\\\tau)\n\n    .. math::\n\n        b_2(t) = T \\\\cdot a_1(t - \\\\tau)\n\n    where :math:`\\\\tau = L / v_p` is the one-way propagation delay,\n    :math:`v_p = c_0 / \\\\sqrt{\\\\varepsilon_r}` is the phase velocity,\n    and :math:`T = 10^{-\\\\alpha L / 20}` is the voltage transmission\n    coefficient for attenuation :math:`\\\\alpha` in dB/m.\n\n    The block uses a single vector-valued adaptive interpolating buffer\n    to delay both wave directions simultaneously.\n\n    Parameters\n    ----------\n    length : float\n        Physical length of the line [m].\n    er : float\n        Effective relative permittivity [-]. Default 1.0 (free space).\n    attenuation : float\n        Attenuation constant [dB/m]. Default 0.0 (lossless).\n    Z0 : float\n        Characteristic impedance [Ohm]. Stored for reference, does not\n        affect the scattering computation (matched-line assumption).\n    \"\"\"\n\n    input_port_labels = {\n        \"a1\": 0,\n        \"a2\": 1,\n    }\n\n    output_port_labels = {\n        \"b1\": 0,\n        \"b2\": 1,\n    }\n\n    def __init__(self, length=1.0, er=1.0, attenuation=0.0, Z0=50.0):\n\n        super().__init__()\n\n        # input validation\n        if length <= 0:\n            raise ValueError(f\"'length' must be positive but is {length}\")\n        if er <= 0:\n            raise ValueError(f\"'er' must be positive but is {er}\")\n        if attenuation < 0:\n            raise ValueError(f\"'attenuation' must be non-negative but is {attenuation}\")\n\n        # store parameters\n        self.length = length\n        self.er = er\n        self.attenuation = attenuation\n        self.Z0 = Z0\n\n        # derived quantities\n        self.vp = C0 / np.sqrt(er)\n        self.tau = length / self.vp\n        self.T = 10.0 ** (-attenuation * length / 20.0)\n\n        # single vector-valued buffer for [a1, a2]\n        self._buffer = AdaptiveBuffer(self.tau)\n\n    def __len__(self):\n        # no algebraic passthrough — output depends on past input only\n        return 0\n\n    def reset(self):\n        super().reset()\n        self._buffer.clear()\n\n    def sample(self, t, dt):\n        \"\"\"Store current incident waves into the delay buffer.\"\"\"\n        self._buffer.add(t, np.array([self.inputs[0], self.inputs[1]]))\n\n    def update(self, t):\n        \"\"\"Read delayed waves, cross and scale.\"\"\"\n        delayed = self._buffer.get(t)\n\n        if np.isscalar(delayed):\n            # buffer not yet filled (t < tau)\n            self.outputs[0] = 0.0\n            self.outputs[1] = 0.0\n        else:\n            # b1 = T * a2(t-tau), b2 = T * a1(t-tau)\n            self.outputs[0] = self.T * delayed[1]\n            self.outputs[1] = self.T * delayed[0]",
+          "bases": [
+            "pathsim.blocks._block.Block"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, length=1.0, er=1.0, attenuation=0.0, Z0=50.0):\n\n    super().__init__()\n\n    # input validation\n    if length <= 0:\n        raise ValueError(f\"'length' must be positive but is {length}\")\n    if er <= 0:\n        raise ValueError(f\"'er' must be positive but is {er}\")\n    if attenuation < 0:\n        raise ValueError(f\"'attenuation' must be non-negative but is {attenuation}\")\n\n    # store parameters\n    self.length = length\n    self.er = er\n    self.attenuation = attenuation\n    self.Z0 = Z0\n\n    # derived quantities\n    self.vp = C0 / np.sqrt(er)\n    self.tau = length / self.vp\n    self.T = 10.0 ** (-attenuation * length / 20.0)\n\n    # single vector-valued buffer for [a1, a2]\n    self._buffer = AdaptiveBuffer(self.tau)",
+              "signature": "(length = 1.0, er = 1.0, attenuation = 0.0, Z0 = 50.0)",
+              "parameters": [
+                {
+                  "name": "length",
+                  "type": null,
+                  "default": "1.0",
+                  "description": ""
+                },
+                {
+                  "name": "er",
+                  "type": null,
+                  "default": "1.0",
+                  "description": ""
+                },
+                {
+                  "name": "attenuation",
+                  "type": null,
+                  "default": "0.0",
+                  "description": ""
+                },
+                {
+                  "name": "Z0",
+                  "type": null,
+                  "default": "50.0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "reset",
+              "description": "",
+              "docstring_html": "",
+              "source": "def reset(self):\n    super().reset()\n    self._buffer.clear()",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "sample",
+              "description": "Store current incident waves into the delay buffer.",
+              "docstring_html": "<p>Store current incident waves into the delay buffer.</p>\n",
+              "source": "def sample(self, t, dt):\n    \"\"\"Store current incident waves into the delay buffer.\"\"\"\n    self._buffer.add(t, np.array([self.inputs[0], self.inputs[1]]))",
+              "signature": "(t, dt)",
+              "parameters": [
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "dt",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "update",
+              "description": "Read delayed waves, cross and scale.",
+              "docstring_html": "<p>Read delayed waves, cross and scale.</p>\n",
+              "source": "def update(self, t):\n    \"\"\"Read delayed waves, cross and scale.\"\"\"\n    delayed = self._buffer.get(t)\n\n    if np.isscalar(delayed):\n        # buffer not yet filled (t < tau)\n        self.outputs[0] = 0.0\n        self.outputs[1] = 0.0\n    else:\n        # b1 = T * a2(t-tau), b2 = T * a1(t-tau)\n        self.outputs[0] = self.T * delayed[1]\n        self.outputs[1] = self.T * delayed[0]",
+              "signature": "(t)",
+              "parameters": [
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'a1': 0, 'a2': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'b1': 0, 'b2': 1}"
+            },
+            {
+              "name": "length",
+              "description": "",
+              "type": null,
+              "value": "length"
+            },
+            {
+              "name": "er",
+              "description": "",
+              "type": null,
+              "value": "er"
+            },
+            {
+              "name": "attenuation",
+              "description": "",
+              "type": null,
+              "value": "attenuation"
+            },
+            {
+              "name": "Z0",
+              "description": "",
+              "type": null,
+              "value": "Z0"
+            },
+            {
+              "name": "vp",
+              "description": "",
+              "type": null,
+              "value": "C0 / np.sqrt(er)"
+            },
+            {
+              "name": "tau",
+              "description": "",
+              "type": null,
+              "value": "length / self.vp"
+            },
+            {
+              "name": "T",
+              "description": "",
+              "type": null,
+              "value": "10.0 ** (-attenuation * length / 20.0)"
+            },
+            {
+              "name": "_buffer",
+              "description": "",
+              "type": null,
+              "value": "AdaptiveBuffer(self.tau)"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "length",
+              "type": null,
+              "default": "1.0",
+              "description": "Physical length of the line [m]."
+            },
+            {
+              "name": "er",
+              "type": null,
+              "default": "1.0",
+              "description": "Effective relative permittivity [-]. Default 1.0 (free space)."
+            },
+            {
+              "name": "attenuation",
+              "type": null,
+              "default": "0.0",
+              "description": "b_1(t) = T \\cdot a_2(t - \\tau)"
+            },
+            {
+              "name": "Z0",
+              "type": null,
+              "default": "50.0",
+              "description": "Characteristic impedance [Ohm]. Stored for reference, does not affect the scattering computation (matched-line assumption)."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    }
+  }
+}

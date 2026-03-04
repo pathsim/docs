@@ -1,0 +1,164 @@
+[
+  {
+    "type": "module",
+    "name": "pathsim_rf.amplifier",
+    "description": "",
+    "path": "rf/v0.1.0/api#pathsim_rf-amplifier",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier"
+  },
+  {
+    "type": "class",
+    "name": "RFAmplifier",
+    "description": "RF amplifier with optional nonlinearity (IP3 / P1dB compression).",
+    "path": "rf/v0.1.0/api#RFAmplifier",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.1.0/api#RFAmplifier.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "parentClass": "RFAmplifier"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "rf/v0.1.0/api#RFAmplifier._eval",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "parentClass": "RFAmplifier"
+  },
+  {
+    "type": "function",
+    "name": "_dbm_to_vpeak",
+    "description": "Convert power in dBm to peak voltage amplitude.",
+    "path": "rf/v0.1.0/api#_dbm_to_vpeak",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_rf.mixer",
+    "description": "",
+    "path": "rf/v0.1.0/api#pathsim_rf-mixer",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer"
+  },
+  {
+    "type": "class",
+    "name": "RFMixer",
+    "description": "Ideal RF mixer (frequency converter).",
+    "path": "rf/v0.1.0/api#RFMixer",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.1.0/api#RFMixer.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "parentClass": "RFMixer"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "rf/v0.1.0/api#RFMixer._eval",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "parentClass": "RFMixer"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_rf.network",
+    "description": "",
+    "path": "rf/v0.1.0/api#pathsim_rf-network",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network"
+  },
+  {
+    "type": "class",
+    "name": "RFNetwork",
+    "description": "N-port RF network linear time invariant (LTI) MIMO state-space model.",
+    "path": "rf/v0.1.0/api#RFNetwork",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.1.0/api#RFNetwork.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "parentClass": "RFNetwork"
+  },
+  {
+    "type": "method",
+    "name": "s",
+    "description": "S-matrix of the vector fitted N-port model from its state-space representation.",
+    "path": "rf/v0.1.0/api#RFNetwork.s",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "parentClass": "RFNetwork"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_rf.transmission_line",
+    "description": "",
+    "path": "rf/v0.1.0/api#pathsim_rf-transmission_line",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line"
+  },
+  {
+    "type": "class",
+    "name": "TransmissionLine",
+    "description": "Lossy transmission line modeled as a delayed scattering two-port.",
+    "path": "rf/v0.1.0/api#TransmissionLine",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.1.0/api#TransmissionLine.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "rf/v0.1.0/api#TransmissionLine.reset",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Store current incident waves into the delay buffer.",
+    "path": "rf/v0.1.0/api#TransmissionLine.sample",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Read delayed waves, cross and scale.",
+    "path": "rf/v0.1.0/api#TransmissionLine.update",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine"
+  }
+]
