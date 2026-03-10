@@ -7,6 +7,7 @@
 	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
 	import { notebookStore } from '$lib/stores/notebookStore';
+	import { reset as resetPyodide } from '$lib/pyodide';
 	import { groupByCategory } from '$lib/notebook/manifest';
 	import { packages } from '$lib/config/packages';
 	import type { PageData } from './$types';
@@ -43,17 +44,9 @@
 	$effect(() => {
 		const slug = data.meta.slug;
 
-		return async () => {
-			// Cell IDs are prefixed with the slug, so old cells won't collide
-			// with new ones. But we still need to clean up stale store entries
-			// and reset the Python namespace.
+		return () => {
 			notebookStore.reset();
-			try {
-				const { reset } = await import('$lib/pyodide');
-				await reset();
-			} catch {
-				// Ignore if Pyodide not loaded
-			}
+			resetPyodide();
 		};
 	});
 
