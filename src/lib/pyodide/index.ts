@@ -188,19 +188,19 @@ export async function initPyodide(packages?: PyodidePackageInfo[], packageVersio
 	}
 
 	// Already initialized with same versions
-	let state: { status: string } = { status: 'idle' };
-	pyodideState.subscribe((s) => (state = s))();
-	if (state.status === 'ready') {
+	if (worker) {
 		return;
 	}
 
 	initPromise = new Promise<void>((resolve, reject) => {
+		let settled = false;
+
 		// Create worker
 		worker = new Worker(new URL('./worker.ts', import.meta.url), { type: 'module' });
 		worker.onmessage = handleWorkerMessage;
 		worker.onerror = (error) => {
 			setError(error.message);
-			reject(new Error(error.message));
+			if (!settled) { settled = true; reject(new Error(error.message)); }
 		};
 
 		// Wait for ready message
@@ -211,10 +211,10 @@ export async function initPyodide(packages?: PyodidePackageInfo[], packageVersio
 				worker!.onmessage = originalHandler;
 				initializedPackages = packages ?? null;
 				initializedVersions = packageVersions ?? null;
-				resolve();
+				if (!settled) { settled = true; resolve(); }
 			} else if (event.data.type === 'error' && !event.data.id) {
 				worker!.onmessage = originalHandler;
-				reject(new Error(event.data.error));
+				if (!settled) { settled = true; reject(new Error(event.data.error)); }
 			}
 		};
 
@@ -224,7 +224,8 @@ export async function initPyodide(packages?: PyodidePackageInfo[], packageVersio
 
 		// Set timeout
 		setTimeout(() => {
-			if (state.status === 'loading') {
+			if (!settled) {
+				settled = true;
 				const error = ERROR_MESSAGES.EXECUTION_TIMEOUT;
 				setError(error);
 				reject(new Error(error));
@@ -293,10 +294,15 @@ export async function execute(
 /**
  * Reset the Python namespace
  * Clears all user-defined variables but keeps common imports (np, plt)
+ * Only sends reset if the worker is alive and initialized
  */
-export async function reset(): Promise<void> {
-	await initPyodide();
-	send({ type: 'reset' });
+export function reset(): void {
+	if (!worker || !initPromise) return;
+	try {
+		send({ type: 'reset' });
+	} catch {
+		// Worker may have been terminated between our check and the send
+	}
 }
 
 /**
@@ -318,7 +324,19 @@ export function terminate(): void {
 	initPromise = null;
 	initializedPackages = null;
 	initializedVersions = null;
+
+	// Resolve all pending executions with an error so callers don't hang forever
+	for (const [id, pending] of pendingExecutions) {
+		pending.resolve({
+			stdout: pending.stdout.join('\n'),
+			stderr: pending.stderr.join('\n'),
+			plots: pending.plots,
+			error: { message: 'Worker terminated' },
+			duration: Date.now() - pending.startTime
+		});
+	}
 	pendingExecutions.clear();
+
 	updateState({ status: 'idle', progress: '', error: null });
 }
 
