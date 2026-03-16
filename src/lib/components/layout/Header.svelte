@@ -50,7 +50,7 @@
 				{/each}
 			</nav>
 		</div>
-		<div class="header-right header-actions">
+		<div class="header-right">
 			<a href={nav.home} class="icon-btn" use:tooltip={'Home'}>
 				<Icon name="home" size={14} />
 			</a>
