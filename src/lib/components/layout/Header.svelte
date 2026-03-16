@@ -33,6 +33,9 @@
 					<Icon name="menu" size={14} />
 				</button>
 			{/if}
+			<a href="{base}/" class="icon-btn" use:tooltip={'Docs'}>
+				<Icon name="book" size={14} />
+			</a>
 			<nav class="package-tabs">
 				{#each packageOrder as id}
 					{@const pkg = packages[id]}
@@ -48,9 +51,6 @@
 			</nav>
 		</div>
 		<div class="header-right header-actions">
-			<a href="{base}/" class="icon-btn" use:tooltip={'Docs'}>
-				<Icon name="book" size={14} />
-			</a>
 			<a href={nav.home} class="icon-btn" use:tooltip={'Home'}>
 				<Icon name="home" size={14} />
 			</a>
