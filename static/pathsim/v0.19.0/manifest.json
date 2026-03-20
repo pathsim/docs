@@ -1,0 +1,481 @@
+{
+  "package": "pathsim",
+  "tag": "v0.19.0",
+  "notebooks": [
+    {
+      "slug": "harmonic-oscillator",
+      "file": "harmonic_oscillator.ipynb",
+      "title": "Harmonic Oscillator",
+      "description": "Simulation of a damped harmonic oscillator, modeling a spring-mass-damper system.",
+      "category": "getting-started",
+      "tags": [
+        "ode",
+        "basics"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/harmonic_oscillator_g.png"
+    },
+    {
+      "slug": "linear-feedback",
+      "file": "linear_feedback.ipynb",
+      "title": "Linear Feedback System",
+      "description": "Simulation of a simple linear feedback system with step response.",
+      "category": "getting-started",
+      "tags": [
+        "ode",
+        "feedback"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/linear_feedback_blockdiagram_g.png"
+    },
+    {
+      "slug": "pendulum",
+      "file": "pendulum.ipynb",
+      "title": "Pendulum",
+      "description": "Simulation of a nonlinear mathematical pendulum.",
+      "category": "getting-started",
+      "tags": [
+        "ode",
+        "adaptive",
+        "physics"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/pendulum_blockdiagram_g.png"
+    },
+    {
+      "slug": "vanderpol",
+      "file": "vanderpol.ipynb",
+      "title": "Van der Pol",
+      "description": "Simulation of the Van der Pol oscillator, a classic example of a stiff dynamical system.",
+      "category": "getting-started",
+      "tags": [
+        "ode",
+        "nonlinear"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/ode_blockdiagram_g.png"
+    },
+    {
+      "slug": "abs-braking",
+      "file": "abs_braking.ipynb",
+      "title": "Anti-lock Braking System (ABS)",
+      "description": "This example demonstrates an anti-lock braking system (ABS) using nonlinear tire dynamics and event-driven slip control. The system prevents wheel lockup during braking by modulating brake torque t...",
+      "category": "control",
+      "tags": [
+        "hybrid",
+        "events",
+        "automotive"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "cascade-controller",
+      "file": "cascade_controller.ipynb",
+      "title": "Cascade Controller",
+      "description": "Demonstration of a two-loop cascade PID control system with inner and outer loops.",
+      "category": "control",
+      "tags": [
+        "cascade",
+        "feedback"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/cascade_blockdiagram_g.png"
+    },
+    {
+      "slug": "dcmotor-control",
+      "file": "dcmotor_control.ipynb",
+      "title": "DC Motor Speed Control",
+      "description": "This example demonstrates multi-domain modeling of a DC motor with PID speed control. The system combines electrical and mechanical dynamics with anti-windup control to handle voltage saturation.",
+      "category": "control",
+      "tags": [
+        "motor",
+        "pid"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "kalman-filter",
+      "file": "kalman_filter.ipynb",
+      "title": "Kalman Filter",
+      "description": "This example demonstrates the Kalman filter in PathSim for optimal state estimation of a linear dynamical system from noisy measurements. The filter recursively estimates the state of a moving obje...",
+      "category": "control",
+      "tags": [
+        "estimation",
+        "filter"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/kalman_filter_blockdiagram_g.png"
+    },
+    {
+      "slug": "pid-controller",
+      "file": "pid_controller.ipynb",
+      "title": "PID Controller",
+      "description": "Simulation of a PID controller tracking a step-changing setpoint.",
+      "category": "control",
+      "tags": [
+        "pid",
+        "feedback"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/pid_blockdiagram_g.png"
+    },
+    {
+      "slug": "thermostat",
+      "file": "thermostat.ipynb",
+      "title": "Thermostat",
+      "description": "Simulation of a thermostat with threshold-based switching between heater states.",
+      "category": "control",
+      "tags": [
+        "hybrid",
+        "events"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/thermostat_blockdiagram_g.png"
+    },
+    {
+      "slug": "billards",
+      "file": "billards.ipynb",
+      "title": "Billards & Collisions",
+      "description": "Simulation of a ball bouncing inside a circular boundary using event detection.",
+      "category": "mechanics",
+      "tags": [
+        "events",
+        "collision"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/billard_circle_g.png"
+    },
+    {
+      "slug": "bouncing-ball",
+      "file": "bouncing_ball.ipynb",
+      "title": "Bouncing Ball",
+      "description": "Simulation of a bouncing ball using PathSim's event handling system.",
+      "category": "mechanics",
+      "tags": [
+        "events",
+        "hybrid"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/bouncing_ball_g.png"
+    },
+    {
+      "slug": "bouncing-pendulum",
+      "file": "bouncing_pendulum.ipynb",
+      "title": "Bouncing Pendulum",
+      "description": "This example demonstrates a hybrid system combining continuous pendulum dynamics with discrete bounce events. The pendulum swings until it hits the ground (zero angle), at which point it bounces ba...",
+      "category": "mechanics",
+      "tags": [
+        "events",
+        "collision"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/bouncing_pendulum_blockdiagram_g.png"
+    },
+    {
+      "slug": "coupled-oscillators",
+      "file": "coupled_oscillators.ipynb",
+      "title": "Coupled Oscillators",
+      "description": "Simulation of two coupled damped harmonic oscillators using ODE blocks.",
+      "category": "mechanics",
+      "tags": [
+        "ode",
+        "physics"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/coupled_oscillators_g.png"
+    },
+    {
+      "slug": "elastic-pendulum",
+      "file": "elastic_pendulum.ipynb",
+      "title": "Elastic Pendulum",
+      "description": "Simulation of an elastic pendulum combining spring and pendulum dynamics.",
+      "category": "mechanics",
+      "tags": [
+        "ode",
+        "physics"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/elastic_pendulum_g.png"
+    },
+    {
+      "slug": "stick-slip",
+      "file": "stick_slip.ipynb",
+      "title": "Stick Slip",
+      "description": "Simulation of a mechanical system exhibiting stick-slip behavior due to Coulomb friction.",
+      "category": "mechanics",
+      "tags": [
+        "friction",
+        "hybrid"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/stick_slip_g.png"
+    },
+    {
+      "slug": "switched-bouncing-ball",
+      "file": "switched_bouncing_ball.ipynb",
+      "title": "Switched Bouncing Ball",
+      "description": "This example demonstrates advanced event handling with multiple simultaneous events, event switching, and conditional event logic. The bouncing ball bounces on a table first, and then drops to the ...",
+      "category": "mechanics",
+      "tags": [
+        "events",
+        "hybrid"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "delta-sigma-adc",
+      "file": "delta_sigma_adc.ipynb",
+      "title": "Delta-Sigma ADC",
+      "description": "Simulation of a first-order delta-sigma analog-to-digital converter.",
+      "category": "electronics",
+      "tags": [
+        "adc",
+        "mixed-signal"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/delta_sigma_blockdiagram_g.png"
+    },
+    {
+      "slug": "diode-circuit",
+      "file": "diode_circuit.ipynb",
+      "title": "Diode Circuit",
+      "description": "Simulation of a diode circuit demonstrating nonlinear algebraic loop solving.",
+      "category": "electronics",
+      "tags": [
+        "nonlinear",
+        "circuit"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/diode_blockdiagram_g.png"
+    },
+    {
+      "slug": "noisy-amplifier",
+      "file": "noisy_amplifier.ipynb",
+      "title": "Noisy Amplifier",
+      "description": "Simulation of a nonlinear, noisy, and band-limited amplifier model.",
+      "category": "electronics",
+      "tags": [
+        "noise",
+        "circuit"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/nonlinear_noisy_amplifier_blockdiagram_g.png"
+    },
+    {
+      "slug": "sar-adc",
+      "file": "sar_adc.ipynb",
+      "title": "SAR ADC",
+      "description": "Simulation of a Successive Approximation Register ADC with custom block creation.",
+      "category": "electronics",
+      "tags": [
+        "adc",
+        "mixed-signal"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/sar_adc_blockdiagram_g.png"
+    },
+    {
+      "slug": "fmcw-radar",
+      "file": "fmcw_radar.ipynb",
+      "title": "FMCW Radar",
+      "description": "In this example we simulate a simple frequency modulated continuous wave (FMCW) radar system.",
+      "category": "signal-processing",
+      "tags": [
+        "radar",
+        "frequency"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/fmcw_g.png"
+    },
+    {
+      "slug": "rf-network-oneport",
+      "file": "rf_network_oneport.ipynb",
+      "title": "RF Network - One Port",
+      "description": "Simulation of a Radio Frequency (RF) network using scikit-rf for state-space conversion.",
+      "category": "signal-processing",
+      "tags": [
+        "rf",
+        "network"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "spectrum-analysis",
+      "file": "spectrum_analysis.ipynb",
+      "title": "Spectrum Analysis",
+      "description": "In this example we demonstrate frequency domain analysis using PathSim's spectrum block. We'll examine the frequency response of a Butterworth lowpass filter by analyzing its response to a Gaussian...",
+      "category": "signal-processing",
+      "tags": [
+        "fft",
+        "frequency"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "transfer-function",
+      "file": "transfer_function.ipynb",
+      "title": "Transfer Function",
+      "description": "In this example we demonstrate how to use transfer functions in PathSim using the Pole-Residue-Constant (PRC) form. This representation is particularly convenient for transfer functions with comple...",
+      "category": "signal-processing",
+      "tags": [
+        "frequency",
+        "bode"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "chemical-reactor",
+      "file": "chemical_reactor.ipynb",
+      "title": "Chemical Reactor",
+      "description": "Simulation of a continuous stirred tank reactor (CSTR) with consecutive exothermic reactions.",
+      "category": "chemical",
+      "tags": [
+        "cstr",
+        "reaction"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "algebraic-loop",
+      "file": "algebraic_loop.ipynb",
+      "title": "Algebraic Loop",
+      "description": "Demonstration of PathSim's automatic handling of algebraic loops.",
+      "category": "advanced",
+      "tags": [
+        "algebraic",
+        "solver"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/algebraicloop_blockdiagram_g.png"
+    },
+    {
+      "slug": "checkpoints",
+      "file": "checkpoints.ipynb",
+      "title": "Checkpoints",
+      "description": "PathSim supports saving and loading simulation state via checkpoints. This allows you to pause a simulation, save its complete state to disk, and resume it later from exactly where you left off.",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    },
+    {
+      "slug": "lorenz-attractor",
+      "file": "lorenz_attractor.ipynb",
+      "title": "Lorenz Attractor",
+      "description": "Simulation of the famous Lorenz attractor, a chaotic dynamical system.",
+      "category": "advanced",
+      "tags": [
+        "chaos",
+        "ode"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "nested-subsystems",
+      "file": "nested_subsystems.ipynb",
+      "title": "Nested Subsystems",
+      "description": "Demonstration of hierarchical modeling using nested subsystems for a Van der Pol oscillator.",
+      "category": "advanced",
+      "tags": [
+        "hierarchy",
+        "subsystem"
+      ],
+      "executable": true,
+      "thumbnail": "figures_g/vanderpol_subsystem_lvl1_g.png"
+    },
+    {
+      "slug": "poincare-maps",
+      "file": "poincare_maps.ipynb",
+      "title": "Poincaré Maps",
+      "description": "Demonstration of computing Poincaré sections for chaotic dynamical systems using event handling.",
+      "category": "advanced",
+      "tags": [
+        "analysis",
+        "chaos"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "fmu-cosimulation",
+      "file": "fmu_cosimulation.ipynb",
+      "title": "FMU Co-Simulation",
+      "description": "Demonstration of integrating Functional Mock-up Units (FMU) as PathSim blocks.",
+      "category": "fmu",
+      "tags": [
+        "fmu",
+        "cosim"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "fmu-model-exchange-bouncing-ball",
+      "file": "fmu_model_exchange_bouncing_ball.ipynb",
+      "title": "FMU ME: Bouncing Ball",
+      "description": "This example demonstrates Model Exchange FMU integration with PathSim. Unlike co-simulation FMUs, Model Exchange FMUs provide only the differential equations. PathSim's solvers perform the numerica...",
+      "category": "fmu",
+      "tags": [
+        "fmu",
+        "model-exchange"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "fmu-model-exchange-vanderpol",
+      "file": "fmu_model_exchange_vanderpol.ipynb",
+      "title": "FMU ME: Van der Pol",
+      "description": "This example demonstrates Model Exchange FMU integration with a nonlinear oscillator. The Van der Pol equation exhibits self-sustained oscillations:",
+      "category": "fmu",
+      "tags": [
+        "fmu",
+        "model-exchange"
+      ],
+      "executable": false
+    }
+  ],
+  "categories": [
+    {
+      "id": "getting-started",
+      "title": "Getting Started",
+      "order": 1
+    },
+    {
+      "id": "control",
+      "title": "Control Systems",
+      "order": 2
+    },
+    {
+      "id": "mechanics",
+      "title": "Mechanics",
+      "order": 3
+    },
+    {
+      "id": "electronics",
+      "title": "Electronics",
+      "order": 4
+    },
+    {
+      "id": "signal-processing",
+      "title": "Signal Processing",
+      "order": 5
+    },
+    {
+      "id": "chemical",
+      "title": "Chemical Engineering",
+      "order": 6
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced Topics",
+      "order": 7
+    },
+    {
+      "id": "rf-engineering",
+      "title": "RF Engineering",
+      "order": 8
+    },
+    {
+      "id": "fmu",
+      "title": "FMU Integration",
+      "order": 9
+    }
+  ]
+}

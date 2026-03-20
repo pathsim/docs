@@ -1,7 +1,7 @@
 {
   "package": "pathsim",
   "repo": "pathsim/pathsim",
-  "updated": "2026-03-15T14:18:02Z",
+  "updated": "2026-03-20T01:50:50Z",
   "issues": [
     {
       "number": 172,
@@ -47,16 +47,6 @@
       "created": "2025-10-15T09:14:08Z"
     },
     {
-      "number": 109,
-      "title": "Checkpoints",
-      "body": "Saving simulation state as checkpoint and loading simulation state from checkpoints.",
-      "labels": [
-        "enhancement"
-      ],
-      "url": "https://github.com/pathsim/pathsim/issues/109",
-      "created": "2025-10-09T19:49:11Z"
-    },
-    {
       "number": 105,
       "title": "pseudo steady state mode for dynamical blocks",
       "body": "Sometimes in big complex systems, individual components have wildly different timescales for their physics. In some cases it makes sense to approximate components with very fast dynamics as being in a steady state at each timestep, such that the component becomes purely algebraic.\n\nTo achieve this, the time derivative of the block ode \n\n```math\n\\dot{x} = f(x, u, t) \n```\n\nwill be forced to zero (transients have settled locally). Then the behavior of the block becomes algebraic and is defined by this algebraic implicit equation \n\n```math\n0 = f(x, u, t) \n```\n\nthat has to be solved for `x` for given block inputs `u` and time `t`.\n\n**Implementation ideas:**\n\n- define new `pseudosteadystate(t)` method for blocks and implement it for blocks that have dynamic operators \n- add a new `_pss` flag to blocks and enable `pss` as an arg for the blocks that support it \n- in the timestepping methods of the block check if `_pss` is set and handle the logic accordingly\n\nThis will work but maybe there is a more elegant solution\n\n- alternatively build a `PeriodicSteadyState` block that wraps other blocks and solves the algebraic equation through the same interface as the `Simulation` using the already existing `SteadyState` solver\n\nI think thats more elegant but might be less efficient",
@@ -66,16 +56,6 @@
       ],
       "url": "https://github.com/pathsim/pathsim/issues/105",
       "created": "2025-10-08T11:53:15Z"
-    },
-    {
-      "number": 104,
-      "title": "Runtime System Modifications",
-      "body": "PathSim already supports adding and activating/deactivating blocks and connections at simulation runtime. For example through events. Whats missing is the capability to cleanly replace and remove blocks in a similar fashion.\n\n**What this will enable:**\nImagine you are running a big system simulation with many (maybe hundreds) of blocks that might be small or large individual models themself. Some of these blocks might be surrogate models, i.e. trained neural odes. The described functionality would enable seamless hot-swapping of models mid simulation. For example a nn that has been trained on some real world data and update the surrogate model every couple of minutes with the newly trained nn.",
-      "labels": [
-        "enhancement"
-      ],
-      "url": "https://github.com/pathsim/pathsim/issues/104",
-      "created": "2025-10-08T11:37:36Z"
     },
     {
       "number": 91,
