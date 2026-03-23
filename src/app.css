@@ -852,7 +852,12 @@ input::placeholder {
 	background: var(--border);
 }
 
-/* Scrollbar */
+/* Scrollbar — consistent everywhere */
+* {
+	scrollbar-color: var(--border-focus) transparent;
+	scrollbar-width: thin;
+}
+
 ::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
