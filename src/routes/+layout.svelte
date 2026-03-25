@@ -111,6 +111,13 @@
 
 <svelte:head>
 	<link rel="stylesheet" href={CDN.katex.css} />
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"url": "https://docs.pathsim.org",
+		"name": "PathSim Documentation",
+		"description": "API reference, examples, and guides for PathSim — a Python framework for simulating dynamical systems using block diagrams."
+	})}</script>`}
 </svelte:head>
 
 <Tooltip />

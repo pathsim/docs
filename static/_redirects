@@ -1,0 +1,5 @@
+# Redirect old ReadTheDocs URLs to new structure
+/en/latest/*  /pathsim/latest/:splat  301
+/en/stable/*  /pathsim/latest/:splat  301
+/en/v:version/*  /pathsim/v:version/:splat  301
+/en/*  /pathsim  301

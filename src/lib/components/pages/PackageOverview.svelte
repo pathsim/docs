@@ -118,8 +118,9 @@
 </script>
 
 <svelte:head>
-	<title>{pkg.name}</title>
+	<title>{pkg.name} — PathSim Docs</title>
 	<meta name="description" content="{pkg.name} - {pkg.description}" />
+	<link rel="canonical" href="https://docs.pathsim.org/{packageId}" />
 </svelte:head>
 
 <Tooltip />

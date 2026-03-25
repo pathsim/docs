@@ -59,8 +59,9 @@
 </script>
 
 <svelte:head>
-	<title>{pkg.name} - Examples</title>
-	<meta name="description" content="{pkg.name} example notebooks" />
+	<title>{pkg.name} Examples — PathSim Docs</title>
+	<meta name="description" content="Interactive example notebooks for {pkg.name} — tutorials, simulations, and code walkthroughs." />
+	<link rel="canonical" href="https://docs.pathsim.org/{packageId}/latest/examples" />
 </svelte:head>
 
 <Tooltip />

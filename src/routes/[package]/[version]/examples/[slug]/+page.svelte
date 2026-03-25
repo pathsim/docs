@@ -71,8 +71,9 @@
 </script>
 
 <svelte:head>
-	<title>{data.meta.title} - Example</title>
+	<title>{data.meta.title} — {data.packageId} Example | PathSim Docs</title>
 	<meta name="description" content={data.meta.description} />
+	<link rel="canonical" href="https://docs.pathsim.org/{data.packageId}/latest/examples/{data.meta.slug}" />
 </svelte:head>
 
 <Tooltip />

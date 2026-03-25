@@ -102,8 +102,9 @@
 </script>
 
 <svelte:head>
-	<title>{pkg.name} - API{tag ? ` ${tag}` : ''}</title>
-	<meta name="description" content="{pkg.name} API reference documentation" />
+	<title>{pkg.name} API Reference{tag ? ` ${tag}` : ''} — PathSim Docs</title>
+	<meta name="description" content="{pkg.name} API reference documentation — classes, methods, and parameters." />
+	<link rel="canonical" href="https://docs.pathsim.org/{packageId}/latest/api" />
 </svelte:head>
 
 <Tooltip />

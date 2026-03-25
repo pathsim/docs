@@ -79,8 +79,9 @@
 </script>
 
 <svelte:head>
-	<title>PathSim Docs</title>
-	<meta name="description" content="Documentation for PathSim - A Python framework for simulating dynamical systems" />
+	<title>PathSim Documentation — API Reference, Examples & Guides</title>
+	<meta name="description" content="Documentation for PathSim — a Python framework for simulating dynamical systems using block diagrams. API reference, interactive examples, and guides." />
+	<link rel="canonical" href="https://docs.pathsim.org/" />
 </svelte:head>
 
 <Tooltip />

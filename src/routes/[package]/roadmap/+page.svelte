@@ -18,8 +18,9 @@
 </script>
 
 <svelte:head>
-	<title>{pkg.name} - Roadmap</title>
-	<meta name="description" content="{pkg.name} development roadmap" />
+	<title>{pkg.name} Roadmap — PathSim Docs</title>
+	<meta name="description" content="{pkg.name} development roadmap — upcoming features and planned improvements." />
+	<link rel="canonical" href="https://docs.pathsim.org/{data.packageId}/roadmap" />
 </svelte:head>
 
 <div class="hero">
