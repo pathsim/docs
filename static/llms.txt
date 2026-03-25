@@ -2,295 +2,302 @@
 
 > PathSim is a Python framework for simulating dynamical systems using block diagrams. It supports continuous-time, discrete-time, and hybrid systems with 18+ numerical solvers, hierarchical subsystems, event handling, and MIMO connections.
 
-## PathSim (v0.18.0)
+## Installation
 
-- [PathSim API Reference](https://docs.pathsim.org/pathsim/v0.18.0/api): Full API documentation
-- [pathsim.connection](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-connection)
-  - [Connection](https://docs.pathsim.org/pathsim/v0.18.0/api#Connection): Class to handle input-output relations of blocks by connecting them (directed graph)
-  - [Duplex](https://docs.pathsim.org/pathsim/v0.18.0/api#Duplex): Extension of the 'Connection' class, that defines bidirectional
-- [pathsim.simulation](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-simulation)
-  - [Simulation](https://docs.pathsim.org/pathsim/v0.18.0/api#Simulation): Class that performs transient analysis of the dynamical system, defined by the
-- [pathsim.subsystem](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-subsystem)
-  - [Interface](https://docs.pathsim.org/pathsim/v0.18.0/api#Interface): Bare-bone block that serves as a data interface for the 'Subsystem' class.
-  - [Subsystem](https://docs.pathsim.org/pathsim/v0.18.0/api#Subsystem): Subsystem class that holds its own blocks and connecions and
-- [pathsim.blocks._block](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-_block)
-  - [Block](https://docs.pathsim.org/pathsim/v0.18.0/api#Block): Base 'Block' object that defines the inputs, outputs and the block interface.
-- [pathsim.blocks.adder](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-adder)
-  - [Adder](https://docs.pathsim.org/pathsim/v0.18.0/api#Adder): Summs / adds up all input signals to a single output signal (MISO)
-- [pathsim.blocks.amplifier](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-amplifier)
-  - [Amplifier](https://docs.pathsim.org/pathsim/v0.18.0/api#Amplifier): Amplifies the input signal by multiplication with a constant gain term.
-- [pathsim.blocks.comparator](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-comparator)
-  - [Comparator](https://docs.pathsim.org/pathsim/v0.18.0/api#Comparator): Comparator block that sets output depending on predefined thresholds for the input.
-- [pathsim.blocks.converters](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-converters)
-  - [ADC](https://docs.pathsim.org/pathsim/v0.18.0/api#ADC): Models an ideal Analog-to-Digital Converter (ADC).
-  - [DAC](https://docs.pathsim.org/pathsim/v0.18.0/api#DAC): Models an ideal Digital-to-Analog Converter (DAC).
-- [pathsim.blocks.counter](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-counter)
-  - [Counter](https://docs.pathsim.org/pathsim/v0.18.0/api#Counter): Counts the number of detected bidirectional threshold crossings.
-  - [CounterUp](https://docs.pathsim.org/pathsim/v0.18.0/api#CounterUp): Counts the number of detected unidirectional (lo->hi) threshold crossings.
-  - [CounterDown](https://docs.pathsim.org/pathsim/v0.18.0/api#CounterDown): Counts the number of detected unidirectional (hi->lo) threshold crossings.
-- [pathsim.blocks.ctrl](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-ctrl)
-  - [PT1](https://docs.pathsim.org/pathsim/v0.18.0/api#PT1): First-order lag element (PT1).
-  - [PT2](https://docs.pathsim.org/pathsim/v0.18.0/api#PT2): Second-order lag element (PT2).
-  - [LeadLag](https://docs.pathsim.org/pathsim/v0.18.0/api#LeadLag): Lead-Lag compensator.
-  - [PID](https://docs.pathsim.org/pathsim/v0.18.0/api#PID): Proportional-Integral-Differentiation (PID) controller.
-  - [AntiWindupPID](https://docs.pathsim.org/pathsim/v0.18.0/api#AntiWindupPID): Proportional-Integral-Differentiation (PID) controller with anti-windup mechanism (back-calculation).
-  - [RateLimiter](https://docs.pathsim.org/pathsim/v0.18.0/api#RateLimiter): Rate limiter block that limits the rate of change of a signal.
-  - [Backlash](https://docs.pathsim.org/pathsim/v0.18.0/api#Backlash): Backlash (mechanical play) element.
-  - [Deadband](https://docs.pathsim.org/pathsim/v0.18.0/api#Deadband): Deadband (dead zone) element.
-- [pathsim.blocks.delay](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-delay)
-  - [Delay](https://docs.pathsim.org/pathsim/v0.18.0/api#Delay): Delays the input signal by a time constant 'tau' in seconds.
-- [pathsim.blocks.differentiator](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-differentiator)
-  - [Differentiator](https://docs.pathsim.org/pathsim/v0.18.0/api#Differentiator): Differentiates the input signal.
-- [pathsim.blocks.divider](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-divider)
-  - [Divider](https://docs.pathsim.org/pathsim/v0.18.0/api#Divider): Multiplies and divides input signals (MISO).
-- [pathsim.blocks.dynsys](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-dynsys)
-  - [DynamicalSystem](https://docs.pathsim.org/pathsim/v0.18.0/api#DynamicalSystem): This block implements a nonlinear dynamical system / nonlinear state space model.
-- [pathsim.blocks.filters](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-filters)
-  - [ButterworthLowpassFilter](https://docs.pathsim.org/pathsim/v0.18.0/api#ButterworthLowpassFilter): Direct implementation of a low pass butterworth filter block.
-  - [ButterworthHighpassFilter](https://docs.pathsim.org/pathsim/v0.18.0/api#ButterworthHighpassFilter): Direct implementation of a high pass butterworth filter block.
-  - [ButterworthBandpassFilter](https://docs.pathsim.org/pathsim/v0.18.0/api#ButterworthBandpassFilter): Direct implementation of a bandpass butterworth filter block.
-  - [ButterworthBandstopFilter](https://docs.pathsim.org/pathsim/v0.18.0/api#ButterworthBandstopFilter): Direct implementation of a bandstop butterworth filter block.
-  - [AllpassFilter](https://docs.pathsim.org/pathsim/v0.18.0/api#AllpassFilter): Direct implementation of a first order allpass filter, or a cascade
-- [pathsim.blocks.fir](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-fir)
-  - [FIR](https://docs.pathsim.org/pathsim/v0.18.0/api#FIR): Models a discrete-time Finite-Impulse-Response (FIR) filter.
-- [pathsim.blocks.fmu](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-fmu)
-  - [CoSimulationFMU](https://docs.pathsim.org/pathsim/v0.18.0/api#CoSimulationFMU): Co-Simulation FMU block using FMPy with support for FMI 2.0 and FMI 3.0.
-  - [ModelExchangeFMU](https://docs.pathsim.org/pathsim/v0.18.0/api#ModelExchangeFMU): Model Exchange FMU block using FMPy with support for FMI 2.0 and FMI 3.0.
-- [pathsim.blocks.function](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-function)
-  - [Function](https://docs.pathsim.org/pathsim/v0.18.0/api#Function): Arbitrary MIMO function block, defined by a function or `lambda` expression.
-  - [DynamicalFunction](https://docs.pathsim.org/pathsim/v0.18.0/api#DynamicalFunction): Arbitrary MIMO time and input dependent function block.
-- [pathsim.blocks.integrator](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-integrator)
-  - [Integrator](https://docs.pathsim.org/pathsim/v0.18.0/api#Integrator): Integrates the input signal.
-- [pathsim.blocks.kalman](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-kalman)
-  - [KalmanFilter](https://docs.pathsim.org/pathsim/v0.18.0/api#KalmanFilter): Discrete-time Kalman filter for state estimation.
-- [pathsim.blocks.logic](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-logic)
-  - [Logic](https://docs.pathsim.org/pathsim/v0.18.0/api#Logic): Base logic block.
-  - [GreaterThan](https://docs.pathsim.org/pathsim/v0.18.0/api#GreaterThan): Greater-than comparison block.
-  - [LessThan](https://docs.pathsim.org/pathsim/v0.18.0/api#LessThan): Less-than comparison block.
-  - [Equal](https://docs.pathsim.org/pathsim/v0.18.0/api#Equal): Equality comparison block.
-  - [LogicAnd](https://docs.pathsim.org/pathsim/v0.18.0/api#LogicAnd): Logical AND block.
-  - [LogicOr](https://docs.pathsim.org/pathsim/v0.18.0/api#LogicOr): Logical OR block.
-  - [LogicNot](https://docs.pathsim.org/pathsim/v0.18.0/api#LogicNot): Logical NOT block.
-- [pathsim.blocks.lti](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-lti)
-  - [StateSpace](https://docs.pathsim.org/pathsim/v0.18.0/api#StateSpace): Linear time invariant (LTI) multi input multi output (MIMO) state space model.
-  - [TransferFunctionPRC](https://docs.pathsim.org/pathsim/v0.18.0/api#TransferFunctionPRC): This block defines a LTI (MIMO for pole residue) transfer function.
-  - [TransferFunction](https://docs.pathsim.org/pathsim/v0.18.0/api#TransferFunction): Alias for TransferFunctionPRC.
-  - [TransferFunctionZPG](https://docs.pathsim.org/pathsim/v0.18.0/api#TransferFunctionZPG): This block defines a LTI (SISO) transfer function.
-  - [TransferFunctionNumDen](https://docs.pathsim.org/pathsim/v0.18.0/api#TransferFunctionNumDen): This block defines a LTI (SISO) transfer function.
-- [pathsim.blocks.math](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-math)
-  - [Math](https://docs.pathsim.org/pathsim/v0.18.0/api#Math): Base math block.
-  - [Sin](https://docs.pathsim.org/pathsim/v0.18.0/api#Sin): Sine operator block.
-  - [Cos](https://docs.pathsim.org/pathsim/v0.18.0/api#Cos): Cosine operator block.
-  - [Sqrt](https://docs.pathsim.org/pathsim/v0.18.0/api#Sqrt): Square root operator block.
-  - [Abs](https://docs.pathsim.org/pathsim/v0.18.0/api#Abs): Absolute value operator block.
-  - [Pow](https://docs.pathsim.org/pathsim/v0.18.0/api#Pow): Raise to power operator block.
-  - [PowProd](https://docs.pathsim.org/pathsim/v0.18.0/api#PowProd): Power-Product operator block.
-  - [Exp](https://docs.pathsim.org/pathsim/v0.18.0/api#Exp): Exponential operator block.
-  - [Log](https://docs.pathsim.org/pathsim/v0.18.0/api#Log): Natural logarithm operator block.
-  - [Log10](https://docs.pathsim.org/pathsim/v0.18.0/api#Log10): Base-10 logarithm operator block.
-  - [Tan](https://docs.pathsim.org/pathsim/v0.18.0/api#Tan): Tangent operator block.
-  - [Sinh](https://docs.pathsim.org/pathsim/v0.18.0/api#Sinh): Hyperbolic sine operator block.
-  - [Cosh](https://docs.pathsim.org/pathsim/v0.18.0/api#Cosh): Hyperbolic cosine operator block.
-  - [Tanh](https://docs.pathsim.org/pathsim/v0.18.0/api#Tanh): Hyperbolic tangent operator block.
-  - [Atan](https://docs.pathsim.org/pathsim/v0.18.0/api#Atan): Arctangent operator block.
-  - [Norm](https://docs.pathsim.org/pathsim/v0.18.0/api#Norm): Vector norm operator block.
-  - [Mod](https://docs.pathsim.org/pathsim/v0.18.0/api#Mod): Modulo operator block.
-  - [Clip](https://docs.pathsim.org/pathsim/v0.18.0/api#Clip): Clipping/saturation operator block.
-  - [Matrix](https://docs.pathsim.org/pathsim/v0.18.0/api#Matrix): Linear matrix operation (matrix-vector product).
-  - [Atan2](https://docs.pathsim.org/pathsim/v0.18.0/api#Atan2): Two-argument arctangent block.
-  - [Rescale](https://docs.pathsim.org/pathsim/v0.18.0/api#Rescale): Linear rescaling / mapping block.
-  - [Alias](https://docs.pathsim.org/pathsim/v0.18.0/api#Alias): Signal alias / pass-through block.
-- [pathsim.blocks.multiplier](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-multiplier)
-  - [Multiplier](https://docs.pathsim.org/pathsim/v0.18.0/api#Multiplier): Multiplies all signals from all input ports (MISO).
-- [pathsim.blocks.noise](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-noise)
-  - [WhiteNoise](https://docs.pathsim.org/pathsim/v0.18.0/api#WhiteNoise): White noise source with Gaussian distribution.
-  - [PinkNoise](https://docs.pathsim.org/pathsim/v0.18.0/api#PinkNoise): Pink noise (1/f noise) source using the Voss-McCartney algorithm.
-- [pathsim.blocks.ode](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-ode)
-  - [ODE](https://docs.pathsim.org/pathsim/v0.18.0/api#ODE): Ordinary differential equation (ODE) defined by its right hand side function.
-- [pathsim.blocks.relay](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-relay)
-  - [Relay](https://docs.pathsim.org/pathsim/v0.18.0/api#Relay): Relay block with hysteresis (Schmitt trigger).
-- [pathsim.blocks.rf](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-rf)
-  - [RFNetwork](https://docs.pathsim.org/pathsim/v0.18.0/api#RFNetwork): N-port RF network linear time invariant (LTI) multi input multi output (MIMO) state-space model.
-- [pathsim.blocks.rng](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-rng)
-  - [RandomNumberGenerator](https://docs.pathsim.org/pathsim/v0.18.0/api#RandomNumberGenerator): Generates a random output value using `numpy.random.rand`.
-  - [RNG](https://docs.pathsim.org/pathsim/v0.18.0/api#RNG): Alias for RandomNumberGenerator.
-- [pathsim.blocks.samplehold](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-samplehold)
-  - [SampleHold](https://docs.pathsim.org/pathsim/v0.18.0/api#SampleHold): Samples the inputs periodically and produces them at the output.
-- [pathsim.blocks.scope](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-scope)
-  - [Scope](https://docs.pathsim.org/pathsim/v0.18.0/api#Scope): Block for recording time domain data with variable sampling period.
-  - [RealtimeScope](https://docs.pathsim.org/pathsim/v0.18.0/api#RealtimeScope): An extension of the 'Scope' block that initializes a realtime plotter.
-- [pathsim.blocks.sources](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-sources)
-  - [Constant](https://docs.pathsim.org/pathsim/v0.18.0/api#Constant): Produces a constant output signal (SISO).
-  - [Source](https://docs.pathsim.org/pathsim/v0.18.0/api#Source): Source that produces an arbitrary time dependent output defined by `func` (callable).
-  - [TriangleWaveSource](https://docs.pathsim.org/pathsim/v0.18.0/api#TriangleWaveSource): Source block that generates an analog triangle wave
-  - [SinusoidalSource](https://docs.pathsim.org/pathsim/v0.18.0/api#SinusoidalSource): Source block that generates a sinusoid wave
-  - [GaussianPulseSource](https://docs.pathsim.org/pathsim/v0.18.0/api#GaussianPulseSource): Source block that generates a gaussian pulse
-  - [SinusoidalPhaseNoiseSource](https://docs.pathsim.org/pathsim/v0.18.0/api#SinusoidalPhaseNoiseSource): Sinusoidal source with cumulative and white phase noise.
-  - [ChirpPhaseNoiseSource](https://docs.pathsim.org/pathsim/v0.18.0/api#ChirpPhaseNoiseSource): Chirp source, sinusoid with frequency ramp up and ramp down, plus phase noise.
-  - [ChirpSource](https://docs.pathsim.org/pathsim/v0.18.0/api#ChirpSource): Alias for ChirpPhaseNoiseSource.
-  - [PulseSource](https://docs.pathsim.org/pathsim/v0.18.0/api#PulseSource): Generates a periodic pulse waveform with defined rise and fall times.
-  - [Pulse](https://docs.pathsim.org/pathsim/v0.18.0/api#Pulse): Alias for PulseSource.
-  - [ClockSource](https://docs.pathsim.org/pathsim/v0.18.0/api#ClockSource): Discrete time clock source block.
-  - [Clock](https://docs.pathsim.org/pathsim/v0.18.0/api#Clock): Alias for ClockSource.
-  - [SquareWaveSource](https://docs.pathsim.org/pathsim/v0.18.0/api#SquareWaveSource): Discrete time square wave source.
-  - [StepSource](https://docs.pathsim.org/pathsim/v0.18.0/api#StepSource): Discrete time unit step (or multi step) source block.
-  - [Step](https://docs.pathsim.org/pathsim/v0.18.0/api#Step): Alias for StepSource.
-- [pathsim.blocks.spectrum](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-spectrum)
-  - [Spectrum](https://docs.pathsim.org/pathsim/v0.18.0/api#Spectrum): Block for fourier spectrum analysis (spectrum analyzer).
-  - [RealtimeSpectrum](https://docs.pathsim.org/pathsim/v0.18.0/api#RealtimeSpectrum): An extension of the 'Spectrum' block that also initializes a realtime plotter.
-- [pathsim.blocks.switch](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-switch)
-  - [Switch](https://docs.pathsim.org/pathsim/v0.18.0/api#Switch): Switch block that selects between its inputs.
-- [pathsim.blocks.table](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-table)
-  - [LUT](https://docs.pathsim.org/pathsim/v0.18.0/api#LUT): N-dimensional lookup table with linear interpolation functionality.
-  - [LUT1D](https://docs.pathsim.org/pathsim/v0.18.0/api#LUT1D): One-dimensional lookup table with linear interpolation functionality.
-- [pathsim.blocks.wrapper](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-blocks-wrapper)
-  - [Wrapper](https://docs.pathsim.org/pathsim/v0.18.0/api#Wrapper): Wrapper block for discrete implementation and external code integration.
-- [pathsim.solvers._rungekutta](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-_rungekutta)
-  - [ExplicitRungeKutta](https://docs.pathsim.org/pathsim/v0.18.0/api#ExplicitRungeKutta): Base class for explicit Runge-Kutta integrators which implements
-  - [DiagonallyImplicitRungeKutta](https://docs.pathsim.org/pathsim/v0.18.0/api#DiagonallyImplicitRungeKutta): Base class for diagonally implicit Runge-Kutta (DIRK) integrators
-- [pathsim.solvers._solver](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-_solver)
-  - [Solver](https://docs.pathsim.org/pathsim/v0.18.0/api#Solver): Base skeleton class for solver definition. Defines the basic solver methods and
-  - [ExplicitSolver](https://docs.pathsim.org/pathsim/v0.18.0/api#ExplicitSolver): Base class for explicit solver definition.
-  - [ImplicitSolver](https://docs.pathsim.org/pathsim/v0.18.0/api#ImplicitSolver): Base class for implicit solver definition.
-- [pathsim.solvers.bdf](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-bdf)
-  - [BDF](https://docs.pathsim.org/pathsim/v0.18.0/api#BDF): Base class for the backward differentiation formula (BDF) integrators.
-  - [BDF2](https://docs.pathsim.org/pathsim/v0.18.0/api#BDF2): Fixed-step 2nd order BDF method. A-stable.
-  - [BDF3](https://docs.pathsim.org/pathsim/v0.18.0/api#BDF3): Fixed-step 3rd order BDF method. :math:`A(\alpha)`-stable with
-  - [BDF4](https://docs.pathsim.org/pathsim/v0.18.0/api#BDF4): Fixed-step 4th order BDF method. :math:`A(\alpha)`-stable with
-  - [BDF5](https://docs.pathsim.org/pathsim/v0.18.0/api#BDF5): Fixed-step 5th order BDF method. :math:`A(\alpha)`-stable with
-  - [BDF6](https://docs.pathsim.org/pathsim/v0.18.0/api#BDF6): Fixed-step 6th order BDF method. **Not** A-stable
-- [pathsim.solvers.dirk2](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-dirk2)
-  - [DIRK2](https://docs.pathsim.org/pathsim/v0.18.0/api#DIRK2): Two-stage, 2nd order DIRK method. L-stable, SSP-optimal, symplectic.
-- [pathsim.solvers.dirk3](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-dirk3)
-  - [DIRK3](https://docs.pathsim.org/pathsim/v0.18.0/api#DIRK3): Four-stage, 3rd order L-stable DIRK method. Stiffly accurate.
-- [pathsim.solvers.esdirk32](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-esdirk32)
-  - [ESDIRK32](https://docs.pathsim.org/pathsim/v0.18.0/api#ESDIRK32): Four-stage, 3rd order ESDIRK method with embedded 2nd order error
-- [pathsim.solvers.esdirk4](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-esdirk4)
-  - [ESDIRK4](https://docs.pathsim.org/pathsim/v0.18.0/api#ESDIRK4): Six-stage, 4th order ESDIRK method. L-stable and stiffly accurate.
-- [pathsim.solvers.esdirk43](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-esdirk43)
-  - [ESDIRK43](https://docs.pathsim.org/pathsim/v0.18.0/api#ESDIRK43): Six-stage, 4th order ESDIRK method with embedded 3rd order error
-- [pathsim.solvers.esdirk54](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-esdirk54)
-  - [ESDIRK54](https://docs.pathsim.org/pathsim/v0.18.0/api#ESDIRK54): Seven-stage, 5th order ESDIRK method with embedded 4th order error
-- [pathsim.solvers.esdirk85](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-esdirk85)
-  - [ESDIRK85](https://docs.pathsim.org/pathsim/v0.18.0/api#ESDIRK85): Sixteen-stage, 8th order ESDIRK method with embedded 5th order error
-- [pathsim.solvers.euler](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-euler)
-  - [EUF](https://docs.pathsim.org/pathsim/v0.18.0/api#EUF): Explicit forward Euler method. First-order, single-stage.
-  - [EUB](https://docs.pathsim.org/pathsim/v0.18.0/api#EUB): Implicit backward Euler method. First-order, A-stable and L-stable.
-- [pathsim.solvers.gear](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-gear)
-  - [GEAR](https://docs.pathsim.org/pathsim/v0.18.0/api#GEAR): Base class for GEAR-type integrators that defines the universal methods.
-  - [GEAR21](https://docs.pathsim.org/pathsim/v0.18.0/api#GEAR21): Variable-step 2nd order BDF with 1st order error estimate. A-stable.
-  - [GEAR32](https://docs.pathsim.org/pathsim/v0.18.0/api#GEAR32): Variable-step 3rd order BDF with 2nd order error estimate.
-  - [GEAR43](https://docs.pathsim.org/pathsim/v0.18.0/api#GEAR43): Variable-step 4th order BDF with 3rd order error estimate.
-  - [GEAR54](https://docs.pathsim.org/pathsim/v0.18.0/api#GEAR54): Variable-step 5th order BDF with 4th order error estimate.
-  - [GEAR52A](https://docs.pathsim.org/pathsim/v0.18.0/api#GEAR52A): Variable-step, variable-order BDF (orders 2--5). Adapts both timestep
-- [pathsim.solvers.rk4](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-rk4)
-  - [RK4](https://docs.pathsim.org/pathsim/v0.18.0/api#RK4): Classical four-stage, 4th order explicit Runge-Kutta method.
-- [pathsim.solvers.rkbs32](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-rkbs32)
-  - [RKBS32](https://docs.pathsim.org/pathsim/v0.18.0/api#RKBS32): Bogacki-Shampine 3(2) pair. Four-stage, 3rd order with FSAL property.
-- [pathsim.solvers.rkck54](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-rkck54)
-  - [RKCK54](https://docs.pathsim.org/pathsim/v0.18.0/api#RKCK54): Cash-Karp 5(4) pair. Six stages, 5th order with embedded 4th order
-- [pathsim.solvers.rkdp54](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-rkdp54)
-  - [RKDP54](https://docs.pathsim.org/pathsim/v0.18.0/api#RKDP54): Dormand-Prince 5(4) pair (DOPRI5). Seven stages, 5th order with
-- [pathsim.solvers.rkdp87](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-rkdp87)
-  - [RKDP87](https://docs.pathsim.org/pathsim/v0.18.0/api#RKDP87): Dormand-Prince 8(7) pair (DOP853). Thirteen stages, 8th order with
-- [pathsim.solvers.rkf21](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-rkf21)
-  - [RKF21](https://docs.pathsim.org/pathsim/v0.18.0/api#RKF21): Three-stage, 2nd order Runge-Kutta-Fehlberg method with embedded 1st order error estimate.
-- [pathsim.solvers.rkf45](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-rkf45)
-  - [RKF45](https://docs.pathsim.org/pathsim/v0.18.0/api#RKF45): Runge-Kutta-Fehlberg 4(5) pair. Six stages, 4th order propagation with
-- [pathsim.solvers.rkf78](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-rkf78)
-  - [RKF78](https://docs.pathsim.org/pathsim/v0.18.0/api#RKF78): Runge-Kutta-Fehlberg 7(8) pair. Thirteen stages, 7th order propagation
-- [pathsim.solvers.rkv65](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-rkv65)
-  - [RKV65](https://docs.pathsim.org/pathsim/v0.18.0/api#RKV65): Verner 6(5) "most robust" pair. Nine stages, 6th order with
-- [pathsim.solvers.ssprk22](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-ssprk22)
-  - [SSPRK22](https://docs.pathsim.org/pathsim/v0.18.0/api#SSPRK22): Two-stage, 2nd order Strong Stability Preserving (SSP) Runge-Kutta method.
-- [pathsim.solvers.ssprk33](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-ssprk33)
-  - [SSPRK33](https://docs.pathsim.org/pathsim/v0.18.0/api#SSPRK33): Three-stage, 3rd order optimal SSP Runge-Kutta method.
-- [pathsim.solvers.ssprk34](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-ssprk34)
-  - [SSPRK34](https://docs.pathsim.org/pathsim/v0.18.0/api#SSPRK34): Four-stage, 3rd order SSP Runge-Kutta method with SSP coefficient 2.
-- [pathsim.solvers.steadystate](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-solvers-steadystate)
-  - [SteadyState](https://docs.pathsim.org/pathsim/v0.18.0/api#SteadyState): Pseudo-solver for computing the DC operating point (steady state).
-- [pathsim.events._event](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-events-_event)
-  - [Event](https://docs.pathsim.org/pathsim/v0.18.0/api#Event): This is the base class of the event handling system.
-- [pathsim.events.condition](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-events-condition)
-  - [Condition](https://docs.pathsim.org/pathsim/v0.18.0/api#Condition): Subclass of base 'Event' that triggers if the event function evaluates to 'True',
-- [pathsim.events.schedule](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-events-schedule)
-  - [Schedule](https://docs.pathsim.org/pathsim/v0.18.0/api#Schedule): Subclass of base 'Event' that triggers dependent on the evaluation time.
-  - [ScheduleList](https://docs.pathsim.org/pathsim/v0.18.0/api#ScheduleList): Subclass of base 'Schedule' that triggers dependent on the evaluation time.
-- [pathsim.events.zerocrossing](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-events-zerocrossing)
-  - [ZeroCrossing](https://docs.pathsim.org/pathsim/v0.18.0/api#ZeroCrossing): Subclass of base 'Event' that triggers if the event function crosses zero.
-  - [ZeroCrossingUp](https://docs.pathsim.org/pathsim/v0.18.0/api#ZeroCrossingUp): Modification of standard 'ZeroCrossing' event where events are only triggered
-  - [ZeroCrossingDown](https://docs.pathsim.org/pathsim/v0.18.0/api#ZeroCrossingDown): Modification of standard 'ZeroCrossing' event where events are only triggered
-- [pathsim.optim.anderson](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-optim-anderson)
-  - [Anderson](https://docs.pathsim.org/pathsim/v0.18.0/api#Anderson): Anderson acceleration for fixed-point iteration.
-  - [NewtonAnderson](https://docs.pathsim.org/pathsim/v0.18.0/api#NewtonAnderson): Hybrid Newton--Anderson fixed-point solver.
-- [pathsim.optim.booster](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-optim-booster)
-  - [ConnectionBooster](https://docs.pathsim.org/pathsim/v0.18.0/api#ConnectionBooster): Wraps a `Connection` instance and injects a fixed point accelerator.
-- [pathsim.optim.numerical](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-optim-numerical)
-- [pathsim.optim.operator](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-optim-operator)
-  - [Operator](https://docs.pathsim.org/pathsim/v0.18.0/api#Operator): Operator class for function evaluation and linearization.
-  - [DynamicOperator](https://docs.pathsim.org/pathsim/v0.18.0/api#DynamicOperator): Operator class for dynamic system function evaluation and linearization.
-- [pathsim.utils.adaptivebuffer](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-adaptivebuffer)
-  - [AdaptiveBuffer](https://docs.pathsim.org/pathsim/v0.18.0/api#AdaptiveBuffer): A class that manages an adaptive buffer for delay modeling which is primarily
-- [pathsim.utils.analysis](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-analysis)
-  - [Timer](https://docs.pathsim.org/pathsim/v0.18.0/api#Timer): Context manager that times the execution time
-  - [Profiler](https://docs.pathsim.org/pathsim/v0.18.0/api#Profiler): Context manager for easy code profiling
-- [pathsim.utils.deprecation](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-deprecation)
-- [pathsim.utils.fmuwrapper](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-fmuwrapper)
-  - [EventInfo](https://docs.pathsim.org/pathsim/v0.18.0/api#EventInfo): Unified event information structure for both FMI 2.0 and 3.0.
-  - [StepResult](https://docs.pathsim.org/pathsim/v0.18.0/api#StepResult): Result information from a co-simulation step.
-  - [_FMI2Ops](https://docs.pathsim.org/pathsim/v0.18.0/api#_FMI2Ops): FMI 2.0 specific operations.
-  - [_FMI3Ops](https://docs.pathsim.org/pathsim/v0.18.0/api#_FMI3Ops): FMI 3.0 specific operations.
-  - [FMUWrapper](https://docs.pathsim.org/pathsim/v0.18.0/api#FMUWrapper): Version-agnostic wrapper for FMI 2.0 and 3.0 FMUs.
-- [pathsim.utils.gilbert](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-gilbert)
-- [pathsim.utils.graph](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-graph)
-  - [Graph](https://docs.pathsim.org/pathsim/v0.18.0/api#Graph): Optimized graph representation with efficient assembly and cycle detection.
-- [pathsim.utils.logger](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-logger)
-  - [LoggerManager](https://docs.pathsim.org/pathsim/v0.18.0/api#LoggerManager): Singleton class for centralized logging configuration in PathSim.
-- [pathsim.utils.mutable](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-mutable)
-- [pathsim.utils.portreference](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-portreference)
-  - [PortReference](https://docs.pathsim.org/pathsim/v0.18.0/api#PortReference): Container class that holds a reference to a block and a list of ports.
-- [pathsim.utils.progresstracker](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-progresstracker)
-  - [ProgressTracker](https://docs.pathsim.org/pathsim/v0.18.0/api#ProgressTracker): A progress tracker for simulations with adaptive ETA and step rate display.
-- [pathsim.utils.realtimeplotter](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-realtimeplotter)
-  - [RealtimePlotter](https://docs.pathsim.org/pathsim/v0.18.0/api#RealtimePlotter): Class that manages a realtime plotting window that
-- [pathsim.utils.register](https://docs.pathsim.org/pathsim/v0.18.0/api#pathsim-utils-register)
-  - [Register](https://docs.pathsim.org/pathsim/v0.18.0/api#Register): This class is a intended to be used for the inputs and outputs of blocks.
+```
+pip install pathsim
+```
+
+## PathSim (v0.19.0)
+
+- [PathSim API Reference](https://docs.pathsim.org/pathsim/v0.19.0/api): Full API documentation
+- [pathsim.connection](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-connection)
+  - [Connection](https://docs.pathsim.org/pathsim/v0.19.0/api#Connection): Class to handle input-output relations of blocks by connecting them (directed graph)
+  - [Duplex](https://docs.pathsim.org/pathsim/v0.19.0/api#Duplex): Extension of the 'Connection' class, that defines bidirectional
+- [pathsim.simulation](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-simulation)
+  - [Simulation](https://docs.pathsim.org/pathsim/v0.19.0/api#Simulation): Class that performs transient analysis of the dynamical system, defined by the
+- [pathsim.subsystem](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-subsystem)
+  - [Interface](https://docs.pathsim.org/pathsim/v0.19.0/api#Interface): Bare-bone block that serves as a data interface for the 'Subsystem' class.
+  - [Subsystem](https://docs.pathsim.org/pathsim/v0.19.0/api#Subsystem): Subsystem class that holds its own blocks and connecions and
+- [pathsim.blocks._block](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-_block)
+  - [Block](https://docs.pathsim.org/pathsim/v0.19.0/api#Block): Base 'Block' object that defines the inputs, outputs and the block interface.
+- [pathsim.blocks.adder](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-adder)
+  - [Adder](https://docs.pathsim.org/pathsim/v0.19.0/api#Adder): Summs / adds up all input signals to a single output signal (MISO)
+- [pathsim.blocks.amplifier](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-amplifier)
+  - [Amplifier](https://docs.pathsim.org/pathsim/v0.19.0/api#Amplifier): Amplifies the input signal by multiplication with a constant gain term.
+- [pathsim.blocks.comparator](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-comparator)
+  - [Comparator](https://docs.pathsim.org/pathsim/v0.19.0/api#Comparator): Comparator block that sets output depending on predefined thresholds for the input.
+- [pathsim.blocks.converters](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-converters)
+  - [ADC](https://docs.pathsim.org/pathsim/v0.19.0/api#ADC): Models an ideal Analog-to-Digital Converter (ADC).
+  - [DAC](https://docs.pathsim.org/pathsim/v0.19.0/api#DAC): Models an ideal Digital-to-Analog Converter (DAC).
+- [pathsim.blocks.counter](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-counter)
+  - [Counter](https://docs.pathsim.org/pathsim/v0.19.0/api#Counter): Counts the number of detected bidirectional threshold crossings.
+  - [CounterUp](https://docs.pathsim.org/pathsim/v0.19.0/api#CounterUp): Counts the number of detected unidirectional (lo->hi) threshold crossings.
+  - [CounterDown](https://docs.pathsim.org/pathsim/v0.19.0/api#CounterDown): Counts the number of detected unidirectional (hi->lo) threshold crossings.
+- [pathsim.blocks.ctrl](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-ctrl)
+  - [PT1](https://docs.pathsim.org/pathsim/v0.19.0/api#PT1): First-order lag element (PT1).
+  - [PT2](https://docs.pathsim.org/pathsim/v0.19.0/api#PT2): Second-order lag element (PT2).
+  - [LeadLag](https://docs.pathsim.org/pathsim/v0.19.0/api#LeadLag): Lead-Lag compensator.
+  - [PID](https://docs.pathsim.org/pathsim/v0.19.0/api#PID): Proportional-Integral-Differentiation (PID) controller.
+  - [AntiWindupPID](https://docs.pathsim.org/pathsim/v0.19.0/api#AntiWindupPID): Proportional-Integral-Differentiation (PID) controller with anti-windup mechanism (back-calculation).
+  - [RateLimiter](https://docs.pathsim.org/pathsim/v0.19.0/api#RateLimiter): Rate limiter block that limits the rate of change of a signal.
+  - [Backlash](https://docs.pathsim.org/pathsim/v0.19.0/api#Backlash): Backlash (mechanical play) element.
+  - [Deadband](https://docs.pathsim.org/pathsim/v0.19.0/api#Deadband): Deadband (dead zone) element.
+- [pathsim.blocks.delay](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-delay)
+  - [Delay](https://docs.pathsim.org/pathsim/v0.19.0/api#Delay): Delays the input signal by a time constant 'tau' in seconds.
+- [pathsim.blocks.differentiator](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-differentiator)
+  - [Differentiator](https://docs.pathsim.org/pathsim/v0.19.0/api#Differentiator): Differentiates the input signal.
+- [pathsim.blocks.divider](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-divider)
+  - [Divider](https://docs.pathsim.org/pathsim/v0.19.0/api#Divider): Multiplies and divides input signals (MISO).
+- [pathsim.blocks.dynsys](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-dynsys)
+  - [DynamicalSystem](https://docs.pathsim.org/pathsim/v0.19.0/api#DynamicalSystem): This block implements a nonlinear dynamical system / nonlinear state space model.
+- [pathsim.blocks.filters](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-filters)
+  - [ButterworthLowpassFilter](https://docs.pathsim.org/pathsim/v0.19.0/api#ButterworthLowpassFilter): Direct implementation of a low pass butterworth filter block.
+  - [ButterworthHighpassFilter](https://docs.pathsim.org/pathsim/v0.19.0/api#ButterworthHighpassFilter): Direct implementation of a high pass butterworth filter block.
+  - [ButterworthBandpassFilter](https://docs.pathsim.org/pathsim/v0.19.0/api#ButterworthBandpassFilter): Direct implementation of a bandpass butterworth filter block.
+  - [ButterworthBandstopFilter](https://docs.pathsim.org/pathsim/v0.19.0/api#ButterworthBandstopFilter): Direct implementation of a bandstop butterworth filter block.
+  - [AllpassFilter](https://docs.pathsim.org/pathsim/v0.19.0/api#AllpassFilter): Direct implementation of a first order allpass filter, or a cascade
+- [pathsim.blocks.fir](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-fir)
+  - [FIR](https://docs.pathsim.org/pathsim/v0.19.0/api#FIR): Models a discrete-time Finite-Impulse-Response (FIR) filter.
+- [pathsim.blocks.fmu](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-fmu)
+  - [CoSimulationFMU](https://docs.pathsim.org/pathsim/v0.19.0/api#CoSimulationFMU): Co-Simulation FMU block using FMPy with support for FMI 2.0 and FMI 3.0.
+  - [ModelExchangeFMU](https://docs.pathsim.org/pathsim/v0.19.0/api#ModelExchangeFMU): Model Exchange FMU block using FMPy with support for FMI 2.0 and FMI 3.0.
+- [pathsim.blocks.function](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-function)
+  - [Function](https://docs.pathsim.org/pathsim/v0.19.0/api#Function): Arbitrary MIMO function block, defined by a function or `lambda` expression.
+  - [DynamicalFunction](https://docs.pathsim.org/pathsim/v0.19.0/api#DynamicalFunction): Arbitrary MIMO time and input dependent function block.
+- [pathsim.blocks.integrator](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-integrator)
+  - [Integrator](https://docs.pathsim.org/pathsim/v0.19.0/api#Integrator): Integrates the input signal.
+- [pathsim.blocks.kalman](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-kalman)
+  - [KalmanFilter](https://docs.pathsim.org/pathsim/v0.19.0/api#KalmanFilter): Discrete-time Kalman filter for state estimation.
+- [pathsim.blocks.logic](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-logic)
+  - [Logic](https://docs.pathsim.org/pathsim/v0.19.0/api#Logic): Base logic block.
+  - [GreaterThan](https://docs.pathsim.org/pathsim/v0.19.0/api#GreaterThan): Greater-than comparison block.
+  - [LessThan](https://docs.pathsim.org/pathsim/v0.19.0/api#LessThan): Less-than comparison block.
+  - [Equal](https://docs.pathsim.org/pathsim/v0.19.0/api#Equal): Equality comparison block.
+  - [LogicAnd](https://docs.pathsim.org/pathsim/v0.19.0/api#LogicAnd): Logical AND block.
+  - [LogicOr](https://docs.pathsim.org/pathsim/v0.19.0/api#LogicOr): Logical OR block.
+  - [LogicNot](https://docs.pathsim.org/pathsim/v0.19.0/api#LogicNot): Logical NOT block.
+- [pathsim.blocks.lti](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-lti)
+  - [StateSpace](https://docs.pathsim.org/pathsim/v0.19.0/api#StateSpace): Linear time invariant (LTI) multi input multi output (MIMO) state space model.
+  - [TransferFunctionPRC](https://docs.pathsim.org/pathsim/v0.19.0/api#TransferFunctionPRC): This block defines a LTI (MIMO for pole residue) transfer function.
+  - [TransferFunction](https://docs.pathsim.org/pathsim/v0.19.0/api#TransferFunction): Alias for TransferFunctionPRC.
+  - [TransferFunctionZPG](https://docs.pathsim.org/pathsim/v0.19.0/api#TransferFunctionZPG): This block defines a LTI (SISO) transfer function.
+  - [TransferFunctionNumDen](https://docs.pathsim.org/pathsim/v0.19.0/api#TransferFunctionNumDen): This block defines a LTI (SISO) transfer function.
+- [pathsim.blocks.math](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-math)
+  - [Math](https://docs.pathsim.org/pathsim/v0.19.0/api#Math): Base math block.
+  - [Sin](https://docs.pathsim.org/pathsim/v0.19.0/api#Sin): Sine operator block.
+  - [Cos](https://docs.pathsim.org/pathsim/v0.19.0/api#Cos): Cosine operator block.
+  - [Sqrt](https://docs.pathsim.org/pathsim/v0.19.0/api#Sqrt): Square root operator block.
+  - [Abs](https://docs.pathsim.org/pathsim/v0.19.0/api#Abs): Absolute value operator block.
+  - [Pow](https://docs.pathsim.org/pathsim/v0.19.0/api#Pow): Raise to power operator block.
+  - [PowProd](https://docs.pathsim.org/pathsim/v0.19.0/api#PowProd): Power-Product operator block.
+  - [Exp](https://docs.pathsim.org/pathsim/v0.19.0/api#Exp): Exponential operator block.
+  - [Log](https://docs.pathsim.org/pathsim/v0.19.0/api#Log): Natural logarithm operator block.
+  - [Log10](https://docs.pathsim.org/pathsim/v0.19.0/api#Log10): Base-10 logarithm operator block.
+  - [Tan](https://docs.pathsim.org/pathsim/v0.19.0/api#Tan): Tangent operator block.
+  - [Sinh](https://docs.pathsim.org/pathsim/v0.19.0/api#Sinh): Hyperbolic sine operator block.
+  - [Cosh](https://docs.pathsim.org/pathsim/v0.19.0/api#Cosh): Hyperbolic cosine operator block.
+  - [Tanh](https://docs.pathsim.org/pathsim/v0.19.0/api#Tanh): Hyperbolic tangent operator block.
+  - [Atan](https://docs.pathsim.org/pathsim/v0.19.0/api#Atan): Arctangent operator block.
+  - [Norm](https://docs.pathsim.org/pathsim/v0.19.0/api#Norm): Vector norm operator block.
+  - [Mod](https://docs.pathsim.org/pathsim/v0.19.0/api#Mod): Modulo operator block.
+  - [Clip](https://docs.pathsim.org/pathsim/v0.19.0/api#Clip): Clipping/saturation operator block.
+  - [Matrix](https://docs.pathsim.org/pathsim/v0.19.0/api#Matrix): Linear matrix operation (matrix-vector product).
+  - [Atan2](https://docs.pathsim.org/pathsim/v0.19.0/api#Atan2): Two-argument arctangent block.
+  - [Rescale](https://docs.pathsim.org/pathsim/v0.19.0/api#Rescale): Linear rescaling / mapping block.
+  - [Alias](https://docs.pathsim.org/pathsim/v0.19.0/api#Alias): Signal alias / pass-through block.
+- [pathsim.blocks.multiplier](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-multiplier)
+  - [Multiplier](https://docs.pathsim.org/pathsim/v0.19.0/api#Multiplier): Multiplies all signals from all input ports (MISO).
+- [pathsim.blocks.noise](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-noise)
+  - [WhiteNoise](https://docs.pathsim.org/pathsim/v0.19.0/api#WhiteNoise): White noise source with Gaussian distribution.
+  - [PinkNoise](https://docs.pathsim.org/pathsim/v0.19.0/api#PinkNoise): Pink noise (1/f noise) source using the Voss-McCartney algorithm.
+- [pathsim.blocks.ode](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-ode)
+  - [ODE](https://docs.pathsim.org/pathsim/v0.19.0/api#ODE): Ordinary differential equation (ODE) defined by its right hand side function.
+- [pathsim.blocks.relay](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-relay)
+  - [Relay](https://docs.pathsim.org/pathsim/v0.19.0/api#Relay): Relay block with hysteresis (Schmitt trigger).
+- [pathsim.blocks.rf](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-rf)
+  - [RFNetwork](https://docs.pathsim.org/pathsim/v0.19.0/api#RFNetwork): N-port RF network linear time invariant (LTI) multi input multi output (MIMO) state-space model.
+- [pathsim.blocks.rng](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-rng)
+  - [RandomNumberGenerator](https://docs.pathsim.org/pathsim/v0.19.0/api#RandomNumberGenerator): Generates a random output value using `numpy.random.rand`.
+  - [RNG](https://docs.pathsim.org/pathsim/v0.19.0/api#RNG): Alias for RandomNumberGenerator.
+- [pathsim.blocks.samplehold](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-samplehold)
+  - [SampleHold](https://docs.pathsim.org/pathsim/v0.19.0/api#SampleHold): Samples the inputs periodically and produces them at the output.
+- [pathsim.blocks.scope](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-scope)
+  - [Scope](https://docs.pathsim.org/pathsim/v0.19.0/api#Scope): Block for recording time domain data with variable sampling period.
+  - [RealtimeScope](https://docs.pathsim.org/pathsim/v0.19.0/api#RealtimeScope): An extension of the 'Scope' block that initializes a realtime plotter.
+- [pathsim.blocks.sources](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-sources)
+  - [Constant](https://docs.pathsim.org/pathsim/v0.19.0/api#Constant): Produces a constant output signal (SISO).
+  - [Source](https://docs.pathsim.org/pathsim/v0.19.0/api#Source): Source that produces an arbitrary time dependent output defined by `func` (callable).
+  - [TriangleWaveSource](https://docs.pathsim.org/pathsim/v0.19.0/api#TriangleWaveSource): Source block that generates an analog triangle wave
+  - [SinusoidalSource](https://docs.pathsim.org/pathsim/v0.19.0/api#SinusoidalSource): Source block that generates a sinusoid wave
+  - [GaussianPulseSource](https://docs.pathsim.org/pathsim/v0.19.0/api#GaussianPulseSource): Source block that generates a gaussian pulse
+  - [SinusoidalPhaseNoiseSource](https://docs.pathsim.org/pathsim/v0.19.0/api#SinusoidalPhaseNoiseSource): Sinusoidal source with cumulative and white phase noise.
+  - [ChirpPhaseNoiseSource](https://docs.pathsim.org/pathsim/v0.19.0/api#ChirpPhaseNoiseSource): Chirp source, sinusoid with frequency ramp up and ramp down, plus phase noise.
+  - [ChirpSource](https://docs.pathsim.org/pathsim/v0.19.0/api#ChirpSource): Alias for ChirpPhaseNoiseSource.
+  - [PulseSource](https://docs.pathsim.org/pathsim/v0.19.0/api#PulseSource): Generates a periodic pulse waveform with defined rise and fall times.
+  - [Pulse](https://docs.pathsim.org/pathsim/v0.19.0/api#Pulse): Alias for PulseSource.
+  - [ClockSource](https://docs.pathsim.org/pathsim/v0.19.0/api#ClockSource): Discrete time clock source block.
+  - [Clock](https://docs.pathsim.org/pathsim/v0.19.0/api#Clock): Alias for ClockSource.
+  - [SquareWaveSource](https://docs.pathsim.org/pathsim/v0.19.0/api#SquareWaveSource): Discrete time square wave source.
+  - [StepSource](https://docs.pathsim.org/pathsim/v0.19.0/api#StepSource): Discrete time unit step (or multi step) source block.
+  - [Step](https://docs.pathsim.org/pathsim/v0.19.0/api#Step): Alias for StepSource.
+- [pathsim.blocks.spectrum](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-spectrum)
+  - [Spectrum](https://docs.pathsim.org/pathsim/v0.19.0/api#Spectrum): Block for fourier spectrum analysis (spectrum analyzer).
+  - [RealtimeSpectrum](https://docs.pathsim.org/pathsim/v0.19.0/api#RealtimeSpectrum): An extension of the 'Spectrum' block that also initializes a realtime plotter.
+- [pathsim.blocks.switch](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-switch)
+  - [Switch](https://docs.pathsim.org/pathsim/v0.19.0/api#Switch): Switch block that selects between its inputs.
+- [pathsim.blocks.table](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-table)
+  - [LUT](https://docs.pathsim.org/pathsim/v0.19.0/api#LUT): N-dimensional lookup table with linear interpolation functionality.
+  - [LUT1D](https://docs.pathsim.org/pathsim/v0.19.0/api#LUT1D): One-dimensional lookup table with linear interpolation functionality.
+- [pathsim.blocks.wrapper](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-blocks-wrapper)
+  - [Wrapper](https://docs.pathsim.org/pathsim/v0.19.0/api#Wrapper): Wrapper block for discrete implementation and external code integration.
+- [pathsim.events._event](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-events-_event)
+  - [Event](https://docs.pathsim.org/pathsim/v0.19.0/api#Event): This is the base class of the event handling system.
+- [pathsim.events.condition](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-events-condition)
+  - [Condition](https://docs.pathsim.org/pathsim/v0.19.0/api#Condition): Subclass of base 'Event' that triggers if the event function evaluates to 'True',
+- [pathsim.events.schedule](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-events-schedule)
+  - [Schedule](https://docs.pathsim.org/pathsim/v0.19.0/api#Schedule): Subclass of base 'Event' that triggers dependent on the evaluation time.
+  - [ScheduleList](https://docs.pathsim.org/pathsim/v0.19.0/api#ScheduleList): Subclass of base 'Schedule' that triggers dependent on the evaluation time.
+- [pathsim.events.zerocrossing](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-events-zerocrossing)
+  - [ZeroCrossing](https://docs.pathsim.org/pathsim/v0.19.0/api#ZeroCrossing): Subclass of base 'Event' that triggers if the event function crosses zero.
+  - [ZeroCrossingUp](https://docs.pathsim.org/pathsim/v0.19.0/api#ZeroCrossingUp): Modification of standard 'ZeroCrossing' event where events are only triggered
+  - [ZeroCrossingDown](https://docs.pathsim.org/pathsim/v0.19.0/api#ZeroCrossingDown): Modification of standard 'ZeroCrossing' event where events are only triggered
+- [pathsim.optim.anderson](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-optim-anderson)
+  - [Anderson](https://docs.pathsim.org/pathsim/v0.19.0/api#Anderson): Anderson acceleration for fixed-point iteration.
+  - [NewtonAnderson](https://docs.pathsim.org/pathsim/v0.19.0/api#NewtonAnderson): Hybrid Newton--Anderson fixed-point solver.
+- [pathsim.optim.booster](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-optim-booster)
+  - [ConnectionBooster](https://docs.pathsim.org/pathsim/v0.19.0/api#ConnectionBooster): Wraps a `Connection` instance and injects a fixed point accelerator.
+- [pathsim.optim.numerical](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-optim-numerical)
+- [pathsim.optim.operator](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-optim-operator)
+  - [Operator](https://docs.pathsim.org/pathsim/v0.19.0/api#Operator): Operator class for function evaluation and linearization.
+  - [DynamicOperator](https://docs.pathsim.org/pathsim/v0.19.0/api#DynamicOperator): Operator class for dynamic system function evaluation and linearization.
+- [pathsim.solvers._rungekutta](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-_rungekutta)
+  - [ExplicitRungeKutta](https://docs.pathsim.org/pathsim/v0.19.0/api#ExplicitRungeKutta): Base class for explicit Runge-Kutta integrators which implements
+  - [DiagonallyImplicitRungeKutta](https://docs.pathsim.org/pathsim/v0.19.0/api#DiagonallyImplicitRungeKutta): Base class for diagonally implicit Runge-Kutta (DIRK) integrators
+- [pathsim.solvers._solver](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-_solver)
+  - [Solver](https://docs.pathsim.org/pathsim/v0.19.0/api#Solver): Base skeleton class for solver definition. Defines the basic solver methods and
+  - [ExplicitSolver](https://docs.pathsim.org/pathsim/v0.19.0/api#ExplicitSolver): Base class for explicit solver definition.
+  - [ImplicitSolver](https://docs.pathsim.org/pathsim/v0.19.0/api#ImplicitSolver): Base class for implicit solver definition.
+- [pathsim.solvers.bdf](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-bdf)
+  - [BDF](https://docs.pathsim.org/pathsim/v0.19.0/api#BDF): Base class for the backward differentiation formula (BDF) integrators.
+  - [BDF2](https://docs.pathsim.org/pathsim/v0.19.0/api#BDF2): Fixed-step 2nd order BDF method. A-stable.
+  - [BDF3](https://docs.pathsim.org/pathsim/v0.19.0/api#BDF3): Fixed-step 3rd order BDF method. :math:`A(\alpha)`-stable with
+  - [BDF4](https://docs.pathsim.org/pathsim/v0.19.0/api#BDF4): Fixed-step 4th order BDF method. :math:`A(\alpha)`-stable with
+  - [BDF5](https://docs.pathsim.org/pathsim/v0.19.0/api#BDF5): Fixed-step 5th order BDF method. :math:`A(\alpha)`-stable with
+  - [BDF6](https://docs.pathsim.org/pathsim/v0.19.0/api#BDF6): Fixed-step 6th order BDF method. **Not** A-stable
+- [pathsim.solvers.dirk2](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-dirk2)
+  - [DIRK2](https://docs.pathsim.org/pathsim/v0.19.0/api#DIRK2): Two-stage, 2nd order DIRK method. L-stable, SSP-optimal, symplectic.
+- [pathsim.solvers.dirk3](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-dirk3)
+  - [DIRK3](https://docs.pathsim.org/pathsim/v0.19.0/api#DIRK3): Four-stage, 3rd order L-stable DIRK method. Stiffly accurate.
+- [pathsim.solvers.esdirk32](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-esdirk32)
+  - [ESDIRK32](https://docs.pathsim.org/pathsim/v0.19.0/api#ESDIRK32): Four-stage, 3rd order ESDIRK method with embedded 2nd order error
+- [pathsim.solvers.esdirk4](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-esdirk4)
+  - [ESDIRK4](https://docs.pathsim.org/pathsim/v0.19.0/api#ESDIRK4): Six-stage, 4th order ESDIRK method. L-stable and stiffly accurate.
+- [pathsim.solvers.esdirk43](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-esdirk43)
+  - [ESDIRK43](https://docs.pathsim.org/pathsim/v0.19.0/api#ESDIRK43): Six-stage, 4th order ESDIRK method with embedded 3rd order error
+- [pathsim.solvers.esdirk54](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-esdirk54)
+  - [ESDIRK54](https://docs.pathsim.org/pathsim/v0.19.0/api#ESDIRK54): Seven-stage, 5th order ESDIRK method with embedded 4th order error
+- [pathsim.solvers.esdirk85](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-esdirk85)
+  - [ESDIRK85](https://docs.pathsim.org/pathsim/v0.19.0/api#ESDIRK85): Sixteen-stage, 8th order ESDIRK method with embedded 5th order error
+- [pathsim.solvers.euler](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-euler)
+  - [EUF](https://docs.pathsim.org/pathsim/v0.19.0/api#EUF): Explicit forward Euler method. First-order, single-stage.
+  - [EUB](https://docs.pathsim.org/pathsim/v0.19.0/api#EUB): Implicit backward Euler method. First-order, A-stable and L-stable.
+- [pathsim.solvers.gear](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-gear)
+  - [GEAR](https://docs.pathsim.org/pathsim/v0.19.0/api#GEAR): Base class for GEAR-type integrators that defines the universal methods.
+  - [GEAR21](https://docs.pathsim.org/pathsim/v0.19.0/api#GEAR21): Variable-step 2nd order BDF with 1st order error estimate. A-stable.
+  - [GEAR32](https://docs.pathsim.org/pathsim/v0.19.0/api#GEAR32): Variable-step 3rd order BDF with 2nd order error estimate.
+  - [GEAR43](https://docs.pathsim.org/pathsim/v0.19.0/api#GEAR43): Variable-step 4th order BDF with 3rd order error estimate.
+  - [GEAR54](https://docs.pathsim.org/pathsim/v0.19.0/api#GEAR54): Variable-step 5th order BDF with 4th order error estimate.
+  - [GEAR52A](https://docs.pathsim.org/pathsim/v0.19.0/api#GEAR52A): Variable-step, variable-order BDF (orders 2--5). Adapts both timestep
+- [pathsim.solvers.rk4](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-rk4)
+  - [RK4](https://docs.pathsim.org/pathsim/v0.19.0/api#RK4): Classical four-stage, 4th order explicit Runge-Kutta method.
+- [pathsim.solvers.rkbs32](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-rkbs32)
+  - [RKBS32](https://docs.pathsim.org/pathsim/v0.19.0/api#RKBS32): Bogacki-Shampine 3(2) pair. Four-stage, 3rd order with FSAL property.
+- [pathsim.solvers.rkck54](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-rkck54)
+  - [RKCK54](https://docs.pathsim.org/pathsim/v0.19.0/api#RKCK54): Cash-Karp 5(4) pair. Six stages, 5th order with embedded 4th order
+- [pathsim.solvers.rkdp54](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-rkdp54)
+  - [RKDP54](https://docs.pathsim.org/pathsim/v0.19.0/api#RKDP54): Dormand-Prince 5(4) pair (DOPRI5). Seven stages, 5th order with
+- [pathsim.solvers.rkdp87](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-rkdp87)
+  - [RKDP87](https://docs.pathsim.org/pathsim/v0.19.0/api#RKDP87): Dormand-Prince 8(7) pair (DOP853). Thirteen stages, 8th order with
+- [pathsim.solvers.rkf21](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-rkf21)
+  - [RKF21](https://docs.pathsim.org/pathsim/v0.19.0/api#RKF21): Three-stage, 2nd order Runge-Kutta-Fehlberg method with embedded 1st order error estimate.
+- [pathsim.solvers.rkf45](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-rkf45)
+  - [RKF45](https://docs.pathsim.org/pathsim/v0.19.0/api#RKF45): Runge-Kutta-Fehlberg 4(5) pair. Six stages, 4th order propagation with
+- [pathsim.solvers.rkf78](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-rkf78)
+  - [RKF78](https://docs.pathsim.org/pathsim/v0.19.0/api#RKF78): Runge-Kutta-Fehlberg 7(8) pair. Thirteen stages, 7th order propagation
+- [pathsim.solvers.rkv65](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-rkv65)
+  - [RKV65](https://docs.pathsim.org/pathsim/v0.19.0/api#RKV65): Verner 6(5) "most robust" pair. Nine stages, 6th order with
+- [pathsim.solvers.ssprk22](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-ssprk22)
+  - [SSPRK22](https://docs.pathsim.org/pathsim/v0.19.0/api#SSPRK22): Two-stage, 2nd order Strong Stability Preserving (SSP) Runge-Kutta method.
+- [pathsim.solvers.ssprk33](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-ssprk33)
+  - [SSPRK33](https://docs.pathsim.org/pathsim/v0.19.0/api#SSPRK33): Three-stage, 3rd order optimal SSP Runge-Kutta method.
+- [pathsim.solvers.ssprk34](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-ssprk34)
+  - [SSPRK34](https://docs.pathsim.org/pathsim/v0.19.0/api#SSPRK34): Four-stage, 3rd order SSP Runge-Kutta method with SSP coefficient 2.
+- [pathsim.solvers.steadystate](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-solvers-steadystate)
+  - [SteadyState](https://docs.pathsim.org/pathsim/v0.19.0/api#SteadyState): Pseudo-solver for computing the DC operating point (steady state).
+- [pathsim.utils.adaptivebuffer](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-adaptivebuffer)
+  - [AdaptiveBuffer](https://docs.pathsim.org/pathsim/v0.19.0/api#AdaptiveBuffer): A class that manages an adaptive buffer for delay modeling which is primarily
+- [pathsim.utils.analysis](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-analysis)
+  - [Timer](https://docs.pathsim.org/pathsim/v0.19.0/api#Timer): Context manager that times the execution time
+  - [Profiler](https://docs.pathsim.org/pathsim/v0.19.0/api#Profiler): Context manager for easy code profiling
+- [pathsim.utils.deprecation](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-deprecation)
+- [pathsim.utils.fmuwrapper](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-fmuwrapper)
+  - [EventInfo](https://docs.pathsim.org/pathsim/v0.19.0/api#EventInfo): Unified event information structure for both FMI 2.0 and 3.0.
+  - [StepResult](https://docs.pathsim.org/pathsim/v0.19.0/api#StepResult): Result information from a co-simulation step.
+  - [_FMI2Ops](https://docs.pathsim.org/pathsim/v0.19.0/api#_FMI2Ops): FMI 2.0 specific operations.
+  - [_FMI3Ops](https://docs.pathsim.org/pathsim/v0.19.0/api#_FMI3Ops): FMI 3.0 specific operations.
+  - [FMUWrapper](https://docs.pathsim.org/pathsim/v0.19.0/api#FMUWrapper): Version-agnostic wrapper for FMI 2.0 and 3.0 FMUs.
+- [pathsim.utils.gilbert](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-gilbert)
+- [pathsim.utils.graph](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-graph)
+  - [Graph](https://docs.pathsim.org/pathsim/v0.19.0/api#Graph): Optimized graph representation with efficient assembly and cycle detection.
+- [pathsim.utils.logger](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-logger)
+  - [LoggerManager](https://docs.pathsim.org/pathsim/v0.19.0/api#LoggerManager): Singleton class for centralized logging configuration in PathSim.
+- [pathsim.utils.mutable](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-mutable)
+- [pathsim.utils.portreference](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-portreference)
+  - [PortReference](https://docs.pathsim.org/pathsim/v0.19.0/api#PortReference): Container class that holds a reference to a block and a list of ports.
+- [pathsim.utils.progresstracker](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-progresstracker)
+  - [ProgressTracker](https://docs.pathsim.org/pathsim/v0.19.0/api#ProgressTracker): A progress tracker for simulations with adaptive ETA and step rate display.
+- [pathsim.utils.realtimeplotter](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-realtimeplotter)
+  - [RealtimePlotter](https://docs.pathsim.org/pathsim/v0.19.0/api#RealtimePlotter): Class that manages a realtime plotting window that
+- [pathsim.utils.register](https://docs.pathsim.org/pathsim/v0.19.0/api#pathsim-utils-register)
+  - [Register](https://docs.pathsim.org/pathsim/v0.19.0/api#Register): This class is a intended to be used for the inputs and outputs of blocks.
 
 ### Examples
 
-- [Harmonic Oscillator](https://docs.pathsim.org/pathsim/v0.18.0/examples/harmonic-oscillator): Simulation of a damped harmonic oscillator, modeling a spring-mass-damper system.
-- [Linear Feedback System](https://docs.pathsim.org/pathsim/v0.18.0/examples/linear-feedback): Simulation of a simple linear feedback system with step response.
-- [Pendulum](https://docs.pathsim.org/pathsim/v0.18.0/examples/pendulum): Simulation of a nonlinear mathematical pendulum.
-- [Van der Pol](https://docs.pathsim.org/pathsim/v0.18.0/examples/vanderpol): Simulation of the Van der Pol oscillator, a classic example of a stiff dynamical system.
-- [Anti-lock Braking System (ABS)](https://docs.pathsim.org/pathsim/v0.18.0/examples/abs-braking): This example demonstrates an anti-lock braking system (ABS) using nonlinear tire dynamics and event-driven slip control. The system prevents wheel lockup during braking by modulating brake torque t...
-- [Cascade Controller](https://docs.pathsim.org/pathsim/v0.18.0/examples/cascade-controller): Demonstration of a two-loop cascade PID control system with inner and outer loops.
-- [DC Motor Speed Control](https://docs.pathsim.org/pathsim/v0.18.0/examples/dcmotor-control): This example demonstrates multi-domain modeling of a DC motor with PID speed control. The system combines electrical and mechanical dynamics with anti-windup control to handle voltage saturation.
-- [Kalman Filter](https://docs.pathsim.org/pathsim/v0.18.0/examples/kalman-filter): This example demonstrates the Kalman filter in PathSim for optimal state estimation of a linear dynamical system from noisy measurements. The filter recursively estimates the state of a moving obje...
-- [PID Controller](https://docs.pathsim.org/pathsim/v0.18.0/examples/pid-controller): Simulation of a PID controller tracking a step-changing setpoint.
-- [Thermostat](https://docs.pathsim.org/pathsim/v0.18.0/examples/thermostat): Simulation of a thermostat with threshold-based switching between heater states.
-- [Billards & Collisions](https://docs.pathsim.org/pathsim/v0.18.0/examples/billards): Simulation of a ball bouncing inside a circular boundary using event detection.
-- [Bouncing Ball](https://docs.pathsim.org/pathsim/v0.18.0/examples/bouncing-ball): Simulation of a bouncing ball using PathSim's event handling system.
-- [Bouncing Pendulum](https://docs.pathsim.org/pathsim/v0.18.0/examples/bouncing-pendulum): This example demonstrates a hybrid system combining continuous pendulum dynamics with discrete bounce events. The pendulum swings until it hits the ground (zero angle), at which point it bounces ba...
-- [Coupled Oscillators](https://docs.pathsim.org/pathsim/v0.18.0/examples/coupled-oscillators): Simulation of two coupled damped harmonic oscillators using ODE blocks.
-- [Elastic Pendulum](https://docs.pathsim.org/pathsim/v0.18.0/examples/elastic-pendulum): Simulation of an elastic pendulum combining spring and pendulum dynamics.
-- [Stick Slip](https://docs.pathsim.org/pathsim/v0.18.0/examples/stick-slip): Simulation of a mechanical system exhibiting stick-slip behavior due to Coulomb friction.
-- [Switched Bouncing Ball](https://docs.pathsim.org/pathsim/v0.18.0/examples/switched-bouncing-ball): This example demonstrates advanced event handling with multiple simultaneous events, event switching, and conditional event logic. The bouncing ball bounces on a table first, and then drops to the ...
-- [Delta-Sigma ADC](https://docs.pathsim.org/pathsim/v0.18.0/examples/delta-sigma-adc): Simulation of a first-order delta-sigma analog-to-digital converter.
-- [Diode Circuit](https://docs.pathsim.org/pathsim/v0.18.0/examples/diode-circuit): Simulation of a diode circuit demonstrating nonlinear algebraic loop solving.
-- [Noisy Amplifier](https://docs.pathsim.org/pathsim/v0.18.0/examples/noisy-amplifier): Simulation of a nonlinear, noisy, and band-limited amplifier model.
-- [SAR ADC](https://docs.pathsim.org/pathsim/v0.18.0/examples/sar-adc): Simulation of a Successive Approximation Register ADC with custom block creation.
-- [FMCW Radar](https://docs.pathsim.org/pathsim/v0.18.0/examples/fmcw-radar): In this example we simulate a simple frequency modulated continuous wave (FMCW) radar system.
-- [RF Network - One Port](https://docs.pathsim.org/pathsim/v0.18.0/examples/rf-network-oneport): Simulation of a Radio Frequency (RF) network using scikit-rf for state-space conversion.
-- [Spectrum Analysis](https://docs.pathsim.org/pathsim/v0.18.0/examples/spectrum-analysis): In this example we demonstrate frequency domain analysis using PathSim's spectrum block. We'll examine the frequency response of a Butterworth lowpass filter by analyzing its response to a Gaussian...
-- [Transfer Function](https://docs.pathsim.org/pathsim/v0.18.0/examples/transfer-function): In this example we demonstrate how to use transfer functions in PathSim using the Pole-Residue-Constant (PRC) form. This representation is particularly convenient for transfer functions with comple...
-- [Chemical Reactor](https://docs.pathsim.org/pathsim/v0.18.0/examples/chemical-reactor): Simulation of a continuous stirred tank reactor (CSTR) with consecutive exothermic reactions.
-- [Algebraic Loop](https://docs.pathsim.org/pathsim/v0.18.0/examples/algebraic-loop): Demonstration of PathSim's automatic handling of algebraic loops.
-- [Lorenz Attractor](https://docs.pathsim.org/pathsim/v0.18.0/examples/lorenz-attractor): Simulation of the famous Lorenz attractor, a chaotic dynamical system.
-- [Nested Subsystems](https://docs.pathsim.org/pathsim/v0.18.0/examples/nested-subsystems): Demonstration of hierarchical modeling using nested subsystems for a Van der Pol oscillator.
-- [Poincaré Maps](https://docs.pathsim.org/pathsim/v0.18.0/examples/poincare-maps): Demonstration of computing Poincaré sections for chaotic dynamical systems using event handling.
-- [FMU Co-Simulation](https://docs.pathsim.org/pathsim/v0.18.0/examples/fmu-cosimulation): Demonstration of integrating Functional Mock-up Units (FMU) as PathSim blocks.
-- [FMU ME: Bouncing Ball](https://docs.pathsim.org/pathsim/v0.18.0/examples/fmu-model-exchange-bouncing-ball): This example demonstrates Model Exchange FMU integration with PathSim. Unlike co-simulation FMUs, Model Exchange FMUs provide only the differential equations. PathSim's solvers perform the numerica...
-- [FMU ME: Van der Pol](https://docs.pathsim.org/pathsim/v0.18.0/examples/fmu-model-exchange-vanderpol): This example demonstrates Model Exchange FMU integration with a nonlinear oscillator. The Van der Pol equation exhibits self-sustained oscillations:
+- [Harmonic Oscillator](https://docs.pathsim.org/pathsim/v0.19.0/examples/harmonic-oscillator): Simulation of a damped harmonic oscillator, modeling a spring-mass-damper system.
+- [Linear Feedback System](https://docs.pathsim.org/pathsim/v0.19.0/examples/linear-feedback): Simulation of a simple linear feedback system with step response.
+- [Pendulum](https://docs.pathsim.org/pathsim/v0.19.0/examples/pendulum): Simulation of a nonlinear mathematical pendulum.
+- [Van der Pol](https://docs.pathsim.org/pathsim/v0.19.0/examples/vanderpol): Simulation of the Van der Pol oscillator, a classic example of a stiff dynamical system.
+- [Anti-lock Braking System (ABS)](https://docs.pathsim.org/pathsim/v0.19.0/examples/abs-braking): This example demonstrates an anti-lock braking system (ABS) using nonlinear tire dynamics and event-driven slip control. The system prevents wheel lockup during braking by modulating brake torque t...
+- [Cascade Controller](https://docs.pathsim.org/pathsim/v0.19.0/examples/cascade-controller): Demonstration of a two-loop cascade PID control system with inner and outer loops.
+- [DC Motor Speed Control](https://docs.pathsim.org/pathsim/v0.19.0/examples/dcmotor-control): This example demonstrates multi-domain modeling of a DC motor with PID speed control. The system combines electrical and mechanical dynamics with anti-windup control to handle voltage saturation.
+- [Kalman Filter](https://docs.pathsim.org/pathsim/v0.19.0/examples/kalman-filter): This example demonstrates the Kalman filter in PathSim for optimal state estimation of a linear dynamical system from noisy measurements. The filter recursively estimates the state of a moving obje...
+- [PID Controller](https://docs.pathsim.org/pathsim/v0.19.0/examples/pid-controller): Simulation of a PID controller tracking a step-changing setpoint.
+- [Thermostat](https://docs.pathsim.org/pathsim/v0.19.0/examples/thermostat): Simulation of a thermostat with threshold-based switching between heater states.
+- [Billards & Collisions](https://docs.pathsim.org/pathsim/v0.19.0/examples/billards): Simulation of a ball bouncing inside a circular boundary using event detection.
+- [Bouncing Ball](https://docs.pathsim.org/pathsim/v0.19.0/examples/bouncing-ball): Simulation of a bouncing ball using PathSim's event handling system.
+- [Bouncing Pendulum](https://docs.pathsim.org/pathsim/v0.19.0/examples/bouncing-pendulum): This example demonstrates a hybrid system combining continuous pendulum dynamics with discrete bounce events. The pendulum swings until it hits the ground (zero angle), at which point it bounces ba...
+- [Coupled Oscillators](https://docs.pathsim.org/pathsim/v0.19.0/examples/coupled-oscillators): Simulation of two coupled damped harmonic oscillators using ODE blocks.
+- [Elastic Pendulum](https://docs.pathsim.org/pathsim/v0.19.0/examples/elastic-pendulum): Simulation of an elastic pendulum combining spring and pendulum dynamics.
+- [Stick Slip](https://docs.pathsim.org/pathsim/v0.19.0/examples/stick-slip): Simulation of a mechanical system exhibiting stick-slip behavior due to Coulomb friction.
+- [Switched Bouncing Ball](https://docs.pathsim.org/pathsim/v0.19.0/examples/switched-bouncing-ball): This example demonstrates advanced event handling with multiple simultaneous events, event switching, and conditional event logic. The bouncing ball bounces on a table first, and then drops to the ...
+- [Delta-Sigma ADC](https://docs.pathsim.org/pathsim/v0.19.0/examples/delta-sigma-adc): Simulation of a first-order delta-sigma analog-to-digital converter.
+- [Diode Circuit](https://docs.pathsim.org/pathsim/v0.19.0/examples/diode-circuit): Simulation of a diode circuit demonstrating nonlinear algebraic loop solving.
+- [Noisy Amplifier](https://docs.pathsim.org/pathsim/v0.19.0/examples/noisy-amplifier): Simulation of a nonlinear, noisy, and band-limited amplifier model.
+- [SAR ADC](https://docs.pathsim.org/pathsim/v0.19.0/examples/sar-adc): Simulation of a Successive Approximation Register ADC with custom block creation.
+- [FMCW Radar](https://docs.pathsim.org/pathsim/v0.19.0/examples/fmcw-radar): In this example we simulate a simple frequency modulated continuous wave (FMCW) radar system.
+- [RF Network - One Port](https://docs.pathsim.org/pathsim/v0.19.0/examples/rf-network-oneport): Simulation of a Radio Frequency (RF) network using scikit-rf for state-space conversion.
+- [Spectrum Analysis](https://docs.pathsim.org/pathsim/v0.19.0/examples/spectrum-analysis): In this example we demonstrate frequency domain analysis using PathSim's spectrum block. We'll examine the frequency response of a Butterworth lowpass filter by analyzing its response to a Gaussian...
+- [Transfer Function](https://docs.pathsim.org/pathsim/v0.19.0/examples/transfer-function): In this example we demonstrate how to use transfer functions in PathSim using the Pole-Residue-Constant (PRC) form. This representation is particularly convenient for transfer functions with comple...
+- [Chemical Reactor](https://docs.pathsim.org/pathsim/v0.19.0/examples/chemical-reactor): Simulation of a continuous stirred tank reactor (CSTR) with consecutive exothermic reactions.
+- [Algebraic Loop](https://docs.pathsim.org/pathsim/v0.19.0/examples/algebraic-loop): Demonstration of PathSim's automatic handling of algebraic loops.
+- [Checkpoints](https://docs.pathsim.org/pathsim/v0.19.0/examples/checkpoints): PathSim supports saving and loading simulation state via checkpoints. This allows you to pause a simulation, save its complete state to disk, and resume it later from exactly where you left off.
+- [Lorenz Attractor](https://docs.pathsim.org/pathsim/v0.19.0/examples/lorenz-attractor): Simulation of the famous Lorenz attractor, a chaotic dynamical system.
+- [Nested Subsystems](https://docs.pathsim.org/pathsim/v0.19.0/examples/nested-subsystems): Demonstration of hierarchical modeling using nested subsystems for a Van der Pol oscillator.
+- [Poincaré Maps](https://docs.pathsim.org/pathsim/v0.19.0/examples/poincare-maps): Demonstration of computing Poincaré sections for chaotic dynamical systems using event handling.
+- [FMU Co-Simulation](https://docs.pathsim.org/pathsim/v0.19.0/examples/fmu-cosimulation): Demonstration of integrating Functional Mock-up Units (FMU) as PathSim blocks.
+- [FMU ME: Bouncing Ball](https://docs.pathsim.org/pathsim/v0.19.0/examples/fmu-model-exchange-bouncing-ball): This example demonstrates Model Exchange FMU integration with PathSim. Unlike co-simulation FMUs, Model Exchange FMUs provide only the differential equations. PathSim's solvers perform the numerica...
+- [FMU ME: Van der Pol](https://docs.pathsim.org/pathsim/v0.19.0/examples/fmu-model-exchange-vanderpol): This example demonstrates Model Exchange FMU integration with a nonlinear oscillator. The Van der Pol equation exhibits self-sustained oscillations:
 
 ## PathSim-Chem (v0.2.2)
 
@@ -395,6 +402,21 @@
 - [Reactor Point Kinetics](https://docs.pathsim.org/chem/v0.2.2/examples/point-kinetics): Simulating the transient neutron population in a nuclear reactor using the point kinetics equations (PKE) with six delayed neutron precursor groups.
 - [Valve Flow Characteristics](https://docs.pathsim.org/chem/v0.2.2/examples/valve-characteristics): Exploring the flow behaviour of the  block under varying pressure drop conditions.
 
+## PathSim-Flight (v0.1.0)
+
+- [PathSim-Flight API Reference](https://docs.pathsim.org/flight/v0.1.0/api): Full API documentation
+- [pathsim_flight.atmosphere.international_standard_atmosphere](https://docs.pathsim.org/flight/v0.1.0/api#pathsim_flight-atmosphere-international_standard_atmosphere)
+  - [ISAtmosphere](https://docs.pathsim.org/flight/v0.1.0/api#ISAtmosphere): International Standard Atmosphere.
+- [pathsim_flight.jsbsim.jsbsim_wrapper](https://docs.pathsim.org/flight/v0.1.0/api#pathsim_flight-jsbsim-jsbsim_wrapper)
+  - [JSBSimWrapper](https://docs.pathsim.org/flight/v0.1.0/api#JSBSimWrapper): A wrapper for the JSBSim flight dynamics model, which allows it to be
+- [pathsim_flight.utils.airspeed_conversions](https://docs.pathsim.org/flight/v0.1.0/api#pathsim_flight-utils-airspeed_conversions)
+  - [CAStoMach](https://docs.pathsim.org/flight/v0.1.0/api#CAStoMach): Convert calibrated airspeed (CAS) to Mach value.
+  - [CAStoTAS](https://docs.pathsim.org/flight/v0.1.0/api#CAStoTAS): Convert calibrated airspeed (CAS) to true airspeed (TAS).
+  - [TAStoCAS](https://docs.pathsim.org/flight/v0.1.0/api#TAStoCAS): Convert true airspeed (TAS) to calibrated airspeed (CAS).
+  - [CAStoEAS](https://docs.pathsim.org/flight/v0.1.0/api#CAStoEAS): Convert calibrated airspeed (CAS) to equivalent airspeed (EAS).
+  - [EAStoTAS](https://docs.pathsim.org/flight/v0.1.0/api#EAStoTAS): Convert equivalent airspeed (EAS) to true airspeed (TAS).
+  - [MachtoCAS](https://docs.pathsim.org/flight/v0.1.0/api#MachtoCAS): Convert Mach value to calibrated airspeed (CAS).
+
 ## PathSim-RF (v0.1.1)
 
 - [PathSim-RF API Reference](https://docs.pathsim.org/rf/v0.1.1/api): Full API documentation
@@ -418,6 +440,7 @@
 
 - [PathSim Homepage](https://pathsim.org): Project homepage
 - [PathView Editor](https://view.pathsim.org): Browser-based visual block diagram editor
+- [PathSim Codegen](https://code.pathsim.org): Generate C99 code from PathSim models
 - [GitHub](https://github.com/pathsim): Source code repositories
 - [PyPI](https://pypi.org/project/pathsim): Python package
 - [JOSS Paper](https://doi.org/10.21105/joss.07484): Published paper
