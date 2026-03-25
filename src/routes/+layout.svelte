@@ -5,7 +5,7 @@
 	import { page } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import LegacyBanner from '$lib/components/common/LegacyBanner.svelte';
+
 	import { Header, MobileDrawer } from '$lib/components/layout';
 	import { packageOrder, type PackageId } from '$lib/config/packages';
 	import { CDN } from '$lib/config/cdn';
@@ -118,7 +118,6 @@
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <div class="app">
-	<LegacyBanner />
 	<Header onMenuClick={openMobileMenu} onThemeToggle={toggleTheme} {theme} />
 	<div id="main-content" class="main-content">
 		{@render children()}
