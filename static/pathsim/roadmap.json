@@ -1,19 +1,8 @@
 {
   "package": "pathsim",
   "repo": "pathsim/pathsim",
-  "updated": "2026-03-20T01:50:50Z",
+  "updated": "2026-03-27T07:05:00Z",
   "issues": [
-    {
-      "number": 172,
-      "title": "Fine Grained Diagnostics",
-      "body": "If simulation doesnt converge, we want to know where the problem comes from. Which block for the ode solvers. Which connection for the algebraic loop solvers. We want block wise error and convergence metrics. \n\nLuckiely everything is there already, we just need to expose it through a nice interface.",
-      "labels": [
-        "enhancement",
-        "numerics"
-      ],
-      "url": "https://github.com/pathsim/pathsim/issues/172",
-      "created": "2025-12-22T22:18:45Z"
-    },
     {
       "number": 160,
       "title": "ODE Solver Error Control",
