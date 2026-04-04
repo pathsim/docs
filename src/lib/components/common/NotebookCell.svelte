@@ -301,8 +301,9 @@
 		border-radius: 0;
 	}
 
-	/* Spinning loader for running/pending states */
-	.notebook-cell .icon-btn:disabled :global(svg) {
+	/* Spinning loader for running/pending states only */
+	.notebook-cell.running .icon-btn:disabled :global(svg),
+	.notebook-cell.pending .icon-btn:disabled :global(svg) {
 		animation: spin 1s linear infinite;
 	}
 
