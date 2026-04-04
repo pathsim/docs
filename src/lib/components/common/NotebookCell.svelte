@@ -78,10 +78,12 @@
 		status: 'idle',
 		executionCount: 0
 	});
+	let globalExecuting = $state(false);
 
 	// Computed states
 	let isRunning = $derived(cellState.status === 'running');
 	let isPending = $derived(cellState.status === 'pending');
+	let isBlocked = $derived(globalExecuting && !isRunning && !isPending);
 	let hasLiveOutput = $derived(stdout || stderr || plots.length > 0 || error);
 	let hasPrecomputedOutput = $derived(
 		precomputedStdout || precomputedStderr || figureUrls.length > 0
@@ -158,7 +160,7 @@
 	 * Handle run button click - triggers prerequisite chain
 	 */
 	async function handleRun() {
-		if (isRunning || isPending) return;
+		if (isRunning || isPending || globalExecuting) return;
 
 		const settings = get(notebookSettingsStore);
 		const result = await notebookStore.runWithPrerequisites(id, settings.forcePrerequisites);
@@ -193,7 +195,7 @@
 	onMount(() => {
 		notebookStore.registerCell(id, executeCell, prerequisites);
 
-		// Subscribe to cell state changes
+		// Subscribe to cell state changes and global execution lock
 		const unsubscribe = notebookStore.subscribe((state) => {
 			const cell = state.cells.get(id);
 			if (cell) {
@@ -202,6 +204,7 @@
 					executionCount: cell.executionCount
 				};
 			}
+			globalExecuting = state.executing;
 		});
 
 		return () => {
@@ -234,7 +237,7 @@
 						<Icon name="loader" size={14} />
 					</button>
 				{:else}
-					<button class="icon-btn" onclick={handleRun} use:tooltip={'Run cell'}>
+					<button class="icon-btn" onclick={handleRun} disabled={isBlocked} use:tooltip={isBlocked ? 'Execution in progress...' : 'Run cell'}>
 						<Icon name="play" size={14} />
 					</button>
 				{/if}

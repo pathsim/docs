@@ -300,8 +300,17 @@ plt.close('all')
 	`);
 }
 
-// Handle messages from main thread
-self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
+// Sequential message queue to prevent concurrent execution.
+// The async onmessage handler doesn't block the event loop during awaits,
+// so without a queue, multiple exec messages could overlap and corrupt
+// shared state (currentExecId, Python namespace).
+let messageQueue: Promise<void> = Promise.resolve();
+
+self.onmessage = (event: MessageEvent<WorkerRequest>) => {
+	messageQueue = messageQueue.then(() => handleMessage(event));
+};
+
+async function handleMessage(event: MessageEvent<WorkerRequest>): Promise<void> {
 	const { type } = event.data;
 
 	try {
@@ -330,4 +339,4 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
 			error: error instanceof Error ? error.message : String(error)
 		});
 	}
-};
+}

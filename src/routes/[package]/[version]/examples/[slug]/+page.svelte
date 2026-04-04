@@ -7,7 +7,7 @@
 	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
 	import { notebookStore } from '$lib/stores/notebookStore';
-	import { reset as resetPyodide } from '$lib/pyodide';
+	import { terminate as terminatePyodide } from '$lib/pyodide';
 	import { groupByCategory } from '$lib/notebook/manifest';
 	import { packages } from '$lib/config/packages';
 	import type { PageData } from './$types';
@@ -40,13 +40,17 @@
 		};
 	});
 
-	// Reset Pyodide namespace and notebook store when example changes
+	// Reset execution state when example changes.
+	// Uses resetAllCells() instead of reset() to avoid wiping newly registered
+	// cells — Svelte 5 runs $effect cleanup AFTER the DOM update, so new cells
+	// have already registered by the time this cleanup fires.
+	// terminate() fully kills the worker so the next execution starts fresh.
 	$effect(() => {
 		const slug = data.meta.slug;
 
 		return () => {
-			notebookStore.reset();
-			resetPyodide();
+			notebookStore.resetAllCells();
+			terminatePyodide();
 		};
 	});
 
