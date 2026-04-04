@@ -40,12 +40,17 @@
 		};
 	});
 
-	// Reset Pyodide namespace and notebook store when example changes
+	// Reset execution state when example changes.
+	// Uses resetAllCells() instead of reset() to avoid wiping newly registered
+	// cells — Svelte 5 runs $effect cleanup AFTER the DOM update, so new cells
+	// have already registered by the time this cleanup fires.
+	// resetPyodide() clears the Python namespace but keeps the worker alive.
+	// Package/version changes are handled lazily by initPyodide() on next execution.
 	$effect(() => {
 		const slug = data.meta.slug;
 
 		return () => {
-			notebookStore.reset();
+			notebookStore.resetAllCells();
 			resetPyodide();
 		};
 	});

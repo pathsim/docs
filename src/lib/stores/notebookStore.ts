@@ -28,10 +28,13 @@ export interface CellState {
 interface NotebookState {
 	/** Registry of all cells by ID */
 	cells: Map<string, CellState>;
+	/** Global lock to prevent overlapping execution chains */
+	executing: boolean;
 }
 
 const initialState: NotebookState = {
-	cells: new Map()
+	cells: new Map(),
+	executing: false
 };
 
 function createNotebookStore() {
@@ -191,6 +194,15 @@ function createNotebookStore() {
 			const state = get({ subscribe });
 			const cells = state.cells;
 
+			// Prevent overlapping execution chains
+			if (state.executing) {
+				return {
+					success: false,
+					executedCells: [],
+					error: 'Another execution is already in progress'
+				};
+			}
+
 			// Check for circular dependencies
 			const cycle = detectCircularDeps(cellId, cells);
 			if (cycle) {
@@ -213,6 +225,9 @@ function createNotebookStore() {
 						return cell && (cell.status !== 'success' || id === cellId);
 					});
 
+			// Acquire execution lock
+			update((s) => ({ ...s, executing: true }));
+
 			// Mark all cells as pending
 			for (const id of cellsToRun) {
 				this.setCellStatus(id, 'pending');
@@ -220,20 +235,37 @@ function createNotebookStore() {
 
 			const executedCells: string[] = [];
 
-			// Execute in order
-			for (const id of cellsToRun) {
-				const cell = get({ subscribe }).cells.get(id);
-				if (!cell) continue;
+			try {
+				// Execute in order
+				for (const id of cellsToRun) {
+					const cell = get({ subscribe }).cells.get(id);
+					if (!cell) continue;
 
-				this.setCellStatus(id, 'running');
+					this.setCellStatus(id, 'running');
 
-				try {
-					await cell.execute();
-					// Status will be set to 'success' or 'error' by the cell itself
-					const updatedCell = get({ subscribe }).cells.get(id);
-					if (updatedCell?.status === 'error') {
-						// Stop execution chain on error
-						// Reset remaining pending cells to idle
+					try {
+						await cell.execute();
+						// Status will be set to 'success' or 'error' by the cell itself
+						const updatedCell = get({ subscribe }).cells.get(id);
+						if (updatedCell?.status === 'error') {
+							// Stop execution chain on error
+							// Reset remaining pending cells to idle
+							for (const remainingId of cellsToRun) {
+								const remaining = get({ subscribe }).cells.get(remainingId);
+								if (remaining?.status === 'pending') {
+									this.setCellStatus(remainingId, 'idle');
+								}
+							}
+							return {
+								success: false,
+								executedCells,
+								error: `Cell "${id}" failed`
+							};
+						}
+						executedCells.push(id);
+					} catch (err) {
+						this.setCellStatus(id, 'error');
+						// Reset remaining pending cells
 						for (const remainingId of cellsToRun) {
 							const remaining = get({ subscribe }).cells.get(remainingId);
 							if (remaining?.status === 'pending') {
@@ -243,28 +275,15 @@ function createNotebookStore() {
 						return {
 							success: false,
 							executedCells,
-							error: `Cell "${id}" failed`
+							error: err instanceof Error ? err.message : String(err)
 						};
 					}
-					executedCells.push(id);
-				} catch (err) {
-					this.setCellStatus(id, 'error');
-					// Reset remaining pending cells
-					for (const remainingId of cellsToRun) {
-						const remaining = get({ subscribe }).cells.get(remainingId);
-						if (remaining?.status === 'pending') {
-							this.setCellStatus(remainingId, 'idle');
-						}
-					}
-					return {
-						success: false,
-						executedCells,
-						error: err instanceof Error ? err.message : String(err)
-					};
 				}
-			}
 
-			return { success: true, executedCells };
+				return { success: true, executedCells };
+			} finally {
+				update((s) => ({ ...s, executing: false }));
+			}
 		},
 
 		/**
@@ -283,6 +302,15 @@ function createNotebookStore() {
 				return { success: true, executedCells: [] };
 			}
 
+			// Prevent overlapping execution chains
+			if (state.executing) {
+				return {
+					success: false,
+					executedCells: [],
+					error: 'Another execution is already in progress'
+				};
+			}
+
 			// Get all cell IDs and build a combined execution order
 			const allCellIds = [...cells.keys()];
 			const visited = new Set<string>();
@@ -299,6 +327,9 @@ function createNotebookStore() {
 				}
 			}
 
+			// Acquire execution lock
+			update((s) => ({ ...s, executing: true }));
+
 			// Mark all cells as pending
 			for (const id of executionOrder) {
 				this.setCellStatus(id, 'pending');
@@ -306,18 +337,34 @@ function createNotebookStore() {
 
 			const executedCells: string[] = [];
 
-			// Execute in order
-			for (const id of executionOrder) {
-				const cell = get({ subscribe }).cells.get(id);
-				if (!cell) continue;
+			try {
+				// Execute in order
+				for (const id of executionOrder) {
+					const cell = get({ subscribe }).cells.get(id);
+					if (!cell) continue;
 
-				this.setCellStatus(id, 'running');
+					this.setCellStatus(id, 'running');
 
-				try {
-					await cell.execute();
-					const updatedCell = get({ subscribe }).cells.get(id);
-					if (updatedCell?.status === 'error') {
-						// Reset remaining pending cells
+					try {
+						await cell.execute();
+						const updatedCell = get({ subscribe }).cells.get(id);
+						if (updatedCell?.status === 'error') {
+							// Reset remaining pending cells
+							for (const remainingId of executionOrder) {
+								const remaining = get({ subscribe }).cells.get(remainingId);
+								if (remaining?.status === 'pending') {
+									this.setCellStatus(remainingId, 'idle');
+								}
+							}
+							return {
+								success: false,
+								executedCells,
+								error: `Cell "${id}" failed`
+							};
+						}
+						executedCells.push(id);
+					} catch (err) {
+						this.setCellStatus(id, 'error');
 						for (const remainingId of executionOrder) {
 							const remaining = get({ subscribe }).cells.get(remainingId);
 							if (remaining?.status === 'pending') {
@@ -327,27 +374,15 @@ function createNotebookStore() {
 						return {
 							success: false,
 							executedCells,
-							error: `Cell "${id}" failed`
+							error: err instanceof Error ? err.message : String(err)
 						};
 					}
-					executedCells.push(id);
-				} catch (err) {
-					this.setCellStatus(id, 'error');
-					for (const remainingId of executionOrder) {
-						const remaining = get({ subscribe }).cells.get(remainingId);
-						if (remaining?.status === 'pending') {
-							this.setCellStatus(remainingId, 'idle');
-						}
-					}
-					return {
-						success: false,
-						executedCells,
-						error: err instanceof Error ? err.message : String(err)
-					};
 				}
-			}
 
-			return { success: true, executedCells };
+				return { success: true, executedCells };
+			} finally {
+				update((s) => ({ ...s, executing: false }));
+			}
 		},
 
 		/**
@@ -361,13 +396,8 @@ function createNotebookStore() {
 		 * Check if any cells are currently running or pending
 		 */
 		isExecuting(): boolean {
-			const cells = get({ subscribe }).cells;
-			for (const cell of cells.values()) {
-				if (cell.status === 'running' || cell.status === 'pending') {
-					return true;
-				}
-			}
-			return false;
+			const state = get({ subscribe });
+			return state.executing;
 		},
 
 		/**
