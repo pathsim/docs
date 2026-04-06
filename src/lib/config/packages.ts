@@ -199,11 +199,13 @@ scope.plot()`,
 		docs: 'vehicle',
 		api: 'vehicle/api',
 		examples: null,
-		pypi: null,
+		pypi: `${external.pypi}/pathsim-vehicle`,
 		conda: null,
 		github: `${external.github}/pathsim-vehicle`,
 		features: [],
-		installation: [],
+		installation: [
+			{ name: 'pip', command: 'pip install pathsim-vehicle' }
+		],
 		quickstart: null,
 		apiModules: [
 			{ name: 'pathsim_vehicle.tires', description: 'Pacejka magic formula, linear tire models' },
@@ -225,11 +227,13 @@ scope.plot()`,
 		docs: 'flight',
 		api: 'flight/api',
 		examples: null,
-		pypi: null,
+		pypi: `${external.pypi}/pathsim-flight`,
 		conda: null,
 		github: `${external.github}/pathsim-flight`,
 		features: [],
-		installation: [],
+		installation: [
+			{ name: 'pip', command: 'pip install pathsim-flight' }
+		],
 		quickstart: null,
 		apiModules: [],
 		pyodidePackages: [
