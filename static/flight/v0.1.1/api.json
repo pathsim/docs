@@ -1,0 +1,762 @@
+{
+  "package": "flight",
+  "modules": {
+    "pathsim_flight.atmosphere.international_standard_atmosphere": {
+      "name": "pathsim_flight.atmosphere.international_standard_atmosphere",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "ISAtmosphere",
+          "description": "International Standard Atmosphere.",
+          "docstring_html": "<p>International Standard Atmosphere.</p>\n<p>For a given geometric altitude and temperature deviation from standard day,\ncompute the pressure, density, temperature, and speed of sound.</p>\n<p>See - <a class=\"reference external\" href=\"https://seanmcleod70.github.io/FlightDynamicsCalcs/InternationalStandardAtmosphere.html\">https://seanmcleod70.github.io/FlightDynamicsCalcs/InternationalStandardAtmosphere.html</a></p>\n",
+          "source": "class ISAtmosphere(Function):\n    \"\"\"International Standard Atmosphere.\n\n    For a given geometric altitude and temperature deviation from standard day, \n    compute the pressure, density, temperature, and speed of sound.\n\n    See - https://seanmcleod70.github.io/FlightDynamicsCalcs/InternationalStandardAtmosphere.html\n    \"\"\"\n\n    input_port_labels = {\n        \"altitude\": 0,\n        \"temp_deviation\": 1\n    }\n\n    output_port_labels = {\n        \"pressure\": 0,\n        \"density\": 1,\n        \"temperature\": 2,\n        \"speed_of_sound\": 3\n    }\n\n    def __init__(self):\n        super().__init__(func=self._eval)\n\n    # Constants\n    R = 287.0528    # Specific gas constant\n    g0 = 9.80665    # Gravitational acceleration \n    gamma = 1.4     # Air specific heat ratio\n    r0 = 6356766    # Earth radius\n\n    StdSL_pressure = 101325         # Pa\n    StdSL_speed_of_sound = 340.294  # m/s\n\n    # Atmosphere bands\n    AtmosphereBand = namedtuple('AtmosphereBand', ['start_alt', 'end_alt', \n                                                   'base_temperature', 'base_pressure',\n                                                   'lapse_rate'])\n\n    atmosphere_bands = [\n        AtmosphereBand(0,     11000, 288.15, 101325,    -0.0065),\n        AtmosphereBand(11000, 20000, 216.65, 22632,     0.0),\n        AtmosphereBand(20000, 32000, 216.65, 5474.9,    0.001),\n        AtmosphereBand(32000, 47000, 228.65, 868.02,    0.0028),\n        AtmosphereBand(47000, 51000, 270.65, 110.91,    0.0),\n        AtmosphereBand(51000, 71000, 270.65, 66.939,    -0.0028),\n        AtmosphereBand(71000, 84852, 214.65, 3.9564,    -0.002),\n        ]\n\n    def _eval(self, geometric_altitude, delta_temp=0):\n        geopot_altitude = self.geopotential_altitude(geometric_altitude)\n        band_data = self.get_atmosphere_band(geopot_altitude)\n\n        dh = geopot_altitude - band_data.start_alt\n        lapse_rate = band_data.lapse_rate\n\n        temp = 0\n        pressure = 0\n        density = 0\n        speed_of_sound = 0\n\n        if lapse_rate != 0.0:\n            temp = band_data.base_temperature + lapse_rate * dh\n            pressure = band_data.base_pressure * math.pow(temp/band_data.base_temperature, -self.g0/(lapse_rate * self.R))\n        else:\n            temp = band_data.base_temperature\n            pressure = band_data.base_pressure * math.exp((-self.g0 * dh)/(self.R * temp))\n\n        density = pressure/(self.R * (temp + delta_temp))\n        speed_of_sound = math.sqrt(self.gamma * self.R * (temp + delta_temp))\n\n        return (pressure, density, temp + delta_temp, speed_of_sound)\n\n    def geopotential_altitude(self, geometric_altitude):\n        return (geometric_altitude * self.r0)/(self.r0 + geometric_altitude)\n\n    def geometric_altitude(self, geopotential_altitude):\n        return (self.r0 * geopotential_altitude)/(self.r0 - geopotential_altitude)\n\n    def get_atmosphere_band(self, geopot_altitude):\n        for band in self.atmosphere_bands:\n            if geopot_altitude >= band.start_alt and geopot_altitude <= band.end_alt:\n                return band\n        raise IndexError('Altitude out of range')",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self):\n    super().__init__(func=self._eval)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _eval(self, geometric_altitude, delta_temp=0):\n    geopot_altitude = self.geopotential_altitude(geometric_altitude)\n    band_data = self.get_atmosphere_band(geopot_altitude)\n\n    dh = geopot_altitude - band_data.start_alt\n    lapse_rate = band_data.lapse_rate\n\n    temp = 0\n    pressure = 0\n    density = 0\n    speed_of_sound = 0\n\n    if lapse_rate != 0.0:\n        temp = band_data.base_temperature + lapse_rate * dh\n        pressure = band_data.base_pressure * math.pow(temp/band_data.base_temperature, -self.g0/(lapse_rate * self.R))\n    else:\n        temp = band_data.base_temperature\n        pressure = band_data.base_pressure * math.exp((-self.g0 * dh)/(self.R * temp))\n\n    density = pressure/(self.R * (temp + delta_temp))\n    speed_of_sound = math.sqrt(self.gamma * self.R * (temp + delta_temp))\n\n    return (pressure, density, temp + delta_temp, speed_of_sound)",
+              "signature": "(geometric_altitude, delta_temp = 0)",
+              "parameters": [
+                {
+                  "name": "geometric_altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "delta_temp",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "geopotential_altitude",
+              "description": "",
+              "docstring_html": "",
+              "source": "def geopotential_altitude(self, geometric_altitude):\n    return (geometric_altitude * self.r0)/(self.r0 + geometric_altitude)",
+              "signature": "(geometric_altitude)",
+              "parameters": [
+                {
+                  "name": "geometric_altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "geometric_altitude",
+              "description": "",
+              "docstring_html": "",
+              "source": "def geometric_altitude(self, geopotential_altitude):\n    return (self.r0 * geopotential_altitude)/(self.r0 - geopotential_altitude)",
+              "signature": "(geopotential_altitude)",
+              "parameters": [
+                {
+                  "name": "geopotential_altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "get_atmosphere_band",
+              "description": "",
+              "docstring_html": "",
+              "source": "def get_atmosphere_band(self, geopot_altitude):\n    for band in self.atmosphere_bands:\n        if geopot_altitude >= band.start_alt and geopot_altitude <= band.end_alt:\n            return band\n    raise IndexError('Altitude out of range')",
+              "signature": "(geopot_altitude)",
+              "parameters": [
+                {
+                  "name": "geopot_altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'altitude': 0, 'temp_deviation': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'pressure': 0, 'density': 1, 'temperature': 2, 'speed_of_sound': 3}"
+            },
+            {
+              "name": "R",
+              "description": "",
+              "type": null,
+              "value": "287.0528"
+            },
+            {
+              "name": "g0",
+              "description": "",
+              "type": null,
+              "value": "9.80665"
+            },
+            {
+              "name": "gamma",
+              "description": "",
+              "type": null,
+              "value": "1.4"
+            },
+            {
+              "name": "r0",
+              "description": "",
+              "type": null,
+              "value": "6356766"
+            },
+            {
+              "name": "StdSL_pressure",
+              "description": "",
+              "type": null,
+              "value": "101325"
+            },
+            {
+              "name": "StdSL_speed_of_sound",
+              "description": "",
+              "type": null,
+              "value": "340.294"
+            },
+            {
+              "name": "AtmosphereBand",
+              "description": "",
+              "type": null,
+              "value": "namedtuple('AtmosphereBand', ['start_alt', 'end_alt', 'base_temperature', 'base_pressure', 'lapse_rate'])"
+            },
+            {
+              "name": "atmosphere_bands",
+              "description": "",
+              "type": null,
+              "value": "[AtmosphereBand(0, 11000, 288.15, 101325, -0.0065), AtmosphereBand(11000, 20000, 216.65, 22632, 0.0), AtmosphereBand(20000, 32000, 216.65, 5474.9, 0.001), AtmosphereBand(32000, 47000, 228.65, 868.02, 0.0028), AtmosphereBand(47000, 51000, 270.65, 110.91, 0.0), AtmosphereBand(51000, 71000, 270.65, 66.939, -0.0028), AtmosphereBand(71000, 84852, 214.65, 3.9564, -0.002)]"
+            }
+          ],
+          "parameters": []
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_flight.jsbsim.jsbsim_wrapper": {
+      "name": "pathsim_flight.jsbsim.jsbsim_wrapper",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "JSBSimWrapper",
+          "description": "A wrapper for the JSBSim flight dynamics model, which allows it to be",
+          "docstring_html": "<p>A wrapper for the JSBSim flight dynamics model, which allows it to be\nused as a block in PathSim.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>T <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>The time step for the JSBSim model, in seconds. Default is 1/120, which corresponds\nto 120 Hz.</dd>\n<dt>input_properties <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">list of str</span></dt>\n<dd>A list of JSBSim property names that correspond to the input ports of the block.</dd>\n<dt>output_properties <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">list of str</span></dt>\n<dd>A list of JSBSim property names that correspond to the output ports of the block.</dd>\n<dt>JSBSim_path <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>The file path to the JSBSim installation. If None, it will look for JSBSim files\nin the         pip install location.</dd>\n<dt>aircraft_model <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>The name of the aircraft model to load in JSBSim. Default is '737'.</dd>\n<dt>trim_airspeed <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>The airspeed to use for trimming the aircraft, as KCAS. Default is 200 KCAS.</dd>\n<dt>trim_altitude <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>The altitude ASL to use for trimming the aircraft, in feet. Default is 1000 ft ASL.</dd>\n<dt>trim_gamma <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>The flight path angle to use for trimming the aircraft, in degrees. Default is\n0 degrees (level flight).</dd>\n</dl>\n",
+          "source": "class JSBSimWrapper(Wrapper):\n    \"\"\"A wrapper for the JSBSim flight dynamics model, which allows it to be\n    used as a block in PathSim.\n\n    Parameters\n    ----------\n    T : float\n        The time step for the JSBSim model, in seconds. Default is 1/120, which corresponds\n        to 120 Hz.\n    input_properties : list of str\n        A list of JSBSim property names that correspond to the input ports of the block. \n    output_properties : list of str\n        A list of JSBSim property names that correspond to the output ports of the block.\n    JSBSim_path : str\n        The file path to the JSBSim installation. If None, it will look for JSBSim files \n        in the         pip install location.\n    aircraft_model : str\n        The name of the aircraft model to load in JSBSim. Default is '737'.\n    trim_airspeed : float\n        The airspeed to use for trimming the aircraft, as KCAS. Default is 200 KCAS.\n    trim_altitude : float\n        The altitude ASL to use for trimming the aircraft, in feet. Default is 1000 ft ASL.\n    trim_gamma : float\n        The flight path angle to use for trimming the aircraft, in degrees. Default is \n        0 degrees (level flight).\n    \"\"\"\n\n    input_port_labels = None\n\n    output_port_labels = None\n\n    # TODO: Probably need to add some additional parameters, e.g. ground trim versus \n    # full air trim versus no trim, gear position, flap position.\n\n    def __init__(self, T=1/120, input_properties=None, output_properties=None, JSBSim_path=None,\n                 aircraft_model='737', trim_airspeed=200, trim_altitude=1000, trim_gamma=0):\n        super().__init__(func=self._func, T=T)\n\n        self.input_properties = input_properties if input_properties is not None else []\n        self.output_properties = output_properties if output_properties is not None else []\n\n        # Init JSBSim, load aircraft, trim with initial conditions\n        self.init_fdm(JSBSim_path, aircraft_model, T)\n        self.trim(trim_airspeed, trim_altitude, trim_gamma)\n\n    def init_fdm(self, JSBSim_path, aircraft_model, T):\n        # Avoid flooding the console with log messages\n        jsbsim.FGJSBBase().debug_lvl = 0\n\n        # Create a flight dynamics model (FDM) instance. \n        # None for JSBSim_path means it will look for JSBSim files in pip install location.\n        self.fdm = jsbsim.FGFDMExec(JSBSim_path)\n\n        # Load the aircraft model\n        self.fdm.load_model(aircraft_model)\n\n        # Set the time step\n        self.fdm.set_dt(T)\n\n    def trim(self, trim_airspeed, trim_alitude, trim_gamma):\n        # Set engines running\n        self.fdm['propulsion/set-running'] = -1\n\n        # Set initial conditions for trim\n        self.fdm['ic/h-sl-ft'] = trim_alitude\n        self.fdm['ic/vc-kts'] = trim_airspeed\n        self.fdm['ic/gamma-deg'] = trim_gamma\n        self.fdm.run_ic()\n\n        # Calculate trim solution\n        self.fdm['simulation/do_simple_trim'] = 1\n\n    def _func(self, *u):\n        # PathSim's Wrapper base class passes the input vector as separate arguments, \n        # so we need to collect them into a list\n\n        # Confirm that the input vector u has the expected length\n        if len(u) != len(self.input_properties):\n            raise ValueError(f\"Expected {len(self.input_properties)} inputs, but got {len(u)}\")\n\n        # Pass input vector u to JSBSim by setting the corresponding properties\n        for i in range(len(u)):\n            self.fdm[self.input_properties[i]] = u[i]\n\n        # Run the JSBSim model for one time step\n        self.fdm.run()  \n\n        # Extract output properties from JSBSim and return as vector y\n        y = []\n        for i in range(len(self.output_properties)):\n            y.append(self.fdm[self.output_properties[i]])\n\n        return y",
+          "bases": [
+            "pathsim.blocks.Wrapper"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, T=1/120, input_properties=None, output_properties=None, JSBSim_path=None,\n             aircraft_model='737', trim_airspeed=200, trim_altitude=1000, trim_gamma=0):\n    super().__init__(func=self._func, T=T)\n\n    self.input_properties = input_properties if input_properties is not None else []\n    self.output_properties = output_properties if output_properties is not None else []\n\n    # Init JSBSim, load aircraft, trim with initial conditions\n    self.init_fdm(JSBSim_path, aircraft_model, T)\n    self.trim(trim_airspeed, trim_altitude, trim_gamma)",
+              "signature": "(T = 1 / 120, input_properties = None, output_properties = None, JSBSim_path = None, aircraft_model = '737', trim_airspeed = 200, trim_altitude = 1000, trim_gamma = 0)",
+              "parameters": [
+                {
+                  "name": "T",
+                  "type": null,
+                  "default": "1 / 120",
+                  "description": ""
+                },
+                {
+                  "name": "input_properties",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "output_properties",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "JSBSim_path",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "aircraft_model",
+                  "type": null,
+                  "default": "'737'",
+                  "description": ""
+                },
+                {
+                  "name": "trim_airspeed",
+                  "type": null,
+                  "default": "200",
+                  "description": ""
+                },
+                {
+                  "name": "trim_altitude",
+                  "type": null,
+                  "default": "1000",
+                  "description": ""
+                },
+                {
+                  "name": "trim_gamma",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "init_fdm",
+              "description": "",
+              "docstring_html": "",
+              "source": "def init_fdm(self, JSBSim_path, aircraft_model, T):\n    # Avoid flooding the console with log messages\n    jsbsim.FGJSBBase().debug_lvl = 0\n\n    # Create a flight dynamics model (FDM) instance. \n    # None for JSBSim_path means it will look for JSBSim files in pip install location.\n    self.fdm = jsbsim.FGFDMExec(JSBSim_path)\n\n    # Load the aircraft model\n    self.fdm.load_model(aircraft_model)\n\n    # Set the time step\n    self.fdm.set_dt(T)",
+              "signature": "(JSBSim_path, aircraft_model, T)",
+              "parameters": [
+                {
+                  "name": "JSBSim_path",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "aircraft_model",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "trim",
+              "description": "",
+              "docstring_html": "",
+              "source": "def trim(self, trim_airspeed, trim_alitude, trim_gamma):\n    # Set engines running\n    self.fdm['propulsion/set-running'] = -1\n\n    # Set initial conditions for trim\n    self.fdm['ic/h-sl-ft'] = trim_alitude\n    self.fdm['ic/vc-kts'] = trim_airspeed\n    self.fdm['ic/gamma-deg'] = trim_gamma\n    self.fdm.run_ic()\n\n    # Calculate trim solution\n    self.fdm['simulation/do_simple_trim'] = 1",
+              "signature": "(trim_airspeed, trim_alitude, trim_gamma)",
+              "parameters": [
+                {
+                  "name": "trim_airspeed",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "trim_alitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "trim_gamma",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_func",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _func(self, *u):\n    # PathSim's Wrapper base class passes the input vector as separate arguments, \n    # so we need to collect them into a list\n\n    # Confirm that the input vector u has the expected length\n    if len(u) != len(self.input_properties):\n        raise ValueError(f\"Expected {len(self.input_properties)} inputs, but got {len(u)}\")\n\n    # Pass input vector u to JSBSim by setting the corresponding properties\n    for i in range(len(u)):\n        self.fdm[self.input_properties[i]] = u[i]\n\n    # Run the JSBSim model for one time step\n    self.fdm.run()  \n\n    # Extract output properties from JSBSim and return as vector y\n    y = []\n    for i in range(len(self.output_properties)):\n        y.append(self.fdm[self.output_properties[i]])\n\n    return y",
+              "signature": "(u = ())",
+              "parameters": [
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": "()",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "input_properties",
+              "description": "",
+              "type": null,
+              "value": "input_properties if input_properties is not None else []"
+            },
+            {
+              "name": "output_properties",
+              "description": "",
+              "type": null,
+              "value": "output_properties if output_properties is not None else []"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "T",
+              "type": null,
+              "default": "1 / 120",
+              "description": "The time step for the JSBSim model, in seconds. Default is 1/120, which corresponds to 120 Hz."
+            },
+            {
+              "name": "input_properties",
+              "type": null,
+              "default": "None",
+              "description": "A list of JSBSim property names that correspond to the input ports of the block."
+            },
+            {
+              "name": "output_properties",
+              "type": null,
+              "default": "None",
+              "description": "A list of JSBSim property names that correspond to the output ports of the block."
+            },
+            {
+              "name": "JSBSim_path",
+              "type": null,
+              "default": "None",
+              "description": "The file path to the JSBSim installation. If None, it will look for JSBSim files in the pip install location."
+            },
+            {
+              "name": "aircraft_model",
+              "type": null,
+              "default": "'737'",
+              "description": "The name of the aircraft model to load in JSBSim. Default is '737'."
+            },
+            {
+              "name": "trim_airspeed",
+              "type": null,
+              "default": "200",
+              "description": "The airspeed to use for trimming the aircraft, as KCAS. Default is 200 KCAS."
+            },
+            {
+              "name": "trim_altitude",
+              "type": null,
+              "default": "1000",
+              "description": "The altitude ASL to use for trimming the aircraft, in feet. Default is 1000 ft ASL."
+            },
+            {
+              "name": "trim_gamma",
+              "type": null,
+              "default": "0",
+              "description": "The flight path angle to use for trimming the aircraft, in degrees. Default is 0 degrees (level flight)."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_flight.utils.airspeed_conversions": {
+      "name": "pathsim_flight.utils.airspeed_conversions",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "CAStoMach",
+          "description": "Convert calibrated airspeed (CAS) to Mach value.",
+          "docstring_html": "<p>Convert calibrated airspeed (CAS) to Mach value.\nCAS in m/s altitude in m.</p>\n",
+          "source": "class CAStoMach(Function):\n    \"\"\"Convert calibrated airspeed (CAS) to Mach value.\n    CAS in m/s altitude in m.\n    \"\"\"\n\n    input_port_labels = {\n        \"cas\": 0,\n        \"altitude\": 1\n    }\n\n    output_port_labels = {\n        \"mach\": 0\n    }\n\n    def __init__(self):\n        super().__init__(func=self._eval)\n\n    def _eval(self, cas, altitude):\n        \"\"\"Convert Calibrated airspeed to Mach value.\n\n        Assume m/s for cas and m for altitude.\n\n        Based on the formulas in the US Air Force Aircraft Performance Flight\n        Testing Manual (AFFTC-TIH-99-01), in particular sections 4.6 to 4.8.\n\n        The subsonic and supersonic Mach number equations are used with the simple\n        substitutions of (Vc/asl) for M and Psl for P. However, the condition for\n        which the equations are used is no longer subsonic (M < 1) or supersonic\n        (M > 1) but rather calibrated airspeed being less or greater than the\n        speed of sound ( asl ), standard day, sea level (661.48 knots).\n        \"\"\"\n        ISA = ISAtmosphere()\n\n        pressure, _, _, _ = ISA._eval(altitude)\n\n        if cas < ISAtmosphere.StdSL_speed_of_sound:\n            # Bernoulli's compressible equation (4.11)\n            qc = ISAtmosphere.StdSL_pressure * (\n                math.pow(1 + 0.2 * math.pow(cas / ISAtmosphere.StdSL_speed_of_sound, 2), 3.5) - 1\n            )\n        else:\n            # Rayleigh's supersonic pitot equation (4.16)\n            qc = ISAtmosphere.StdSL_pressure * (\n                (\n                    (166.9215801 * math.pow(cas / ISAtmosphere.StdSL_speed_of_sound, 7))\n                    / math.pow(7 * math.pow(cas / ISAtmosphere.StdSL_speed_of_sound, 2) - 1, 2.5)\n                )\n                - 1\n            )\n\n        # Solving for M in equation (4.11), also used as initial condition for supersonic case\n        mach = math.sqrt(5 * (math.pow(qc / pressure + 1, 2 / 7) - 1))\n\n        if mach > 1:\n            # Iterate equation (4.22) since M appears on both sides of the equation\n            for i in range(7):\n                mach = 0.88128485 * math.sqrt((qc / pressure + 1) * math.pow(1 - 1 / (7 * mach * mach), 2.5))\n\n        return mach",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self):\n    super().__init__(func=self._eval)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "Convert Calibrated airspeed to Mach value.",
+              "docstring_html": "<p>Convert Calibrated airspeed to Mach value.</p>\n<p>Assume m/s for cas and m for altitude.</p>\n<p>Based on the formulas in the US Air Force Aircraft Performance Flight\nTesting Manual (AFFTC-TIH-99-01), in particular sections 4.6 to 4.8.</p>\n<p>The subsonic and supersonic Mach number equations are used with the simple\nsubstitutions of (Vc/asl) for M and Psl for P. However, the condition for\nwhich the equations are used is no longer subsonic (M &lt; 1) or supersonic\n(M &gt; 1) but rather calibrated airspeed being less or greater than the\nspeed of sound ( asl ), standard day, sea level (661.48 knots).</p>\n",
+              "source": "def _eval(self, cas, altitude):\n    \"\"\"Convert Calibrated airspeed to Mach value.\n\n    Assume m/s for cas and m for altitude.\n\n    Based on the formulas in the US Air Force Aircraft Performance Flight\n    Testing Manual (AFFTC-TIH-99-01), in particular sections 4.6 to 4.8.\n\n    The subsonic and supersonic Mach number equations are used with the simple\n    substitutions of (Vc/asl) for M and Psl for P. However, the condition for\n    which the equations are used is no longer subsonic (M < 1) or supersonic\n    (M > 1) but rather calibrated airspeed being less or greater than the\n    speed of sound ( asl ), standard day, sea level (661.48 knots).\n    \"\"\"\n    ISA = ISAtmosphere()\n\n    pressure, _, _, _ = ISA._eval(altitude)\n\n    if cas < ISAtmosphere.StdSL_speed_of_sound:\n        # Bernoulli's compressible equation (4.11)\n        qc = ISAtmosphere.StdSL_pressure * (\n            math.pow(1 + 0.2 * math.pow(cas / ISAtmosphere.StdSL_speed_of_sound, 2), 3.5) - 1\n        )\n    else:\n        # Rayleigh's supersonic pitot equation (4.16)\n        qc = ISAtmosphere.StdSL_pressure * (\n            (\n                (166.9215801 * math.pow(cas / ISAtmosphere.StdSL_speed_of_sound, 7))\n                / math.pow(7 * math.pow(cas / ISAtmosphere.StdSL_speed_of_sound, 2) - 1, 2.5)\n            )\n            - 1\n        )\n\n    # Solving for M in equation (4.11), also used as initial condition for supersonic case\n    mach = math.sqrt(5 * (math.pow(qc / pressure + 1, 2 / 7) - 1))\n\n    if mach > 1:\n        # Iterate equation (4.22) since M appears on both sides of the equation\n        for i in range(7):\n            mach = 0.88128485 * math.sqrt((qc / pressure + 1) * math.pow(1 - 1 / (7 * mach * mach), 2.5))\n\n    return mach",
+              "signature": "(cas, altitude)",
+              "parameters": [
+                {
+                  "name": "cas",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'cas': 0, 'altitude': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'mach': 0}"
+            }
+          ],
+          "parameters": []
+        },
+        {
+          "name": "CAStoTAS",
+          "description": "Convert calibrated airspeed (CAS) to true airspeed (TAS).",
+          "docstring_html": "<p>Convert calibrated airspeed (CAS) to true airspeed (TAS).\nCAS and TAS in m/s altitude in m.</p>\n",
+          "source": "class CAStoTAS(Function):\n    \"\"\"Convert calibrated airspeed (CAS) to true airspeed (TAS). \n    CAS and TAS in m/s altitude in m.\n    \"\"\"\n\n    input_port_labels = {\n        \"cas\": 0,\n        \"altitude\": 1\n    }\n\n    output_port_labels = {\n        \"tas\": 0\n    }\n\n    def __init__(self):\n        super().__init__(func=self._eval)\n\n    def _eval(self, cas, altitude):\n        \"\"\"Assume m/s for input and output velocities and m for altitude.\"\"\"\n\n        mach = CAStoMach()._eval(cas, altitude)\n        ISA = ISAtmosphere()\n        _, _, _, speed_of_sound = ISA._eval(altitude)\n        return mach * speed_of_sound",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self):\n    super().__init__(func=self._eval)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "Assume m/s for input and output velocities and m for altitude.",
+              "docstring_html": "<p>Assume m/s for input and output velocities and m for altitude.</p>\n",
+              "source": "def _eval(self, cas, altitude):\n    \"\"\"Assume m/s for input and output velocities and m for altitude.\"\"\"\n\n    mach = CAStoMach()._eval(cas, altitude)\n    ISA = ISAtmosphere()\n    _, _, _, speed_of_sound = ISA._eval(altitude)\n    return mach * speed_of_sound",
+              "signature": "(cas, altitude)",
+              "parameters": [
+                {
+                  "name": "cas",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'cas': 0, 'altitude': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'tas': 0}"
+            }
+          ],
+          "parameters": []
+        },
+        {
+          "name": "TAStoCAS",
+          "description": "Convert true airspeed (TAS) to calibrated airspeed (CAS).",
+          "docstring_html": "<p>Convert true airspeed (TAS) to calibrated airspeed (CAS).\nTAS and CAS in m/s altitude in m.</p>\n",
+          "source": "class TAStoCAS(Function):\n    \"\"\"Convert true airspeed (TAS) to calibrated airspeed (CAS).\n    TAS and CAS in m/s altitude in m.\n    \"\"\"\n\n    input_port_labels = {\n        \"tas\": 0,\n        \"altitude\": 1\n    }\n\n    output_port_labels = {\n        \"cas\": 0\n    }\n\n    def __init__(self):\n        super().__init__(func=self._eval)\n\n    def _eval(self, tas, altitude):\n        \"\"\"Assume m/s for input and output velocities and m for altitude.\"\"\"\n\n        ISA = ISAtmosphere()\n        pressure, _, _, speed_of_sound = ISA._eval(altitude)\n\n        mach = tas / speed_of_sound\n        qc = pressure * ( math.pow(1 + 0.2*mach**2, 7/2) - 1)\n        cas = ISA.StdSL_speed_of_sound * math.sqrt( 5 * ( math.pow(qc/ISA.StdSL_pressure + 1, 2/7) - 1) ) \n        return cas",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self):\n    super().__init__(func=self._eval)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "Assume m/s for input and output velocities and m for altitude.",
+              "docstring_html": "<p>Assume m/s for input and output velocities and m for altitude.</p>\n",
+              "source": "def _eval(self, tas, altitude):\n    \"\"\"Assume m/s for input and output velocities and m for altitude.\"\"\"\n\n    ISA = ISAtmosphere()\n    pressure, _, _, speed_of_sound = ISA._eval(altitude)\n\n    mach = tas / speed_of_sound\n    qc = pressure * ( math.pow(1 + 0.2*mach**2, 7/2) - 1)\n    cas = ISA.StdSL_speed_of_sound * math.sqrt( 5 * ( math.pow(qc/ISA.StdSL_pressure + 1, 2/7) - 1) ) \n    return cas",
+              "signature": "(tas, altitude)",
+              "parameters": [
+                {
+                  "name": "tas",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'tas': 0, 'altitude': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'cas': 0}"
+            }
+          ],
+          "parameters": []
+        },
+        {
+          "name": "CAStoEAS",
+          "description": "Convert calibrated airspeed (CAS) to equivalent airspeed (EAS).",
+          "docstring_html": "<p>Convert calibrated airspeed (CAS) to equivalent airspeed (EAS).\nCAS and EAS in m/s altitude in m.</p>\n",
+          "source": "class CAStoEAS(Function):\n    \"\"\"Convert calibrated airspeed (CAS) to equivalent airspeed (EAS).\n    CAS and EAS in m/s altitude in m.\n    \"\"\"\n\n    input_port_labels = {\n        \"cas\": 0,\n        \"altitude\": 1\n    }\n\n    output_port_labels = {\n        \"eas\": 0\n    }\n\n    def __init__(self):\n        super().__init__(func=self._eval)\n\n    def _eval(self, cas, altitude):\n        \"\"\"Assume m/s for input and output velocities and m for altitude.\"\"\"\n        ISA = ISAtmosphere()\n        _, density, _, _ = ISA._eval(altitude)\n        _, rho0, _, _ = ISA._eval(0)  # Standard sea level density\n        eas = CAStoTAS()._eval(cas, altitude) * math.sqrt(density / rho0)\n        return eas",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self):\n    super().__init__(func=self._eval)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "Assume m/s for input and output velocities and m for altitude.",
+              "docstring_html": "<p>Assume m/s for input and output velocities and m for altitude.</p>\n",
+              "source": "def _eval(self, cas, altitude):\n    \"\"\"Assume m/s for input and output velocities and m for altitude.\"\"\"\n    ISA = ISAtmosphere()\n    _, density, _, _ = ISA._eval(altitude)\n    _, rho0, _, _ = ISA._eval(0)  # Standard sea level density\n    eas = CAStoTAS()._eval(cas, altitude) * math.sqrt(density / rho0)\n    return eas",
+              "signature": "(cas, altitude)",
+              "parameters": [
+                {
+                  "name": "cas",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'cas': 0, 'altitude': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'eas': 0}"
+            }
+          ],
+          "parameters": []
+        },
+        {
+          "name": "EAStoTAS",
+          "description": "Convert equivalent airspeed (EAS) to true airspeed (TAS).",
+          "docstring_html": "<p>Convert equivalent airspeed (EAS) to true airspeed (TAS).\nEAS and TAS in m/s altitude in m.</p>\n",
+          "source": "class EAStoTAS(Function):\n    \"\"\"Convert equivalent airspeed (EAS) to true airspeed (TAS).\n    EAS and TAS in m/s altitude in m.\n    \"\"\"\n\n    input_port_labels = {\n        \"eas\": 0,\n        \"altitude\": 1\n    }\n\n    output_port_labels = {\n        \"tas\": 0\n    }\n\n    def __init__(self):\n        super().__init__(func=self._eval)\n\n    def _eval(self, eas, altitude):\n        \"\"\"Assume m/s for input and output velocities and m for altitude.\"\"\"\n        ISA = ISAtmosphere()\n        _, density, _, _ = ISA._eval(altitude)\n        _, rho0, _, _ = ISA._eval(0)  # Standard sea level density\n        tas = eas * math.sqrt(rho0 / density)\n        return tas",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self):\n    super().__init__(func=self._eval)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "Assume m/s for input and output velocities and m for altitude.",
+              "docstring_html": "<p>Assume m/s for input and output velocities and m for altitude.</p>\n",
+              "source": "def _eval(self, eas, altitude):\n    \"\"\"Assume m/s for input and output velocities and m for altitude.\"\"\"\n    ISA = ISAtmosphere()\n    _, density, _, _ = ISA._eval(altitude)\n    _, rho0, _, _ = ISA._eval(0)  # Standard sea level density\n    tas = eas * math.sqrt(rho0 / density)\n    return tas",
+              "signature": "(eas, altitude)",
+              "parameters": [
+                {
+                  "name": "eas",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'eas': 0, 'altitude': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'tas': 0}"
+            }
+          ],
+          "parameters": []
+        },
+        {
+          "name": "MachtoCAS",
+          "description": "Convert Mach value to calibrated airspeed (CAS).",
+          "docstring_html": "<p>Convert Mach value to calibrated airspeed (CAS).\nCAS in m/s altitude in m.</p>\n",
+          "source": "class MachtoCAS(Function):\n    \"\"\"Convert Mach value to calibrated airspeed (CAS).\n    CAS in m/s altitude in m.\n    \"\"\"\n\n    input_port_labels = {\n        \"mach\": 0,\n        \"altitude\": 1\n    }\n\n    output_port_labels = {\n        \"cas\": 0\n    }\n\n    def __init__(self):\n        super().__init__(func=self._eval)\n\n    def _eval(self, mach, altitude):\n        \"\"\"Assume m for altitude.\"\"\"\n        ISA = ISAtmosphere()\n        _, _, _, speed_of_sound = ISA._eval(altitude)\n        return TAStoCAS()._eval(mach * speed_of_sound, altitude)",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self):\n    super().__init__(func=self._eval)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "Assume m for altitude.",
+              "docstring_html": "<p>Assume m for altitude.</p>\n",
+              "source": "def _eval(self, mach, altitude):\n    \"\"\"Assume m for altitude.\"\"\"\n    ISA = ISAtmosphere()\n    _, _, _, speed_of_sound = ISA._eval(altitude)\n    return TAStoCAS()._eval(mach * speed_of_sound, altitude)",
+              "signature": "(mach, altitude)",
+              "parameters": [
+                {
+                  "name": "mach",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "altitude",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'mach': 0, 'altitude': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'cas': 0}"
+            }
+          ],
+          "parameters": []
+        }
+      ],
+      "functions": []
+    }
+  }
+}

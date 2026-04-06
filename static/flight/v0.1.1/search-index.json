@@ -1,0 +1,279 @@
+[
+  {
+    "type": "module",
+    "name": "pathsim_flight.atmosphere.international_standard_atmosphere",
+    "description": "",
+    "path": "flight/v0.1.1/api#pathsim_flight-atmosphere-international_standard_atmosphere",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.atmosphere.international_standard_atmosphere"
+  },
+  {
+    "type": "class",
+    "name": "ISAtmosphere",
+    "description": "International Standard Atmosphere.",
+    "path": "flight/v0.1.1/api#ISAtmosphere",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.atmosphere.international_standard_atmosphere"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "flight/v0.1.1/api#ISAtmosphere.__init__",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.atmosphere.international_standard_atmosphere",
+    "parentClass": "ISAtmosphere"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "flight/v0.1.1/api#ISAtmosphere._eval",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.atmosphere.international_standard_atmosphere",
+    "parentClass": "ISAtmosphere"
+  },
+  {
+    "type": "method",
+    "name": "geopotential_altitude",
+    "description": "",
+    "path": "flight/v0.1.1/api#ISAtmosphere.geopotential_altitude",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.atmosphere.international_standard_atmosphere",
+    "parentClass": "ISAtmosphere"
+  },
+  {
+    "type": "method",
+    "name": "geometric_altitude",
+    "description": "",
+    "path": "flight/v0.1.1/api#ISAtmosphere.geometric_altitude",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.atmosphere.international_standard_atmosphere",
+    "parentClass": "ISAtmosphere"
+  },
+  {
+    "type": "method",
+    "name": "get_atmosphere_band",
+    "description": "",
+    "path": "flight/v0.1.1/api#ISAtmosphere.get_atmosphere_band",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.atmosphere.international_standard_atmosphere",
+    "parentClass": "ISAtmosphere"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_flight.jsbsim.jsbsim_wrapper",
+    "description": "",
+    "path": "flight/v0.1.1/api#pathsim_flight-jsbsim-jsbsim_wrapper",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.jsbsim.jsbsim_wrapper"
+  },
+  {
+    "type": "class",
+    "name": "JSBSimWrapper",
+    "description": "A wrapper for the JSBSim flight dynamics model, which allows it to be",
+    "path": "flight/v0.1.1/api#JSBSimWrapper",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.jsbsim.jsbsim_wrapper"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "flight/v0.1.1/api#JSBSimWrapper.__init__",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.jsbsim.jsbsim_wrapper",
+    "parentClass": "JSBSimWrapper"
+  },
+  {
+    "type": "method",
+    "name": "init_fdm",
+    "description": "",
+    "path": "flight/v0.1.1/api#JSBSimWrapper.init_fdm",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.jsbsim.jsbsim_wrapper",
+    "parentClass": "JSBSimWrapper"
+  },
+  {
+    "type": "method",
+    "name": "trim",
+    "description": "",
+    "path": "flight/v0.1.1/api#JSBSimWrapper.trim",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.jsbsim.jsbsim_wrapper",
+    "parentClass": "JSBSimWrapper"
+  },
+  {
+    "type": "method",
+    "name": "_func",
+    "description": "",
+    "path": "flight/v0.1.1/api#JSBSimWrapper._func",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.jsbsim.jsbsim_wrapper",
+    "parentClass": "JSBSimWrapper"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_flight.utils.airspeed_conversions",
+    "description": "",
+    "path": "flight/v0.1.1/api#pathsim_flight-utils-airspeed_conversions",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions"
+  },
+  {
+    "type": "class",
+    "name": "CAStoMach",
+    "description": "Convert calibrated airspeed (CAS) to Mach value.",
+    "path": "flight/v0.1.1/api#CAStoMach",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "flight/v0.1.1/api#CAStoMach.__init__",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "CAStoMach"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "Convert Calibrated airspeed to Mach value.",
+    "path": "flight/v0.1.1/api#CAStoMach._eval",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "CAStoMach"
+  },
+  {
+    "type": "class",
+    "name": "CAStoTAS",
+    "description": "Convert calibrated airspeed (CAS) to true airspeed (TAS).",
+    "path": "flight/v0.1.1/api#CAStoTAS",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "flight/v0.1.1/api#CAStoTAS.__init__",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "CAStoTAS"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "Assume m/s for input and output velocities and m for altitude.",
+    "path": "flight/v0.1.1/api#CAStoTAS._eval",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "CAStoTAS"
+  },
+  {
+    "type": "class",
+    "name": "TAStoCAS",
+    "description": "Convert true airspeed (TAS) to calibrated airspeed (CAS).",
+    "path": "flight/v0.1.1/api#TAStoCAS",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "flight/v0.1.1/api#TAStoCAS.__init__",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "TAStoCAS"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "Assume m/s for input and output velocities and m for altitude.",
+    "path": "flight/v0.1.1/api#TAStoCAS._eval",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "TAStoCAS"
+  },
+  {
+    "type": "class",
+    "name": "CAStoEAS",
+    "description": "Convert calibrated airspeed (CAS) to equivalent airspeed (EAS).",
+    "path": "flight/v0.1.1/api#CAStoEAS",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "flight/v0.1.1/api#CAStoEAS.__init__",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "CAStoEAS"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "Assume m/s for input and output velocities and m for altitude.",
+    "path": "flight/v0.1.1/api#CAStoEAS._eval",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "CAStoEAS"
+  },
+  {
+    "type": "class",
+    "name": "EAStoTAS",
+    "description": "Convert equivalent airspeed (EAS) to true airspeed (TAS).",
+    "path": "flight/v0.1.1/api#EAStoTAS",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "flight/v0.1.1/api#EAStoTAS.__init__",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "EAStoTAS"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "Assume m/s for input and output velocities and m for altitude.",
+    "path": "flight/v0.1.1/api#EAStoTAS._eval",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "EAStoTAS"
+  },
+  {
+    "type": "class",
+    "name": "MachtoCAS",
+    "description": "Convert Mach value to calibrated airspeed (CAS).",
+    "path": "flight/v0.1.1/api#MachtoCAS",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "flight/v0.1.1/api#MachtoCAS.__init__",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "MachtoCAS"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "Assume m for altitude.",
+    "path": "flight/v0.1.1/api#MachtoCAS._eval",
+    "packageId": "flight",
+    "moduleName": "pathsim_flight.utils.airspeed_conversions",
+    "parentClass": "MachtoCAS"
+  }
+]
