@@ -72,6 +72,7 @@ PACKAGES = {
         "root_modules": [
             "pathsim_flight",
         ],
+        "required": False,
     },
     "rf": {
         "repo": ROOT_DIR / "pathsim-rf",
@@ -84,6 +85,7 @@ PACKAGES = {
         "root_modules": [
             "pathsim_rf",
         ],
+        "required": False,
     },
 }
 

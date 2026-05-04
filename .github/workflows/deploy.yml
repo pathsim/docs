@@ -36,24 +36,7 @@ jobs:
           python -m ipykernel install --user --name python3 --display-name "Python 3"
 
       - name: Clone PathSim repositories
-        run: |
-          git clone https://github.com/pathsim/pathsim.git ../pathsim || { echo "Failed to clone pathsim"; exit 1; }
-          git clone https://github.com/pathsim/pathsim-chem.git ../pathsim-chem || { echo "Failed to clone pathsim-chem"; exit 1; }
-          git clone https://github.com/pathsim/pathsim-vehicle.git ../pathsim-vehicle || { echo "Failed to clone pathsim-vehicle"; exit 1; }
-          git clone https://github.com/pathsim/pathsim-flight.git ../pathsim-flight || echo "Skipping pathsim-flight (not available)"
-          git clone https://github.com/pathsim/pathsim-rf.git ../pathsim-rf || echo "Skipping pathsim-rf (not available)"
-
-      - name: Fetch all tags
-        run: |
-          for repo in pathsim pathsim-chem pathsim-vehicle pathsim-flight pathsim-rf; do
-            if [ -d "../$repo" ]; then
-              git -C ../$repo fetch --tags
-              latest_tag=$(git -C ../$repo describe --tags --abbrev=0 2>/dev/null || echo 'no tags')
-              echo "✓ $repo: latest_tag=$latest_tag"
-            else
-              echo "⊘ $repo: not cloned, skipping"
-            fi
-          done
+        run: python scripts/clone-repos.py
 
       # Build all versions (API, notebooks, outputs, figures, roadmaps)
       # Uses smart caching: historical versions only built once, latest always rebuilt
