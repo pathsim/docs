@@ -1,0 +1,95 @@
+[
+  {
+    "type": "module",
+    "name": "pathsim_batt.cells.pybamm_cell",
+    "description": "",
+    "path": "batt/v0.1.0/api#pathsim_batt-cells-pybamm_cell",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell"
+  },
+  {
+    "type": "class",
+    "name": "_CellBase",
+    "description": "Shared base for PyBaMM cell blocks.",
+    "path": "batt/v0.1.0/api#_CellBase",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "batt/v0.1.0/api#_CellBase.__init__",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell",
+    "parentClass": "_CellBase"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "batt/v0.1.0/api#_CellBase.reset",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell",
+    "parentClass": "_CellBase"
+  },
+  {
+    "type": "class",
+    "name": "CellElectrical",
+    "description": "Cell block — electrical outputs only, external thermal coupling.",
+    "path": "batt/v0.1.0/api#CellElectrical",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "batt/v0.1.0/api#CellElectrical.__init__",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell",
+    "parentClass": "CellElectrical"
+  },
+  {
+    "type": "class",
+    "name": "CellElectrothermal",
+    "description": "Cell block — coupled electrical and thermal model.",
+    "path": "batt/v0.1.0/api#CellElectrothermal",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "batt/v0.1.0/api#CellElectrothermal.__init__",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell",
+    "parentClass": "CellElectrothermal"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_batt.thermal.lumped",
+    "description": "",
+    "path": "batt/v0.1.0/api#pathsim_batt-thermal-lumped",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.thermal.lumped"
+  },
+  {
+    "type": "class",
+    "name": "LumpedThermal",
+    "description": "Single-node lumped thermal model.",
+    "path": "batt/v0.1.0/api#LumpedThermal",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.thermal.lumped"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "batt/v0.1.0/api#LumpedThermal.__init__",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.thermal.lumped",
+    "parentClass": "LumpedThermal"
+  }
+]

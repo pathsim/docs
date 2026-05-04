@@ -1,0 +1,453 @@
+{
+  "package": "batt",
+  "modules": {
+    "pathsim_batt.cells.pybamm_cell": {
+      "name": "pathsim_batt.cells.pybamm_cell",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "_CellBase",
+          "description": "Shared base for PyBaMM cell blocks.",
+          "docstring_html": "<p>Shared base for PyBaMM cell blocks.</p>\n<p>Discretises the PyBaMM model at construction time and exposes its ODE\nright-hand side to PathSim's numerical integrator via the <tt class=\"docutils literal\">DynamicalSystem</tt>\ninterface.  The differential state vector of the discretised model becomes\nthe PathSim state; PathSim's chosen solver advances it in time.</p>\n<p>Only PyBaMM models that produce a pure ODE after discretisation are\nsupported (i.e. models with no algebraic variables, such as SPMe and SPM).\nModels that result in a DAE system (e.g. DFN) are not supported and will\nraise <tt class=\"docutils literal\">NotImplementedError</tt> at construction time.</p>\n<p>Because the SPMe/SPM family of models is stiff, users should prefer an\nimplicit solver (e.g. <tt class=\"docutils literal\">ESDIRK43</tt>, <tt class=\"docutils literal\">BDF</tt>) when constructing the\nPathSim <tt class=\"docutils literal\">Simulation</tt>.</p>\n<p>Subclasses set <tt class=\"docutils literal\">_thermal_option</tt> and <tt class=\"docutils literal\">_pybamm_output_vars</tt> to select the\nthermal sub-model and define which PyBaMM variables map to the block's\noutput ports (SOC is always appended last).</p>\n",
+          "source": "class _CellBase(DynamicalSystem):\n    \"\"\"Shared base for PyBaMM cell blocks.\n\n    Discretises the PyBaMM model at construction time and exposes its ODE\n    right-hand side to PathSim's numerical integrator via the ``DynamicalSystem``\n    interface.  The differential state vector of the discretised model becomes\n    the PathSim state; PathSim's chosen solver advances it in time.\n\n    Only PyBaMM models that produce a pure ODE after discretisation are\n    supported (i.e. models with no algebraic variables, such as SPMe and SPM).\n    Models that result in a DAE system (e.g. DFN) are not supported and will\n    raise ``NotImplementedError`` at construction time.\n\n    Because the SPMe/SPM family of models is stiff, users should prefer an\n    implicit solver (e.g. ``ESDIRK43``, ``BDF``) when constructing the\n    PathSim ``Simulation``.\n\n    Subclasses set ``_thermal_option`` and ``_pybamm_output_vars`` to select the\n    thermal sub-model and define which PyBaMM variables map to the block's\n    output ports (SOC is always appended last).\n    \"\"\"\n\n    _thermal_option: str = \"\"\n    _pybamm_output_vars: list[str] = []\n\n    def __init__(\n        self,\n        model,\n        parameter_values,\n        initial_soc,\n        pybamm_solver,\n    ):\n        self._initial_soc = float(initial_soc)\n\n        if model is None:\n            model = pybamm.lithium_ion.SPMe(options={\"thermal\": self._thermal_option})\n\n        if parameter_values is None:\n            parameter_values = pybamm.ParameterValues(\"Chen2020\")\n        parameter_values = parameter_values.copy()\n        parameter_values[\"Current function [A]\"] = \"[input]\"\n        parameter_values[\"Ambient temperature [K]\"] = \"[input]\"\n        self._parameter_values = parameter_values\n\n        pybamm_solver = pybamm_solver or pybamm.CasadiSolver(mode=\"safe\")\n\n        _build_inputs = {\n            \"Current function [A]\": 0.0,\n            \"Ambient temperature [K]\": 298.15,\n        }\n        sim = pybamm.Simulation(\n            model,\n            parameter_values=parameter_values,\n            solver=pybamm_solver,\n        )\n        sim.build(initial_soc=self._initial_soc, inputs=_build_inputs)\n\n        all_out_vars = self._pybamm_output_vars + [\"Discharge capacity [A.h]\"]\n        input_order = [\"Current function [A]\", \"Ambient temperature [K]\"]\n        casadi_objs = sim.built_model.export_casadi_objects(\n            all_out_vars, input_parameter_order=input_order\n        )\n\n        t_sym = casadi_objs[\"t\"]\n        x_sym = casadi_objs[\"x\"]\n        z_sym = casadi_objs[\"z\"]\n        p_sym = casadi_objs[\"inputs\"]\n\n        if z_sym.numel() > 0:\n            raise NotImplementedError(\n                f\"{type(self).__name__}: the supplied PyBaMM model has \"\n                f\"{z_sym.numel()} algebraic variable(s) after discretisation \"\n                \"(DAE system). Only pure ODE models are supported. \"\n                \"Use SPMe or SPM instead of DFN.\"\n            )\n\n        rhs_fn = casadi.Function(\"rhs\", [t_sym, x_sym, p_sym], [casadi_objs[\"rhs\"]])\n        jac_fn = casadi.Function(\n            \"jac_rhs\", [t_sym, x_sym, p_sym], [casadi_objs[\"jac_rhs\"]]\n        )\n\n        out_var_fns = {}\n        for idx, var_name in enumerate(all_out_vars):\n            var_expr = casadi_objs[\"variables\"][var_name]\n            out_var_fns[var_name] = casadi.Function(\n                f\"outvar_{idx}\", [t_sym, x_sym, p_sym], [var_expr]\n            )\n\n        self._casadi_rhs = rhs_fn\n        self._jac_rhs_eval = jac_fn\n        self._out_var_fcns = out_var_fns\n        self._q_nominal = float(parameter_values[\"Nominal cell capacity [A.h]\"])\n\n        q_nominal = self._q_nominal\n        initial_soc_val = float(initial_soc)\n        pybamm_output_vars = list(self._pybamm_output_vars)\n\n        def _pack(u):\n            return casadi.DM([float(u[0]), float(u[1])])\n\n        def func_dyn(x, u, t):\n            xv = casadi.DM(x.reshape(-1, 1))\n            p = _pack(u)\n            return np.array(rhs_fn(t, xv, p)).flatten()\n\n        def jac_dyn(x, u, t):\n            xv = casadi.DM(x.reshape(-1, 1))\n            p = _pack(u)\n            return np.array(jac_fn(t, xv, p))\n\n        def func_alg(x, u, t):\n            xv = casadi.DM(x.reshape(-1, 1))\n            p = _pack(u)\n            outputs = [float(out_var_fns[n](t, xv, p)) for n in pybamm_output_vars]\n            q_dis = float(out_var_fns[\"Discharge capacity [A.h]\"](t, xv, p))\n            soc = max(0.0, min(1.0, initial_soc_val - q_dis / q_nominal))\n            outputs.append(soc)\n            return np.array(outputs)\n\n        x0_fn = casadi.Function(\"x0\", [p_sym], [casadi_objs[\"x0\"]])\n\n        default_inputs = casadi.DM([0.0, 298.15])\n        y0 = np.array(x0_fn(default_inputs)).flatten()\n\n        super().__init__(\n            func_dyn=func_dyn,\n            func_alg=func_alg,\n            initial_value=y0,\n            jac_dyn=jac_dyn,\n        )\n\n    def __len__(self):\n        return len(self._pybamm_output_vars) + 1\n\n    def reset(self):\n        super().reset()",
+          "bases": [
+            "pathsim.blocks.DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    model,\n    parameter_values,\n    initial_soc,\n    pybamm_solver,\n):\n    self._initial_soc = float(initial_soc)\n\n    if model is None:\n        model = pybamm.lithium_ion.SPMe(options={\"thermal\": self._thermal_option})\n\n    if parameter_values is None:\n        parameter_values = pybamm.ParameterValues(\"Chen2020\")\n    parameter_values = parameter_values.copy()\n    parameter_values[\"Current function [A]\"] = \"[input]\"\n    parameter_values[\"Ambient temperature [K]\"] = \"[input]\"\n    self._parameter_values = parameter_values\n\n    pybamm_solver = pybamm_solver or pybamm.CasadiSolver(mode=\"safe\")\n\n    _build_inputs = {\n        \"Current function [A]\": 0.0,\n        \"Ambient temperature [K]\": 298.15,\n    }\n    sim = pybamm.Simulation(\n        model,\n        parameter_values=parameter_values,\n        solver=pybamm_solver,\n    )\n    sim.build(initial_soc=self._initial_soc, inputs=_build_inputs)\n\n    all_out_vars = self._pybamm_output_vars + [\"Discharge capacity [A.h]\"]\n    input_order = [\"Current function [A]\", \"Ambient temperature [K]\"]\n    casadi_objs = sim.built_model.export_casadi_objects(\n        all_out_vars, input_parameter_order=input_order\n    )\n\n    t_sym = casadi_objs[\"t\"]\n    x_sym = casadi_objs[\"x\"]\n    z_sym = casadi_objs[\"z\"]\n    p_sym = casadi_objs[\"inputs\"]\n\n    if z_sym.numel() > 0:\n        raise NotImplementedError(\n            f\"{type(self).__name__}: the supplied PyBaMM model has \"\n            f\"{z_sym.numel()} algebraic variable(s) after discretisation \"\n            \"(DAE system). Only pure ODE models are supported. \"\n            \"Use SPMe or SPM instead of DFN.\"\n        )\n\n    rhs_fn = casadi.Function(\"rhs\", [t_sym, x_sym, p_sym], [casadi_objs[\"rhs\"]])\n    jac_fn = casadi.Function(\n        \"jac_rhs\", [t_sym, x_sym, p_sym], [casadi_objs[\"jac_rhs\"]]\n    )\n\n    out_var_fns = {}\n    for idx, var_name in enumerate(all_out_vars):\n        var_expr = casadi_objs[\"variables\"][var_name]\n        out_var_fns[var_name] = casadi.Function(\n            f\"outvar_{idx}\", [t_sym, x_sym, p_sym], [var_expr]\n        )\n\n    self._casadi_rhs = rhs_fn\n    self._jac_rhs_eval = jac_fn\n    self._out_var_fcns = out_var_fns\n    self._q_nominal = float(parameter_values[\"Nominal cell capacity [A.h]\"])\n\n    q_nominal = self._q_nominal\n    initial_soc_val = float(initial_soc)\n    pybamm_output_vars = list(self._pybamm_output_vars)\n\n    def _pack(u):\n        return casadi.DM([float(u[0]), float(u[1])])\n\n    def func_dyn(x, u, t):\n        xv = casadi.DM(x.reshape(-1, 1))\n        p = _pack(u)\n        return np.array(rhs_fn(t, xv, p)).flatten()\n\n    def jac_dyn(x, u, t):\n        xv = casadi.DM(x.reshape(-1, 1))\n        p = _pack(u)\n        return np.array(jac_fn(t, xv, p))\n\n    def func_alg(x, u, t):\n        xv = casadi.DM(x.reshape(-1, 1))\n        p = _pack(u)\n        outputs = [float(out_var_fns[n](t, xv, p)) for n in pybamm_output_vars]\n        q_dis = float(out_var_fns[\"Discharge capacity [A.h]\"](t, xv, p))\n        soc = max(0.0, min(1.0, initial_soc_val - q_dis / q_nominal))\n        outputs.append(soc)\n        return np.array(outputs)\n\n    x0_fn = casadi.Function(\"x0\", [p_sym], [casadi_objs[\"x0\"]])\n\n    default_inputs = casadi.DM([0.0, 298.15])\n    y0 = np.array(x0_fn(default_inputs)).flatten()\n\n    super().__init__(\n        func_dyn=func_dyn,\n        func_alg=func_alg,\n        initial_value=y0,\n        jac_dyn=jac_dyn,\n    )",
+              "signature": "(model, parameter_values, initial_soc, pybamm_solver)",
+              "parameters": [
+                {
+                  "name": "model",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "parameter_values",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "initial_soc",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "pybamm_solver",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "reset",
+              "description": "",
+              "docstring_html": "",
+              "source": "def reset(self):\n    super().reset()",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "_thermal_option",
+              "description": "",
+              "type": "str",
+              "value": "''"
+            },
+            {
+              "name": "_pybamm_output_vars",
+              "description": "",
+              "type": "list[str]",
+              "value": "[]"
+            },
+            {
+              "name": "_initial_soc",
+              "description": "",
+              "type": null,
+              "value": "float(initial_soc)"
+            },
+            {
+              "name": "_parameter_values",
+              "description": "",
+              "type": null,
+              "value": "parameter_values"
+            },
+            {
+              "name": "_casadi_rhs",
+              "description": "",
+              "type": null,
+              "value": "rhs_fn"
+            },
+            {
+              "name": "_jac_rhs_eval",
+              "description": "",
+              "type": null,
+              "value": "jac_fn"
+            },
+            {
+              "name": "_out_var_fcns",
+              "description": "",
+              "type": null,
+              "value": "out_var_fns"
+            },
+            {
+              "name": "_q_nominal",
+              "description": "",
+              "type": null,
+              "value": "float(parameter_values['Nominal cell capacity [A.h]'])"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "model",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "parameter_values",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "initial_soc",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "pybamm_solver",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "CellElectrical",
+          "description": "Cell block — electrical outputs only, external thermal coupling.",
+          "docstring_html": "<p>Cell block — electrical outputs only, external thermal coupling.</p>\n<p>PathSim integrates both the electrochemical state (via the discretised\nPyBaMM ODE) and the cell temperature ODE.  Wire <tt class=\"docutils literal\">Q_heat</tt> to a\n<tt class=\"docutils literal\">LumpedThermal</tt> (or similar) block and feed its temperature output\nback to <tt class=\"docutils literal\">T_cell</tt>.</p>\n<div class=\"admonition note\">\n<p class=\"first admonition-title\">Note</p>\n<p class=\"last\">The SPMe/SPM ODE is stiff.  Use an implicit solver (e.g.\n<tt class=\"docutils literal\">ESDIRK43</tt>, <tt class=\"docutils literal\">BDF</tt>) when constructing the PathSim\n<tt class=\"docutils literal\">Simulation</tt> to avoid prohibitively small step sizes.</p>\n</div>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>model <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">pybamm.BaseBatteryModel or None</span></dt>\n<dd>PyBaMM lithium-ion model.  Defaults to <tt class=\"docutils literal\"><span class=\"pre\">SPMe(thermal=&quot;isothermal&quot;)</span></tt>.</dd>\n<dt>parameter_values <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">pybamm.ParameterValues or None</span></dt>\n<dd>PyBaMM parameter set.  Defaults to <tt class=\"docutils literal\">Chen2020</tt>.</dd>\n<dt>initial_soc <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Initial state of charge (0–1).  Default 1.0.</dd>\n<dt>pybamm_solver <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">pybamm.BaseSolver or None</span></dt>\n<dd>PyBaMM solver used only during model build / discretisation.\nDefaults to <tt class=\"docutils literal\"><span class=\"pre\">CasadiSolver(mode=&quot;safe&quot;)</span></tt>.</dd>\n</dl>\n<div class=\"section\" id=\"inputs\">\n<h4>Inputs</h4>\n<p>I (0) : current [A], positive = discharge\nT_cell (1) : cell temperature [K] from external PathSim thermal block</p>\n</div>\n<div class=\"section\" id=\"outputs\">\n<h4>Outputs</h4>\n<p>V (0) : terminal voltage [V]\nQ_heat (1) : X-averaged volumetric heat generation [W m⁻³]\nSOC (2) : state of charge (0–1)</p>\n</div>\n",
+          "source": "class CellElectrical(_CellBase):\n    \"\"\"Cell block — electrical outputs only, external thermal coupling.\n\n    PathSim integrates both the electrochemical state (via the discretised\n    PyBaMM ODE) and the cell temperature ODE.  Wire ``Q_heat`` to a\n    ``LumpedThermal`` (or similar) block and feed its temperature output\n    back to ``T_cell``.\n\n    .. note::\n        The SPMe/SPM ODE is stiff.  Use an implicit solver (e.g.\n        ``ESDIRK43``, ``BDF``) when constructing the PathSim\n        ``Simulation`` to avoid prohibitively small step sizes.\n\n    Parameters\n    ----------\n    model : pybamm.BaseBatteryModel or None\n        PyBaMM lithium-ion model.  Defaults to ``SPMe(thermal=\"isothermal\")``.\n    parameter_values : pybamm.ParameterValues or None\n        PyBaMM parameter set.  Defaults to ``Chen2020``.\n    initial_soc : float\n        Initial state of charge (0–1).  Default 1.0.\n    pybamm_solver : pybamm.BaseSolver or None\n        PyBaMM solver used only during model build / discretisation.\n        Defaults to ``CasadiSolver(mode=\"safe\")``.\n\n    Inputs\n    ------\n    I (0) : current [A], positive = discharge\n    T_cell (1) : cell temperature [K] from external PathSim thermal block\n\n    Outputs\n    -------\n    V (0) : terminal voltage [V]\n    Q_heat (1) : X-averaged volumetric heat generation [W m⁻³]\n    SOC (2) : state of charge (0–1)\n    \"\"\"\n\n    _thermal_option = \"isothermal\"\n    _pybamm_output_vars = [\n        \"Terminal voltage [V]\",\n        \"X-averaged total heating [W.m-3]\",\n    ]\n\n    input_port_labels = {\"I\": 0, \"T_cell\": 1}\n    output_port_labels = {\"V\": 0, \"Q_heat\": 1, \"SOC\": 2}\n\n    def __init__(\n        self,\n        model=None,\n        parameter_values=None,\n        initial_soc=1.0,\n        pybamm_solver=None,\n    ):\n        super().__init__(model, parameter_values, initial_soc, pybamm_solver)",
+          "bases": [
+            "pathsim_batt.cells.pybamm_cell._CellBase"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    model=None,\n    parameter_values=None,\n    initial_soc=1.0,\n    pybamm_solver=None,\n):\n    super().__init__(model, parameter_values, initial_soc, pybamm_solver)",
+              "signature": "(model = None, parameter_values = None, initial_soc = 1.0, pybamm_solver = None)",
+              "parameters": [
+                {
+                  "name": "model",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "parameter_values",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "initial_soc",
+                  "type": null,
+                  "default": "1.0",
+                  "description": ""
+                },
+                {
+                  "name": "pybamm_solver",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "_thermal_option",
+              "description": "",
+              "type": null,
+              "value": "'isothermal'"
+            },
+            {
+              "name": "_pybamm_output_vars",
+              "description": "",
+              "type": null,
+              "value": "['Terminal voltage [V]', 'X-averaged total heating [W.m-3]']"
+            },
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'I': 0, 'T_cell': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'V': 0, 'Q_heat': 1, 'SOC': 2}"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "model",
+              "type": null,
+              "default": "None",
+              "description": "PyBaMM lithium-ion model. Defaults to ``SPMe(thermal=\"isothermal\")``."
+            },
+            {
+              "name": "parameter_values",
+              "type": null,
+              "default": "None",
+              "description": "PyBaMM parameter set. Defaults to ``Chen2020``."
+            },
+            {
+              "name": "initial_soc",
+              "type": null,
+              "default": "1.0",
+              "description": "Initial state of charge (0–1). Default 1.0."
+            },
+            {
+              "name": "pybamm_solver",
+              "type": null,
+              "default": "None",
+              "description": "PyBaMM solver used only during model build / discretisation. Defaults to ``CasadiSolver(mode=\"safe\")``."
+            }
+          ]
+        },
+        {
+          "name": "CellElectrothermal",
+          "description": "Cell block — coupled electrical and thermal model.",
+          "docstring_html": "<p>Cell block — coupled electrical and thermal model.</p>\n<p>PathSim integrates the full electrochemical + thermal state (via the\ndiscretised PyBaMM ODE).  The cell temperature is part of the PyBaMM\nstate vector and is read back as output port <tt class=\"docutils literal\">T</tt>.  Supply a\ntime-varying ambient / coolant temperature via <tt class=\"docutils literal\">T_amb</tt> to couple to a\npack-level thermal model.</p>\n<div class=\"admonition note\">\n<p class=\"first admonition-title\">Note</p>\n<p class=\"last\">The SPMe/SPM ODE is stiff.  Use an implicit solver (e.g.\n<tt class=\"docutils literal\">ESDIRK43</tt>, <tt class=\"docutils literal\">BDF</tt>) when constructing the PathSim\n<tt class=\"docutils literal\">Simulation</tt> to avoid prohibitively small step sizes.</p>\n</div>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>model <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">pybamm.BaseBatteryModel or None</span></dt>\n<dd>PyBaMM lithium-ion model.  Defaults to <tt class=\"docutils literal\"><span class=\"pre\">SPMe(thermal=&quot;lumped&quot;)</span></tt>.</dd>\n<dt>parameter_values <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">pybamm.ParameterValues or None</span></dt>\n<dd>PyBaMM parameter set.  Defaults to <tt class=\"docutils literal\">Chen2020</tt>.</dd>\n<dt>initial_soc <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Initial state of charge (0–1).  Default 1.0.</dd>\n<dt>pybamm_solver <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">pybamm.BaseSolver or None</span></dt>\n<dd>PyBaMM solver used only during model build / discretisation.\nDefaults to <tt class=\"docutils literal\"><span class=\"pre\">CasadiSolver(mode=&quot;safe&quot;)</span></tt>.</dd>\n</dl>\n<div class=\"section\" id=\"inputs\">\n<h4>Inputs</h4>\n<p>I (0) : current [A], positive = discharge\nT_amb (1) : ambient / coolant temperature [K]</p>\n</div>\n<div class=\"section\" id=\"outputs\">\n<h4>Outputs</h4>\n<p>V (0) : terminal voltage [V]\nT (1) : cell temperature [K] (part of PyBaMM state)\nQ_heat (2) : X-averaged volumetric heat generation [W m⁻³]\nSOC (3) : state of charge (0–1)</p>\n</div>\n",
+          "source": "class CellElectrothermal(_CellBase):\n    \"\"\"Cell block — coupled electrical and thermal model.\n\n    PathSim integrates the full electrochemical + thermal state (via the\n    discretised PyBaMM ODE).  The cell temperature is part of the PyBaMM\n    state vector and is read back as output port ``T``.  Supply a\n    time-varying ambient / coolant temperature via ``T_amb`` to couple to a\n    pack-level thermal model.\n\n    .. note::\n        The SPMe/SPM ODE is stiff.  Use an implicit solver (e.g.\n        ``ESDIRK43``, ``BDF``) when constructing the PathSim\n        ``Simulation`` to avoid prohibitively small step sizes.\n\n    Parameters\n    ----------\n    model : pybamm.BaseBatteryModel or None\n        PyBaMM lithium-ion model.  Defaults to ``SPMe(thermal=\"lumped\")``.\n    parameter_values : pybamm.ParameterValues or None\n        PyBaMM parameter set.  Defaults to ``Chen2020``.\n    initial_soc : float\n        Initial state of charge (0–1).  Default 1.0.\n    pybamm_solver : pybamm.BaseSolver or None\n        PyBaMM solver used only during model build / discretisation.\n        Defaults to ``CasadiSolver(mode=\"safe\")``.\n\n    Inputs\n    ------\n    I (0) : current [A], positive = discharge\n    T_amb (1) : ambient / coolant temperature [K]\n\n    Outputs\n    -------\n    V (0) : terminal voltage [V]\n    T (1) : cell temperature [K] (part of PyBaMM state)\n    Q_heat (2) : X-averaged volumetric heat generation [W m⁻³]\n    SOC (3) : state of charge (0–1)\n    \"\"\"\n\n    _thermal_option = \"lumped\"\n    _pybamm_output_vars = [\n        \"Terminal voltage [V]\",\n        \"X-averaged cell temperature [K]\",\n        \"X-averaged total heating [W.m-3]\",\n    ]\n\n    input_port_labels = {\"I\": 0, \"T_amb\": 1}\n    output_port_labels = {\"V\": 0, \"T\": 1, \"Q_heat\": 2, \"SOC\": 3}\n\n    def __init__(\n        self,\n        model=None,\n        parameter_values=None,\n        initial_soc=1.0,\n        pybamm_solver=None,\n    ):\n        super().__init__(model, parameter_values, initial_soc, pybamm_solver)",
+          "bases": [
+            "pathsim_batt.cells.pybamm_cell._CellBase"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    model=None,\n    parameter_values=None,\n    initial_soc=1.0,\n    pybamm_solver=None,\n):\n    super().__init__(model, parameter_values, initial_soc, pybamm_solver)",
+              "signature": "(model = None, parameter_values = None, initial_soc = 1.0, pybamm_solver = None)",
+              "parameters": [
+                {
+                  "name": "model",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "parameter_values",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "initial_soc",
+                  "type": null,
+                  "default": "1.0",
+                  "description": ""
+                },
+                {
+                  "name": "pybamm_solver",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "_thermal_option",
+              "description": "",
+              "type": null,
+              "value": "'lumped'"
+            },
+            {
+              "name": "_pybamm_output_vars",
+              "description": "",
+              "type": null,
+              "value": "['Terminal voltage [V]', 'X-averaged cell temperature [K]', 'X-averaged total heating [W.m-3]']"
+            },
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'I': 0, 'T_amb': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'V': 0, 'T': 1, 'Q_heat': 2, 'SOC': 3}"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "model",
+              "type": null,
+              "default": "None",
+              "description": "PyBaMM lithium-ion model. Defaults to ``SPMe(thermal=\"lumped\")``."
+            },
+            {
+              "name": "parameter_values",
+              "type": null,
+              "default": "None",
+              "description": "PyBaMM parameter set. Defaults to ``Chen2020``."
+            },
+            {
+              "name": "initial_soc",
+              "type": null,
+              "default": "1.0",
+              "description": "Initial state of charge (0–1). Default 1.0."
+            },
+            {
+              "name": "pybamm_solver",
+              "type": null,
+              "default": "None",
+              "description": "PyBaMM solver used only during model build / discretisation. Defaults to ``CasadiSolver(mode=\"safe\")``."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_batt.thermal.lumped": {
+      "name": "pathsim_batt.thermal.lumped",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "LumpedThermal",
+          "description": "Single-node lumped thermal model.",
+          "docstring_html": "<p>Single-node lumped thermal model.</p>\n<pre class=\"math\">\nm C_p \\frac{dT}{dt} = \\dot{Q} - U A (T - T_{\\mathrm{amb}})\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>mass <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Thermal mass [kg].</dd>\n<dt>Cp <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Specific heat capacity [J kg⁻¹ K⁻¹].</dd>\n<dt>UA <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Overall heat transfer conductance [W K⁻¹].</dd>\n<dt>T0 <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Initial temperature [K].  Default 298.15 K.</dd>\n</dl>\n<div class=\"section\" id=\"inputs\">\n<h4>Inputs</h4>\n<p>Q_dot (0) : heat generation rate [W]\nT_amb (1) : ambient temperature [K]</p>\n</div>\n<div class=\"section\" id=\"outputs\">\n<h4>Outputs</h4>\n<p>T (0) : cell temperature [K]</p>\n</div>\n",
+          "source": "class LumpedThermal(DynamicalSystem):\n    \"\"\"Single-node lumped thermal model.\n\n    .. math::\n\n        m C_p \\\\frac{dT}{dt} = \\\\dot{Q} - U A (T - T_{\\\\mathrm{amb}})\n\n    Parameters\n    ----------\n    mass : float\n        Thermal mass [kg].\n    Cp : float\n        Specific heat capacity [J kg⁻¹ K⁻¹].\n    UA : float\n        Overall heat transfer conductance [W K⁻¹].\n    T0 : float\n        Initial temperature [K].  Default 298.15 K.\n\n    Inputs\n    ------\n    Q_dot (0) : heat generation rate [W]\n    T_amb (1) : ambient temperature [K]\n\n    Outputs\n    -------\n    T (0) : cell temperature [K]\n    \"\"\"\n\n    input_port_labels = {\"Q_dot\": 0, \"T_amb\": 1}\n    output_port_labels = {\"T\": 0}\n\n    def __init__(self, mass=0.065, Cp=750.0, UA=0.5, T0=298.15):\n        # input validation\n        if mass <= 0:\n            raise ValueError(f\"'mass' must be positive but is {mass}\")\n        if Cp <= 0:\n            raise ValueError(f\"'Cp' must be positive but is {Cp}\")\n        if UA < 0:\n            raise ValueError(f\"'UA' must be non-negative but is {UA}\")\n\n        # store parameters\n        self.mass = float(mass)\n        self.Cp = float(Cp)\n        self.UA = float(UA)\n\n        def _fn_d(x, u, t):\n            (T,) = x\n            Q_dot, T_amb = u\n            return np.array([(Q_dot - self.UA * (T - T_amb)) / (self.mass * self.Cp)])\n\n        def _fn_a(x, u, t):\n            return x.copy()\n\n        super().__init__(\n            func_dyn=_fn_d,\n            func_alg=_fn_a,\n            initial_value=np.array([float(T0)]),\n        )",
+          "bases": [
+            "pathsim.blocks.DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, mass=0.065, Cp=750.0, UA=0.5, T0=298.15):\n    # input validation\n    if mass <= 0:\n        raise ValueError(f\"'mass' must be positive but is {mass}\")\n    if Cp <= 0:\n        raise ValueError(f\"'Cp' must be positive but is {Cp}\")\n    if UA < 0:\n        raise ValueError(f\"'UA' must be non-negative but is {UA}\")\n\n    # store parameters\n    self.mass = float(mass)\n    self.Cp = float(Cp)\n    self.UA = float(UA)\n\n    def _fn_d(x, u, t):\n        (T,) = x\n        Q_dot, T_amb = u\n        return np.array([(Q_dot - self.UA * (T - T_amb)) / (self.mass * self.Cp)])\n\n    def _fn_a(x, u, t):\n        return x.copy()\n\n    super().__init__(\n        func_dyn=_fn_d,\n        func_alg=_fn_a,\n        initial_value=np.array([float(T0)]),\n    )",
+              "signature": "(mass = 0.065, Cp = 750.0, UA = 0.5, T0 = 298.15)",
+              "parameters": [
+                {
+                  "name": "mass",
+                  "type": null,
+                  "default": "0.065",
+                  "description": ""
+                },
+                {
+                  "name": "Cp",
+                  "type": null,
+                  "default": "750.0",
+                  "description": ""
+                },
+                {
+                  "name": "UA",
+                  "type": null,
+                  "default": "0.5",
+                  "description": ""
+                },
+                {
+                  "name": "T0",
+                  "type": null,
+                  "default": "298.15",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'Q_dot': 0, 'T_amb': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'T': 0}"
+            },
+            {
+              "name": "mass",
+              "description": "",
+              "type": null,
+              "value": "float(mass)"
+            },
+            {
+              "name": "Cp",
+              "description": "",
+              "type": null,
+              "value": "float(Cp)"
+            },
+            {
+              "name": "UA",
+              "description": "",
+              "type": null,
+              "value": "float(UA)"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "mass",
+              "type": null,
+              "default": "0.065",
+              "description": "Thermal mass [kg]."
+            },
+            {
+              "name": "Cp",
+              "type": null,
+              "default": "750.0",
+              "description": "Specific heat capacity [J kg⁻¹ K⁻¹]."
+            },
+            {
+              "name": "UA",
+              "type": null,
+              "default": "0.5",
+              "description": "Overall heat transfer conductance [W K⁻¹]."
+            },
+            {
+              "name": "T0",
+              "type": null,
+              "default": "298.15",
+              "description": "Initial temperature [K]. Default 298.15 K."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    }
+  }
+}
