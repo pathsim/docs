@@ -11,7 +11,7 @@ export const external = {
 	consulting: 'https://milanrother.com/#services'
 };
 
-export type PackageId = 'pathsim' | 'chem' | 'vehicle' | 'flight' | 'rf';
+export type PackageId = 'pathsim' | 'chem' | 'batt' | 'vehicle' | 'flight' | 'rf';
 
 export interface Feature {
 	title: string;
@@ -190,6 +190,56 @@ scope.plot()`,
 			{ pip: 'pathsim-chem', import: 'pathsim_chem', pre: true }
 		]
 	},
+	batt: {
+		id: 'batt',
+		name: 'PathSim-Batt',
+		shortName: 'batt',
+		description: 'Battery cell blocks with PyBaMM integration for coupled electrothermal simulation.',
+		logo: 'pathsim_batt_logo.png',
+		docs: 'batt',
+		api: 'batt/api',
+		examples: null,
+		pypi: `${external.pypi}/pathsim-batt`,
+		conda: null,
+		github: `${external.github}/pathsim-batt`,
+		features: [
+			{ title: 'PyBaMM Backend', description: 'Wraps SPM and SPMe lithium-ion models behind the PathSim block interface' },
+			{ title: 'Electrothermal Coupling', description: 'CellElectrothermal integrates electrical and thermal dynamics in one block' },
+			{ title: 'External Thermal', description: 'CellElectrical + LumpedThermal for multi-cell packs and custom cooling models' },
+			{ title: 'Parameter Sets', description: 'Use any PyBaMM ParameterValues — defaults to Chen2020' }
+		],
+		installation: [
+			{ name: 'pip', command: 'pip install pathsim-batt' }
+		],
+		quickstart: {
+			description: 'PathSim-Batt cell blocks plug into PathSim simulations. Drive the cell with a current source and observe terminal voltage.',
+			code: `from pathsim import Simulation, Connection
+from pathsim.blocks import Source, Scope
+from pathsim_batt import CellElectrothermal
+
+# Default Chen2020 parameter set, SPMe model
+cell = CellElectrothermal(initial_soc=0.8)
+
+# Constant 2 A discharge
+i_src = Source(func=lambda t: 2.0)
+scope = Scope()
+
+sim = Simulation(
+    [i_src, cell, scope],
+    [Connection(i_src, cell), Connection(cell, scope)]
+)
+sim.run(1800)
+scope.plot()`,
+			title: 'Example'
+		},
+		apiModules: [
+			{ name: 'pathsim_batt', description: 'Cell blocks (CellElectrothermal, CellElectrical, LumpedThermal)' }
+		],
+		pyodidePackages: [
+			{ pip: 'pathsim', import: 'pathsim', pre: true },
+			{ pip: 'pathsim-batt', import: 'pathsim_batt', pre: true }
+		]
+	},
 	vehicle: {
 		id: 'vehicle',
 		name: 'PathSim-Vehicle',
@@ -274,7 +324,7 @@ scope.plot()`,
 };
 
 // Ordered list for tabs/navigation
-export const packageOrder: PackageId[] = ['pathsim', 'chem', 'vehicle', 'flight', 'rf'];
+export const packageOrder: PackageId[] = ['pathsim', 'chem', 'batt', 'vehicle', 'flight', 'rf'];
 
 // Sidebar navigation (auto-generated from package config)
 export interface SidebarItem {

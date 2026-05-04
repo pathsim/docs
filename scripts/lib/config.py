@@ -37,6 +37,18 @@ PACKAGES = {
             "pathsim_chem",
         ],
     },
+    "batt": {
+        "repo": ROOT_DIR / "pathsim-batt",
+        "source": ROOT_DIR / "pathsim-batt" / "src",
+        "notebooks": ROOT_DIR / "pathsim-batt" / "docs" / "source" / "examples",
+        "figures": ROOT_DIR / "pathsim-batt" / "docs" / "source" / "examples" / "figures",
+        "display_name": "PathSim-Batt",
+        "griffe_package": "pathsim_batt",
+        "github_repo": "pathsim/pathsim-batt",
+        "root_modules": [
+            "pathsim_batt",
+        ],
+    },
     "vehicle": {
         "repo": ROOT_DIR / "pathsim-vehicle",
         "source": ROOT_DIR / "pathsim-vehicle" / "src",
@@ -80,6 +92,7 @@ PACKAGES = {
 MIN_SUPPORTED_VERSIONS = {
     "pathsim": "0.7",
     "chem": "0.1",
+    "batt": "0.1",
     "vehicle": "0.1",
     "flight": "0.1",
     "rf": "0.1",
