@@ -211,34 +211,11 @@ scope.plot()`,
 		installation: [
 			{ name: 'pip', command: 'pip install pathsim-batt' }
 		],
-		quickstart: {
-			description: 'PathSim-Batt cell blocks plug into PathSim simulations. Drive the cell with a current source and observe terminal voltage.',
-			code: `from pathsim import Simulation, Connection
-from pathsim.blocks import Source, Scope
-from pathsim_batt import CellElectrothermal
-
-# Default Chen2020 parameter set, SPMe model
-cell = CellElectrothermal(initial_soc=0.8)
-
-# Constant 2 A discharge
-i_src = Source(func=lambda t: 2.0)
-scope = Scope()
-
-sim = Simulation(
-    [i_src, cell, scope],
-    [Connection(i_src, cell), Connection(cell, scope)]
-)
-sim.run(1800)
-scope.plot()`,
-			title: 'Example'
-		},
+		quickstart: null,
 		apiModules: [
 			{ name: 'pathsim_batt', description: 'Cell blocks (CellElectrothermal, CellElectrical, LumpedThermal)' }
 		],
-		pyodidePackages: [
-			{ pip: 'pathsim', import: 'pathsim', pre: true },
-			{ pip: 'pathsim-batt', import: 'pathsim_batt', pre: true }
-		]
+		pyodidePackages: []
 	},
 	vehicle: {
 		id: 'vehicle',
