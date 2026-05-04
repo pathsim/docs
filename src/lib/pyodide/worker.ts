@@ -4,7 +4,8 @@
  */
 
 import {
-	PYODIDE_CDN_URL,
+	PYODIDE_INDEX_URL,
+	PYODIDE_MODULE_URL,
 	PYODIDE_PRELOAD,
 	BASE_PACKAGES,
 	PROGRESS_MESSAGES,
@@ -47,13 +48,16 @@ async function initialize(dynamicPackages?: PyodidePackageInfo[], packageVersion
 
 	send({ type: 'progress', message: PROGRESS_MESSAGES.LOADING_PYODIDE });
 
-	// Dynamic import of Pyodide from CDN
+	// Self-hosted Pyodide module (see static/pyodide/, populated by
+	// scripts/fetch-pyodide.py at build time). indexURL is set explicitly so
+	// Pyodide does not depend on import.meta.url derivation, which fails on
+	// some Firefox/Waterfox configurations.
 	const { loadPyodide } = await import(
 		/* @vite-ignore */
-		PYODIDE_CDN_URL
+		PYODIDE_MODULE_URL
 	);
 
-	pyodide = await loadPyodide();
+	pyodide = await loadPyodide({ indexURL: PYODIDE_INDEX_URL });
 	if (!pyodide) throw new Error(ERROR_MESSAGES.FAILED_TO_LOAD_PYODIDE);
 
 	// Setup stdout/stderr capture with routing to current execution

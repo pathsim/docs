@@ -1,7 +1,12 @@
 // Pyodide configuration for documentation notebooks
 
 export const PYODIDE_VERSION = '0.26.2';
-export const PYODIDE_CDN_URL = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/pyodide.mjs`;
+// Self-hosted Pyodide assets — fetched into static/pyodide/ at build time
+// by scripts/fetch-pyodide.py. Same-origin avoids cross-origin module
+// resolution quirks (e.g. Firefox failing to derive indexURL from
+// import.meta.url) and removes the runtime jsdelivr dependency.
+export const PYODIDE_INDEX_URL = '/pyodide/';
+export const PYODIDE_MODULE_URL = `${PYODIDE_INDEX_URL}pyodide.mjs`;
 
 // Packages preloaded with Pyodide (available as built-in Pyodide packages)
 export const PYODIDE_PRELOAD = ['numpy', 'scipy', 'micropip'] as const;

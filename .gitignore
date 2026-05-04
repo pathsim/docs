@@ -5,6 +5,9 @@ node_modules/
 build/
 .svelte-kit/
 
+# Self-hosted Pyodide assets (populated by scripts/fetch-pyodide.py)
+static/pyodide/
+
 # Environment
 .env
 .env.*

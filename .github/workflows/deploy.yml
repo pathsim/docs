@@ -38,6 +38,9 @@ jobs:
       - name: Clone PathSim repositories
         run: python scripts/clone-repos.py
 
+      - name: Fetch Pyodide runtime
+        run: python scripts/fetch-pyodide.py
+
       # Build all versions (API, notebooks, outputs, figures, roadmaps)
       # Uses smart caching: historical versions only built once, latest always rebuilt
       - name: Build documentation
