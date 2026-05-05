@@ -7675,7 +7675,7 @@
           "name": "_process_results",
           "description": "Process the BVP solution to produce dimensional results.",
           "docstring_html": "<p>Process the BVP solution to produce dimensional results.</p>\n<p>This function converts the dimensionless solution of the BVP back into\ndimensional quantities, calculates the extraction efficiency, performs a\nmass balance check, and aggregates all results.</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd>solution (scipy.integrate.OdeSolution): The BVP solution object.\nparams (dict): The original input parameters.\nphys_props (dict): The calculated physical properties.\ndim_params (dict): The calculated dimensionless groups.</dd>\n<dt>Returns:</dt>\n<dd>list: A list containing the results dictionary and the solution object.</dd>\n</dl>\n",
-          "source": "def _process_results(solution, params, phys_props, dim_params):\n    \"\"\"\n    Process the BVP solution to produce dimensional results.\n\n    This function converts the dimensionless solution of the BVP back into\n    dimensional quantities, calculates the extraction efficiency, performs a\n    mass balance check, and aggregates all results.\n\n    Args:\n        solution (scipy.integrate.OdeSolution): The BVP solution object.\n        params (dict): The original input parameters.\n        phys_props (dict): The calculated physical properties.\n        dim_params (dict): The calculated dimensionless groups.\n\n    Returns:\n        list: A list containing the results dictionary and the solution object.\n    \"\"\"\n\n    # Unpack parameters\n    c_T_in, P_in, T = params[\"c_T_in\"], params[\"P_in\"], params[\"T\"]\n    y_T2_in = params[\"y_T2_in\"]\n\n    ########### Debugging ##########\n    print(\"c_T_in: \", c_T_in)\n    print(\"y_T2_in :\", y_T2_in)\n    print(\"flow_l: \", params[\"flow_l\"])\n    print(\"flow_g: \", params[\"flow_g\"])\n\n    if not solution.success:\n        raise RuntimeError(\"BVP solver failed to converge.\")\n\n    # Dimensionless results\n    x_T_outlet_dimless = solution.y[0, 0]\n    Q_l, Q_g = phys_props[\"Q_l\"], phys_props[\"Q_g\"]\n    y_T2_out = solution.y[2, -1]\n    efficiency = 1 - x_T_outlet_dimless\n\n    # Dimensional results\n    c_T_out = x_T_outlet_dimless * c_T_in\n    P_out = P_in * (1 - dim_params[\"psi\"])\n    P_T2_out = y_T2_out * P_out\n    P_T2_in = y_T2_in * P_in\n\n    # Mass balance check\n    n_T_in_liquid = c_T_in * Q_l  # mol/s\n    n_T_out_liquid = c_T_out * Q_l  # mol/s\n    n_T2_in_gas = P_T2_in * Q_g / (R * T)  # mol/s\n    n_T_in_gas = n_T2_in_gas * 2  # mol/s\n    Q_g_out = Q_g * (P_in / P_out)  # m3/s\n    n_T2_out_gas = P_T2_out * Q_g_out / (R * T)  # mol/s\n    n_T_out_gas = n_T2_out_gas * 2  # mol/s\n\n    # Adjust for any mass balance error\n    mass_balance_error = (n_T_in_liquid + n_T_in_gas) - (n_T_out_liquid + n_T_out_gas)\n    n_T_out_gas += mass_balance_error * efficiency\n    n_T_out_liquid += mass_balance_error * (1 - efficiency)\n\n    results = {\n        \"Total tritium in [mol/s]\": n_T_in_liquid + n_T_in_gas,\n        \"Total tritium out [mol/s]\": n_T_out_liquid + n_T_out_gas,\n        \"tritium_out_liquid [mol/s]\": n_T_out_liquid,\n        \"tritium_out_gas [mol/s]\": n_T_out_gas,\n        \"extraction_efficiency [fraction]\": efficiency,\n        \"c_T_outlet [mol/m^3]\": c_T_out,\n        \"P_T2_inlet_gas [Pa]\": P_T2_in,\n        \"P_T2_outlet_gas [Pa]\": P_T2_out,\n        \"y_T2_outlet_gas\": y_T2_out,\n        \"total_gas_P_inlet [Pa]\": P_in,\n        \"total_gas_P_outlet [Pa]\": P_out,\n        \"liquid_vol_flow [m^3/s]\": Q_l,\n        \"gas_vol_flow_outlet [m^3/s]\": Q_g_out,\n    }\n\n    # Add all calculated parameters to the results dictionary\n    results.update(phys_props)\n    results.update(dim_params)\n\n    return results, solution",
+          "source": "def _process_results(solution, params, phys_props, dim_params):\n    \"\"\"\n    Process the BVP solution to produce dimensional results.\n\n    This function converts the dimensionless solution of the BVP back into\n    dimensional quantities, calculates the extraction efficiency, performs a\n    mass balance check, and aggregates all results.\n\n    Args:\n        solution (scipy.integrate.OdeSolution): The BVP solution object.\n        params (dict): The original input parameters.\n        phys_props (dict): The calculated physical properties.\n        dim_params (dict): The calculated dimensionless groups.\n\n    Returns:\n        list: A list containing the results dictionary and the solution object.\n    \"\"\"\n\n    # Unpack parameters\n    c_T_in, P_in, T = params[\"c_T_in\"], params[\"P_in\"], params[\"T\"]\n    y_T2_in = params[\"y_T2_in\"]\n\n    if not solution.success:\n        raise RuntimeError(\"BVP solver failed to converge.\")\n\n    # Dimensionless results\n    x_T_outlet_dimless = solution.y[0, 0]\n    Q_l, Q_g = phys_props[\"Q_l\"], phys_props[\"Q_g\"]\n    y_T2_out = solution.y[2, -1]\n    efficiency = 1 - x_T_outlet_dimless\n\n    # Dimensional results\n    c_T_out = x_T_outlet_dimless * c_T_in\n    P_out = P_in * (1 - dim_params[\"psi\"])\n    P_T2_out = y_T2_out * P_out\n    P_T2_in = y_T2_in * P_in\n\n    # Mass balance check\n    n_T_in_liquid = c_T_in * Q_l  # mol/s\n    n_T_out_liquid = c_T_out * Q_l  # mol/s\n    n_T2_in_gas = P_T2_in * Q_g / (R * T)  # mol/s\n    n_T_in_gas = n_T2_in_gas * 2  # mol/s\n    Q_g_out = Q_g * (P_in / P_out)  # m3/s\n    n_T2_out_gas = P_T2_out * Q_g_out / (R * T)  # mol/s\n    n_T_out_gas = n_T2_out_gas * 2  # mol/s\n\n    # Adjust for any mass balance error\n    mass_balance_error = (n_T_in_liquid + n_T_in_gas) - (n_T_out_liquid + n_T_out_gas)\n    n_T_out_gas += mass_balance_error * efficiency\n    n_T_out_liquid += mass_balance_error * (1 - efficiency)\n\n    results = {\n        \"Total tritium in [mol/s]\": n_T_in_liquid + n_T_in_gas,\n        \"Total tritium out [mol/s]\": n_T_out_liquid + n_T_out_gas,\n        \"tritium_out_liquid [mol/s]\": n_T_out_liquid,\n        \"tritium_out_gas [mol/s]\": n_T_out_gas,\n        \"extraction_efficiency [fraction]\": efficiency,\n        \"c_T_outlet [mol/m^3]\": c_T_out,\n        \"P_T2_inlet_gas [Pa]\": P_T2_in,\n        \"P_T2_outlet_gas [Pa]\": P_T2_out,\n        \"y_T2_outlet_gas\": y_T2_out,\n        \"total_gas_P_inlet [Pa]\": P_in,\n        \"total_gas_P_outlet [Pa]\": P_out,\n        \"liquid_vol_flow [m^3/s]\": Q_l,\n        \"gas_vol_flow_outlet [m^3/s]\": Q_g_out,\n    }\n\n    # Add all calculated parameters to the results dictionary\n    results.update(phys_props)\n    results.update(dim_params)\n\n    return results, solution",
           "signature": "(solution, params, phys_props, dim_params)",
           "parameters": [
             {
@@ -7722,6 +7722,111 @@
           "returns": null
         }
       ]
+    },
+    "pathsim_chem.tritium.ionisation_chamber": {
+      "name": "pathsim_chem.tritium.ionisation_chamber",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "IonisationChamber",
+          "description": "Ionisation chamber for tritium detection.",
+          "docstring_html": "<p>Ionisation chamber for tritium detection.</p>\n<p>Algebraic block that models a flow-through ionisation chamber. The sample\npasses through unchanged while the chamber produces a signal proportional\nto the tritium concentration, scaled by a detection efficiency.</p>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<p>The chamber receives a tritium flux and flow rate, computes the\nconcentration, and applies the detection efficiency:</p>\n<pre class=\"math\">\nc = \\frac{\\Phi_{in}}{\\dot{V}}\n</pre>\n<pre class=\"math\">\n\\text{signal} = \\varepsilon(c) \\cdot c\n</pre>\n<pre class=\"math\">\n\\Phi_{out} = \\Phi_{in}\n</pre>\n<p>where <tt class=\"math\">\\varepsilon</tt> is the detection efficiency (constant or\nconcentration-dependent).</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>detection_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float or callable, optional</span></dt>\n<dd>Constant efficiency factor or a function <tt class=\"docutils literal\">f(c) <span class=\"pre\">-&gt;</span> float</tt> that\nreturns the efficiency for a given concentration. Mutually\nexclusive with <em>detection_threshold</em>.</dd>\n<dt>detection_threshold <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>If provided, the efficiency is a step function: 1 above the\nthreshold, 0 below. Mutually exclusive with <em>detection_efficiency</em>.</dd>\n</dl>\n</div>\n",
+          "source": "class IonisationChamber(Function):\n    \"\"\"Ionisation chamber for tritium detection.\n\n    Algebraic block that models a flow-through ionisation chamber. The sample\n    passes through unchanged while the chamber produces a signal proportional\n    to the tritium concentration, scaled by a detection efficiency.\n\n    Mathematical Formulation\n    -------------------------\n    The chamber receives a tritium flux and flow rate, computes the\n    concentration, and applies the detection efficiency:\n\n    .. math::\n\n        c = \\\\frac{\\\\Phi_{in}}{\\\\dot{V}}\n\n    .. math::\n\n        \\\\text{signal} = \\\\varepsilon(c) \\\\cdot c\n\n    .. math::\n\n        \\\\Phi_{out} = \\\\Phi_{in}\n\n    where :math:`\\\\varepsilon` is the detection efficiency (constant or\n    concentration-dependent).\n\n    Parameters\n    ----------\n    detection_efficiency : float or callable, optional\n        Constant efficiency factor or a function ``f(c) -> float`` that\n        returns the efficiency for a given concentration. Mutually\n        exclusive with *detection_threshold*.\n    detection_threshold : float, optional\n        If provided, the efficiency is a step function: 1 above the\n        threshold, 0 below. Mutually exclusive with *detection_efficiency*.\n    \"\"\"\n\n    input_port_labels = {\n        \"flux_in\":   0,\n        \"flow_rate\": 1,\n    }\n\n    output_port_labels = {\n        \"flux_out\": 0,\n        \"signal\":   1,\n    }\n\n    def __init__(self, detection_efficiency=None, detection_threshold=None):\n\n        # input validation\n        if detection_efficiency is not None and detection_threshold is not None:\n            raise ValueError(\n                \"Specify either 'detection_efficiency' or 'detection_threshold', not both\"\n            )\n        if detection_efficiency is None and detection_threshold is None:\n            raise ValueError(\n                \"One of 'detection_efficiency' or 'detection_threshold' must be provided\"\n            )\n\n        if detection_threshold is not None:\n            self.detection_efficiency = lambda c: 1.0 if c >= detection_threshold else 0.0\n        else:\n            self.detection_efficiency = detection_efficiency\n\n        self.detection_threshold = detection_threshold\n\n        super().__init__(func=self._eval)\n\n    def _eval(self, flux_in, flow_rate):\n        concentration = flux_in / flow_rate if flow_rate > 0 else 0.0\n\n        eff = self.detection_efficiency\n        epsilon = eff(concentration) if callable(eff) else eff\n\n        signal = epsilon * concentration\n        flux_out = flux_in\n\n        return (flux_out, signal)",
+          "bases": [
+            "pathsim.blocks.function.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, detection_efficiency=None, detection_threshold=None):\n\n    # input validation\n    if detection_efficiency is not None and detection_threshold is not None:\n        raise ValueError(\n            \"Specify either 'detection_efficiency' or 'detection_threshold', not both\"\n        )\n    if detection_efficiency is None and detection_threshold is None:\n        raise ValueError(\n            \"One of 'detection_efficiency' or 'detection_threshold' must be provided\"\n        )\n\n    if detection_threshold is not None:\n        self.detection_efficiency = lambda c: 1.0 if c >= detection_threshold else 0.0\n    else:\n        self.detection_efficiency = detection_efficiency\n\n    self.detection_threshold = detection_threshold\n\n    super().__init__(func=self._eval)",
+              "signature": "(detection_efficiency = None, detection_threshold = None)",
+              "parameters": [
+                {
+                  "name": "detection_efficiency",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "detection_threshold",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _eval(self, flux_in, flow_rate):\n    concentration = flux_in / flow_rate if flow_rate > 0 else 0.0\n\n    eff = self.detection_efficiency\n    epsilon = eff(concentration) if callable(eff) else eff\n\n    signal = epsilon * concentration\n    flux_out = flux_in\n\n    return (flux_out, signal)",
+              "signature": "(flux_in, flow_rate)",
+              "parameters": [
+                {
+                  "name": "flux_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "flow_rate",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'flux_in': 0, 'flow_rate': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'flux_out': 0, 'signal': 1}"
+            },
+            {
+              "name": "detection_efficiency",
+              "description": "",
+              "type": null,
+              "value": "lambda c: 1.0 if c >= detection_threshold else 0.0"
+            },
+            {
+              "name": "detection_threshold",
+              "description": "",
+              "type": null,
+              "value": "detection_threshold"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "detection_efficiency",
+              "type": null,
+              "default": "None",
+              "description": "Constant efficiency factor or a function ``f(c) -> float`` that returns the efficiency for a given concentration. Mutually exclusive with *detection_threshold*."
+            },
+            {
+              "name": "detection_threshold",
+              "type": null,
+              "default": "None",
+              "description": "If provided, the efficiency is a step function: 1 above the threshold, 0 below. Mutually exclusive with *detection_efficiency*."
+            }
+          ]
+        }
+      ],
+      "functions": []
     },
     "pathsim_chem.tritium.residencetime": {
       "name": "pathsim_chem.tritium.residencetime",
