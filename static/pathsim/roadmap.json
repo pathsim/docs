@@ -1,7 +1,7 @@
 {
   "package": "pathsim",
   "repo": "pathsim/pathsim",
-  "updated": "2026-03-27T07:05:00Z",
+  "updated": "2026-05-07T08:31:42Z",
   "issues": [
     {
       "number": 160,
@@ -66,17 +66,6 @@
       ],
       "url": "https://github.com/pathsim/pathsim/issues/84",
       "created": "2025-09-15T09:20:59Z"
-    },
-    {
-      "number": 82,
-      "title": "IMEX integrators",
-      "body": "Implementing implicit-explicit ode solvers. \n\nSome blocks in large systems may exhibit local stiffness while the coupling to external blocks is non-stiff. In these cases it would be nice to use more stable implicit ode solvers for these blocks while using explicit solvers for the other, non-stiff blocks. \n\nThe global solver would remain explicit, while locally, blocks can be flagged as stiff and then use the implicit counterpart. Implicit iterations will only be done locally for that block. Methods that would suit this are:\n\n\n- [ARS443](https://doi.org/10.1016/S0168-9274(97)00056-1) pair of explicit and diagonally implicit runge kutta methods\n- [ARK4(3)7L[2]SA](https://doi.org/10.1016/j.apnum.2018.10.007) pair of explicit and diagonally implicit runge kutta methods with embedded pairs for error control",
-      "labels": [
-        "enhancement",
-        "numerics"
-      ],
-      "url": "https://github.com/pathsim/pathsim/issues/82",
-      "created": "2025-09-12T17:05:18Z"
     },
     {
       "number": 81,
