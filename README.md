@@ -506,9 +506,3 @@ Documentation is automatically rebuilt on a schedule to pick up new package rele
 ### Environment Variables
 
 - `BASE_PATH`: URL base path (e.g., `/pathsim-docs`)
-
----
-
-## License
-
-MIT
