@@ -1,7 +1,12 @@
 {
-  "cells": {},
-  "executedAt": "2026-05-16T18:25:14.009507+00:00",
-  "duration": 5051,
-  "success": false,
-  "error": "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 1062, in async_execute_cell\n    await self._check_raise_for_error(cell, cell_index, exec_reply)\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 918, in _check_raise_for_error\n    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)\nnbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:\n------------------\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# Apply PathSim docs matplotlib style\nplt.style.use('../pathsim_docs.mplstyle')\n\nfrom pathsim import Simulation, Connection\nfrom pathsim.blocks import Source, Scope, Spectrum\nfrom pathsim.solvers import RKCK54\n\nfrom pathsim_rf import RFAmplifier, RFMixer\n------------------\n\n\n\u001b[31m---------------------------------------------------------------------------\u001b[39m\n\u001b[31mModuleNotFoundError\u001b[39m                       Traceback (most recent call last)\n\u001b[36mCell\u001b[39m\u001b[36m \u001b[39m\u001b[32mIn[2]\u001b[39m\u001b[32m, line 11\u001b[39m\n\u001b[32m      7\u001b[39m \u001b[38;5;28;01mfrom\u001b[39;00m pathsim \u001b[38;5;28;01mimport\u001b[39;00m Simulation, Connection\n\u001b[32m      8\u001b[39m \u001b[38;5;28;01mfrom\u001b[39;00m pathsim.blocks \u001b[38;5;28;01mimport\u001b[39;00m Source, Scope, Spectrum\n\u001b[32m      9\u001b[39m \u001b[38;5;28;01mfrom\u001b[39;00m pathsim.solvers \u001b[38;5;28;01mimport\u001b[39;00m RKCK54\n\u001b[32m     10\u001b[39m \n\u001b[32m---> \u001b[39m\u001b[32m11\u001b[39m \u001b[38;5;28;01mfrom\u001b[39;00m pathsim_rf \u001b[38;5;28;01mimport\u001b[39;00m RFAmplifier, RFMixer\n\n\u001b[31mModuleNotFoundError\u001b[39m: No module named 'pathsim_rf'"
+  "cells": {
+    "6": {
+      "stdout": "18:44:18 - INFO - LOGGING (log: True)\n18:44:18 - INFO - BLOCKS (total: 7, dynamic: 1, static: 6, eventful: 0)\n18:44:18 - INFO - GRAPH (nodes: 7, edges: 8, alg. depth: 4, loop depth: 0, runtime: 0.082ms)\n18:44:18 - INFO - STARTING -> TRANSIENT (Duration: 0.20s)\n18:44:18 - INFO - --------------------   1% | 0.0s<1.5s | 1039.1 it/s\n18:44:18 - INFO - ####----------------  20% | 0.3s<1.3s | 1009.7 it/s\n18:44:19 - INFO - ########------------  40% | 0.6s<0.9s | 1047.7 it/s\n18:44:19 - INFO - ############--------  60% | 1.0s<0.5s | 1257.4 it/s\n18:44:19 - INFO - ################----  80% | 1.2s<0.1s | 2187.8 it/s\n18:44:20 - INFO - #################### 100% | 1.4s<--:-- | 1446.4 it/s\n18:44:20 - INFO - FINISHED -> TRANSIENT (total steps: 1614, successful: 1614, runtime: 1406.98 ms)\n",
+      "stderr": null,
+      "figures": []
+    }
+  },
+  "executedAt": "2026-05-16T18:44:23.670499+00:00",
+  "duration": 9811,
+  "success": true
 }
