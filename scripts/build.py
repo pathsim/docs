@@ -19,6 +19,7 @@ import argparse
 import json
 import shutil
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 # Add scripts directory to path for imports
@@ -213,6 +214,68 @@ def generate_version_indexes(
     print(f"      {len(search_items)} search items, {len(crossref_items)} crossref items")
 
 
+BUILD_OK_FILE = ".build-ok"
+
+
+def _is_build_ok(version_dir: Path) -> bool:
+    """
+    Decide whether a version directory is a successful build that can be skipped.
+
+    Truth sources, in priority order:
+    1. A `.build-ok` marker file → build completed successfully on a previous run.
+    2. Implicit fallback for legacy builds that predate the marker:
+       - api.json or manifest.json exists, AND
+       - either outputs/ is missing (no notebooks) or every outputs/*.json reports
+         success: true.
+       This keeps healthy historical versions from being rebuilt unnecessarily.
+
+    A build that produced any failed notebook output is NOT ok — the version is
+    rebuilt next run so the regression gets healed automatically.
+    """
+    if not version_dir.exists():
+        return False
+
+    if (version_dir / BUILD_OK_FILE).exists():
+        return True
+
+    # Fallback for legacy versions without the marker file
+    has_core = (version_dir / "manifest.json").exists() or (version_dir / "api.json").exists()
+    if not has_core:
+        return False
+
+    outputs_dir = version_dir / "outputs"
+    if not outputs_dir.exists():
+        # No notebooks to execute → nothing could have failed
+        return True
+
+    for output_file in outputs_dir.glob("*.json"):
+        try:
+            with open(output_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            return False
+        if data.get("success") is False:
+            return False
+
+    return True
+
+
+def _write_build_ok(version_dir: Path, notebook_results: dict | None = None) -> None:
+    """Write the .build-ok marker capturing how this version was built."""
+    summary: dict = {
+        "builtAt": datetime.now(timezone.utc).isoformat(),
+        "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+    }
+
+    if notebook_results is not None:
+        total = len(notebook_results)
+        failed = sum(1 for r in notebook_results.values() if r.get("success") is False)
+        summary["notebooks"] = {"total": total, "failed": failed}
+
+    with open(version_dir / BUILD_OK_FILE, "w", encoding="utf-8") as f:
+        json.dump(summary, f, indent=2)
+
+
 def get_versions_to_build(
     package_id: str,
     tags: list[str],
@@ -227,6 +290,9 @@ def get_versions_to_build(
     - Always keep vX.Y.0 tags (historical milestones)
     - Keep exactly one "latest" non-.0 tag
     - When a newer tag exists, build it and delete old non-.0 latest
+    - A version is considered already built only if `_is_build_ok` returns True
+      (presence of `.build-ok` marker, or legacy build with all outputs success:true).
+      Versions with failed outputs are retried automatically.
     """
     min_version = MIN_SUPPORTED_VERSIONS.get(package_id, "0.1")
     output_dir = STATIC_DIR / package_id
@@ -240,14 +306,14 @@ def get_versions_to_build(
 
     # Build missing .0 releases
     for tag in historical:
-        if rebuild_all or not (output_dir / tag).exists():
+        if rebuild_all or not _is_build_ok(output_dir / tag):
             to_build.append(tag)
 
     # Handle latest tag
     if latest_tag:
-        latest_exists = (output_dir / latest_tag).exists()
+        latest_ok = _is_build_ok(output_dir / latest_tag)
 
-        if rebuild_all or not latest_exists:
+        if rebuild_all or not latest_ok:
             to_build.append(latest_tag)
 
             # If latest is not a .0 release, check if there's an old non-.0 to delete
@@ -326,9 +392,10 @@ def build_version(
             print(f"      No notebooks found")
 
         # 3. Execute notebooks
+        notebook_results: dict = {}
         if execute and notebooks:
             print(f"    Executing notebooks...")
-            execute_notebooks(output_dir, notebooks, parallel=True)
+            notebook_results = execute_notebooks(output_dir, notebooks, parallel=True)
 
         # 4. Generate version manifest
         print(f"    Generating manifest...")
@@ -351,7 +418,15 @@ def build_version(
             except Exception as e:
                 print(f"      Warning: {e}")
 
-        print(f"    Done")
+        # 7. Write .build-ok marker — only on a fully-clean run.
+        # Partial failures (some notebook outputs success: false) leave the
+        # marker absent so the next CI run picks the version up automatically.
+        failed = sum(1 for r in notebook_results.values() if r.get("success") is False)
+        if failed == 0:
+            _write_build_ok(output_dir, notebook_results)
+            print(f"    Done (build-ok written)")
+        else:
+            print(f"    Done with {failed} notebook failure(s) — marker withheld, will retry next run")
         return True
 
     except Exception as e:
