@@ -288,13 +288,17 @@ def _execute_with_nbconvert(notebook_path: Path) -> dict[str, Any]:
         if result.returncode == 0:
             return {"success": True, "output_path": output_path}
         else:
-            error = result.stderr.strip().split('\n')[-1] if result.stderr else "Unknown error"
-            return {"success": False, "error": error[:200]}
+            # Keep the tail of stderr — usually the traceback ending with the
+            # actual exception. 200 chars was too aggressive and obscured the
+            # diagnosis of real bugs (e.g. injected-setup-cell syntax errors).
+            stderr = (result.stderr or "").strip()
+            error = stderr[-2000:] if stderr else "Unknown error"
+            return {"success": False, "error": error}
 
     except subprocess.TimeoutExpired:
         return {"success": False, "error": "Timeout"}
     except Exception as e:
-        return {"success": False, "error": str(e)[:200]}
+        return {"success": False, "error": str(e)[:2000]}
 
 
 def _save_output(path: Path, data: dict):
@@ -310,12 +314,17 @@ def _inject_svg_setup(notebook: dict) -> dict:
     This ensures all plots are generated as SVG regardless of
     what the notebook's original settings might be.
     """
+    # nbformat allows source as either a single string or a list of strings;
+    # when using a list, each element MUST keep its trailing newline, otherwise
+    # the kernel reassembles the lines into one undelimited blob that fails to
+    # parse (e.g. "import matplotlibmatplotlib.use('Agg')...").
+    # A plain multi-line string sidesteps the gotcha entirely.
     setup_cell = {
         "cell_type": "code",
         "execution_count": None,
         "metadata": {"tags": ["setup", "hide"]},
         "outputs": [],
-        "source": MATPLOTLIB_SVG_SETUP.strip().split("\n"),
+        "source": MATPLOTLIB_SVG_SETUP.strip() + "\n",
     }
 
     # Create a copy with setup cell prepended
