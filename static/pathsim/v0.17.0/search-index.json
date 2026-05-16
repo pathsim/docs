@@ -3294,6 +3294,560 @@
   },
   {
     "type": "module",
+    "name": "pathsim.events._event",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#pathsim-events-_event",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event"
+  },
+  {
+    "type": "class",
+    "name": "Event",
+    "description": "This is the base class of the event handling system.",
+    "path": "pathsim/v0.17.0/api#Event",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#Event.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "on",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#Event.on",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "off",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#Event.off",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the recorded event times. Resetting the history is not",
+    "path": "pathsim/v0.17.0/api#Event.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "Buffer the event function evaluation before the timestep is",
+    "path": "pathsim/v0.17.0/api#Event.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "estimate",
+    "description": "Estimate the time of the next event, based on history or internal schedule.",
+    "path": "pathsim/v0.17.0/api#Event.estimate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and decide if an event has occurred.",
+    "path": "pathsim/v0.17.0/api#Event.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "resolve",
+    "description": "Resolve the event and record the time (t) at which it occurs.",
+    "path": "pathsim/v0.17.0/api#Event.resolve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.events.condition",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#pathsim-events-condition",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.condition"
+  },
+  {
+    "type": "class",
+    "name": "Condition",
+    "description": "Subclass of base 'Event' that triggers if the event function evaluates to 'True',",
+    "path": "pathsim/v0.17.0/api#Condition",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.condition"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and check if condition is satisfied.",
+    "path": "pathsim/v0.17.0/api#Condition.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.condition",
+    "parentClass": "Condition"
+  },
+  {
+    "type": "method",
+    "name": "resolve",
+    "description": "Resolve the event and record the time (t) at which it occurs.",
+    "path": "pathsim/v0.17.0/api#Condition.resolve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.condition",
+    "parentClass": "Condition"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.events.schedule",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#pathsim-events-schedule",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule"
+  },
+  {
+    "type": "class",
+    "name": "Schedule",
+    "description": "Subclass of base 'Event' that triggers dependent on the evaluation time.",
+    "path": "pathsim/v0.17.0/api#Schedule",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#Schedule.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "method",
+    "name": "_next",
+    "description": "return the next period break",
+    "path": "pathsim/v0.17.0/api#Schedule._next",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "method",
+    "name": "estimate",
+    "description": "Estimate the time until the next scheduled event.",
+    "path": "pathsim/v0.17.0/api#Schedule.estimate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "Buffer the current time to history",
+    "path": "pathsim/v0.17.0/api#Schedule.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Check if the event condition is satisfied, i.e. if the",
+    "path": "pathsim/v0.17.0/api#Schedule.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "class",
+    "name": "ScheduleList",
+    "description": "Subclass of base 'Schedule' that triggers dependent on the evaluation time.",
+    "path": "pathsim/v0.17.0/api#ScheduleList",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#ScheduleList.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "ScheduleList"
+  },
+  {
+    "type": "method",
+    "name": "_next",
+    "description": "return the next event from the event time list by index",
+    "path": "pathsim/v0.17.0/api#ScheduleList._next",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "ScheduleList"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Check if the event condition is satisfied, i.e. if the",
+    "path": "pathsim/v0.17.0/api#ScheduleList.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "ScheduleList"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.events.zerocrossing",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#pathsim-events-zerocrossing",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing"
+  },
+  {
+    "type": "class",
+    "name": "ZeroCrossing",
+    "description": "Subclass of base 'Event' that triggers if the event function crosses zero.",
+    "path": "pathsim/v0.17.0/api#ZeroCrossing",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and check for zero-crossings",
+    "path": "pathsim/v0.17.0/api#ZeroCrossing.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing",
+    "parentClass": "ZeroCrossing"
+  },
+  {
+    "type": "class",
+    "name": "ZeroCrossingUp",
+    "description": "Modification of standard 'ZeroCrossing' event where events are only triggered",
+    "path": "pathsim/v0.17.0/api#ZeroCrossingUp",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and check for zero-crossings",
+    "path": "pathsim/v0.17.0/api#ZeroCrossingUp.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing",
+    "parentClass": "ZeroCrossingUp"
+  },
+  {
+    "type": "class",
+    "name": "ZeroCrossingDown",
+    "description": "Modification of standard 'ZeroCrossing' event where events are only triggered",
+    "path": "pathsim/v0.17.0/api#ZeroCrossingDown",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and check for zero-crossings",
+    "path": "pathsim/v0.17.0/api#ZeroCrossingDown.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing",
+    "parentClass": "ZeroCrossingDown"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.optim.anderson",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#pathsim-optim-anderson",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson"
+  },
+  {
+    "type": "class",
+    "name": "Anderson",
+    "description": "Anderson acceleration for fixed-point iteration.",
+    "path": "pathsim/v0.17.0/api#Anderson",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#Anderson.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "Anderson"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solve the function 'func' with initial",
+    "path": "pathsim/v0.17.0/api#Anderson.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "Anderson"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "reset the anderson accelerator",
+    "path": "pathsim/v0.17.0/api#Anderson.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "Anderson"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Perform one iteration on the fixed-point solution.",
+    "path": "pathsim/v0.17.0/api#Anderson.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "Anderson"
+  },
+  {
+    "type": "class",
+    "name": "NewtonAnderson",
+    "description": "Hybrid Newton--Anderson fixed-point solver.",
+    "path": "pathsim/v0.17.0/api#NewtonAnderson",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solve the function 'func' with initial value",
+    "path": "pathsim/v0.17.0/api#NewtonAnderson.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "NewtonAnderson"
+  },
+  {
+    "type": "method",
+    "name": "_newton",
+    "description": "Newton step on solution, where 'f=g-x' is the",
+    "path": "pathsim/v0.17.0/api#NewtonAnderson._newton",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "NewtonAnderson"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Perform one iteration on the fixed-point solution.",
+    "path": "pathsim/v0.17.0/api#NewtonAnderson.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "NewtonAnderson"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.optim.booster",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#pathsim-optim-booster",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.booster"
+  },
+  {
+    "type": "class",
+    "name": "ConnectionBooster",
+    "description": "Wraps a `Connection` instance and injects a fixed point accelerator.",
+    "path": "pathsim/v0.17.0/api#ConnectionBooster",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.booster"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#ConnectionBooster.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.booster",
+    "parentClass": "ConnectionBooster"
+  },
+  {
+    "type": "method",
+    "name": "get",
+    "description": "Return the output values of the source block that is referenced in",
+    "path": "pathsim/v0.17.0/api#ConnectionBooster.get",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.booster",
+    "parentClass": "ConnectionBooster"
+  },
+  {
+    "type": "method",
+    "name": "set",
+    "description": "Set targets input values.",
+    "path": "pathsim/v0.17.0/api#ConnectionBooster.set",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.booster",
+    "parentClass": "ConnectionBooster"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the internal fixed point accelerator and update the history",
+    "path": "pathsim/v0.17.0/api#ConnectionBooster.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.booster",
+    "parentClass": "ConnectionBooster"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Wraps the `Connection.update` method for data transfer from source",
+    "path": "pathsim/v0.17.0/api#ConnectionBooster.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.booster",
+    "parentClass": "ConnectionBooster"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.optim.numerical",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#pathsim-optim-numerical",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.numerical"
+  },
+  {
+    "type": "function",
+    "name": "num_jac",
+    "description": "Numerically computes the jacobian of the function 'func'",
+    "path": "pathsim/v0.17.0/api#num_jac",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.numerical"
+  },
+  {
+    "type": "function",
+    "name": "num_autojac",
+    "description": "Wraps a function object such that it computes the jacobian",
+    "path": "pathsim/v0.17.0/api#num_autojac",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.numerical"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.optim.operator",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#pathsim-optim-operator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator"
+  },
+  {
+    "type": "class",
+    "name": "Operator",
+    "description": "Operator class for function evaluation and linearization.",
+    "path": "pathsim/v0.17.0/api#Operator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#Operator.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "Operator"
+  },
+  {
+    "type": "method",
+    "name": "jac",
+    "description": "Compute the Jacobian matrix at point x.",
+    "path": "pathsim/v0.17.0/api#Operator.jac",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "Operator"
+  },
+  {
+    "type": "method",
+    "name": "linearize",
+    "description": "Linearize the function at point x.",
+    "path": "pathsim/v0.17.0/api#Operator.linearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "Operator"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the linearization.",
+    "path": "pathsim/v0.17.0/api#Operator.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "Operator"
+  },
+  {
+    "type": "class",
+    "name": "DynamicOperator",
+    "description": "Operator class for dynamic system function evaluation and linearization.",
+    "path": "pathsim/v0.17.0/api#DynamicOperator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.17.0/api#DynamicOperator.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "method",
+    "name": "jac_x",
+    "description": "Compute the Jacobian matrix with respect to x.",
+    "path": "pathsim/v0.17.0/api#DynamicOperator.jac_x",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "method",
+    "name": "jac_u",
+    "description": "Compute the Jacobian matrix with respect to u.",
+    "path": "pathsim/v0.17.0/api#DynamicOperator.jac_u",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "method",
+    "name": "linearize",
+    "description": "Linearize the function at point (x, u, t).",
+    "path": "pathsim/v0.17.0/api#DynamicOperator.linearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the linearization.",
+    "path": "pathsim/v0.17.0/api#DynamicOperator.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "module",
     "name": "pathsim.solvers._rungekutta",
     "description": "",
     "path": "pathsim/v0.17.0/api#pathsim-solvers-_rungekutta",
@@ -4585,560 +5139,6 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.steadystate",
     "parentClass": "SteadyState"
-  },
-  {
-    "type": "module",
-    "name": "pathsim.events._event",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#pathsim-events-_event",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event"
-  },
-  {
-    "type": "class",
-    "name": "Event",
-    "description": "This is the base class of the event handling system.",
-    "path": "pathsim/v0.17.0/api#Event",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event"
-  },
-  {
-    "type": "method",
-    "name": "__init__",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#Event.__init__",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
-    "parentClass": "Event"
-  },
-  {
-    "type": "method",
-    "name": "on",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#Event.on",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
-    "parentClass": "Event"
-  },
-  {
-    "type": "method",
-    "name": "off",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#Event.off",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
-    "parentClass": "Event"
-  },
-  {
-    "type": "method",
-    "name": "reset",
-    "description": "Reset the recorded event times. Resetting the history is not",
-    "path": "pathsim/v0.17.0/api#Event.reset",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
-    "parentClass": "Event"
-  },
-  {
-    "type": "method",
-    "name": "buffer",
-    "description": "Buffer the event function evaluation before the timestep is",
-    "path": "pathsim/v0.17.0/api#Event.buffer",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
-    "parentClass": "Event"
-  },
-  {
-    "type": "method",
-    "name": "estimate",
-    "description": "Estimate the time of the next event, based on history or internal schedule.",
-    "path": "pathsim/v0.17.0/api#Event.estimate",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
-    "parentClass": "Event"
-  },
-  {
-    "type": "method",
-    "name": "detect",
-    "description": "Evaluate the event function and decide if an event has occurred.",
-    "path": "pathsim/v0.17.0/api#Event.detect",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
-    "parentClass": "Event"
-  },
-  {
-    "type": "method",
-    "name": "resolve",
-    "description": "Resolve the event and record the time (t) at which it occurs.",
-    "path": "pathsim/v0.17.0/api#Event.resolve",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
-    "parentClass": "Event"
-  },
-  {
-    "type": "module",
-    "name": "pathsim.events.condition",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#pathsim-events-condition",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.condition"
-  },
-  {
-    "type": "class",
-    "name": "Condition",
-    "description": "Subclass of base 'Event' that triggers if the event function evaluates to 'True',",
-    "path": "pathsim/v0.17.0/api#Condition",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.condition"
-  },
-  {
-    "type": "method",
-    "name": "detect",
-    "description": "Evaluate the event function and check if condition is satisfied.",
-    "path": "pathsim/v0.17.0/api#Condition.detect",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.condition",
-    "parentClass": "Condition"
-  },
-  {
-    "type": "method",
-    "name": "resolve",
-    "description": "Resolve the event and record the time (t) at which it occurs.",
-    "path": "pathsim/v0.17.0/api#Condition.resolve",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.condition",
-    "parentClass": "Condition"
-  },
-  {
-    "type": "module",
-    "name": "pathsim.events.schedule",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#pathsim-events-schedule",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule"
-  },
-  {
-    "type": "class",
-    "name": "Schedule",
-    "description": "Subclass of base 'Event' that triggers dependent on the evaluation time.",
-    "path": "pathsim/v0.17.0/api#Schedule",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule"
-  },
-  {
-    "type": "method",
-    "name": "__init__",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#Schedule.__init__",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule",
-    "parentClass": "Schedule"
-  },
-  {
-    "type": "method",
-    "name": "_next",
-    "description": "return the next period break",
-    "path": "pathsim/v0.17.0/api#Schedule._next",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule",
-    "parentClass": "Schedule"
-  },
-  {
-    "type": "method",
-    "name": "estimate",
-    "description": "Estimate the time until the next scheduled event.",
-    "path": "pathsim/v0.17.0/api#Schedule.estimate",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule",
-    "parentClass": "Schedule"
-  },
-  {
-    "type": "method",
-    "name": "buffer",
-    "description": "Buffer the current time to history",
-    "path": "pathsim/v0.17.0/api#Schedule.buffer",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule",
-    "parentClass": "Schedule"
-  },
-  {
-    "type": "method",
-    "name": "detect",
-    "description": "Check if the event condition is satisfied, i.e. if the",
-    "path": "pathsim/v0.17.0/api#Schedule.detect",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule",
-    "parentClass": "Schedule"
-  },
-  {
-    "type": "class",
-    "name": "ScheduleList",
-    "description": "Subclass of base 'Schedule' that triggers dependent on the evaluation time.",
-    "path": "pathsim/v0.17.0/api#ScheduleList",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule"
-  },
-  {
-    "type": "method",
-    "name": "__init__",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#ScheduleList.__init__",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule",
-    "parentClass": "ScheduleList"
-  },
-  {
-    "type": "method",
-    "name": "_next",
-    "description": "return the next event from the event time list by index",
-    "path": "pathsim/v0.17.0/api#ScheduleList._next",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule",
-    "parentClass": "ScheduleList"
-  },
-  {
-    "type": "method",
-    "name": "detect",
-    "description": "Check if the event condition is satisfied, i.e. if the",
-    "path": "pathsim/v0.17.0/api#ScheduleList.detect",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.schedule",
-    "parentClass": "ScheduleList"
-  },
-  {
-    "type": "module",
-    "name": "pathsim.events.zerocrossing",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#pathsim-events-zerocrossing",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.zerocrossing"
-  },
-  {
-    "type": "class",
-    "name": "ZeroCrossing",
-    "description": "Subclass of base 'Event' that triggers if the event function crosses zero.",
-    "path": "pathsim/v0.17.0/api#ZeroCrossing",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.zerocrossing"
-  },
-  {
-    "type": "method",
-    "name": "detect",
-    "description": "Evaluate the event function and check for zero-crossings",
-    "path": "pathsim/v0.17.0/api#ZeroCrossing.detect",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.zerocrossing",
-    "parentClass": "ZeroCrossing"
-  },
-  {
-    "type": "class",
-    "name": "ZeroCrossingUp",
-    "description": "Modification of standard 'ZeroCrossing' event where events are only triggered",
-    "path": "pathsim/v0.17.0/api#ZeroCrossingUp",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.zerocrossing"
-  },
-  {
-    "type": "method",
-    "name": "detect",
-    "description": "Evaluate the event function and check for zero-crossings",
-    "path": "pathsim/v0.17.0/api#ZeroCrossingUp.detect",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.zerocrossing",
-    "parentClass": "ZeroCrossingUp"
-  },
-  {
-    "type": "class",
-    "name": "ZeroCrossingDown",
-    "description": "Modification of standard 'ZeroCrossing' event where events are only triggered",
-    "path": "pathsim/v0.17.0/api#ZeroCrossingDown",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.zerocrossing"
-  },
-  {
-    "type": "method",
-    "name": "detect",
-    "description": "Evaluate the event function and check for zero-crossings",
-    "path": "pathsim/v0.17.0/api#ZeroCrossingDown.detect",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.events.zerocrossing",
-    "parentClass": "ZeroCrossingDown"
-  },
-  {
-    "type": "module",
-    "name": "pathsim.optim.anderson",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#pathsim-optim-anderson",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson"
-  },
-  {
-    "type": "class",
-    "name": "Anderson",
-    "description": "Anderson acceleration for fixed-point iteration.",
-    "path": "pathsim/v0.17.0/api#Anderson",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson"
-  },
-  {
-    "type": "method",
-    "name": "__init__",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#Anderson.__init__",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson",
-    "parentClass": "Anderson"
-  },
-  {
-    "type": "method",
-    "name": "solve",
-    "description": "Solve the function 'func' with initial",
-    "path": "pathsim/v0.17.0/api#Anderson.solve",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson",
-    "parentClass": "Anderson"
-  },
-  {
-    "type": "method",
-    "name": "reset",
-    "description": "reset the anderson accelerator",
-    "path": "pathsim/v0.17.0/api#Anderson.reset",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson",
-    "parentClass": "Anderson"
-  },
-  {
-    "type": "method",
-    "name": "step",
-    "description": "Perform one iteration on the fixed-point solution.",
-    "path": "pathsim/v0.17.0/api#Anderson.step",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson",
-    "parentClass": "Anderson"
-  },
-  {
-    "type": "class",
-    "name": "NewtonAnderson",
-    "description": "Hybrid Newton--Anderson fixed-point solver.",
-    "path": "pathsim/v0.17.0/api#NewtonAnderson",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson"
-  },
-  {
-    "type": "method",
-    "name": "solve",
-    "description": "Solve the function 'func' with initial value",
-    "path": "pathsim/v0.17.0/api#NewtonAnderson.solve",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson",
-    "parentClass": "NewtonAnderson"
-  },
-  {
-    "type": "method",
-    "name": "_newton",
-    "description": "Newton step on solution, where 'f=g-x' is the",
-    "path": "pathsim/v0.17.0/api#NewtonAnderson._newton",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson",
-    "parentClass": "NewtonAnderson"
-  },
-  {
-    "type": "method",
-    "name": "step",
-    "description": "Perform one iteration on the fixed-point solution.",
-    "path": "pathsim/v0.17.0/api#NewtonAnderson.step",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.anderson",
-    "parentClass": "NewtonAnderson"
-  },
-  {
-    "type": "module",
-    "name": "pathsim.optim.booster",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#pathsim-optim-booster",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.booster"
-  },
-  {
-    "type": "class",
-    "name": "ConnectionBooster",
-    "description": "Wraps a `Connection` instance and injects a fixed point accelerator.",
-    "path": "pathsim/v0.17.0/api#ConnectionBooster",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.booster"
-  },
-  {
-    "type": "method",
-    "name": "__init__",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#ConnectionBooster.__init__",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.booster",
-    "parentClass": "ConnectionBooster"
-  },
-  {
-    "type": "method",
-    "name": "get",
-    "description": "Return the output values of the source block that is referenced in",
-    "path": "pathsim/v0.17.0/api#ConnectionBooster.get",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.booster",
-    "parentClass": "ConnectionBooster"
-  },
-  {
-    "type": "method",
-    "name": "set",
-    "description": "Set targets input values.",
-    "path": "pathsim/v0.17.0/api#ConnectionBooster.set",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.booster",
-    "parentClass": "ConnectionBooster"
-  },
-  {
-    "type": "method",
-    "name": "reset",
-    "description": "Reset the internal fixed point accelerator and update the history",
-    "path": "pathsim/v0.17.0/api#ConnectionBooster.reset",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.booster",
-    "parentClass": "ConnectionBooster"
-  },
-  {
-    "type": "method",
-    "name": "update",
-    "description": "Wraps the `Connection.update` method for data transfer from source",
-    "path": "pathsim/v0.17.0/api#ConnectionBooster.update",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.booster",
-    "parentClass": "ConnectionBooster"
-  },
-  {
-    "type": "module",
-    "name": "pathsim.optim.numerical",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#pathsim-optim-numerical",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.numerical"
-  },
-  {
-    "type": "function",
-    "name": "num_jac",
-    "description": "Numerically computes the jacobian of the function 'func'",
-    "path": "pathsim/v0.17.0/api#num_jac",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.numerical"
-  },
-  {
-    "type": "function",
-    "name": "num_autojac",
-    "description": "Wraps a function object such that it computes the jacobian",
-    "path": "pathsim/v0.17.0/api#num_autojac",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.numerical"
-  },
-  {
-    "type": "module",
-    "name": "pathsim.optim.operator",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#pathsim-optim-operator",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator"
-  },
-  {
-    "type": "class",
-    "name": "Operator",
-    "description": "Operator class for function evaluation and linearization.",
-    "path": "pathsim/v0.17.0/api#Operator",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator"
-  },
-  {
-    "type": "method",
-    "name": "__init__",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#Operator.__init__",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator",
-    "parentClass": "Operator"
-  },
-  {
-    "type": "method",
-    "name": "jac",
-    "description": "Compute the Jacobian matrix at point x.",
-    "path": "pathsim/v0.17.0/api#Operator.jac",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator",
-    "parentClass": "Operator"
-  },
-  {
-    "type": "method",
-    "name": "linearize",
-    "description": "Linearize the function at point x.",
-    "path": "pathsim/v0.17.0/api#Operator.linearize",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator",
-    "parentClass": "Operator"
-  },
-  {
-    "type": "method",
-    "name": "reset",
-    "description": "Reset the linearization.",
-    "path": "pathsim/v0.17.0/api#Operator.reset",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator",
-    "parentClass": "Operator"
-  },
-  {
-    "type": "class",
-    "name": "DynamicOperator",
-    "description": "Operator class for dynamic system function evaluation and linearization.",
-    "path": "pathsim/v0.17.0/api#DynamicOperator",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator"
-  },
-  {
-    "type": "method",
-    "name": "__init__",
-    "description": "",
-    "path": "pathsim/v0.17.0/api#DynamicOperator.__init__",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator",
-    "parentClass": "DynamicOperator"
-  },
-  {
-    "type": "method",
-    "name": "jac_x",
-    "description": "Compute the Jacobian matrix with respect to x.",
-    "path": "pathsim/v0.17.0/api#DynamicOperator.jac_x",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator",
-    "parentClass": "DynamicOperator"
-  },
-  {
-    "type": "method",
-    "name": "jac_u",
-    "description": "Compute the Jacobian matrix with respect to u.",
-    "path": "pathsim/v0.17.0/api#DynamicOperator.jac_u",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator",
-    "parentClass": "DynamicOperator"
-  },
-  {
-    "type": "method",
-    "name": "linearize",
-    "description": "Linearize the function at point (x, u, t).",
-    "path": "pathsim/v0.17.0/api#DynamicOperator.linearize",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator",
-    "parentClass": "DynamicOperator"
-  },
-  {
-    "type": "method",
-    "name": "reset",
-    "description": "Reset the linearization.",
-    "path": "pathsim/v0.17.0/api#DynamicOperator.reset",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.optim.operator",
-    "parentClass": "DynamicOperator"
   },
   {
     "type": "module",

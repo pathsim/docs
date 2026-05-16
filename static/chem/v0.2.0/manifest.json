@@ -7,8 +7,11 @@
       "file": "vle_calculation.ipynb",
       "title": "Activity Coefficients",
       "description": "Simulating how NRTL activity coefficients for the ethanol-water system evolve with temperature using PathSim blocks and connections.",
-      "category": "advanced",
-      "tags": [],
+      "category": "chemical",
+      "tags": [
+        "thermodynamics",
+        "vle"
+      ],
       "executable": true
     },
     {
@@ -16,8 +19,11 @@
       "file": "equation_of_state.ipynb",
       "title": "Cubic Equations of State",
       "description": "Simulating the compressibility factor of methane across a pressure sweep using the Peng-Robinson and Soave-Redlich-Kwong equations of state wired into a PathSim simulation.",
-      "category": "advanced",
-      "tags": [],
+      "category": "chemical",
+      "tags": [
+        "thermodynamics",
+        "eos"
+      ],
       "executable": true
     },
     {
@@ -25,8 +31,11 @@
       "file": "vapor_pressure_curves.ipynb",
       "title": "Vapor Pressure Curves",
       "description": "Comparing vapor pressure correlations for water by sweeping temperature through Antoine, Kirchhoff, and Wagner blocks wired into a PathSim simulation.",
-      "category": "advanced",
-      "tags": [],
+      "category": "chemical",
+      "tags": [
+        "thermodynamics",
+        "vle"
+      ],
       "executable": true
     }
   ],
@@ -67,9 +76,14 @@
       "order": 7
     },
     {
+      "id": "rf-engineering",
+      "title": "RF Engineering",
+      "order": 8
+    },
+    {
       "id": "fmu",
       "title": "FMU Integration",
-      "order": 8
+      "order": 9
     }
   ]
 }

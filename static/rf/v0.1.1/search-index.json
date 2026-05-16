@@ -177,7 +177,7 @@
   {
     "type": "example",
     "name": "RF Mixer Downconversion",
-    "description": "Simulation of a superheterodyne downconversion stage using the  block. A high-frequency RF signal is mixed with a local oscillator (LO) to produce an intermediate frequency (IF) output.",
+    "description": "Simulation of a superheterodyne downconversion stage using the RFMixer block. A high-frequency RF signal is mixed with a local oscillator (LO) to produce an intermediate frequency (IF) output.",
     "path": "rf/v0.1.1/examples/rf-mixer-downconversion",
     "packageId": "rf",
     "moduleName": "rf-engineering",
@@ -202,7 +202,7 @@
   {
     "type": "example",
     "name": "Transmission Line Pulse Propagation",
-    "description": "Simulation of pulse propagation through a lossy transmission line using the  block. We observe the propagation delay and attenuation of a Gaussian pulse traveling through the line.",
+    "description": "Simulation of pulse propagation through a lossy transmission line using the TransmissionLine block. We observe the propagation delay and attenuation of a Gaussian pulse traveling through the line.",
     "path": "rf/v0.1.1/examples/transmission-line-reflection",
     "packageId": "rf",
     "moduleName": "rf-engineering",

@@ -154,7 +154,7 @@
   {
     "type": "example",
     "name": "Constant-Current Discharge with the SPMe",
-    "description": "Constant-current (CC) discharge simulation using , which wraps",
+    "description": "Constant-current (CC) discharge simulation using CellElectrothermal, which wraps",
     "path": "batt/v0.2.0/examples/01-spme-discharge",
     "packageId": "batt",
     "moduleName": "advanced",
@@ -163,7 +163,7 @@
   {
     "type": "example",
     "name": "Electrothermal Coupling with an External Thermal Model",
-    "description": "uses PyBaMM's isothermal electrochemistry and exposes heat generation",
+    "description": "CellElectrical uses PyBaMM's isothermal electrochemistry and exposes heat generation",
     "path": "batt/v0.2.0/examples/02-electrothermal-coupling",
     "packageId": "batt",
     "moduleName": "advanced",
