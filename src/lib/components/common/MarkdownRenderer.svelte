@@ -374,19 +374,34 @@
 
 	/* Header and crossref styles are in app.css for consistency */
 
-	/* Tables */
+	/* Tables - rounded outer border, inner cells use single-line separators
+	   so border-radius isn't broken by collapsed cell borders. */
 	.markdown-content :global(table) {
 		width: 100%;
-		border-collapse: collapse;
+		border-collapse: separate;
+		border-spacing: 0;
 		margin: var(--space-md) 0;
 		font-size: var(--font-base);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		overflow: hidden;
 	}
 
 	.markdown-content :global(th),
 	.markdown-content :global(td) {
 		padding: var(--space-xs) var(--space-sm);
-		border: 1px solid var(--border);
+		border: 0;
+		border-bottom: 1px solid var(--border);
 		text-align: left;
+	}
+
+	.markdown-content :global(th + th),
+	.markdown-content :global(td + td) {
+		border-left: 1px solid var(--border);
+	}
+
+	.markdown-content :global(tr:last-child td) {
+		border-bottom: 0;
 	}
 
 	.markdown-content :global(th) {

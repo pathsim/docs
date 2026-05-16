@@ -203,18 +203,34 @@
 		color: var(--text-muted);
 	}
 
-	/* Tables in HTML output */
+	/* Tables in HTML output - rounded outer border, inner cells use
+	   single-line separators so border-radius isn't broken by
+	   collapsed cell borders. */
 	.output-html :global(table) {
 		width: 100%;
-		border-collapse: collapse;
+		border-collapse: separate;
+		border-spacing: 0;
 		font-size: var(--font-base);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		overflow: hidden;
 	}
 
 	.output-html :global(th),
 	.output-html :global(td) {
 		padding: var(--space-xs) var(--space-sm);
-		border: 1px solid var(--border);
+		border: 0;
+		border-bottom: 1px solid var(--border);
 		text-align: left;
+	}
+
+	.output-html :global(th + th),
+	.output-html :global(td + td) {
+		border-left: 1px solid var(--border);
+	}
+
+	.output-html :global(tr:last-child td) {
+		border-bottom: 0;
 	}
 
 	.output-html :global(th) {
