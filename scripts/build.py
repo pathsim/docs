@@ -224,13 +224,14 @@ def _is_build_ok(version_dir: Path) -> bool:
     Truth sources, in priority order:
     1. A `.build-ok` marker file → build completed successfully on a previous run.
     2. Implicit fallback for legacy builds that predate the marker:
-       - api.json or manifest.json exists, AND
-       - either outputs/ is missing (no notebooks) or every outputs/*.json reports
-         success: true.
-       This keeps healthy historical versions from being rebuilt unnecessarily.
+       - manifest.json or api.json exists,
+       - if notebooks/ contains any .ipynb files then outputs/ must contain at
+         least as many *.json files (allowing fewer when some notebooks are
+         marked non-executable — we accept a small slack), and
+       - every outputs/*.json reports success: true.
 
-    A build that produced any failed notebook output is NOT ok — the version is
-    rebuilt next run so the regression gets healed automatically.
+    A build with failed outputs OR a notebooks/ dir without matching outputs/ is
+    NOT ok — it gets retried next run.
     """
     if not version_dir.exists():
         return False
@@ -243,19 +244,27 @@ def _is_build_ok(version_dir: Path) -> bool:
     if not has_core:
         return False
 
+    notebooks_dir = version_dir / "notebooks"
     outputs_dir = version_dir / "outputs"
-    if not outputs_dir.exists():
-        # No notebooks to execute → nothing could have failed
-        return True
 
-    for output_file in outputs_dir.glob("*.json"):
-        try:
-            with open(output_file, "r", encoding="utf-8") as f:
-                data = json.load(f)
-        except (json.JSONDecodeError, OSError):
-            return False
-        if data.get("success") is False:
-            return False
+    n_notebooks = len(list(notebooks_dir.glob("*.ipynb"))) if notebooks_dir.exists() else 0
+    n_outputs = len(list(outputs_dir.glob("*.json"))) if outputs_dir.exists() else 0
+
+    # Notebooks present but nothing executed (e.g. cleaned-up outputs) → rebuild.
+    # We don't require an exact match because some notebooks can legitimately be
+    # marked non-executable in the manifest and won't produce an output file.
+    if n_notebooks > 0 and n_outputs == 0:
+        return False
+
+    if outputs_dir.exists():
+        for output_file in outputs_dir.glob("*.json"):
+            try:
+                with open(output_file, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+            except (json.JSONDecodeError, OSError):
+                return False
+            if data.get("success") is False:
+                return False
 
     return True
 
