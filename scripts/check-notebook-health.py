@@ -2,14 +2,16 @@
 """
 Inspect all notebook outputs under static/ and report failures.
 
-Behaviour:
+Behaviour (always exits 0 — this is a diagnostic step, not a gate):
 - Writes a Markdown summary table to $GITHUB_STEP_SUMMARY (if set) listing
-  every failed notebook per package/version with its truncated error.
-- Emits ::warning:: log lines so GitHub annotates each failed notebook
-  visibly on the Actions run page.
-- Exits with code 1 iff the *latest* version of any package has at least one
-  failed notebook output. Latest is determined from the package manifest's
-  `latestTag`. Historical versions can fail without blocking deployment.
+  every failed notebook per package/version with the full captured error.
+- Emits ::warning:: log lines so GitHub annotates each failed notebook on the
+  Actions run page (annotation text is truncated for legibility).
+
+Workflow gating: build.py exits non-zero when a build crashes outright;
+per-notebook execution failures are deliberately not blocking because a
+single broken example shouldn't withhold the other healthy versions from
+being deployed.
 
 Usage (called from CI):
     python scripts/check-notebook-health.py
@@ -53,7 +55,11 @@ def _strip_ansi(s: str) -> str:
 
 
 def collect_failures() -> dict[tuple[str, str], list[tuple[str, str]]]:
-    """Return {(package, tag): [(notebook_stem, error_message), ...]} for failed outputs."""
+    """Return {(package, tag): [(notebook_stem, full_error), ...]} for failed outputs.
+
+    The full error string is preserved; annotation formatting decides on its own
+    how much to surface.
+    """
     failures: dict[tuple[str, str], list[tuple[str, str]]] = {}
 
     for pkg_dir in sorted(p for p in STATIC_DIR.iterdir() if p.is_dir()):
@@ -70,8 +76,6 @@ def collect_failures() -> dict[tuple[str, str], list[tuple[str, str]]]:
                 if data is None or data.get("success") is not False:
                     continue
                 error = _strip_ansi(str(data.get("error", "unknown error"))).strip()
-                if len(error) > 200:
-                    error = error[:197] + "..."
                 failures.setdefault((pkg_dir.name, version_dir.name), []).append(
                     (output_file.stem, error)
                 )
@@ -102,37 +106,43 @@ def main() -> int:
             Path(summary_path).write_text("### Notebook health\n\n" + msg)
         return 0
 
-    # GitHub annotations — appear inline on the Actions run page.
+    # GitHub annotations — single-line, so we strip newlines and trim hard.
     for (pkg, tag), items in failures.items():
         for stem, err in items:
-            print(f"::warning title=Notebook failure::{pkg}/{tag}/{stem}: {err}")
+            tail = err.replace("\n", " ⏎ ")
+            if len(tail) > 240:
+                tail = tail[-240:]  # tail of the traceback is where the real exception sits
+            print(f"::warning title=Notebook failure::{pkg}/{tag}/{stem}: ...{tail}")
 
-    # Step summary.
-    lines = ["### Notebook health\n", f"\n{sum(len(v) for v in failures.values())} failed notebook output(s) across {len(failures)} version(s).\n"]
-    lines.append("\n| Package | Version | Latest? | Notebook | Error |\n")
-    lines.append("|---|---|---|---|---|\n")
+    # Step summary with the FULL error in a collapsible <details> per notebook
+    # so the run page surfaces every traceback in readable form.
+    n_failed = sum(len(v) for v in failures.values())
+    lines: list[str] = [
+        "### Notebook health\n\n",
+        f"{n_failed} failed notebook output(s) across {len(failures)} version(s).\n\n",
+    ]
     for (pkg, tag), items in sorted(failures.items()):
-        is_latest = "**yes**" if latest.get(pkg) == tag else ""
+        is_latest = " (latest)" if latest.get(pkg) == tag else ""
+        lines.append(f"#### `{pkg}/{tag}`{is_latest}\n\n")
         for stem, err in items:
-            # Escape pipe characters for Markdown tables.
-            err_md = err.replace("|", "\\|").replace("\n", " ")
-            lines.append(f"| {pkg} | {tag} | {is_latest} | `{stem}` | {err_md} |\n")
+            lines.append(f"<details><summary><code>{stem}</code></summary>\n\n")
+            lines.append("```\n")
+            lines.append(err.rstrip())
+            lines.append("\n```\n\n</details>\n\n")
 
+    output = "".join(lines)
     if summary_path:
-        Path(summary_path).write_text("".join(lines))
+        Path(summary_path).write_text(output)
     else:
-        sys.stdout.write("".join(lines))
+        sys.stdout.write(output)
 
-    # Hard-fail iff latest version of any package has failures.
-    blocking = sorted({pkg for (pkg, tag) in failures if latest.get(pkg) == tag})
-    if blocking:
+    latest_failing = sorted({pkg for (pkg, tag) in failures if latest.get(pkg) == tag})
+    if latest_failing:
         print(
-            f"\nBlocking: latest version of {', '.join(blocking)} has failed notebooks.",
+            f"\nLatest version of {', '.join(latest_failing)} has failed notebooks "
+            "(diagnostic only — does not block deployment).",
             file=sys.stderr,
         )
-        return 1
-
-    print("\nFailures only in historical versions — not blocking deployment.")
     return 0
 
 
