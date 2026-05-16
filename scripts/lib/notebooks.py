@@ -364,7 +364,7 @@ def _clean_description(text: str) -> str:
     """Clean markdown text and extract first meaningful paragraph."""
     # Remove markdown formatting
     text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)  # links
-    text = re.sub(r"`[^`]+`", "", text)  # inline code
+    text = re.sub(r"`([^`]+)`", r"\1", text)  # inline code: keep content, drop backticks
     text = re.sub(r"\*\*([^*]+)\*\*", r"\1", text)  # bold
     text = re.sub(r"\*([^*]+)\*", r"\1", text)  # italic
     text = re.sub(r"^\s*#+\s+.+$", "", text, flags=re.MULTILINE)  # headings
