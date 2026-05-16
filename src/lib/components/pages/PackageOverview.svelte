@@ -88,7 +88,13 @@
 
 	// Build versioned paths
 	let apiPath = $derived(selectedTag ? `${base}/${packageId}/${selectedTag}/api` : `${base}/${pkg.api}`);
-	let examplesPath = $derived(selectedTag ? `${base}/${packageId}/${selectedTag}/examples` : pkg.examples ? `${base}/${pkg.examples}` : null);
+	let examplesPath = $derived(
+		examplesAvailable
+			? selectedTag
+				? `${base}/${packageId}/${selectedTag}/examples`
+				: `${base}/${packageId}/examples`
+			: null
+	);
 
 	// Build versioned installation commands
 	let versionNumber = $derived(selectedTag ? selectedTag.replace(/^v/, '') : null);

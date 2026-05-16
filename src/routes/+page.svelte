@@ -8,7 +8,7 @@
 	import type { SearchResult } from '$lib/utils/search';
 	import { createDebouncedSearch } from '$lib/stores/searchHook.svelte';
 	import { searchTarget } from '$lib/stores/searchNavigation';
-	import { getPackageManifest, packageHasRoadmap } from '$lib/api/versions';
+	import { getPackageManifest, packageHasRoadmap, versionHasExamples } from '$lib/api/versions';
 	import { SearchResult as SearchResultComponent } from '$lib/components/search';
 
 	function navigateWithTransition(path: string) {
@@ -35,17 +35,19 @@
 		}
 	}
 
-	// Track which packages have roadmaps
+	// Track which packages have roadmaps / examples (latest version)
 	let roadmapFlags = $state<Record<string, boolean>>({});
+	let examplesFlags = $state<Record<string, boolean>>({});
 
 	onMount(() => {
 		window.addEventListener('keydown', handleGlobalKeydown);
 
-		// Load manifests to check roadmap availability
+		// Load manifests to derive roadmap and examples availability
 		for (const pkgId of packageOrder) {
 			getPackageManifest(pkgId, fetch)
 				.then((manifest) => {
 					roadmapFlags[pkgId] = packageHasRoadmap(manifest);
+					examplesFlags[pkgId] = versionHasExamples(manifest.latestTag, manifest);
 				})
 				.catch(() => {});
 		}
@@ -180,8 +182,8 @@
 										<Icon name="package" size={14} />
 									</a>
 								{/if}
-								{#if pkg.examples}
-									<a href="{base}/{pkg.examples}" class="icon-btn" use:tooltip={'Examples'}>
+								{#if examplesFlags[pkgId]}
+									<a href="{base}/{pkgId}/examples" class="icon-btn" use:tooltip={'Examples'}>
 										<Icon name="play" size={14} />
 									</a>
 								{/if}

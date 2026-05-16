@@ -54,7 +54,8 @@ export interface PackageConfig {
 	// Links
 	docs: string;
 	api: string;
-	examples: string | null;  // null if no examples
+	// Note: example availability is derived from the per-version manifest
+	// (versions[].hasExamples). Do not duplicate that flag here.
 	pypi: string | null;  // null if not yet on PyPI
 	conda: string | null;  // null if not on conda-forge
 	github: string;
@@ -80,7 +81,6 @@ export const packages: Record<PackageId, PackageConfig> = {
 		logo: 'pathsim_logo.png',
 		docs: 'pathsim',
 		api: 'pathsim/api',
-		examples: 'pathsim/examples',
 		pypi: `${external.pypi}/pathsim`,
 		conda: `${external.conda}/pathsim`,
 		github: `${external.github}/pathsim`,
@@ -138,7 +138,6 @@ scope.plot()`,
 		logo: 'pathsim_chem_logo.png',
 		docs: 'chem',
 		api: 'chem/api',
-		examples: 'chem/examples',
 		pypi: `${external.pypi}/pathsim-chem`,
 		conda: null,
 		github: `${external.github}/pathsim-chem`,
@@ -198,7 +197,6 @@ scope.plot()`,
 		logo: 'pathsim_batt_logo.png',
 		docs: 'batt',
 		api: 'batt/api',
-		examples: null,
 		pypi: `${external.pypi}/pathsim-batt`,
 		conda: null,
 		github: `${external.github}/pathsim-batt`,
@@ -225,7 +223,6 @@ scope.plot()`,
 		logo: 'pathsim_vehicle_logo.png',
 		docs: 'vehicle',
 		api: 'vehicle/api',
-		examples: null,
 		pypi: `${external.pypi}/pathsim-vehicle`,
 		conda: null,
 		github: `${external.github}/pathsim-vehicle`,
@@ -253,7 +250,6 @@ scope.plot()`,
 		logo: 'pathsim_flight_logo.png',
 		docs: 'flight',
 		api: 'flight/api',
-		examples: null,
 		pypi: `${external.pypi}/pathsim-flight`,
 		conda: null,
 		github: `${external.github}/pathsim-flight`,
@@ -276,7 +272,6 @@ scope.plot()`,
 		logo: 'pathsim_rf_logo.png',
 		docs: 'rf',
 		api: 'rf/api',
-		examples: 'rf/examples',
 		pypi: `${external.pypi}/pathsim-rf`,
 		conda: null,
 		github: `${external.github}/pathsim-rf`,
@@ -320,20 +315,15 @@ export function getSidebarItems(packageId: PackageId, version?: string): Sidebar
 		{ title: 'Overview', path: pkg.docs, icon: 'home' }
 	];
 
-	// Add versioned API path
+	// API and Examples paths are versioned when a tag is known, otherwise the
+	// unversioned redirect routes resolve to the latest/stored version.
+	// Sidebar.svelte filters Examples and Roadmap out based on the manifest.
 	if (version) {
 		items.push({ title: 'API Reference', path: `${packageId}/${version}/api`, icon: 'braces' });
+		items.push({ title: 'Examples', path: `${packageId}/${version}/examples`, icon: 'play' });
 	} else {
 		items.push({ title: 'API Reference', path: pkg.api, icon: 'braces' });
-	}
-
-	// Add versioned examples path if package has examples
-	if (pkg.examples) {
-		if (version) {
-			items.push({ title: 'Examples', path: `${packageId}/${version}/examples`, icon: 'play' });
-		} else {
-			items.push({ title: 'Examples', path: pkg.examples, icon: 'play' });
-		}
+		items.push({ title: 'Examples', path: `${packageId}/examples`, icon: 'play' });
 	}
 
 	// Add roadmap (unversioned, per-package)
