@@ -52,6 +52,16 @@ jobs:
       - name: Build indexes
         run: python scripts/build-indexes.py
 
+      # Inspect notebook execution health across all versions. Any version that
+      # still has outputs with success: false is reported in the step summary.
+      # The step fails only when the *latest* version of a package contains
+      # failed notebooks — historical versions can have unfixable code bugs
+      # that we tolerate, but a broken latest blocks deployment.
+      - name: Notebook health check
+        run: python scripts/check-notebook-health.py
+        env:
+          GITHUB_STEP_SUMMARY: ${{ env.GITHUB_STEP_SUMMARY }}
+
       - name: Check for changes
         id: check_changes
         run: |
