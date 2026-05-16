@@ -190,4 +190,4 @@ CATEGORIES = [
 
 # Execution settings
 MAX_WORKERS = 4  # Parallel notebook execution
-NOTEBOOK_TIMEOUT = 600  # 10 minutes per notebook (DFN battery sims need headroom)
+NOTEBOOK_TIMEOUT = 300  # 5 minutes per notebook
