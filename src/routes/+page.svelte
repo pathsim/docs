@@ -4,12 +4,15 @@
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
-	import { packages, packageOrder, nav, type PackageId } from '$lib/config/packages';
+	import { packages, packageOrder, nav } from '$lib/config/packages';
 	import type { SearchResult } from '$lib/utils/search';
 	import { createDebouncedSearch } from '$lib/stores/searchHook.svelte';
 	import { searchTarget } from '$lib/stores/searchNavigation';
-	import { getPackageManifest, packageHasRoadmap, versionHasExamples } from '$lib/api/versions';
 	import { SearchResult as SearchResultComponent } from '$lib/components/search';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+	let packageFlags = $derived(data.packageFlags);
 
 	function navigateWithTransition(path: string) {
 		const doc = document as Document & {
@@ -35,22 +38,8 @@
 		}
 	}
 
-	// Track which packages have roadmaps / examples (latest version)
-	let roadmapFlags = $state<Record<string, boolean>>({});
-	let examplesFlags = $state<Record<string, boolean>>({});
-
 	onMount(() => {
 		window.addEventListener('keydown', handleGlobalKeydown);
-
-		// Load manifests to derive roadmap and examples availability
-		for (const pkgId of packageOrder) {
-			getPackageManifest(pkgId, fetch)
-				.then((manifest) => {
-					roadmapFlags[pkgId] = packageHasRoadmap(manifest);
-					examplesFlags[pkgId] = versionHasExamples(manifest.latestTag, manifest);
-				})
-				.catch(() => {});
-		}
 
 		return () => {
 			window.removeEventListener('keydown', handleGlobalKeydown);
@@ -171,9 +160,11 @@
 						<div class="card-info-row">
 							<span>{pkg.shortName}</span>
 							<div class="header-actions">
-								<a href="{base}/{pkg.api}" class="icon-btn" use:tooltip={'API'}>
-									<Icon name="braces" size={14} />
-								</a>
+								{#if packageFlags[pkgId].hasApi}
+									<a href="{base}/{pkg.api}" class="icon-btn" use:tooltip={'API'}>
+										<Icon name="braces" size={14} />
+									</a>
+								{/if}
 								<a href="{base}/{pkg.docs}" class="icon-btn" use:tooltip={'Docs'}>
 									<Icon name="book" size={14} />
 								</a>
@@ -182,12 +173,12 @@
 										<Icon name="package" size={14} />
 									</a>
 								{/if}
-								{#if examplesFlags[pkgId]}
+								{#if packageFlags[pkgId].hasExamples}
 									<a href="{base}/{pkgId}/examples" class="icon-btn" use:tooltip={'Examples'}>
 										<Icon name="play" size={14} />
 									</a>
 								{/if}
-								{#if roadmapFlags[pkgId]}
+								{#if packageFlags[pkgId].hasRoadmap}
 									<a href="{base}/{pkgId}/roadmap" class="icon-btn" use:tooltip={'Roadmap'}>
 										<Icon name="roadmap" size={14} />
 									</a>
