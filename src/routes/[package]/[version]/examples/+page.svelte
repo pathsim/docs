@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { base } from '$app/paths';
-	import { goto } from '$app/navigation';
-	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packages, type PackageId } from '$lib/config/packages';
 	import { groupByCategory, type NotebookMeta, type Category } from '$lib/notebook/manifest';
@@ -12,6 +10,10 @@
 	let { data }: { data: PageData } = $props();
 
 	let pkg = $derived(packages[data.packageId]);
+
+	// Base path for example detail links — must be a real href so the
+	// adapter-static crawler discovers each slug and prerenders it.
+	let examplesBasePath = $derived(`${base}/${data.packageId}/${data.resolvedTag}/examples`);
 
 	// Grouped notebooks from the version manifest
 	let groupedNotebooks = $derived.by(() => {
@@ -40,10 +42,6 @@
 		exampleGroupsStore.set([]);
 	});
 
-	function navigateToExample(slug: string) {
-		goto(`${base}/${data.packageId}/${data.resolvedTag}/examples/${slug}`);
-	}
-
 	function getThumbnailUrl(thumbnail: string): string {
 		return `${base}/${data.packageId}/${data.resolvedTag}/figures/${thumbnail}`;
 	}
@@ -67,13 +65,7 @@
 
 		<div class="tile-grid cols-2">
 			{#each notebooks as notebook}
-				<div
-					class="tile example-tile elevated"
-					onclick={() => navigateToExample(notebook.slug)}
-					onkeydown={(e) => e.key === 'Enter' && navigateToExample(notebook.slug)}
-					role="button"
-					tabindex="0"
-				>
+				<a href="{examplesBasePath}/{notebook.slug}" class="tile example-tile elevated">
 					<div class="panel-header">{notebook.title}</div>
 					<div class="panel-body tile-body">
 						<p class="tile-description">{notebook.description}</p>
@@ -83,7 +75,7 @@
 							</div>
 						{/if}
 					</div>
-				</div>
+				</a>
 			{/each}
 		</div>
 	{/each}
@@ -100,9 +92,15 @@
 		height: var(--space-2xl);
 	}
 
-	/* Example tile - clickable */
+	/* Example tile - real <a> link, but should look like the surrounding tiles */
 	.example-tile {
-		cursor: pointer;
+		display: block;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.example-tile:hover {
+		text-decoration: none;
 	}
 
 	/* Tile description text */
