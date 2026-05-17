@@ -14,6 +14,13 @@
 
 	let { data }: { data: PageData } = $props();
 
+	// Browser-executable iff the package ships a Pyodide stack AND the notebook
+	// hasn't opted out (e.g. fmu_cosimulation). The manifest's `executable` flag
+	// still drives CI baking — keeping the two concerns separate.
+	let browserExecutable = $derived(
+		packages[data.packageId].pyodidePackages.length > 0 && data.meta.executable !== false
+	);
+
 	// Base path for the version content
 	let versionBasePath = $derived(`${base}/${data.packageId}/${data.tag}`);
 
@@ -85,7 +92,7 @@
 
 <div class="notebook-page">
 	<NotebookControls
-		viewOnly={!data.meta.executable}
+		viewOnly={!browserExecutable}
 		downloadUrl={`${versionBasePath}/notebooks/${data.meta.file}`}
 	/>
 
@@ -95,7 +102,7 @@
 		precomputedOutputs={data.outputs}
 		{figuresBasePath}
 		showStaticOutputs={true}
-		executable={data.meta.executable}
+		executable={browserExecutable}
 	/>
 </div>
 
