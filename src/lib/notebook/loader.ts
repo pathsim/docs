@@ -152,29 +152,5 @@ export function findNotebookBySlug(
 	return manifest.notebooks.find((nb) => nb.slug === slug);
 }
 
-/**
- * Group notebooks by category.
- */
-export function groupByCategory(
-	notebooks: NotebookMeta[],
-	categories: Category[]
-): Map<Category, NotebookMeta[]> {
-	const categoryMap = new Map<string, Category>();
-	for (const cat of categories) {
-		categoryMap.set(cat.id, cat);
-	}
-
-	const groups = new Map<Category, NotebookMeta[]>();
-
-	for (const notebook of notebooks) {
-		const category = categoryMap.get(notebook.category);
-		if (category) {
-			const existing = groups.get(category) || [];
-			existing.push(notebook);
-			groups.set(category, existing);
-		}
-	}
-
-	// Sort by category order
-	return new Map([...groups.entries()].sort((a, b) => a[0].order - b[0].order));
-}
+// groupByCategory lives in manifest.ts — this module focuses on data loading.
+export { groupByCategory } from './manifest';
