@@ -276,6 +276,11 @@ def _execute_with_nbconvert(notebook_path: Path) -> dict[str, Any]:
                 "--execute",
                 "--output", str(output_path.name),
                 "--ExecutePreprocessor.timeout=" + str(NOTEBOOK_TIMEOUT),
+                # Kernel start can be slow on first run after a fresh pip install
+                # because Python warm-loads the full simulation stack (PyBaMM,
+                # CasADi, torch via sentence-transformers, …). Default 60s wasn't
+                # enough on cold CI machines.
+                "--ExecutePreprocessor.startup_timeout=180",
                 "--ExecutePreprocessor.kernel_name=python3",
                 str(notebook_path),
             ],
