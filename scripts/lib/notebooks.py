@@ -404,9 +404,16 @@ def generate_version_manifest(
         key=lambda n: (category_order.get(n["category"], 99), n["title"])
     )
 
+    # Only emit categories that this package actually uses. The full CATEGORIES
+    # list was previously dumped into every manifest — typically 8 out of 9
+    # categories were empty per package, bloating manifests and confusing the
+    # frontend TOC.
+    used_category_ids = {n["category"] for n in sorted_notebooks}
+    used_categories = [c for c in CATEGORIES if c["id"] in used_category_ids]
+
     return {
         "package": package_id,
         "tag": tag,
         "notebooks": sorted_notebooks,
-        "categories": CATEGORIES,
+        "categories": used_categories,
     }
