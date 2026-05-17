@@ -5,4 +5,8 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<PackageOverview packageId="rf" manifest={data.manifest} selectedTag={data.selectedTag} />
+<PackageOverview
+	packageId={data.packageId}
+	manifest={data.manifest}
+	selectedTag={data.selectedTag}
+/>
