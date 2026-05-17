@@ -467,7 +467,7 @@ def generate_package_manifest(package_id: str, dry_run: bool = False):
     version_tags.sort(key=parse_version, reverse=True)
     latest_tag = version_tags[0]
 
-    # Build versions list with release dates and examples availability
+    # Build versions list with release dates, examples, and API availability
     versions = []
     for tag in version_tags:
         released = get_tag_date(repo_path, tag)
@@ -481,10 +481,23 @@ def generate_package_manifest(package_id: str, dry_run: bool = False):
                     has_examples = len(version_manifest.get("notebooks", [])) > 0
             except Exception:
                 pass
+        # Check if this version has an API extract. Packages whose source is
+        # essentially empty (e.g. an early scaffolded stub) produce no api.json,
+        # in which case the frontend must not advertise an "API Reference" link.
+        api_path = output_dir / tag / "api.json"
+        has_api = False
+        if api_path.exists():
+            try:
+                with open(api_path, "r", encoding="utf-8") as f:
+                    api_data = json.load(f)
+                    has_api = bool(api_data.get("modules"))
+            except Exception:
+                pass
         versions.append({
             "tag": tag,
             "released": released,
             "hasExamples": has_examples,
+            "hasApi": has_api,
         })
 
     # Check if roadmap exists

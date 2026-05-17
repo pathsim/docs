@@ -14,7 +14,7 @@
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
 	import type { PackageManifest } from '$lib/api/versions';
-	import { versionHasExamples, packageHasRoadmap } from '$lib/api/versions';
+	import { versionHasExamples, versionHasApi, packageHasRoadmap } from '$lib/api/versions';
 	import { SearchInput, SearchResult as SearchResultComponent } from '$lib/components/search';
 
 	interface Props {
@@ -30,17 +30,22 @@
 		manifest && currentTag ? versionHasExamples(currentTag, manifest) : false
 	);
 
+	// Check if current version has API (false for packages with no Python source)
+	let hasApi = $derived(
+		manifest && currentTag ? versionHasApi(currentTag, manifest) : !!manifest
+	);
+
 	// Check if package has roadmap items
 	let hasRoadmap = $derived(manifest ? packageHasRoadmap(manifest) : false);
 
 	// Filter sidebar items based on availability
-	// - Hide API Reference if no manifest (no versioned docs exist)
+	// - Hide API Reference if version has no extracted API
 	// - Hide Examples if current version has no examples
 	// - Hide Roadmap if package has no roadmap items
 	let items = $derived(
 		getSidebarItems(packageId, currentTag).filter(
 			(item) =>
-				(item.title !== 'API Reference' || manifest) &&
+				(item.title !== 'API Reference' || hasApi) &&
 				(item.title !== 'Examples' || hasExamples) &&
 				(item.title !== 'Roadmap' || hasRoadmap)
 		)

@@ -6,7 +6,7 @@
 	import NotebookCell from '$lib/components/common/NotebookCell.svelte';
 	import { packages, type PackageId, type InstallOption } from '$lib/config/packages';
 	import { copyToClipboard } from '$lib/utils/clipboard';
-	import { type PackageManifest, versionHasExamples, packageHasRoadmap } from '$lib/api/versions';
+	import { type PackageManifest, versionHasExamples, versionHasApi, packageHasRoadmap } from '$lib/api/versions';
 	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 
 	/**
@@ -70,7 +70,9 @@
 	}
 
 	// Reactively compute availability based on manifest and selectedTag
-	let apiAvailable = $derived(manifest !== null && selectedTag !== null);
+	let apiAvailable = $derived(
+		manifest && selectedTag ? versionHasApi(selectedTag, manifest) : false
+	);
 	let examplesAvailable = $derived(
 		manifest && selectedTag ? versionHasExamples(selectedTag, manifest) : false
 	);

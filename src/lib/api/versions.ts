@@ -6,6 +6,7 @@ export interface VersionInfo {
 	tag: string;
 	released: string;
 	hasExamples?: boolean;
+	hasApi?: boolean;
 }
 
 export interface PackageManifest {
@@ -106,6 +107,16 @@ export function versionHasExamples(tag: string, manifest: PackageManifest): bool
 	const normalized = normalizeTag(tag);
 	const version = manifest.versions.find((v) => v.tag === normalized);
 	return version?.hasExamples ?? false;
+}
+
+/**
+ * Check if a version has an extracted API. Returns true when the flag is
+ * missing (older manifests) so we err on the side of showing the link.
+ */
+export function versionHasApi(tag: string, manifest: PackageManifest): boolean {
+	const normalized = normalizeTag(tag);
+	const version = manifest.versions.find((v) => v.tag === normalized);
+	return version?.hasApi ?? true;
 }
 
 /**
