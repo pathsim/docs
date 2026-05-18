@@ -1,24 +1,7 @@
 {
-  "cells": {
-    "17": {
-      "stdout": "15:27:11 - INFO - LOGGING (log: True)\n15:27:11 - INFO - BLOCKS (total: 2, dynamic: 1, static: 1, eventful: 0)\n15:27:11 - INFO - GRAPH (nodes: 2, edges: 1, alg. depth: 1, loop depth: 0, runtime: 0.033ms)\n",
-      "stderr": null,
-      "figures": []
-    },
-    "19": {
-      "stdout": "15:27:11 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n15:27:11 - INFO - --------------------   1% | 0.0s<0.6s | 5344.2 it/s\n15:27:11 - INFO - ####----------------  20% | 0.2s<0.5s | 5072.9 it/s\n15:27:11 - INFO - ########------------  40% | 0.6s<0.5s | 3914.6 it/s\n15:27:12 - INFO - ############--------  60% | 1.0s<1.8s | 3883.8 it/s\n15:27:12 - INFO - ################----  80% | 1.3s<0.2s | 3880.9 it/s\n15:27:12 - INFO - #################### 100% | 1.6s<--:-- | 8045.9 it/s\n15:27:12 - INFO - FINISHED -> TRANSIENT (total steps: 6610, successful: 4889, runtime: 1604.91 ms)\n",
-      "stderr": null,
-      "figures": []
-    },
-    "21": {
-      "stdout": null,
-      "stderr": null,
-      "figures": [
-        "poincare_maps_0.svg"
-      ]
-    }
-  },
-  "executedAt": "2026-05-18T15:27:14.528073+00:00",
-  "duration": 7933,
-  "success": true
+  "cells": {},
+  "executedAt": "2026-05-18T19:48:29.839345+00:00",
+  "duration": 3838,
+  "success": false,
+  "error": "y, resources)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 204, in _async_wait_for_ready\n    raise RuntimeError(msg)\nRuntimeError: Kernel died before replying to kernel_info"
 }
