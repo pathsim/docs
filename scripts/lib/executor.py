@@ -20,26 +20,25 @@ from .config import MAX_WORKERS, NOTEBOOK_TIMEOUT
 
 
 # Setup code to configure matplotlib for SVG output
-# This is prepended to notebooks before execution
+# This is prepended to notebooks before execution.
+#
+# Do NOT call matplotlib.use('Agg') here: that activates the bare Agg backend,
+# which is non-interactive and bypasses IPython's inline display hooks. plt.show()
+# becomes a no-op and nbconvert never sees any image, so cell outputs end up with
+# stdout/stderr but figures: []. We need the matplotlib_inline backend (Agg under
+# the hood, plus _repr_*_ hooks that emit display_data) — activate it via the
+# %matplotlib inline magic before setting figure_formats to SVG.
 MATPLOTLIB_SVG_SETUP = '''
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+from IPython import get_ipython
+ipython = get_ipython()
+if ipython is not None:
+    ipython.run_line_magic('matplotlib', 'inline')
+    ipython.run_line_magic('config', "InlineBackend.figure_formats = ['svg']")
 
-# Configure matplotlib for SVG output
-plt.rcParams['savefig.format'] = 'svg'
+import matplotlib.pyplot as plt
 plt.rcParams['figure.facecolor'] = 'none'
 plt.rcParams['savefig.facecolor'] = 'none'
 plt.rcParams['savefig.transparent'] = True
-
-# Configure IPython inline backend for SVG
-try:
-    from IPython import get_ipython
-    ipython = get_ipython()
-    if ipython is not None:
-        ipython.run_line_magic('config', "InlineBackend.figure_formats = ['svg']")
-except:
-    pass
 '''
 
 
