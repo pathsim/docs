@@ -1,14 +1,21 @@
 {
   "cells": {
     "15": {
-      "stdout": "03:02:07 - INFO - LOGGING (log: True)\n03:02:07 - INFO - BLOCKS (total: 6, dynamic: 2, static: 4, eventful: 0)\n03:02:07 - INFO - GRAPH (nodes: 6, edges: 6, alg. depth: 3, loop depth: 0, runtime: 0.078ms)\n",
+      "stdout": "08:24:37 - INFO - LOGGING (log: True)\n08:24:37 - INFO - BLOCKS (total: 6, dynamic: 2, static: 4, eventful: 0)\n08:24:37 - INFO - GRAPH (nodes: 6, edges: 6, alg. depth: 3, loop depth: 0, runtime: 0.107ms)\n",
       "stderr": null,
       "figures": []
     },
     "17": {
-      "stdout": "03:02:07 - INFO - STARTING -> TRANSIENT (Duration: 15.00s)\n03:02:07 - INFO - --------------------   1% | 0.0s<0.1s | 3277.1 it/s\n03:02:07 - INFO - ####----------------  20% | 0.0s<0.1s | 5559.5 it/s\n03:02:07 - INFO - ########------------  40% | 0.1s<0.1s | 5410.3 it/s\n03:02:07 - INFO - ############--------  60% | 0.1s<0.0s | 5644.7 it/s\n03:02:07 - INFO - ################----  80% | 0.1s<0.0s | 5634.3 it/s\n03:02:07 - INFO - #################### 100% | 0.2s<--:-- | 5382.7 it/s\n03:02:07 - INFO - FINISHED -> TRANSIENT (total steps: 862, successful: 595, runtime: 172.54 ms)\n",
+      "stdout": "08:24:37 - INFO - STARTING -> TRANSIENT (Duration: 15.00s)\n08:24:37 - INFO - --------------------   1% | 0.0s<0.1s | 3639.5 it/s\n08:24:37 - INFO - ####----------------  20% | 0.0s<0.1s | 5789.6 it/s\n08:24:38 - INFO - ########------------  40% | 0.1s<0.1s | 5652.0 it/s\n08:24:38 - INFO - ############--------  60% | 0.1s<0.0s | 5662.7 it/s\n08:24:38 - INFO - ################----  80% | 0.1s<0.0s | 5603.7 it/s\n08:24:38 - INFO - #################### 100% | 0.2s<--:-- | 2809.7 it/s\n08:24:38 - INFO - FINISHED -> TRANSIENT (total steps: 862, successful: 595, runtime: 214.53 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "switched_bouncing_ball_0.svg"
+      ]
     },
     "22": {
       "stdout": "Table bounces (E1): 10\nFloor bounces (E2): 15\nSwitch events (E3): 1\n",
@@ -16,7 +23,7 @@
       "figures": []
     }
   },
-  "executedAt": "2026-05-18T03:02:08.524787+00:00",
-  "duration": 4904,
+  "executedAt": "2026-05-18T08:24:39.464159+00:00",
+  "duration": 6254,
   "success": true
 }

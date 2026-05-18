@@ -1,9 +1,11 @@
 {
   "cells": {
     "9": {
-      "stdout": "02:57:35 - INFO - LOGGING (log: True)\n02:57:35 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n02:57:35 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.062ms)\n02:57:35 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n02:57:35 - INFO - --------------------   1% | 0.0s<0.7s | 8361.9 it/s\n02:57:35 - INFO - ####----------------  20% | 0.1s<0.4s | 11138.1 it/s\n02:57:35 - INFO - ########------------  40% | 0.2s<0.3s | 10465.0 it/s\n02:57:35 - INFO - ############--------  60% | 0.3s<0.2s | 10609.2 it/s\n02:57:35 - INFO - ################----  80% | 0.5s<0.1s | 11304.4 it/s\n02:57:36 - INFO - #################### 100% | 0.6s<--:-- | 10734.4 it/s\n02:57:36 - INFO - FINISHED -> TRANSIENT (total steps: 6001, successful: 6001, runtime: 575.20 ms)\n",
+      "stdout": "08:20:05 - INFO - LOGGING (log: True)\n08:20:05 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n08:20:05 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.063ms)\n08:20:05 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n08:20:05 - INFO - --------------------   1% | 0.0s<1.0s | 6171.3 it/s\n08:20:05 - INFO - ####----------------  20% | 0.2s<0.6s | 8118.0 it/s\n08:20:05 - INFO - ########------------  40% | 0.3s<0.5s | 7676.9 it/s\n08:20:05 - INFO - ############--------  60% | 0.5s<0.1s | 16639.7 it/s\n08:20:05 - INFO - ################----  80% | 0.5s<0.1s | 16623.3 it/s\n08:20:05 - INFO - #################### 100% | 0.6s<--:-- | 16618.3 it/s\n08:20:05 - INFO - FINISHED -> TRANSIENT (total steps: 6001, successful: 6001, runtime: 613.19 ms)\n",
       "stderr": null,
-      "figures": []
+      "figures": [
+        "checkpoints_0.svg"
+      ]
     },
     "12": {
       "stdout": "Checkpoint saved at t = 60.0s\n",
@@ -16,12 +18,19 @@
       "figures": []
     },
     "17": {
-      "stdout": "02:57:36 - INFO - LOGGING (log: True)\n02:57:36 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n02:57:36 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.053ms)\n02:57:36 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n02:57:36 - INFO - --------------------   1% | 0.0s<0.4s | 15819.3 it/s\n02:57:36 - INFO - ####----------------  20% | 0.1s<0.4s | 11004.1 it/s\n02:57:36 - INFO - ########------------  40% | 0.2s<0.5s | 7701.8 it/s\n02:57:36 - INFO - ############--------  60% | 0.4s<0.2s | 10966.9 it/s\n02:57:36 - INFO - ################----  80% | 0.5s<0.1s | 8683.6 it/s\n02:57:36 - INFO - #################### 100% | 0.6s<--:-- | 8343.7 it/s\n02:57:36 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 633.01 ms)\n02:57:36 - INFO - LOGGING (log: True)\n02:57:36 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n02:57:36 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.047ms)\n02:57:36 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n02:57:36 - INFO - --------------------   1% | 0.0s<0.7s | 8890.1 it/s\n02:57:36 - INFO - ####----------------  20% | 0.1s<0.6s | 8189.7 it/s\n02:57:37 - INFO - ########------------  40% | 0.3s<0.4s | 8688.3 it/s\n02:57:37 - INFO - ############--------  60% | 0.4s<0.3s | 8241.8 it/s\n02:57:37 - INFO - ################----  80% | 0.6s<0.2s | 7813.2 it/s\n02:57:37 - INFO - #################### 100% | 0.7s<--:-- | 8292.8 it/s\n02:57:37 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 728.40 ms)\n02:57:37 - INFO - LOGGING (log: True)\n02:57:37 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n02:57:37 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.044ms)\n02:57:37 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n02:57:37 - INFO - --------------------   1% | 0.0s<0.8s | 7883.7 it/s\n02:57:37 - INFO - ####----------------  20% | 0.1s<0.5s | 9792.7 it/s\n02:57:37 - INFO - ########------------  40% | 0.3s<0.4s | 9640.6 it/s\n02:57:37 - INFO - ############--------  60% | 0.4s<0.3s | 8925.4 it/s\n02:57:38 - INFO - ################----  80% | 0.6s<0.1s | 8665.1 it/s\n02:57:38 - INFO - #################### 100% | 0.7s<--:-- | 7568.1 it/s\n02:57:38 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 716.71 ms)\n",
+      "stdout": "08:20:06 - INFO - LOGGING (log: True)\n08:20:06 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n08:20:06 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.049ms)\n08:20:06 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n08:20:06 - INFO - --------------------   1% | 0.0s<0.7s | 8730.7 it/s\n08:20:06 - INFO - ####----------------  20% | 0.1s<0.5s | 8867.0 it/s\n08:20:06 - INFO - ########------------  40% | 0.3s<0.4s | 9202.2 it/s\n08:20:06 - INFO - ############--------  60% | 0.4s<0.3s | 8076.4 it/s\n08:20:06 - INFO - ################----  80% | 0.6s<0.2s | 7789.8 it/s\n08:20:07 - INFO - #################### 100% | 0.8s<--:-- | 7724.2 it/s\n08:20:07 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 795.77 ms)\n08:20:07 - INFO - LOGGING (log: True)\n08:20:07 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n08:20:07 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.046ms)\n08:20:07 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n08:20:07 - INFO - --------------------   1% | 0.0s<0.7s | 8415.2 it/s\n08:20:07 - INFO - ####----------------  20% | 0.1s<0.6s | 8465.9 it/s\n08:20:07 - INFO - ########------------  40% | 0.3s<0.4s | 9454.7 it/s\n08:20:07 - INFO - ############--------  60% | 0.4s<0.3s | 9358.4 it/s\n08:20:07 - INFO - ################----  80% | 0.6s<0.1s | 9038.5 it/s\n08:20:07 - INFO - #################### 100% | 0.7s<--:-- | 7697.0 it/s\n08:20:07 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 689.59 ms)\n08:20:07 - INFO - LOGGING (log: True)\n08:20:07 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n08:20:07 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.045ms)\n08:20:07 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n08:20:07 - INFO - --------------------   1% | 0.0s<0.6s | 9732.1 it/s\n08:20:07 - INFO - ####----------------  20% | 0.1s<0.4s | 11057.2 it/s\n08:20:07 - INFO - ########------------  40% | 0.3s<0.5s | 7769.8 it/s\n08:20:08 - INFO - ############--------  60% | 0.4s<0.3s | 7733.6 it/s\n08:20:08 - INFO - ################----  80% | 0.6s<0.1s | 9426.0 it/s\n08:20:08 - INFO - #################### 100% | 0.7s<--:-- | 10872.0 it/s\n08:20:08 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 688.49 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "checkpoints_1.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T02:57:39.638697+00:00",
-  "duration": 8887,
+  "executedAt": "2026-05-18T08:20:09.842804+00:00",
+  "duration": 9032,
   "success": true
 }

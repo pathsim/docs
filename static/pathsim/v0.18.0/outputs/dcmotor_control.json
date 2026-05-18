@@ -1,12 +1,20 @@
 {
   "cells": {
     "20": {
-      "stdout": "03:05:22 - INFO - LOGGING (log: True)\n03:05:22 - INFO - BLOCKS (total: 17, dynamic: 3, static: 14, eventful: 2)\n03:05:22 - INFO - GRAPH (nodes: 17, edges: 22, alg. depth: 6, loop depth: 0, runtime: 0.199ms)\n03:05:22 - INFO - STARTING -> TRANSIENT (Duration: 30.00s)\n03:05:23 - INFO - --------------------   1% | 0.1s<5.7s | 1052.0 it/s\n03:05:24 - INFO - ###-----------------  15% | 1.1s<7.8s | 791.1 it/s\n03:05:24 - INFO - ####----------------  20% | 1.5s<6.0s | 920.3 it/s\n03:05:25 - INFO - #######-------------  35% | 2.5s<4.2s | 801.6 it/s\n03:05:25 - INFO - ########------------  40% | 2.8s<5.0s | 769.8 it/s\n03:05:26 - INFO - ###########---------  56% | 3.8s<1.4s | 1578.4 it/s\n03:05:26 - INFO - ############--------  60% | 4.0s<2.3s | 821.4 it/s\n03:05:27 - INFO - ###############-----  75% | 5.0s<2.4s | 802.4 it/s\n03:05:28 - INFO - ################----  80% | 5.4s<1.3s | 763.7 it/s\n03:05:29 - INFO - ##################--  94% | 6.4s<0.3s | 847.4 it/s\n03:05:29 - INFO - #################### 100% | 6.7s<--:-- | 1638.4 it/s\n03:05:29 - INFO - FINISHED -> TRANSIENT (total steps: 5837, successful: 4938, runtime: 6693.70 ms)\n",
+      "stdout": "08:25:44 - INFO - LOGGING (log: True)\n08:25:44 - INFO - BLOCKS (total: 17, dynamic: 3, static: 14, eventful: 2)\n08:25:44 - INFO - GRAPH (nodes: 17, edges: 22, alg. depth: 6, loop depth: 0, runtime: 0.159ms)\n08:25:44 - INFO - STARTING -> TRANSIENT (Duration: 30.00s)\n08:25:44 - INFO - --------------------   1% | 0.1s<7.5s | 784.0 it/s\n08:25:45 - INFO - ###-----------------  16% | 1.1s<21.1s | 952.7 it/s\n08:25:45 - INFO - ####----------------  20% | 1.3s<3.5s | 1601.5 it/s\n08:25:46 - INFO - #######-------------  35% | 2.3s<5.9s | 796.6 it/s\n08:25:46 - INFO - ########------------  40% | 2.7s<5.1s | 755.7 it/s\n08:25:47 - INFO - ##########----------  53% | 3.7s<2.8s | 922.6 it/s\n08:25:48 - INFO - ############--------  60% | 4.1s<2.2s | 857.7 it/s\n08:25:49 - INFO - ###############-----  75% | 5.1s<1.2s | 995.2 it/s\n08:25:49 - INFO - ################----  80% | 5.5s<1.4s | 727.4 it/s\n08:25:50 - INFO - ##################--  93% | 6.5s<0.3s | 1089.9 it/s\n08:25:51 - INFO - #################### 100% | 7.0s<--:-- | 720.3 it/s\n08:25:51 - INFO - FINISHED -> TRANSIENT (total steps: 5837, successful: 4938, runtime: 6986.39 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "22": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "dcmotor_control_0.svg",
+        "dcmotor_control_1.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T03:05:30.759102+00:00",
-  "duration": 12559,
+  "executedAt": "2026-05-18T08:25:52.813832+00:00",
+  "duration": 13002,
   "success": true
 }

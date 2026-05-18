@@ -1,12 +1,20 @@
 {
   "cells": {
     "12": {
-      "stdout": "03:01:32 - INFO - LOGGING (log: True)\n03:01:32 - INFO - BLOCKS (total: 9, dynamic: 1, static: 8, eventful: 4)\n03:01:32 - INFO - GRAPH (nodes: 9, edges: 13, alg. depth: 2, loop depth: 0, runtime: 0.081ms)\n03:01:32 - INFO - STARTING -> TRANSIENT (Duration: 2.00s)\n03:01:33 - INFO - --------------------   1% | 0.0s<0.7s | 2866.6 it/s\n03:01:33 - INFO - ####----------------  20% | 0.1s<0.3s | 6652.4 it/s\n03:01:33 - INFO - ########------------  40% | 0.2s<0.2s | 6409.7 it/s\n03:01:33 - INFO - ############--------  60% | 0.3s<0.1s | 6619.2 it/s\n03:01:33 - INFO - ################----  80% | 0.3s<0.1s | 6500.2 it/s\n03:01:33 - INFO - #################### 100% | 0.5s<--:-- | 3141.6 it/s\n03:01:33 - INFO - FINISHED -> TRANSIENT (total steps: 2402, successful: 2401, runtime: 468.05 ms)\n",
+      "stdout": "08:24:04 - INFO - LOGGING (log: True)\n08:24:04 - INFO - BLOCKS (total: 9, dynamic: 1, static: 8, eventful: 4)\n08:24:04 - INFO - GRAPH (nodes: 9, edges: 13, alg. depth: 2, loop depth: 0, runtime: 0.108ms)\n08:24:04 - INFO - STARTING -> TRANSIENT (Duration: 2.00s)\n08:24:04 - INFO - --------------------   1% | 0.0s<0.7s | 2805.1 it/s\n08:24:04 - INFO - ####----------------  20% | 0.2s<0.5s | 3067.4 it/s\n08:24:04 - INFO - ########------------  40% | 0.4s<0.4s | 3270.2 it/s\n08:24:04 - INFO - ############--------  60% | 0.5s<0.2s | 3406.0 it/s\n08:24:04 - INFO - ################----  80% | 0.7s<0.1s | 3590.5 it/s\n08:24:04 - INFO - #################### 100% | 0.8s<--:-- | 6934.7 it/s\n08:24:04 - INFO - FINISHED -> TRANSIENT (total steps: 2402, successful: 2401, runtime: 791.25 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "14": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "delta_sigma_adc_0.svg",
+        "delta_sigma_adc_1.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T03:01:34.394332+00:00",
-  "duration": 4793,
+  "executedAt": "2026-05-18T08:24:06.167225+00:00",
+  "duration": 6765,
   "success": true
 }

@@ -1,12 +1,33 @@
 {
   "cells": {
     "11": {
-      "stdout": "02:58:02 - INFO - LOGGING (log: True)\n02:58:02 - INFO - BLOCKS (total: 13, dynamic: 3, static: 10, eventful: 0)\n02:58:02 - INFO - GRAPH (nodes: 13, edges: 20, alg. depth: 4, loop depth: 0, runtime: 0.139ms)\n02:58:02 - INFO - STARTING -> TRANSIENT (Duration: 50.00s)\n02:58:02 - INFO - --------------------   1% | 0.1s<3.6s | 1619.2 it/s\n02:58:02 - INFO - ####----------------  20% | 0.4s<1.3s | 1637.1 it/s\n02:58:03 - INFO - ########------------  40% | 1.0s<1.2s | 1529.2 it/s\n02:58:04 - INFO - ############--------  60% | 1.6s<1.6s | 1506.4 it/s\n02:58:04 - INFO - ################----  80% | 2.1s<0.4s | 2084.5 it/s\n02:58:05 - INFO - #################### 100% | 2.8s<--:-- | 1491.8 it/s\n02:58:05 - INFO - FINISHED -> TRANSIENT (total steps: 4669, successful: 4057, runtime: 2793.70 ms)\n",
+      "stdout": "08:20:30 - INFO - LOGGING (log: True)\n08:20:30 - INFO - BLOCKS (total: 13, dynamic: 3, static: 10, eventful: 0)\n08:20:30 - INFO - GRAPH (nodes: 13, edges: 20, alg. depth: 4, loop depth: 0, runtime: 0.126ms)\n08:20:30 - INFO - STARTING -> TRANSIENT (Duration: 50.00s)\n08:20:30 - INFO - --------------------   1% | 0.1s<4.0s | 1450.6 it/s\n08:20:30 - INFO - ####----------------  20% | 0.3s<0.7s | 3037.2 it/s\n08:20:30 - INFO - ########------------  40% | 0.9s<1.5s | 1213.4 it/s\n08:20:31 - INFO - ############--------  60% | 1.6s<1.6s | 1526.6 it/s\n08:20:32 - INFO - ################----  80% | 2.4s<0.7s | 1384.4 it/s\n08:20:33 - INFO - #################### 100% | 3.1s<--:-- | 1640.5 it/s\n08:20:33 - INFO - FINISHED -> TRANSIENT (total steps: 4669, successful: 4057, runtime: 3088.60 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "13": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "lorenz_attractor_0.svg"
+      ]
+    },
+    "15": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "lorenz_attractor_1.svg"
+      ]
+    },
+    "17": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "lorenz_attractor_2.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T02:58:06.736053+00:00",
-  "duration": 8763,
+  "executedAt": "2026-05-18T08:20:34.980082+00:00",
+  "duration": 9597,
   "success": true
 }

@@ -1,17 +1,31 @@
 {
   "cells": {
     "11": {
-      "stdout": "02:59:53 - INFO - LOGGING (log: True)\n02:59:53 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n02:59:53 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.036ms)\n",
+      "stdout": "08:22:25 - INFO - LOGGING (log: True)\n08:22:25 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n08:22:25 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.035ms)\n",
       "stderr": null,
       "figures": []
     },
     "13": {
-      "stdout": "02:59:53 - INFO - STARTING -> TRANSIENT (Duration: 0.00s)\n02:59:53 - INFO - --------------------   1% | 0.0s<1.3s | 2478.4 it/s\n02:59:53 - INFO - ####----------------  20% | 0.3s<1.1s | 2452.6 it/s\n02:59:54 - INFO - ########------------  40% | 0.5s<0.7s | 2968.2 it/s\n02:59:54 - INFO - ############--------  60% | 0.8s<0.5s | 2456.2 it/s\n02:59:54 - INFO - ################----  80% | 1.1s<0.3s | 2433.5 it/s\n02:59:54 - INFO - #################### 100% | 1.3s<--:-- | 2518.4 it/s\n02:59:54 - INFO - FINISHED -> TRANSIENT (total steps: 3334, successful: 3334, runtime: 1333.05 ms)\n",
+      "stdout": "08:22:25 - INFO - STARTING -> TRANSIENT (Duration: 0.00s)\n08:22:25 - INFO - --------------------   1% | 0.0s<1.2s | 2762.3 it/s\n08:22:25 - INFO - ####----------------  20% | 0.3s<1.3s | 2021.8 it/s\n08:22:26 - INFO - ########------------  40% | 0.6s<0.8s | 2490.6 it/s\n08:22:26 - INFO - ############--------  60% | 0.8s<0.6s | 2280.6 it/s\n08:22:26 - INFO - ################----  80% | 1.1s<0.2s | 3465.5 it/s\n08:22:26 - INFO - #################### 100% | 1.3s<--:-- | 3672.1 it/s\n08:22:26 - INFO - FINISHED -> TRANSIENT (total steps: 3334, successful: 3334, runtime: 1268.09 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "15": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "noisy_amplifier_0.svg"
+      ]
+    },
+    "17": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "noisy_amplifier_1.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T02:59:55.972912+00:00",
-  "duration": 7246,
+  "executedAt": "2026-05-18T08:22:29.082193+00:00",
+  "duration": 8402,
   "success": true
 }

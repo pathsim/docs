@@ -1,17 +1,31 @@
 {
   "cells": {
     "17": {
-      "stdout": "03:01:38 - INFO - LOGGING (log: True)\n03:01:38 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 1)\n03:01:38 - INFO - GRAPH (nodes: 5, edges: 9, alg. depth: 2, loop depth: 0, runtime: 0.072ms)\n",
+      "stdout": "08:24:10 - INFO - LOGGING (log: True)\n08:24:10 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 1)\n08:24:10 - INFO - GRAPH (nodes: 5, edges: 9, alg. depth: 2, loop depth: 0, runtime: 0.074ms)\n",
       "stderr": null,
       "figures": []
     },
     "18": {
-      "stdout": "03:01:38 - INFO - STARTING -> TRANSIENT (Duration: 10.00s)\n03:01:38 - INFO - --------------------   1% | 0.0s<0.4s | 5013.0 it/s\n03:01:38 - INFO - ####----------------  20% | 0.1s<0.3s | 5056.8 it/s\n03:01:38 - INFO - ########------------  40% | 0.2s<0.2s | 4809.7 it/s\n03:01:38 - INFO - ############--------  60% | 0.3s<0.3s | 2572.3 it/s\n03:01:38 - INFO - ################----  80% | 0.5s<0.1s | 2737.6 it/s\n03:01:38 - INFO - #################### 100% | 0.6s<--:-- | 2334.7 it/s\n03:01:38 - INFO - FINISHED -> TRANSIENT (total steps: 2130, successful: 2083, runtime: 630.35 ms)\n",
+      "stdout": "08:24:10 - INFO - STARTING -> TRANSIENT (Duration: 10.00s)\n08:24:10 - INFO - --------------------   1% | 0.0s<0.7s | 2998.4 it/s\n08:24:10 - INFO - ####----------------  20% | 0.2s<0.7s | 2288.6 it/s\n08:24:11 - INFO - ########------------  40% | 0.3s<0.5s | 2324.0 it/s\n08:24:11 - INFO - ############--------  60% | 0.5s<0.3s | 2800.6 it/s\n08:24:11 - INFO - ################----  80% | 0.7s<0.2s | 2516.3 it/s\n08:24:11 - INFO - #################### 100% | 0.9s<--:-- | 2475.6 it/s\n08:24:11 - INFO - FINISHED -> TRANSIENT (total steps: 2130, successful: 2083, runtime: 916.56 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "20": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "elastic_pendulum_0.svg"
+      ]
+    },
+    "22": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "elastic_pendulum_1.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T03:01:40.012076+00:00",
-  "duration": 5509,
+  "executedAt": "2026-05-18T08:24:13.140315+00:00",
+  "duration": 6972,
   "success": true
 }

@@ -1,12 +1,19 @@
 {
   "cells": {
     "14": {
-      "stdout": "03:00:00 - INFO - LOGGING (log: True)\n03:00:00 - INFO - BLOCKS (total: 6, dynamic: 2, static: 4, eventful: 0)\n03:00:00 - INFO - GRAPH (nodes: 6, edges: 8, alg. depth: 4, loop depth: 0, runtime: 0.148ms)\n03:00:00 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n03:00:00 - INFO - --------------------   1% | 0.0s<0.2s | 1238.7 it/s\n03:00:00 - INFO - ####----------------  20% | 0.1s<166:29:59 | 1771.0 it/s\n03:00:00 - INFO - ########------------  40% | 0.1s<0.1s | 1870.9 it/s\n03:00:00 - INFO - ############--------  60% | 0.2s<39:35:59 | 1903.7 it/s\n03:00:00 - INFO - ################----  80% | 0.3s<0.0s | 1741.9 it/s\n03:00:00 - INFO - #################### 100% | 0.3s<--:-- | 1871.2 it/s\n03:00:00 - INFO - FINISHED -> TRANSIENT (total steps: 455, successful: 291, runtime: 305.33 ms)\n",
+      "stdout": "08:22:31 - INFO - LOGGING (log: True)\n08:22:31 - INFO - BLOCKS (total: 6, dynamic: 2, static: 4, eventful: 0)\n08:22:31 - INFO - GRAPH (nodes: 6, edges: 8, alg. depth: 4, loop depth: 0, runtime: 3.182ms)\n08:22:31 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n08:22:31 - INFO - --------------------   1% | 0.0s<0.1s | 1492.4 it/s\n08:22:31 - INFO - ####----------------  20% | 0.1s<199:20:55 | 1792.3 it/s\n08:22:31 - INFO - ########------------  40% | 0.1s<0.1s | 1963.2 it/s\n08:22:31 - INFO - ############--------  60% | 0.2s<43:40:43 | 1664.0 it/s\n08:22:31 - INFO - ################----  80% | 0.2s<0.0s | 1906.4 it/s\n08:22:31 - INFO - #################### 100% | 0.3s<--:-- | 1950.2 it/s\n08:22:31 - INFO - FINISHED -> TRANSIENT (total steps: 455, successful: 291, runtime: 287.22 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "16": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "pid_controller_0.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T03:00:01.855621+00:00",
-  "duration": 5881,
+  "executedAt": "2026-05-18T08:22:33.185583+00:00",
+  "duration": 6004,
   "success": true
 }

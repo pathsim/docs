@@ -1,17 +1,27 @@
 {
   "cells": {
     "9": {
-      "stdout": "03:07:39 - INFO - LOGGING (log: True)\n03:07:39 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n03:07:39 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.098ms)\n",
+      "stdout": "08:28:00 - INFO - LOGGING (log: True)\n08:28:00 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n08:28:00 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.081ms)\n",
       "stderr": null,
       "figures": []
     },
     "11": {
-      "stdout": "03:07:39 - INFO - STARTING -> TRANSIENT (Duration: 3.00s)\n03:07:39 - INFO - --------------------   3% | 0.0s<0.1s | 645.0 it/s\n03:07:39 - INFO - ####----------------  20% | 0.1s<0.2s | 1351.9 it/s\n03:07:39 - INFO - ########------------  40% | 0.1s<0.0s | 2364.8 it/s\n03:07:39 - INFO - ############--------  60% | 0.1s<0.0s | 1491.9 it/s\n03:07:39 - INFO - ################----  80% | 0.1s<0.0s | 1476.3 it/s\n03:07:39 - INFO - #################### 100% | 0.1s<--:-- | 1477.4 it/s\n03:07:39 - INFO - FINISHED -> TRANSIENT (total steps: 204, successful: 174, runtime: 144.44 ms)\n",
+      "stdout": "08:28:00 - INFO - STARTING -> TRANSIENT (Duration: 3.00s)\n08:28:00 - INFO - --------------------   3% | 0.0s<0.0s | 992.6 it/s\n08:28:00 - INFO - ####----------------  20% | 0.1s<0.2s | 1570.0 it/s\n08:28:00 - INFO - ########------------  40% | 0.1s<0.1s | 1693.1 it/s\n08:28:00 - INFO - ############--------  60% | 0.1s<0.0s | 1496.2 it/s\n08:28:00 - INFO - ################----  80% | 0.1s<0.0s | 1663.5 it/s\n08:28:00 - INFO - #################### 100% | 0.1s<--:-- | 1512.2 it/s\n08:28:00 - INFO - FINISHED -> TRANSIENT (total steps: 204, successful: 174, runtime: 133.21 ms)\n",
       "stderr": null,
-      "figures": []
+      "figures": [
+        "spectrum_analysis_0.svg",
+        "spectrum_analysis_1.svg"
+      ]
+    },
+    "17": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "spectrum_analysis_2.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T03:07:40.886019+00:00",
-  "duration": 5593,
+  "executedAt": "2026-05-18T08:28:02.536295+00:00",
+  "duration": 6368,
   "success": true
 }

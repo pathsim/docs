@@ -1,17 +1,31 @@
 {
   "cells": {
     "11": {
-      "stdout": "03:01:15 - INFO - LOGGING (log: True)\n03:01:15 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n03:01:15 - INFO - GRAPH (nodes: 4, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.044ms)\n",
+      "stdout": "08:23:45 - INFO - LOGGING (log: True)\n08:23:45 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n08:23:45 - INFO - GRAPH (nodes: 4, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.044ms)\n",
       "stderr": null,
       "figures": []
     },
     "12": {
-      "stdout": "03:01:15 - INFO - STARTING -> TRANSIENT (Duration: 7.00s)\n03:01:15 - INFO - --------------------   1% | 0.0s<0.3s | 2556.1 it/s\n03:01:15 - INFO - ####----------------  20% | 0.1s<0.2s | 3475.7 it/s\n03:01:15 - INFO - ########------------  40% | 0.1s<0.3s | 3572.6 it/s\n03:01:15 - INFO - ############--------  60% | 0.2s<0.1s | 4719.8 it/s\n03:01:15 - INFO - ################----  80% | 0.2s<0.0s | 5233.2 it/s\n03:01:15 - INFO - #################### 100% | 0.2s<--:-- | 5463.8 it/s\n03:01:15 - INFO - FINISHED -> TRANSIENT (total steps: 818, successful: 778, runtime: 251.62 ms)\n",
+      "stdout": "08:23:45 - INFO - STARTING -> TRANSIENT (Duration: 7.00s)\n08:23:45 - INFO - --------------------   1% | 0.0s<0.3s | 2179.5 it/s\n08:23:45 - INFO - ####----------------  20% | 0.1s<0.2s | 3547.0 it/s\n08:23:45 - INFO - ########------------  40% | 0.1s<0.3s | 3442.7 it/s\n08:23:45 - INFO - ############--------  60% | 0.2s<0.1s | 3570.1 it/s\n08:23:45 - INFO - ################----  80% | 0.2s<0.0s | 3543.4 it/s\n08:23:45 - INFO - #################### 100% | 0.2s<--:-- | 3539.1 it/s\n08:23:45 - INFO - FINISHED -> TRANSIENT (total steps: 818, successful: 778, runtime: 250.48 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "14": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "billards_0.svg"
+      ]
+    },
+    "16": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "billards_1.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T03:01:16.942298+00:00",
-  "duration": 6147,
+  "executedAt": "2026-05-18T08:23:46.966377+00:00",
+  "duration": 6416,
   "success": true
 }

@@ -1,17 +1,19 @@
 {
   "cells": {
     "10": {
-      "stdout": "03:02:12 - INFO - LOGGING (log: True)\n03:02:12 - INFO - BLOCKS (total: 3, dynamic: 1, static: 2, eventful: 0)\n03:02:12 - INFO - GRAPH (nodes: 3, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.079ms)\n",
+      "stdout": "08:24:40 - INFO - LOGGING (log: True)\n08:24:40 - INFO - BLOCKS (total: 3, dynamic: 1, static: 2, eventful: 0)\n08:24:40 - INFO - GRAPH (nodes: 3, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.078ms)\n",
       "stderr": null,
       "figures": []
     },
     "12": {
-      "stdout": "03:02:12 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n03:02:12 - INFO - --------------------   1% | 0.0s<0.2s | 1866.2 it/s\n03:02:12 - INFO - ####----------------  20% | 0.0s<0.0s | 6586.1 it/s\n03:02:12 - INFO - ########------------  40% | 0.1s<0.0s | 6699.4 it/s\n03:02:12 - INFO - ############--------  60% | 0.1s<0.0s | 6797.2 it/s\n03:02:12 - INFO - ################----  80% | 0.1s<0.0s | 3080.2 it/s\n03:02:12 - INFO - #################### 100% | 0.1s<--:-- | 6639.3 it/s\n03:02:12 - INFO - FINISHED -> TRANSIENT (total steps: 346, successful: 224, runtime: 102.71 ms)\n",
+      "stdout": "08:24:40 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n08:24:40 - INFO - --------------------   1% | 0.0s<0.1s | 2369.5 it/s\n08:24:40 - INFO - ####----------------  20% | 0.0s<0.0s | 6951.9 it/s\n08:24:40 - INFO - ########------------  40% | 0.0s<0.0s | 7046.7 it/s\n08:24:40 - INFO - ############--------  60% | 0.1s<0.0s | 6629.0 it/s\n08:24:40 - INFO - ################----  80% | 0.1s<0.0s | 6950.2 it/s\n08:24:40 - INFO - #################### 100% | 0.1s<--:-- | 6812.9 it/s\n08:24:40 - INFO - FINISHED -> TRANSIENT (total steps: 346, successful: 224, runtime: 64.35 ms)\n",
       "stderr": null,
-      "figures": []
+      "figures": [
+        "transfer_function_0.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T03:02:13.380573+00:00",
-  "duration": 4855,
+  "executedAt": "2026-05-18T08:24:40.955797+00:00",
+  "duration": 5386,
   "success": true
 }

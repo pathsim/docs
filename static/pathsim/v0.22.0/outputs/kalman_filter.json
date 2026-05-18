@@ -1,12 +1,26 @@
 {
   "cells": {
     "15": {
-      "stdout": "02:56:09 - INFO - LOGGING (log: True)\n02:56:09 - INFO - BLOCKS (total: 8, dynamic: 1, static: 7, eventful: 0)\n02:56:09 - INFO - GRAPH (nodes: 8, edges: 9, alg. depth: 2, loop depth: 0, runtime: 0.072ms)\n02:56:09 - INFO - STARTING -> TRANSIENT (Duration: 20.00s)\n02:56:09 - INFO - --------------------   1% | 0.0s<0.3s | 7133.9 it/s\n02:56:09 - INFO - ####----------------  20% | 0.1s<0.2s | 6931.9 it/s\n02:56:09 - INFO - ########------------  40% | 0.1s<0.2s | 6892.1 it/s\n02:56:09 - INFO - ############--------  60% | 0.2s<0.1s | 11007.8 it/s\n02:56:09 - INFO - ################----  80% | 0.3s<0.1s | 6264.3 it/s\n02:56:09 - INFO - #################### 100% | 0.3s<--:-- | 6284.3 it/s\n02:56:09 - INFO - FINISHED -> TRANSIENT (total steps: 2000, successful: 2000, runtime: 323.97 ms)\n",
+      "stdout": "08:18:37 - INFO - LOGGING (log: True)\n08:18:37 - INFO - BLOCKS (total: 8, dynamic: 1, static: 7, eventful: 0)\n08:18:37 - INFO - GRAPH (nodes: 8, edges: 9, alg. depth: 2, loop depth: 0, runtime: 0.067ms)\n08:18:37 - INFO - STARTING -> TRANSIENT (Duration: 20.00s)\n08:18:37 - INFO - --------------------   1% | 0.0s<0.3s | 7069.2 it/s\n08:18:37 - INFO - ####----------------  20% | 0.1s<0.2s | 6963.3 it/s\n08:18:37 - INFO - ########------------  40% | 0.1s<0.2s | 7645.3 it/s\n08:18:37 - INFO - ############--------  60% | 0.2s<0.2s | 5010.4 it/s\n08:18:37 - INFO - ################----  80% | 0.3s<0.1s | 6314.4 it/s\n08:18:37 - INFO - #################### 100% | 0.3s<--:-- | 5889.6 it/s\n08:18:37 - INFO - FINISHED -> TRANSIENT (total steps: 2000, successful: 2000, runtime: 329.45 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "17": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "kalman_filter_0.svg"
+      ]
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "kalman_filter_1.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T02:56:10.983329+00:00",
-  "duration": 5884,
+  "executedAt": "2026-05-18T08:18:39.509437+00:00",
+  "duration": 6804,
   "success": true
 }

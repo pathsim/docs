@@ -1,12 +1,19 @@
 {
   "cells": {
     "14": {
-      "stdout": "02:56:25 - INFO - LOGGING (log: True)\n02:56:25 - INFO - BLOCKS (total: 9, dynamic: 1, static: 8, eventful: 5)\n02:56:25 - INFO - GRAPH (nodes: 9, edges: 27, alg. depth: 3, loop depth: 0, runtime: 0.158ms)\n02:56:25 - INFO - STARTING -> TRANSIENT (Duration: 1.00s)\n02:56:25 - INFO - --------------------   1% | 0.0s<1.2s | 1774.6 it/s\n02:56:25 - INFO - ####----------------  20% | 0.2s<0.5s | 4226.6 it/s\n02:56:25 - INFO - ########------------  40% | 0.3s<0.2s | 4269.1 it/s\n02:56:25 - INFO - ############--------  60% | 0.3s<0.2s | 4257.3 it/s\n02:56:25 - INFO - ################----  80% | 0.5s<0.2s | 1691.2 it/s\n02:56:25 - INFO - #################### 100% | 0.7s<--:-- | 2066.1 it/s\n02:56:25 - INFO - FINISHED -> TRANSIENT (total steps: 2124, successful: 2034, runtime: 742.17 ms)\n",
+      "stdout": "08:18:52 - INFO - LOGGING (log: True)\n08:18:52 - INFO - BLOCKS (total: 9, dynamic: 1, static: 8, eventful: 5)\n08:18:52 - INFO - GRAPH (nodes: 9, edges: 27, alg. depth: 3, loop depth: 0, runtime: 0.242ms)\n08:18:52 - INFO - STARTING -> TRANSIENT (Duration: 1.00s)\n08:18:52 - INFO - --------------------   1% | 0.0s<0.6s | 2292.7 it/s\n08:18:52 - INFO - ####----------------  20% | 0.2s<0.8s | 2486.8 it/s\n08:18:52 - INFO - ########------------  40% | 0.3s<0.2s | 4178.0 it/s\n08:18:52 - INFO - ############--------  60% | 0.5s<0.2s | 4174.2 it/s\n08:18:53 - INFO - ################----  80% | 0.7s<0.1s | 2053.8 it/s\n08:18:53 - INFO - #################### 100% | 0.9s<--:-- | 2048.1 it/s\n08:18:53 - INFO - FINISHED -> TRANSIENT (total steps: 2124, successful: 2034, runtime: 858.47 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "16": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "sar_adc_0.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T02:56:26.719764+00:00",
-  "duration": 6105,
+  "executedAt": "2026-05-18T08:18:54.645415+00:00",
+  "duration": 6855,
   "success": true
 }

@@ -1,12 +1,19 @@
 {
   "cells": {
     "17": {
-      "stdout": "03:01:49 - INFO - LOGGING (log: True)\n03:01:49 - INFO - BLOCKS (total: 2, dynamic: 1, static: 1, eventful: 0)\n03:01:49 - INFO - GRAPH (nodes: 2, edges: 1, alg. depth: 1, loop depth: 0, runtime: 0.026ms)\n03:01:49 - INFO - STARTING -> TRANSIENT (Duration: 2000.00s)\n03:01:49 - INFO - --------------------   1% | 0.4s<7.4s | 66.0 it/s\n03:01:49 - INFO - #####---------------  27% | 0.7s<1.3s | 28.9 it/s\n03:01:50 - INFO - ########------------  40% | 1.4s<9.5s | 22.7 it/s\n03:01:52 - INFO - ########------------  41% | 2.8s<9.4s | 82.4 it/s\n03:01:52 - INFO - #############-------  67% | 3.1s<0.6s | 26.9 it/s\n03:01:52 - INFO - ################----  80% | 3.7s<2.4s | 22.0 it/s\n03:01:54 - INFO - ################----  81% | 5.1s<8.9s | 53.4 it/s\n03:01:54 - INFO - #################### 100% | 5.3s<--:-- | 27.9 it/s\n03:01:54 - INFO - FINISHED -> TRANSIENT (total steps: 341, successful: 234, runtime: 5333.82 ms)\n",
+      "stdout": "08:24:21 - INFO - LOGGING (log: True)\n08:24:21 - INFO - BLOCKS (total: 2, dynamic: 1, static: 1, eventful: 0)\n08:24:21 - INFO - GRAPH (nodes: 2, edges: 1, alg. depth: 1, loop depth: 0, runtime: 0.025ms)\n08:24:21 - INFO - STARTING -> TRANSIENT (Duration: 2000.00s)\n08:24:21 - INFO - --------------------   1% | 0.6s<15.2s | 33.5 it/s\n08:24:22 - INFO - #####---------------  27% | 0.9s<1.4s | 21.1 it/s\n08:24:22 - INFO - ########------------  40% | 1.8s<10.6s | 17.5 it/s\n08:24:24 - INFO - ########------------  41% | 3.6s<13.5s | 46.5 it/s\n08:24:25 - INFO - #############-------  67% | 3.9s<0.5s | 24.9 it/s\n08:24:25 - INFO - ################----  80% | 4.4s<1.9s | 33.7 it/s\n08:24:27 - INFO - ################----  81% | 6.3s<7.1s | 69.8 it/s\n08:24:27 - INFO - #################### 100% | 6.6s<--:-- | 26.7 it/s\n08:24:27 - INFO - FINISHED -> TRANSIENT (total steps: 341, successful: 234, runtime: 6586.18 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "nested_subsystems_0.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T03:01:55.723639+00:00",
-  "duration": 10217,
+  "executedAt": "2026-05-18T08:24:29.097992+00:00",
+  "duration": 12558,
   "success": true
 }

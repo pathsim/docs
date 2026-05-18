@@ -1,12 +1,26 @@
 {
   "cells": {
     "20": {
-      "stdout": "02:58:16 - INFO - LOGGING (log: True)\n02:58:16 - INFO - BLOCKS (total: 11, dynamic: 2, static: 9, eventful: 0)\n02:58:16 - INFO - GRAPH (nodes: 11, edges: 17, alg. depth: 5, loop depth: 0, runtime: 0.104ms)\n02:58:16 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n02:58:16 - INFO - --------------------   1% | 0.0s<0.3s | 3065.0 it/s\n02:58:16 - INFO - ####----------------  20% | 0.1s<0.4s | 1951.1 it/s\n02:58:16 - INFO - ########------------  40% | 0.4s<0.3s | 2049.3 it/s\n02:58:17 - INFO - ############--------  60% | 0.6s<0.2s | 1954.3 it/s\n02:58:18 - INFO - ###############-----  75% | 1.6s<03:34:37 | 2235.8 it/s\n02:58:18 - INFO - ################----  80% | 2.3s<0.1s | 2722.7 it/s\n02:58:19 - INFO - #################### 100% | 2.4s<--:-- | 1927.9 it/s\n02:58:19 - INFO - FINISHED -> TRANSIENT (total steps: 5055, successful: 2409, runtime: 2432.77 ms)\n",
+      "stdout": "08:20:45 - INFO - LOGGING (log: True)\n08:20:45 - INFO - BLOCKS (total: 11, dynamic: 2, static: 9, eventful: 0)\n08:20:45 - INFO - GRAPH (nodes: 11, edges: 17, alg. depth: 5, loop depth: 0, runtime: 0.109ms)\n08:20:45 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n08:20:45 - INFO - --------------------   1% | 0.0s<0.4s | 2568.6 it/s\n08:20:45 - INFO - ####----------------  20% | 0.1s<0.2s | 3933.9 it/s\n08:20:46 - INFO - ########------------  40% | 0.3s<0.3s | 2664.4 it/s\n08:20:46 - INFO - ############--------  60% | 0.5s<0.2s | 2559.8 it/s\n08:20:47 - INFO - ###############-----  75% | 1.5s<05:45:13 | 3945.8 it/s\n08:20:47 - INFO - ################----  80% | 2.1s<0.1s | 2497.3 it/s\n08:20:48 - INFO - #################### 100% | 2.3s<--:-- | 1799.6 it/s\n08:20:48 - INFO - FINISHED -> TRANSIENT (total steps: 5055, successful: 2409, runtime: 2271.41 ms)\n",
       "stderr": null,
       "figures": []
+    },
+    "22": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "stick_slip_0.svg"
+      ]
+    },
+    "24": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "stick_slip_1.svg"
+      ]
     }
   },
-  "executedAt": "2026-05-18T02:58:20.074269+00:00",
-  "duration": 8059,
+  "executedAt": "2026-05-18T08:20:49.507902+00:00",
+  "duration": 8483,
   "success": true
 }
