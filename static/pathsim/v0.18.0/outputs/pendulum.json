@@ -1,12 +1,12 @@
 {
   "cells": {
     "10": {
-      "stdout": "20:21:01 - INFO - LOGGING (log: True)\n20:21:01 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 0)\n20:21:01 - INFO - GRAPH (nodes: 5, edges: 6, alg. depth: 3, loop depth: 0, runtime: 0.071ms)\n",
+      "stdout": "03:03:00 - INFO - LOGGING (log: True)\n03:03:00 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 0)\n03:03:00 - INFO - GRAPH (nodes: 5, edges: 6, alg. depth: 3, loop depth: 0, runtime: 0.073ms)\n",
       "stderr": null,
       "figures": []
     },
     "12": {
-      "stdout": "20:21:01 - INFO - STARTING -> TRANSIENT (Duration: 15.00s)\n20:21:01 - INFO - --------------------   1% | 0.0s<0.2s | 1144.6 it/s\n20:21:01 - INFO - ####----------------  20% | 0.0s<0.1s | 2105.0 it/s\n20:21:01 - INFO - ########------------  40% | 0.0s<0.0s | 2173.5 it/s\n20:21:01 - INFO - ############--------  60% | 0.1s<0.0s | 2170.7 it/s\n20:21:01 - INFO - ################----  80% | 0.1s<0.0s | 2170.3 it/s\n20:21:01 - INFO - #################### 100% | 0.1s<--:-- | 2146.5 it/s\n20:21:01 - INFO - FINISHED -> TRANSIENT (total steps: 207, successful: 174, runtime: 108.91 ms)\n",
+      "stdout": "03:03:00 - INFO - STARTING -> TRANSIENT (Duration: 15.00s)\n03:03:00 - INFO - --------------------   1% | 0.0s<0.2s | 1045.4 it/s\n03:03:00 - INFO - ####----------------  20% | 0.0s<0.1s | 1864.6 it/s\n03:03:00 - INFO - ########------------  40% | 0.1s<0.1s | 1886.2 it/s\n03:03:00 - INFO - ############--------  60% | 0.1s<0.0s | 1874.2 it/s\n03:03:00 - INFO - ################----  80% | 0.1s<0.0s | 1934.0 it/s\n03:03:00 - INFO - #################### 100% | 0.1s<--:-- | 1932.6 it/s\n03:03:00 - INFO - FINISHED -> TRANSIENT (total steps: 207, successful: 174, runtime: 123.72 ms)\n",
       "stderr": null,
       "figures": [
         "pendulum_0.svg"
@@ -20,7 +20,7 @@
       ]
     }
   },
-  "executedAt": "2026-05-20T20:21:02.709622+00:00",
-  "duration": 5927,
+  "executedAt": "2026-05-21T03:03:01.579009+00:00",
+  "duration": 6149,
   "success": true
 }
