@@ -1,19 +1,7 @@
 {
-  "cells": {
-    "10": {
-      "stdout": "14:45:54 - INFO - LOGGING (log: True)\n14:45:54 - INFO - BLOCKS (total: 3, dynamic: 1, static: 2, eventful: 0)\n14:45:54 - INFO - GRAPH (nodes: 3, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.219ms)\n",
-      "stderr": null,
-      "figures": []
-    },
-    "12": {
-      "stdout": "14:45:54 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n14:45:54 - INFO - --------------------   1% | 0.0s<0.2s | 1358.1 it/s\n14:45:54 - INFO - ####----------------  20% | 0.0s<0.1s | 2715.5 it/s\n14:45:54 - INFO - ########------------  40% | 0.1s<0.1s | 2425.5 it/s\n14:45:54 - INFO - ############--------  60% | 0.1s<0.0s | 2890.9 it/s\n14:45:54 - INFO - ################----  80% | 0.1s<0.0s | 2165.2 it/s\n14:45:54 - INFO - #################### 100% | 0.1s<--:-- | 2509.1 it/s\n14:45:54 - INFO - FINISHED -> TRANSIENT (total steps: 346, successful: 224, runtime: 133.62 ms)\n",
-      "stderr": null,
-      "figures": [
-        "transfer_function_0.svg"
-      ]
-    }
-  },
-  "executedAt": "2026-05-22T14:45:55.756525+00:00",
-  "duration": 5572,
-  "success": true
+  "cells": {},
+  "executedAt": "2026-05-22T19:47:16.757504+00:00",
+  "duration": 182771,
+  "success": false,
+  "error": " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 208, in _async_wait_for_ready\n    raise RuntimeError(\"Kernel didn't respond in %d seconds\" % timeout)\nRuntimeError: Kernel didn't respond in 180 seconds"
 }
