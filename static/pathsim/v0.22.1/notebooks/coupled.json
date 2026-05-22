@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "pathsim_version": "0.22.1",
+  "created": "2026-05-22T08:58:14.090704+00:00",
+  "simulation": {
+    "time": 60.00999999999663,
+    "dt": 0.01,
+    "dt_min": 1e-16,
+    "dt_max": null,
+    "solver": "SSPRK22",
+    "tolerance_fpi": 1e-10,
+    "iterations_max": 200
+  },
+  "blocks": [
+    {
+      "type": "ODE",
+      "active": true,
+      "engine": {
+        "type": "SSPRK22",
+        "is_adaptive": false,
+        "n": 2,
+        "history_len": 1,
+        "history_maxlen": 1
+      },
+      "_key": "ODE_0"
+    },
+    {
+      "type": "ODE",
+      "active": true,
+      "engine": {
+        "type": "SSPRK22",
+        "is_adaptive": false,
+        "n": 2,
+        "history_len": 1,
+        "history_maxlen": 1
+      },
+      "_key": "ODE_1"
+    },
+    {
+      "type": "Function",
+      "active": true,
+      "_key": "Function_0"
+    },
+    {
+      "type": "Scope",
+      "active": true,
+      "_incremental_idx": 0,
+      "_key": "Scope_0"
+    }
+  ],
+  "events": []
+}
