@@ -1,7 +1,19 @@
 {
-  "cells": {},
-  "executedAt": "2026-05-22T19:47:16.757504+00:00",
-  "duration": 182771,
-  "success": false,
-  "error": " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 208, in _async_wait_for_ready\n    raise RuntimeError(\"Kernel didn't respond in %d seconds\" % timeout)\nRuntimeError: Kernel didn't respond in 180 seconds"
+  "cells": {
+    "10": {
+      "stdout": "02:51:38 - INFO - LOGGING (log: True)\n02:51:38 - INFO - BLOCKS (total: 3, dynamic: 1, static: 2, eventful: 0)\n02:51:38 - INFO - GRAPH (nodes: 3, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.067ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "12": {
+      "stdout": "02:51:38 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n02:51:38 - INFO - --------------------   1% | 0.0s<0.1s | 2571.4 it/s\n02:51:38 - INFO - ####----------------  20% | 0.0s<0.1s | 4202.4 it/s\n02:51:38 - INFO - ########------------  40% | 0.1s<0.0s | 4166.7 it/s\n02:51:38 - INFO - ############--------  60% | 0.1s<0.0s | 4037.3 it/s\n02:51:38 - INFO - ################----  80% | 0.1s<0.0s | 4106.8 it/s\n02:51:38 - INFO - #################### 100% | 0.1s<--:-- | 4088.5 it/s\n02:51:38 - INFO - FINISHED -> TRANSIENT (total steps: 346, successful: 224, runtime: 97.13 ms)\n",
+      "stderr": null,
+      "figures": [
+        "transfer_function_0.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-05-23T02:51:42.368077+00:00",
+  "duration": 8848,
+  "success": true
 }
