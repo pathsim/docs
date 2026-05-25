@@ -1,12 +1,12 @@
 {
   "cells": {
     "9": {
-      "stdout": "07:44:37 - INFO - LOGGING (log: True)\n07:44:37 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n07:44:37 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.077ms)\n",
+      "stdout": "13:19:30 - INFO - LOGGING (log: True)\n13:19:30 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n13:19:30 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.283ms)\n",
       "stderr": null,
       "figures": []
     },
     "11": {
-      "stdout": "07:44:37 - INFO - STARTING -> TRANSIENT (Duration: 3.00s)\n07:44:37 - INFO - --------------------   3% | 0.0s<0.1s | 381.9 it/s\n07:44:38 - INFO - ####----------------  20% | 0.1s<0.4s | 820.8 it/s\n07:44:38 - INFO - ########------------  40% | 0.2s<0.1s | 813.9 it/s\n07:44:38 - INFO - ############--------  60% | 0.2s<0.1s | 793.8 it/s\n07:44:38 - INFO - ################----  80% | 0.2s<0.0s | 820.3 it/s\n07:44:38 - INFO - #################### 100% | 0.3s<--:-- | 806.0 it/s\n07:44:38 - INFO - FINISHED -> TRANSIENT (total steps: 204, successful: 174, runtime: 261.69 ms)\n",
+      "stdout": "13:19:30 - INFO - STARTING -> TRANSIENT (Duration: 3.00s)\n13:19:30 - INFO - --------------------   3% | 0.0s<0.1s | 380.5 it/s\n13:19:30 - INFO - ####----------------  20% | 0.1s<0.4s | 868.6 it/s\n13:19:31 - INFO - ########------------  40% | 0.2s<0.2s | 787.7 it/s\n13:19:31 - INFO - ############--------  60% | 0.3s<0.0s | 1039.6 it/s\n13:19:31 - INFO - ################----  80% | 0.3s<0.0s | 877.9 it/s\n13:19:31 - INFO - #################### 100% | 0.3s<--:-- | 836.5 it/s\n13:19:31 - INFO - FINISHED -> TRANSIENT (total steps: 204, successful: 174, runtime: 300.35 ms)\n",
       "stderr": null,
       "figures": [
         "spectrum_analysis_0.svg",
@@ -21,7 +21,7 @@
       ]
     }
   },
-  "executedAt": "2026-05-25T07:44:39.955048+00:00",
-  "duration": 7193,
+  "executedAt": "2026-05-25T13:19:33.146089+00:00",
+  "duration": 7546,
   "success": true
 }
