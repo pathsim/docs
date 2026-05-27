@@ -11,7 +11,7 @@ export const external = {
 	consulting: 'https://milanrother.com/#services'
 };
 
-export type PackageId = 'pathsim' | 'chem' | 'batt' | 'vehicle' | 'flight' | 'rf';
+export type PackageId = 'pathsim' | 'chem' | 'batt' | 'vehicle' | 'flight' | 'rf' | 'fmi';
 
 export interface Feature {
 	title: string;
@@ -292,11 +292,57 @@ scope.plot()`,
 			{ pip: 'pathsim', import: 'pathsim', pre: true },
 			{ pip: 'pathsim-rf', import: 'pathsim_rf', pre: true }
 		]
+	},
+	fmi: {
+		id: 'fmi',
+		name: 'PathSim-FMI',
+		shortName: 'fmi',
+		description: 'Wrap Co-Simulation and Model-Exchange FMUs (FMI 2.0 / 3.0) as PathSim blocks, driven by FMPy.',
+		logo: 'pathsim_fmi_logo.png',
+		docs: 'fmi',
+		api: 'fmi/api',
+		pypi: `${external.pypi}/pathsim-fmi`,
+		conda: null,
+		github: `${external.github}/pathsim-fmi`,
+		features: [
+			{ title: 'FMI 2.0 & 3.0', description: 'Version-agnostic wrapper around the FMI standard via FMPy' },
+			{ title: 'Co-Simulation', description: 'Drive an FMU as a slave on a fixed communication grid' },
+			{ title: 'Model Exchange', description: 'Integrate an FMU with PathSim\'s own adaptive solvers' },
+			{ title: 'Low-level Access', description: 'FMUWrapper exposes the full FMI API for advanced use cases' }
+		],
+		installation: [
+			{ name: 'pip', command: 'pip install pathsim-fmi' }
+		],
+		quickstart: {
+			description: 'Drop an FMU into a PathSim simulation as a co-simulation slave or a model-exchange system.',
+			code: `from pathsim import Simulation, Connection
+from pathsim.blocks import Scope
+from pathsim_fmi import ModelExchangeFMU
+
+fmu = ModelExchangeFMU("VanDerPol.fmu")
+sco = Scope(labels=["x0", "x1"], sampling_period=0.02)
+
+sim = Simulation(
+    blocks=[fmu, sco],
+    connections=[
+        Connection(fmu[0], sco[0]),
+        Connection(fmu[1], sco[1]),
+    ],
+    dt=0.01,
+)
+sim.run(5.0)
+sco.plot()`,
+			title: 'Example'
+		},
+		apiModules: [
+			{ name: 'pathsim_fmi', description: 'FMU blocks (CoSimulationFMU, ModelExchangeFMU) and low-level FMUWrapper' }
+		],
+		pyodidePackages: []
 	}
 };
 
 // Ordered list for tabs/navigation
-export const packageOrder: PackageId[] = ['pathsim', 'chem', 'batt', 'vehicle', 'flight', 'rf'];
+export const packageOrder: PackageId[] = ['pathsim', 'chem', 'batt', 'vehicle', 'flight', 'rf', 'fmi'];
 
 // Sidebar navigation (auto-generated from package config)
 export interface SidebarItem {
