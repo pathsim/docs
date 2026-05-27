@@ -87,6 +87,19 @@ PACKAGES = {
         ],
         "required": False,
     },
+    "fmi": {
+        "repo": ROOT_DIR / "pathsim-fmi",
+        "source": ROOT_DIR / "pathsim-fmi" / "src",
+        "notebooks": ROOT_DIR / "pathsim-fmi" / "docs" / "source" / "examples",
+        "figures": ROOT_DIR / "pathsim-fmi" / "docs" / "source" / "examples" / "figures",
+        "display_name": "PathSim-FMI",
+        "griffe_package": "pathsim_fmi",
+        "github_repo": "pathsim/pathsim-fmi",
+        "root_modules": [
+            "pathsim_fmi",
+        ],
+        "required": False,
+    },
 }
 
 # Minimum supported versions per package
@@ -98,6 +111,7 @@ MIN_SUPPORTED_VERSIONS = {
     "vehicle": "0.1",
     "flight": "0.1",
     "rf": "0.1",
+    "fmi": "0.1",
 }
 
 # Patterns to skip during API extraction
