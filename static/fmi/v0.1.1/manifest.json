@@ -1,0 +1,49 @@
+{
+  "package": "fmi",
+  "tag": "v0.1.1",
+  "notebooks": [
+    {
+      "slug": "fmu-cosimulation",
+      "file": "fmu_cosimulation.ipynb",
+      "title": "FMU Co-Simulation",
+      "description": "Demonstration of integrating Functional Mock-up Units (FMU) as PathSim blocks.",
+      "category": "fmu",
+      "tags": [
+        "fmu",
+        "cosim"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "fmu-model-exchange-bouncing-ball",
+      "file": "fmu_model_exchange_bouncing_ball.ipynb",
+      "title": "FMU ME: Bouncing Ball",
+      "description": "This example demonstrates Model Exchange FMU integration with PathSim. Unlike co-simulation FMUs, Model Exchange FMUs provide only the differential equations. PathSim's solvers perform the numerica...",
+      "category": "fmu",
+      "tags": [
+        "fmu",
+        "model-exchange"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "fmu-model-exchange-vanderpol",
+      "file": "fmu_model_exchange_vanderpol.ipynb",
+      "title": "FMU ME: Van der Pol",
+      "description": "This example demonstrates Model Exchange FMU integration with a nonlinear oscillator. The Van der Pol equation exhibits self-sustained oscillations:",
+      "category": "fmu",
+      "tags": [
+        "fmu",
+        "model-exchange"
+      ],
+      "executable": false
+    }
+  ],
+  "categories": [
+    {
+      "id": "fmu",
+      "title": "FMU Integration",
+      "order": 9
+    }
+  ]
+}

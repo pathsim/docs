@@ -1,0 +1,686 @@
+[
+  {
+    "type": "module",
+    "name": "pathsim_fmi.blocks",
+    "description": "",
+    "path": "fmi/v0.1.1/api#pathsim_fmi-blocks",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks"
+  },
+  {
+    "type": "class",
+    "name": "CoSimulationFMU",
+    "description": "Co-Simulation FMU block using FMPy with support for FMI 2.0 and FMI 3.0.",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU.__init__",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "CoSimulationFMU"
+  },
+  {
+    "type": "method",
+    "name": "_step_fmu",
+    "description": "Perform one FMU co-simulation step.",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU._step_fmu",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "CoSimulationFMU"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the FMU instance.",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU.reset",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "CoSimulationFMU"
+  },
+  {
+    "type": "class",
+    "name": "ModelExchangeFMU",
+    "description": "Model Exchange FMU block using FMPy with support for FMI 2.0 and FMI 3.0.",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU.__init__",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU"
+  },
+  {
+    "type": "method",
+    "name": "_get_derivatives",
+    "description": "Evaluate FMU derivatives (RHS of ODE).",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._get_derivatives",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU"
+  },
+  {
+    "type": "method",
+    "name": "_get_jacobian",
+    "description": "Evaluate Jacobian of FMU derivatives w.r.t. states (∂ẋ/∂x).",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._get_jacobian",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU"
+  },
+  {
+    "type": "method",
+    "name": "_get_outputs",
+    "description": "Evaluate FMU outputs (algebraic part).",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._get_outputs",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU"
+  },
+  {
+    "type": "method",
+    "name": "_get_event_indicator",
+    "description": "Get value of a specific event indicator.",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._get_event_indicator",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU"
+  },
+  {
+    "type": "method",
+    "name": "_handle_event",
+    "description": "Handle FMU event with fixed-point iteration for discrete states.",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._handle_event",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU"
+  },
+  {
+    "type": "method",
+    "name": "_update_time_events",
+    "description": "Update or create time event schedule.",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._update_time_events",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Sample block after successful timestep and handle FMU step completion events.",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU.sample",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the FMU instance.",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU.reset",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_fmi.wrapper",
+    "description": "",
+    "path": "fmi/v0.1.1/api#pathsim_fmi-wrapper",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper"
+  },
+  {
+    "type": "class",
+    "name": "EventInfo",
+    "description": "Unified event information structure for both FMI 2.0 and 3.0.",
+    "path": "fmi/v0.1.1/api#EventInfo",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "fmi/v0.1.1/api#EventInfo.__init__",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "EventInfo"
+  },
+  {
+    "type": "class",
+    "name": "StepResult",
+    "description": "Result information from a co-simulation step.",
+    "path": "fmi/v0.1.1/api#StepResult",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "fmi/v0.1.1/api#StepResult.__init__",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "StepResult"
+  },
+  {
+    "type": "class",
+    "name": "_FMI2Ops",
+    "description": "FMI 2.0 specific operations.",
+    "path": "fmi/v0.1.1/api#_FMI2Ops",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper"
+  },
+  {
+    "type": "method",
+    "name": "set_real",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.set_real",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "method",
+    "name": "get_real",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.get_real",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "method",
+    "name": "set_integer",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.set_integer",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "method",
+    "name": "get_integer",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.get_integer",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "method",
+    "name": "do_step",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.do_step",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "method",
+    "name": "get_derivatives",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.get_derivatives",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "method",
+    "name": "update_discrete_states",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.update_discrete_states",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "method",
+    "name": "setup_experiment",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.setup_experiment",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "method",
+    "name": "enter_initialization_mode",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.enter_initialization_mode",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "method",
+    "name": "exit_initialization_mode",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.exit_initialization_mode",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops"
+  },
+  {
+    "type": "class",
+    "name": "_FMI3Ops",
+    "description": "FMI 3.0 specific operations.",
+    "path": "fmi/v0.1.1/api#_FMI3Ops",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper"
+  },
+  {
+    "type": "method",
+    "name": "set_real",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.set_real",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "method",
+    "name": "get_real",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.get_real",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "method",
+    "name": "set_integer",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.set_integer",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "method",
+    "name": "get_integer",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.get_integer",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "method",
+    "name": "do_step",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.do_step",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "method",
+    "name": "get_derivatives",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.get_derivatives",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "method",
+    "name": "update_discrete_states",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.update_discrete_states",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "method",
+    "name": "setup_experiment",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.setup_experiment",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "method",
+    "name": "enter_initialization_mode",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.enter_initialization_mode",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "method",
+    "name": "exit_initialization_mode",
+    "description": "",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.exit_initialization_mode",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops"
+  },
+  {
+    "type": "class",
+    "name": "FMUWrapper",
+    "description": "Version-agnostic wrapper for FMI 2.0 and 3.0 FMUs.",
+    "path": "fmi/v0.1.1/api#FMUWrapper",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "fmi/v0.1.1/api#FMUWrapper.__init__",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "_create_fmu_instance",
+    "description": "Create the appropriate FMU instance based on version and mode.",
+    "path": "fmi/v0.1.1/api#FMUWrapper._create_fmu_instance",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "_build_variable_maps",
+    "description": "Build internal variable name to reference mappings.",
+    "path": "fmi/v0.1.1/api#FMUWrapper._build_variable_maps",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "_build_state_derivative_maps",
+    "description": "Build state and derivative value reference lists (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper._build_state_derivative_maps",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "create_port_registers",
+    "description": "Create input and output registers for block I/O.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.create_port_registers",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "initialize",
+    "description": "Complete FMU initialization sequence.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.initialize",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "get_state_jacobian",
+    "description": "Compute Jacobian of state derivatives w.r.t. states (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_state_jacobian",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "instantiate",
+    "description": "Instantiate the FMU.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.instantiate",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "setup_experiment",
+    "description": "Setup experiment parameters.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.setup_experiment",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "enter_initialization_mode",
+    "description": "Enter initialization mode.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.enter_initialization_mode",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "exit_initialization_mode",
+    "description": "Exit initialization mode and return event information.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.exit_initialization_mode",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset FMU to initial state.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.reset",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "terminate",
+    "description": "Terminate FMU.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.terminate",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "free_instance",
+    "description": "Free FMU instance and resources.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.free_instance",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "set_real",
+    "description": "Set real-valued variables by reference.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_real",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "get_real",
+    "description": "Get real-valued variables by reference.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_real",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "set_variable",
+    "description": "Set a single variable by name (automatically detects type).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_variable",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "set_inputs_from_array",
+    "description": "Set all FMU inputs from an array.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_inputs_from_array",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "get_outputs_as_array",
+    "description": "Get all FMU outputs as an array.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_outputs_as_array",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "do_step",
+    "description": "Perform a co-simulation step.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.do_step",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "set_time",
+    "description": "Set current time (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_time",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "set_continuous_states",
+    "description": "Set continuous states (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_continuous_states",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "get_continuous_states",
+    "description": "Get continuous states (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_continuous_states",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "get_derivatives",
+    "description": "Get state derivatives (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_derivatives",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "get_event_indicators",
+    "description": "Get event indicators (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_event_indicators",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "enter_event_mode",
+    "description": "Enter event mode (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.enter_event_mode",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "enter_continuous_time_mode",
+    "description": "Enter continuous time mode (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.enter_continuous_time_mode",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "update_discrete_states",
+    "description": "Update discrete states during event iteration (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.update_discrete_states",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "completed_integrator_step",
+    "description": "Notify FMU that integrator step completed (Model Exchange only).",
+    "path": "fmi/v0.1.1/api#FMUWrapper.completed_integrator_step",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "method",
+    "name": "__del__",
+    "description": "Cleanup FMU resources on deletion.",
+    "path": "fmi/v0.1.1/api#FMUWrapper.__del__",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper"
+  },
+  {
+    "type": "example",
+    "name": "FMU Co-Simulation",
+    "description": "Demonstration of integrating Functional Mock-up Units (FMU) as PathSim blocks.",
+    "path": "fmi/v0.1.1/examples/fmu-cosimulation",
+    "packageId": "fmi",
+    "moduleName": "fmu",
+    "tags": [
+      "fmu",
+      "cosim"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "FMU ME: Bouncing Ball",
+    "description": "This example demonstrates Model Exchange FMU integration with PathSim. Unlike co-simulation FMUs, Model Exchange FMUs provide only the differential equations. PathSim's solvers perform the numerica...",
+    "path": "fmi/v0.1.1/examples/fmu-model-exchange-bouncing-ball",
+    "packageId": "fmi",
+    "moduleName": "fmu",
+    "tags": [
+      "fmu",
+      "model-exchange"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "FMU ME: Van der Pol",
+    "description": "This example demonstrates Model Exchange FMU integration with a nonlinear oscillator. The Van der Pol equation exhibits self-sustained oscillations:",
+    "path": "fmi/v0.1.1/examples/fmu-model-exchange-vanderpol",
+    "packageId": "fmi",
+    "moduleName": "fmu",
+    "tags": [
+      "fmu",
+      "model-exchange"
+    ]
+  }
+]

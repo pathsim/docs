@@ -1,0 +1,675 @@
+{
+  "pathsim_fmi.blocks": {
+    "name": "pathsim_fmi.blocks",
+    "type": "module",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "path": "fmi/v0.1.1/api#pathsim_fmi-blocks"
+  },
+  "CoSimulationFMU": {
+    "name": "CoSimulationFMU",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU"
+  },
+  "pathsim_fmi.blocks.CoSimulationFMU": {
+    "name": "CoSimulationFMU",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU"
+  },
+  "fmi.CoSimulationFMU": {
+    "name": "CoSimulationFMU",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU"
+  },
+  "CoSimulationFMU.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "CoSimulationFMU",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU.__init__"
+  },
+  "CoSimulationFMU._step_fmu": {
+    "name": "_step_fmu",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "CoSimulationFMU",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU._step_fmu"
+  },
+  "CoSimulationFMU.reset": {
+    "name": "reset",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "CoSimulationFMU",
+    "path": "fmi/v0.1.1/api#CoSimulationFMU.reset"
+  },
+  "ModelExchangeFMU": {
+    "name": "ModelExchangeFMU",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU"
+  },
+  "pathsim_fmi.blocks.ModelExchangeFMU": {
+    "name": "ModelExchangeFMU",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU"
+  },
+  "fmi.ModelExchangeFMU": {
+    "name": "ModelExchangeFMU",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU"
+  },
+  "ModelExchangeFMU.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU.__init__"
+  },
+  "ModelExchangeFMU._get_derivatives": {
+    "name": "_get_derivatives",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._get_derivatives"
+  },
+  "ModelExchangeFMU._get_jacobian": {
+    "name": "_get_jacobian",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._get_jacobian"
+  },
+  "ModelExchangeFMU._get_outputs": {
+    "name": "_get_outputs",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._get_outputs"
+  },
+  "ModelExchangeFMU._get_event_indicator": {
+    "name": "_get_event_indicator",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._get_event_indicator"
+  },
+  "ModelExchangeFMU._handle_event": {
+    "name": "_handle_event",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._handle_event"
+  },
+  "ModelExchangeFMU._update_time_events": {
+    "name": "_update_time_events",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU._update_time_events"
+  },
+  "ModelExchangeFMU.sample": {
+    "name": "sample",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU.sample"
+  },
+  "ModelExchangeFMU.reset": {
+    "name": "reset",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.blocks",
+    "parentClass": "ModelExchangeFMU",
+    "path": "fmi/v0.1.1/api#ModelExchangeFMU.reset"
+  },
+  "pathsim_fmi.wrapper": {
+    "name": "pathsim_fmi.wrapper",
+    "type": "module",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#pathsim_fmi-wrapper"
+  },
+  "EventInfo": {
+    "name": "EventInfo",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#EventInfo"
+  },
+  "pathsim_fmi.wrapper.EventInfo": {
+    "name": "EventInfo",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#EventInfo"
+  },
+  "fmi.EventInfo": {
+    "name": "EventInfo",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#EventInfo"
+  },
+  "EventInfo.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "EventInfo",
+    "path": "fmi/v0.1.1/api#EventInfo.__init__"
+  },
+  "StepResult": {
+    "name": "StepResult",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#StepResult"
+  },
+  "pathsim_fmi.wrapper.StepResult": {
+    "name": "StepResult",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#StepResult"
+  },
+  "fmi.StepResult": {
+    "name": "StepResult",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#StepResult"
+  },
+  "StepResult.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "StepResult",
+    "path": "fmi/v0.1.1/api#StepResult.__init__"
+  },
+  "_FMI2Ops": {
+    "name": "_FMI2Ops",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#_FMI2Ops"
+  },
+  "pathsim_fmi.wrapper._FMI2Ops": {
+    "name": "_FMI2Ops",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#_FMI2Ops"
+  },
+  "fmi._FMI2Ops": {
+    "name": "_FMI2Ops",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#_FMI2Ops"
+  },
+  "_FMI2Ops.set_real": {
+    "name": "set_real",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.set_real"
+  },
+  "_FMI2Ops.get_real": {
+    "name": "get_real",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.get_real"
+  },
+  "_FMI2Ops.set_integer": {
+    "name": "set_integer",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.set_integer"
+  },
+  "_FMI2Ops.get_integer": {
+    "name": "get_integer",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.get_integer"
+  },
+  "_FMI2Ops.do_step": {
+    "name": "do_step",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.do_step"
+  },
+  "_FMI2Ops.get_derivatives": {
+    "name": "get_derivatives",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.get_derivatives"
+  },
+  "_FMI2Ops.update_discrete_states": {
+    "name": "update_discrete_states",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.update_discrete_states"
+  },
+  "_FMI2Ops.setup_experiment": {
+    "name": "setup_experiment",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.setup_experiment"
+  },
+  "_FMI2Ops.enter_initialization_mode": {
+    "name": "enter_initialization_mode",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.enter_initialization_mode"
+  },
+  "_FMI2Ops.exit_initialization_mode": {
+    "name": "exit_initialization_mode",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI2Ops",
+    "path": "fmi/v0.1.1/api#_FMI2Ops.exit_initialization_mode"
+  },
+  "_FMI3Ops": {
+    "name": "_FMI3Ops",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#_FMI3Ops"
+  },
+  "pathsim_fmi.wrapper._FMI3Ops": {
+    "name": "_FMI3Ops",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#_FMI3Ops"
+  },
+  "fmi._FMI3Ops": {
+    "name": "_FMI3Ops",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#_FMI3Ops"
+  },
+  "_FMI3Ops.set_real": {
+    "name": "set_real",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.set_real"
+  },
+  "_FMI3Ops.get_real": {
+    "name": "get_real",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.get_real"
+  },
+  "_FMI3Ops.set_integer": {
+    "name": "set_integer",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.set_integer"
+  },
+  "_FMI3Ops.get_integer": {
+    "name": "get_integer",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.get_integer"
+  },
+  "_FMI3Ops.do_step": {
+    "name": "do_step",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.do_step"
+  },
+  "_FMI3Ops.get_derivatives": {
+    "name": "get_derivatives",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.get_derivatives"
+  },
+  "_FMI3Ops.update_discrete_states": {
+    "name": "update_discrete_states",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.update_discrete_states"
+  },
+  "_FMI3Ops.setup_experiment": {
+    "name": "setup_experiment",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.setup_experiment"
+  },
+  "_FMI3Ops.enter_initialization_mode": {
+    "name": "enter_initialization_mode",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.enter_initialization_mode"
+  },
+  "_FMI3Ops.exit_initialization_mode": {
+    "name": "exit_initialization_mode",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "_FMI3Ops",
+    "path": "fmi/v0.1.1/api#_FMI3Ops.exit_initialization_mode"
+  },
+  "FMUWrapper": {
+    "name": "FMUWrapper",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper"
+  },
+  "pathsim_fmi.wrapper.FMUWrapper": {
+    "name": "FMUWrapper",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper"
+  },
+  "fmi.FMUWrapper": {
+    "name": "FMUWrapper",
+    "type": "class",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper"
+  },
+  "FMUWrapper.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.__init__"
+  },
+  "FMUWrapper._create_fmu_instance": {
+    "name": "_create_fmu_instance",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper._create_fmu_instance"
+  },
+  "FMUWrapper._build_variable_maps": {
+    "name": "_build_variable_maps",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper._build_variable_maps"
+  },
+  "FMUWrapper._build_state_derivative_maps": {
+    "name": "_build_state_derivative_maps",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper._build_state_derivative_maps"
+  },
+  "FMUWrapper.create_port_registers": {
+    "name": "create_port_registers",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.create_port_registers"
+  },
+  "FMUWrapper.initialize": {
+    "name": "initialize",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.initialize"
+  },
+  "FMUWrapper.get_state_jacobian": {
+    "name": "get_state_jacobian",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_state_jacobian"
+  },
+  "FMUWrapper.instantiate": {
+    "name": "instantiate",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.instantiate"
+  },
+  "FMUWrapper.setup_experiment": {
+    "name": "setup_experiment",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.setup_experiment"
+  },
+  "FMUWrapper.enter_initialization_mode": {
+    "name": "enter_initialization_mode",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.enter_initialization_mode"
+  },
+  "FMUWrapper.exit_initialization_mode": {
+    "name": "exit_initialization_mode",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.exit_initialization_mode"
+  },
+  "FMUWrapper.reset": {
+    "name": "reset",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.reset"
+  },
+  "FMUWrapper.terminate": {
+    "name": "terminate",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.terminate"
+  },
+  "FMUWrapper.free_instance": {
+    "name": "free_instance",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.free_instance"
+  },
+  "FMUWrapper.set_real": {
+    "name": "set_real",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_real"
+  },
+  "FMUWrapper.get_real": {
+    "name": "get_real",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_real"
+  },
+  "FMUWrapper.set_variable": {
+    "name": "set_variable",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_variable"
+  },
+  "FMUWrapper.set_inputs_from_array": {
+    "name": "set_inputs_from_array",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_inputs_from_array"
+  },
+  "FMUWrapper.get_outputs_as_array": {
+    "name": "get_outputs_as_array",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_outputs_as_array"
+  },
+  "FMUWrapper.do_step": {
+    "name": "do_step",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.do_step"
+  },
+  "FMUWrapper.set_time": {
+    "name": "set_time",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_time"
+  },
+  "FMUWrapper.set_continuous_states": {
+    "name": "set_continuous_states",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.set_continuous_states"
+  },
+  "FMUWrapper.get_continuous_states": {
+    "name": "get_continuous_states",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_continuous_states"
+  },
+  "FMUWrapper.get_derivatives": {
+    "name": "get_derivatives",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_derivatives"
+  },
+  "FMUWrapper.get_event_indicators": {
+    "name": "get_event_indicators",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.get_event_indicators"
+  },
+  "FMUWrapper.enter_event_mode": {
+    "name": "enter_event_mode",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.enter_event_mode"
+  },
+  "FMUWrapper.enter_continuous_time_mode": {
+    "name": "enter_continuous_time_mode",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.enter_continuous_time_mode"
+  },
+  "FMUWrapper.update_discrete_states": {
+    "name": "update_discrete_states",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.update_discrete_states"
+  },
+  "FMUWrapper.completed_integrator_step": {
+    "name": "completed_integrator_step",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.completed_integrator_step"
+  },
+  "FMUWrapper.__del__": {
+    "name": "__del__",
+    "type": "method",
+    "packageId": "fmi",
+    "moduleName": "pathsim_fmi.wrapper",
+    "parentClass": "FMUWrapper",
+    "path": "fmi/v0.1.1/api#FMUWrapper.__del__"
+  }
+}

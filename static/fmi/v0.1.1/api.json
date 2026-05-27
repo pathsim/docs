@@ -1,0 +1,1822 @@
+{
+  "package": "fmi",
+  "modules": {
+    "pathsim_fmi.blocks": {
+      "name": "pathsim_fmi.blocks",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "CoSimulationFMU",
+          "description": "Co-Simulation FMU block using FMPy with support for FMI 2.0 and FMI 3.0.",
+          "docstring_html": "<p>Co-Simulation FMU block using FMPy with support for FMI 2.0 and FMI 3.0.</p>\n<p>This block wraps an FMU (Functional Mock-up Unit) for co-simulation.\nThe FMU encapsulates a simulation model that can be executed independently\nand synchronized with the main simulation at discrete communication points.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>fmu_path <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>path to the FMU file (.fmu)</dd>\n<dt>instance_name <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str, optional</span></dt>\n<dd>name for the FMU instance (default: 'fmu_instance')</dd>\n<dt>start_values <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">dict, optional</span></dt>\n<dd>dictionary of variable names and their initial values</dd>\n<dt>dt <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>communication step size for co-simulation. If None, uses the FMU's\ndefault experiment step size if available.</dd>\n</dl>\n<p><strong>Attributes</strong></p>\n<dl class=\"docutils\">\n<dt>fmu_wrapper <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">FMUWrapper</span></dt>\n<dd>version-agnostic FMU wrapper instance providing access to model_description,\nfmu, and other FMPy objects for advanced usage</dd>\n<dt>dt <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>communication step size</dd>\n</dl>\n",
+          "source": "class CoSimulationFMU(Block):\n    \"\"\"Co-Simulation FMU block using FMPy with support for FMI 2.0 and FMI 3.0.\n\n    This block wraps an FMU (Functional Mock-up Unit) for co-simulation.\n    The FMU encapsulates a simulation model that can be executed independently\n    and synchronized with the main simulation at discrete communication points.\n\n    Parameters\n    ----------\n    fmu_path : str\n        path to the FMU file (.fmu)\n    instance_name : str, optional\n        name for the FMU instance (default: 'fmu_instance')\n    start_values : dict, optional\n        dictionary of variable names and their initial values\n    dt : float, optional\n        communication step size for co-simulation. If None, uses the FMU's\n        default experiment step size if available.\n\n    Attributes\n    ----------\n    fmu_wrapper : FMUWrapper\n        version-agnostic FMU wrapper instance providing access to model_description,\n        fmu, and other FMPy objects for advanced usage\n    dt : float\n        communication step size\n    \"\"\"\n\n    def __init__(self, fmu_path, instance_name=\"fmu_instance\", start_values=None, dt=None):\n        super().__init__()\n\n        self.start_values = start_values\n\n        # Create and initialize FMU wrapper\n        self.fmu_wrapper = FMUWrapper(fmu_path, instance_name, mode=\"cosimulation\")\n        self.fmu_wrapper.initialize(start_values, start_time=0.0)\n\n        # Determine step size\n        self.dt = dt if dt is not None else self.fmu_wrapper.default_step_size\n        if self.dt is None:\n            raise ValueError(\"No step size provided and FMU has no default experiment step size\")\n\n        # Setup block I/O from FMU variables\n        self.inputs, self.outputs = self.fmu_wrapper.create_port_registers()\n\n        # Scheduled co-simulation step\n        self.events = [Schedule(t_start=0, t_period=self.dt, func_act=self._step_fmu)]\n\n        # Read initial outputs\n        self.outputs.update_from_array(self.fmu_wrapper.get_outputs_as_array())\n\n    def _step_fmu(self, t):\n        \"\"\"Perform one FMU co-simulation step.\"\"\"\n        self.fmu_wrapper.set_inputs_from_array(self.inputs.to_array())\n\n        result = self.fmu_wrapper.do_step(current_time=t, step_size=self.dt)\n\n        if result.terminate_simulation:\n            raise RuntimeError(\"FMU requested simulation termination\")\n\n        self.outputs.update_from_array(self.fmu_wrapper.get_outputs_as_array())\n\n    def reset(self):\n        \"\"\"Reset the FMU instance.\"\"\"\n        super().reset()\n        self.fmu_wrapper.reset()\n        self.fmu_wrapper.initialize(self.start_values, start_time=0.0)\n        self.outputs.update_from_array(self.fmu_wrapper.get_outputs_as_array())\n\n    def __len__(self):\n        \"\"\"FMU is a discrete time source-like block without direct passthrough.\"\"\"\n        return 0",
+          "bases": [
+            "pathsim.blocks._block.Block"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, fmu_path, instance_name=\"fmu_instance\", start_values=None, dt=None):\n    super().__init__()\n\n    self.start_values = start_values\n\n    # Create and initialize FMU wrapper\n    self.fmu_wrapper = FMUWrapper(fmu_path, instance_name, mode=\"cosimulation\")\n    self.fmu_wrapper.initialize(start_values, start_time=0.0)\n\n    # Determine step size\n    self.dt = dt if dt is not None else self.fmu_wrapper.default_step_size\n    if self.dt is None:\n        raise ValueError(\"No step size provided and FMU has no default experiment step size\")\n\n    # Setup block I/O from FMU variables\n    self.inputs, self.outputs = self.fmu_wrapper.create_port_registers()\n\n    # Scheduled co-simulation step\n    self.events = [Schedule(t_start=0, t_period=self.dt, func_act=self._step_fmu)]\n\n    # Read initial outputs\n    self.outputs.update_from_array(self.fmu_wrapper.get_outputs_as_array())",
+              "signature": "(fmu_path, instance_name = 'fmu_instance', start_values = None, dt = None)",
+              "parameters": [
+                {
+                  "name": "fmu_path",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "instance_name",
+                  "type": null,
+                  "default": "'fmu_instance'",
+                  "description": ""
+                },
+                {
+                  "name": "start_values",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "dt",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_step_fmu",
+              "description": "Perform one FMU co-simulation step.",
+              "docstring_html": "<p>Perform one FMU co-simulation step.</p>\n",
+              "source": "def _step_fmu(self, t):\n    \"\"\"Perform one FMU co-simulation step.\"\"\"\n    self.fmu_wrapper.set_inputs_from_array(self.inputs.to_array())\n\n    result = self.fmu_wrapper.do_step(current_time=t, step_size=self.dt)\n\n    if result.terminate_simulation:\n        raise RuntimeError(\"FMU requested simulation termination\")\n\n    self.outputs.update_from_array(self.fmu_wrapper.get_outputs_as_array())",
+              "signature": "(t)",
+              "parameters": [
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "reset",
+              "description": "Reset the FMU instance.",
+              "docstring_html": "<p>Reset the FMU instance.</p>\n",
+              "source": "def reset(self):\n    \"\"\"Reset the FMU instance.\"\"\"\n    super().reset()\n    self.fmu_wrapper.reset()\n    self.fmu_wrapper.initialize(self.start_values, start_time=0.0)\n    self.outputs.update_from_array(self.fmu_wrapper.get_outputs_as_array())",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "start_values",
+              "description": "",
+              "type": null,
+              "value": "start_values"
+            },
+            {
+              "name": "fmu_wrapper",
+              "description": "",
+              "type": null,
+              "value": "FMUWrapper(fmu_path, instance_name, mode='cosimulation')"
+            },
+            {
+              "name": "dt",
+              "description": "",
+              "type": null,
+              "value": "dt if dt is not None else self.fmu_wrapper.default_step_size"
+            },
+            {
+              "name": "events",
+              "description": "",
+              "type": null,
+              "value": "[Schedule(t_start=0, t_period=(self.dt), func_act=(self._step_fmu))]"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "fmu_path",
+              "type": null,
+              "default": null,
+              "description": "path to the FMU file (.fmu)"
+            },
+            {
+              "name": "instance_name",
+              "type": null,
+              "default": "'fmu_instance'",
+              "description": "name for the FMU instance (default: 'fmu_instance')"
+            },
+            {
+              "name": "start_values",
+              "type": null,
+              "default": "None",
+              "description": "dictionary of variable names and their initial values"
+            },
+            {
+              "name": "dt",
+              "type": null,
+              "default": "None",
+              "description": "communication step size for co-simulation. If None, uses the FMU's default experiment step size if available."
+            }
+          ]
+        },
+        {
+          "name": "ModelExchangeFMU",
+          "description": "Model Exchange FMU block using FMPy with support for FMI 2.0 and FMI 3.0.",
+          "docstring_html": "<p>Model Exchange FMU block using FMPy with support for FMI 2.0 and FMI 3.0.</p>\n<p>This block wraps an FMU (Functional Mock-up Unit) for model exchange.\nThe FMU provides the right-hand side of an ODE system that is integrated\nby PathSim's numerical solvers. Internal FMU events (state events, time\nevents, and step completion events) are translated to PathSim events.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>fmu_path <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>path to the FMU file (.fmu)</dd>\n<dt>instance_name <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str, optional</span></dt>\n<dd>name for the FMU instance (default: 'fmu_instance')</dd>\n<dt>start_values <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">dict, optional</span></dt>\n<dd>dictionary of variable names and their initial values</dd>\n<dt>tolerance <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>tolerance for event detection (default: 1e-10)</dd>\n<dt>verbose <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool, optional</span></dt>\n<dd>enable verbose output (default: False)</dd>\n</dl>\n<p><strong>Attributes</strong></p>\n<dl class=\"docutils\">\n<dt>fmu_wrapper <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">FMUWrapper</span></dt>\n<dd>version-agnostic FMU wrapper instance providing access to model_description,\nfmu, and other FMPy objects for advanced usage</dd>\n<dt>time_event <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">ScheduleList or None</span></dt>\n<dd>dynamic time event for FMU-scheduled events</dd>\n</dl>\n",
+          "source": "class ModelExchangeFMU(DynamicalSystem):\n    \"\"\"Model Exchange FMU block using FMPy with support for FMI 2.0 and FMI 3.0.\n\n    This block wraps an FMU (Functional Mock-up Unit) for model exchange.\n    The FMU provides the right-hand side of an ODE system that is integrated\n    by PathSim's numerical solvers. Internal FMU events (state events, time\n    events, and step completion events) are translated to PathSim events.\n\n    Parameters\n    ----------\n    fmu_path : str\n        path to the FMU file (.fmu)\n    instance_name : str, optional\n        name for the FMU instance (default: 'fmu_instance')\n    start_values : dict, optional\n        dictionary of variable names and their initial values\n    tolerance : float, optional\n        tolerance for event detection (default: 1e-10)\n    verbose : bool, optional\n        enable verbose output (default: False)\n\n    Attributes\n    ----------\n    fmu_wrapper : FMUWrapper\n        version-agnostic FMU wrapper instance providing access to model_description,\n        fmu, and other FMPy objects for advanced usage\n    time_event : ScheduleList or None\n        dynamic time event for FMU-scheduled events\n    \"\"\"\n\n    def __init__(\n        self,\n        fmu_path,\n        instance_name=\"fmu_instance\",\n        start_values=None,\n        tolerance=1e-10,\n        verbose=False,\n    ):\n\n        self.tolerance = tolerance\n        self.verbose = verbose\n        self.start_values = start_values\n\n        # Create and initialize FMU wrapper\n        self.fmu_wrapper = FMUWrapper(fmu_path, instance_name, mode=\"model_exchange\")\n        event_info = self.fmu_wrapper.initialize(start_values, start_time=0.0, tolerance=tolerance)\n\n        # Store initial time event if defined\n        self._initial_time_event = (\n            event_info.next_event_time\n            if event_info and event_info.next_event_time_defined\n            else None\n        )\n\n        # Enter continuous time mode\n        self.fmu_wrapper.enter_continuous_time_mode()\n\n        # Initialize parent DynamicalSystem with FMU dynamics\n        # Use FMU's Jacobian if available (providesDirectionalDerivative=true)\n        jac_func = self._get_jacobian if self.fmu_wrapper.provides_jacobian else None\n\n        super().__init__(\n            func_dyn=self._get_derivatives,\n            func_alg=self._get_outputs,\n            initial_value=self.fmu_wrapper.get_continuous_states(),\n            jac_dyn=jac_func,\n        )\n\n        # Setup block I/O from FMU variables\n        self.inputs, self.outputs = self.fmu_wrapper.create_port_registers()\n\n        # Initialize time event manager\n        self.time_event = None\n\n        # Create state event (zero-crossing) for each event indicator\n        for i in range(self.fmu_wrapper.n_event_indicators):\n            self.events.append(\n                ZeroCrossing(\n                    func_evt=lambda t, idx=i: self._get_event_indicator(idx),\n                    func_act=self._handle_event,\n                    tolerance=self.tolerance,\n                )\n            )\n\n        # Cache capability flag for sample() performance\n        self._needs_completed_integrator_step = self.fmu_wrapper.needs_completed_integrator_step\n\n        # Schedule initial time event if any\n        if self._initial_time_event is not None:\n            self._update_time_events(self._initial_time_event)\n\n    def _get_derivatives(self, x, u, t):\n        \"\"\"Evaluate FMU derivatives (RHS of ODE).\"\"\"\n        if self.fmu_wrapper.n_states == 0:\n            return []\n\n        self.fmu_wrapper.set_time(t)\n        self.fmu_wrapper.set_continuous_states(x)\n        self.fmu_wrapper.set_inputs_from_array(u)\n\n        return self.fmu_wrapper.get_derivatives()\n\n    def _get_jacobian(self, x, u, t):\n        \"\"\"Evaluate Jacobian of FMU derivatives w.r.t. states (∂ẋ/∂x).\"\"\"\n        self.fmu_wrapper.set_time(t)\n        self.fmu_wrapper.set_continuous_states(x)\n        self.fmu_wrapper.set_inputs_from_array(u)\n\n        return self.fmu_wrapper.get_state_jacobian()\n\n    def _get_outputs(self, x, u, t):\n        \"\"\"Evaluate FMU outputs (algebraic part).\"\"\"\n        self.fmu_wrapper.set_time(t)\n        self.fmu_wrapper.set_continuous_states(x)\n        self.fmu_wrapper.set_inputs_from_array(u)\n\n        return self.fmu_wrapper.get_outputs_as_array()\n\n    def _get_event_indicator(self, idx):\n        \"\"\"Get value of a specific event indicator.\"\"\"\n        return self.fmu_wrapper.get_event_indicators()[idx]\n\n    def _handle_event(self, t):\n        \"\"\"Handle FMU event with fixed-point iteration for discrete states.\"\"\"\n        if self.verbose:\n            print(f\"FMU event detected at t={t}\")\n\n        self.fmu_wrapper.enter_event_mode()\n\n        # Iterate until discrete states stabilize\n        while True:\n            event_info = self.fmu_wrapper.update_discrete_states()\n\n            if event_info.terminate_simulation:\n                raise RuntimeError(\"FMU requested simulation termination\")\n\n            if not event_info.discrete_states_need_update:\n                break\n\n        self.fmu_wrapper.enter_continuous_time_mode()\n\n        # Update continuous states if changed\n        if event_info.values_changed:\n            x_new = self.fmu_wrapper.get_continuous_states()\n            self.engine.set(x_new)\n            if self.verbose:\n                print(f\"Continuous states updated after event: {x_new}\")\n\n        # Schedule new time events\n        if event_info.next_event_time_defined:\n            self._update_time_events(event_info.next_event_time)\n            if self.verbose:\n                print(f\"Next time event scheduled at t={event_info.next_event_time}\")\n\n    def _update_time_events(self, next_time):\n        \"\"\"Update or create time event schedule.\"\"\"\n        if self.time_event is None:\n            self.time_event = ScheduleList(\n                times_evt=[next_time],\n                func_act=self._handle_event,\n                tolerance=self.tolerance,\n            )\n            self.events.append(self.time_event)\n        elif next_time not in self.time_event.times_evt:\n            bisect.insort(self.time_event.times_evt, next_time)\n\n    def sample(self, t, dt):\n        \"\"\"Sample block after successful timestep and handle FMU step completion events.\"\"\"\n        super().sample(t, dt)\n\n        if self._needs_completed_integrator_step:\n            enter_event_mode, terminate_simulation = self.fmu_wrapper.completed_integrator_step()\n\n            if terminate_simulation:\n                raise RuntimeError(\"FMU requested simulation termination\")\n\n            if enter_event_mode:\n                if self.verbose:\n                    print(f\"Step completion event at t={t}\")\n                self._handle_event(t)\n\n    def reset(self):\n        \"\"\"Reset the FMU instance.\"\"\"\n        super().reset()\n        self.fmu_wrapper.reset()\n\n        # Re-initialize FMU\n        event_info = self.fmu_wrapper.initialize(\n            self.start_values, start_time=0.0, tolerance=self.tolerance\n        )\n        self.fmu_wrapper.enter_continuous_time_mode()\n\n        # Reset to initial states\n        self.engine.set(self.fmu_wrapper.get_continuous_states())\n\n        # Reset time events\n        if self.time_event is not None:\n            self.time_event.times_evt.clear()\n\n        # Schedule initial time event from re-initialization or cached initial\n        if event_info and event_info.next_event_time_defined:\n            self._update_time_events(event_info.next_event_time)\n        elif self._initial_time_event is not None:\n            self._update_time_events(self._initial_time_event)",
+          "bases": [
+            "pathsim.blocks.dynsys.DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    fmu_path,\n    instance_name=\"fmu_instance\",\n    start_values=None,\n    tolerance=1e-10,\n    verbose=False,\n):\n\n    self.tolerance = tolerance\n    self.verbose = verbose\n    self.start_values = start_values\n\n    # Create and initialize FMU wrapper\n    self.fmu_wrapper = FMUWrapper(fmu_path, instance_name, mode=\"model_exchange\")\n    event_info = self.fmu_wrapper.initialize(start_values, start_time=0.0, tolerance=tolerance)\n\n    # Store initial time event if defined\n    self._initial_time_event = (\n        event_info.next_event_time\n        if event_info and event_info.next_event_time_defined\n        else None\n    )\n\n    # Enter continuous time mode\n    self.fmu_wrapper.enter_continuous_time_mode()\n\n    # Initialize parent DynamicalSystem with FMU dynamics\n    # Use FMU's Jacobian if available (providesDirectionalDerivative=true)\n    jac_func = self._get_jacobian if self.fmu_wrapper.provides_jacobian else None\n\n    super().__init__(\n        func_dyn=self._get_derivatives,\n        func_alg=self._get_outputs,\n        initial_value=self.fmu_wrapper.get_continuous_states(),\n        jac_dyn=jac_func,\n    )\n\n    # Setup block I/O from FMU variables\n    self.inputs, self.outputs = self.fmu_wrapper.create_port_registers()\n\n    # Initialize time event manager\n    self.time_event = None\n\n    # Create state event (zero-crossing) for each event indicator\n    for i in range(self.fmu_wrapper.n_event_indicators):\n        self.events.append(\n            ZeroCrossing(\n                func_evt=lambda t, idx=i: self._get_event_indicator(idx),\n                func_act=self._handle_event,\n                tolerance=self.tolerance,\n            )\n        )\n\n    # Cache capability flag for sample() performance\n    self._needs_completed_integrator_step = self.fmu_wrapper.needs_completed_integrator_step\n\n    # Schedule initial time event if any\n    if self._initial_time_event is not None:\n        self._update_time_events(self._initial_time_event)",
+              "signature": "(fmu_path, instance_name = 'fmu_instance', start_values = None, tolerance = 1e-10, verbose = False)",
+              "parameters": [
+                {
+                  "name": "fmu_path",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "instance_name",
+                  "type": null,
+                  "default": "'fmu_instance'",
+                  "description": ""
+                },
+                {
+                  "name": "start_values",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "tolerance",
+                  "type": null,
+                  "default": "1e-10",
+                  "description": ""
+                },
+                {
+                  "name": "verbose",
+                  "type": null,
+                  "default": "False",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_get_derivatives",
+              "description": "Evaluate FMU derivatives (RHS of ODE).",
+              "docstring_html": "<p>Evaluate FMU derivatives (RHS of ODE).</p>\n",
+              "source": "def _get_derivatives(self, x, u, t):\n    \"\"\"Evaluate FMU derivatives (RHS of ODE).\"\"\"\n    if self.fmu_wrapper.n_states == 0:\n        return []\n\n    self.fmu_wrapper.set_time(t)\n    self.fmu_wrapper.set_continuous_states(x)\n    self.fmu_wrapper.set_inputs_from_array(u)\n\n    return self.fmu_wrapper.get_derivatives()",
+              "signature": "(x, u, t)",
+              "parameters": [
+                {
+                  "name": "x",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_get_jacobian",
+              "description": "Evaluate Jacobian of FMU derivatives w.r.t. states (∂ẋ/∂x).",
+              "docstring_html": "<p>Evaluate Jacobian of FMU derivatives w.r.t. states (∂ẋ/∂x).</p>\n",
+              "source": "def _get_jacobian(self, x, u, t):\n    \"\"\"Evaluate Jacobian of FMU derivatives w.r.t. states (∂ẋ/∂x).\"\"\"\n    self.fmu_wrapper.set_time(t)\n    self.fmu_wrapper.set_continuous_states(x)\n    self.fmu_wrapper.set_inputs_from_array(u)\n\n    return self.fmu_wrapper.get_state_jacobian()",
+              "signature": "(x, u, t)",
+              "parameters": [
+                {
+                  "name": "x",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_get_outputs",
+              "description": "Evaluate FMU outputs (algebraic part).",
+              "docstring_html": "<p>Evaluate FMU outputs (algebraic part).</p>\n",
+              "source": "def _get_outputs(self, x, u, t):\n    \"\"\"Evaluate FMU outputs (algebraic part).\"\"\"\n    self.fmu_wrapper.set_time(t)\n    self.fmu_wrapper.set_continuous_states(x)\n    self.fmu_wrapper.set_inputs_from_array(u)\n\n    return self.fmu_wrapper.get_outputs_as_array()",
+              "signature": "(x, u, t)",
+              "parameters": [
+                {
+                  "name": "x",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_get_event_indicator",
+              "description": "Get value of a specific event indicator.",
+              "docstring_html": "<p>Get value of a specific event indicator.</p>\n",
+              "source": "def _get_event_indicator(self, idx):\n    \"\"\"Get value of a specific event indicator.\"\"\"\n    return self.fmu_wrapper.get_event_indicators()[idx]",
+              "signature": "(idx)",
+              "parameters": [
+                {
+                  "name": "idx",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_handle_event",
+              "description": "Handle FMU event with fixed-point iteration for discrete states.",
+              "docstring_html": "<p>Handle FMU event with fixed-point iteration for discrete states.</p>\n",
+              "source": "def _handle_event(self, t):\n    \"\"\"Handle FMU event with fixed-point iteration for discrete states.\"\"\"\n    if self.verbose:\n        print(f\"FMU event detected at t={t}\")\n\n    self.fmu_wrapper.enter_event_mode()\n\n    # Iterate until discrete states stabilize\n    while True:\n        event_info = self.fmu_wrapper.update_discrete_states()\n\n        if event_info.terminate_simulation:\n            raise RuntimeError(\"FMU requested simulation termination\")\n\n        if not event_info.discrete_states_need_update:\n            break\n\n    self.fmu_wrapper.enter_continuous_time_mode()\n\n    # Update continuous states if changed\n    if event_info.values_changed:\n        x_new = self.fmu_wrapper.get_continuous_states()\n        self.engine.set(x_new)\n        if self.verbose:\n            print(f\"Continuous states updated after event: {x_new}\")\n\n    # Schedule new time events\n    if event_info.next_event_time_defined:\n        self._update_time_events(event_info.next_event_time)\n        if self.verbose:\n            print(f\"Next time event scheduled at t={event_info.next_event_time}\")",
+              "signature": "(t)",
+              "parameters": [
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_update_time_events",
+              "description": "Update or create time event schedule.",
+              "docstring_html": "<p>Update or create time event schedule.</p>\n",
+              "source": "def _update_time_events(self, next_time):\n    \"\"\"Update or create time event schedule.\"\"\"\n    if self.time_event is None:\n        self.time_event = ScheduleList(\n            times_evt=[next_time],\n            func_act=self._handle_event,\n            tolerance=self.tolerance,\n        )\n        self.events.append(self.time_event)\n    elif next_time not in self.time_event.times_evt:\n        bisect.insort(self.time_event.times_evt, next_time)",
+              "signature": "(next_time)",
+              "parameters": [
+                {
+                  "name": "next_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "sample",
+              "description": "Sample block after successful timestep and handle FMU step completion events.",
+              "docstring_html": "<p>Sample block after successful timestep and handle FMU step completion events.</p>\n",
+              "source": "def sample(self, t, dt):\n    \"\"\"Sample block after successful timestep and handle FMU step completion events.\"\"\"\n    super().sample(t, dt)\n\n    if self._needs_completed_integrator_step:\n        enter_event_mode, terminate_simulation = self.fmu_wrapper.completed_integrator_step()\n\n        if terminate_simulation:\n            raise RuntimeError(\"FMU requested simulation termination\")\n\n        if enter_event_mode:\n            if self.verbose:\n                print(f\"Step completion event at t={t}\")\n            self._handle_event(t)",
+              "signature": "(t, dt)",
+              "parameters": [
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "dt",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "reset",
+              "description": "Reset the FMU instance.",
+              "docstring_html": "<p>Reset the FMU instance.</p>\n",
+              "source": "def reset(self):\n    \"\"\"Reset the FMU instance.\"\"\"\n    super().reset()\n    self.fmu_wrapper.reset()\n\n    # Re-initialize FMU\n    event_info = self.fmu_wrapper.initialize(\n        self.start_values, start_time=0.0, tolerance=self.tolerance\n    )\n    self.fmu_wrapper.enter_continuous_time_mode()\n\n    # Reset to initial states\n    self.engine.set(self.fmu_wrapper.get_continuous_states())\n\n    # Reset time events\n    if self.time_event is not None:\n        self.time_event.times_evt.clear()\n\n    # Schedule initial time event from re-initialization or cached initial\n    if event_info and event_info.next_event_time_defined:\n        self._update_time_events(event_info.next_event_time)\n    elif self._initial_time_event is not None:\n        self._update_time_events(self._initial_time_event)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tolerance",
+              "description": "",
+              "type": null,
+              "value": "tolerance"
+            },
+            {
+              "name": "verbose",
+              "description": "",
+              "type": null,
+              "value": "verbose"
+            },
+            {
+              "name": "start_values",
+              "description": "",
+              "type": null,
+              "value": "start_values"
+            },
+            {
+              "name": "fmu_wrapper",
+              "description": "",
+              "type": null,
+              "value": "FMUWrapper(fmu_path, instance_name, mode='model_exchange')"
+            },
+            {
+              "name": "_initial_time_event",
+              "description": "",
+              "type": null,
+              "value": "event_info.next_event_time if event_info and event_info.next_event_time_defined else None"
+            },
+            {
+              "name": "time_event",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "_needs_completed_integrator_step",
+              "description": "",
+              "type": null,
+              "value": "self.fmu_wrapper.needs_completed_integrator_step"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "fmu_path",
+              "type": null,
+              "default": null,
+              "description": "path to the FMU file (.fmu)"
+            },
+            {
+              "name": "instance_name",
+              "type": null,
+              "default": "'fmu_instance'",
+              "description": "name for the FMU instance (default: 'fmu_instance')"
+            },
+            {
+              "name": "start_values",
+              "type": null,
+              "default": "None",
+              "description": "dictionary of variable names and their initial values"
+            },
+            {
+              "name": "tolerance",
+              "type": null,
+              "default": "1e-10",
+              "description": "tolerance for event detection (default: 1e-10)"
+            },
+            {
+              "name": "verbose",
+              "type": null,
+              "default": "False",
+              "description": "enable verbose output (default: False)"
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_fmi.wrapper": {
+      "name": "pathsim_fmi.wrapper",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "EventInfo",
+          "description": "Unified event information structure for both FMI 2.0 and 3.0.",
+          "docstring_html": "<p>Unified event information structure for both FMI 2.0 and 3.0.</p>\n<p><strong>Attributes</strong></p>\n<dl class=\"docutils\">\n<dt>discrete_states_need_update <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether discrete state iteration is needed</dd>\n<dt>terminate_simulation <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether FMU requests simulation termination</dd>\n<dt>nominals_changed <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether nominal values of continuous states changed</dd>\n<dt>values_changed <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether continuous state values changed</dd>\n<dt>next_event_time_defined <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether FMU has scheduled a next time event</dd>\n<dt>next_event_time <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>time of next scheduled event (if defined)</dd>\n</dl>\n",
+          "source": "@dataclass\nclass EventInfo:\n    \"\"\"Unified event information structure for both FMI 2.0 and 3.0.\n\n    Attributes\n    ----------\n    discrete_states_need_update : bool\n        whether discrete state iteration is needed\n    terminate_simulation : bool\n        whether FMU requests simulation termination\n    nominals_changed : bool\n        whether nominal values of continuous states changed\n    values_changed : bool\n        whether continuous state values changed\n    next_event_time_defined : bool\n        whether FMU has scheduled a next time event\n    next_event_time : float\n        time of next scheduled event (if defined)\n    \"\"\"\n\n    discrete_states_need_update: bool = False\n    terminate_simulation: bool = False\n    nominals_changed: bool = False\n    values_changed: bool = False\n    next_event_time_defined: bool = False\n    next_event_time: float = 0.0",
+          "bases": [],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": null,
+              "signature": "(discrete_states_need_update: bool = False, terminate_simulation: bool = False, nominals_changed: bool = False, values_changed: bool = False, next_event_time_defined: bool = False, next_event_time: float = 0.0)",
+              "parameters": [
+                {
+                  "name": "discrete_states_need_update",
+                  "type": "bool",
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "terminate_simulation",
+                  "type": "bool",
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "nominals_changed",
+                  "type": "bool",
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "values_changed",
+                  "type": "bool",
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "next_event_time_defined",
+                  "type": "bool",
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "next_event_time",
+                  "type": "float",
+                  "default": "0.0",
+                  "description": ""
+                }
+              ],
+              "returns": "None",
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "discrete_states_need_update",
+              "description": "",
+              "type": "bool",
+              "value": "False"
+            },
+            {
+              "name": "terminate_simulation",
+              "description": "",
+              "type": "bool",
+              "value": "False"
+            },
+            {
+              "name": "nominals_changed",
+              "description": "",
+              "type": "bool",
+              "value": "False"
+            },
+            {
+              "name": "values_changed",
+              "description": "",
+              "type": "bool",
+              "value": "False"
+            },
+            {
+              "name": "next_event_time_defined",
+              "description": "",
+              "type": "bool",
+              "value": "False"
+            },
+            {
+              "name": "next_event_time",
+              "description": "",
+              "type": "float",
+              "value": "0.0"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "discrete_states_need_update",
+              "type": "bool",
+              "default": "False",
+              "description": "whether discrete state iteration is needed"
+            },
+            {
+              "name": "terminate_simulation",
+              "type": "bool",
+              "default": "False",
+              "description": "whether FMU requests simulation termination"
+            },
+            {
+              "name": "nominals_changed",
+              "type": "bool",
+              "default": "False",
+              "description": "whether nominal values of continuous states changed"
+            },
+            {
+              "name": "values_changed",
+              "type": "bool",
+              "default": "False",
+              "description": "whether continuous state values changed"
+            },
+            {
+              "name": "next_event_time_defined",
+              "type": "bool",
+              "default": "False",
+              "description": "whether FMU has scheduled a next time event"
+            },
+            {
+              "name": "next_event_time",
+              "type": "float",
+              "default": "0.0",
+              "description": "time of next scheduled event (if defined)"
+            }
+          ]
+        },
+        {
+          "name": "StepResult",
+          "description": "Result information from a co-simulation step.",
+          "docstring_html": "<p>Result information from a co-simulation step.</p>\n<p><strong>Attributes</strong></p>\n<dl class=\"docutils\">\n<dt>event_encountered <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether an event was encountered during step (FMI 3.0 only)</dd>\n<dt>terminate_simulation <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether FMU requests simulation termination (FMI 3.0 only)</dd>\n<dt>early_return <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether step returned early (FMI 3.0 only)</dd>\n<dt>last_successful_time <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>last time successfully reached (FMI 3.0 only)</dd>\n</dl>\n",
+          "source": "@dataclass\nclass StepResult:\n    \"\"\"Result information from a co-simulation step.\n\n    Attributes\n    ----------\n    event_encountered : bool\n        whether an event was encountered during step (FMI 3.0 only)\n    terminate_simulation : bool\n        whether FMU requests simulation termination (FMI 3.0 only)\n    early_return : bool\n        whether step returned early (FMI 3.0 only)\n    last_successful_time : float\n        last time successfully reached (FMI 3.0 only)\n    \"\"\"\n\n    event_encountered: bool = False\n    terminate_simulation: bool = False\n    early_return: bool = False\n    last_successful_time: float = 0.0",
+          "bases": [],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": null,
+              "signature": "(event_encountered: bool = False, terminate_simulation: bool = False, early_return: bool = False, last_successful_time: float = 0.0)",
+              "parameters": [
+                {
+                  "name": "event_encountered",
+                  "type": "bool",
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "terminate_simulation",
+                  "type": "bool",
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "early_return",
+                  "type": "bool",
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "last_successful_time",
+                  "type": "float",
+                  "default": "0.0",
+                  "description": ""
+                }
+              ],
+              "returns": "None",
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "event_encountered",
+              "description": "",
+              "type": "bool",
+              "value": "False"
+            },
+            {
+              "name": "terminate_simulation",
+              "description": "",
+              "type": "bool",
+              "value": "False"
+            },
+            {
+              "name": "early_return",
+              "description": "",
+              "type": "bool",
+              "value": "False"
+            },
+            {
+              "name": "last_successful_time",
+              "description": "",
+              "type": "float",
+              "value": "0.0"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "event_encountered",
+              "type": "bool",
+              "default": "False",
+              "description": "whether an event was encountered during step (FMI 3.0 only)"
+            },
+            {
+              "name": "terminate_simulation",
+              "type": "bool",
+              "default": "False",
+              "description": "whether FMU requests simulation termination (FMI 3.0 only)"
+            },
+            {
+              "name": "early_return",
+              "type": "bool",
+              "default": "False",
+              "description": "whether step returned early (FMI 3.0 only)"
+            },
+            {
+              "name": "last_successful_time",
+              "type": "float",
+              "default": "0.0",
+              "description": "last time successfully reached (FMI 3.0 only)"
+            }
+          ]
+        },
+        {
+          "name": "_FMI2Ops",
+          "description": "FMI 2.0 specific operations.",
+          "docstring_html": "<p>FMI 2.0 specific operations.</p>\n",
+          "source": "class _FMI2Ops:\n    \"\"\"FMI 2.0 specific operations.\"\"\"\n\n    @staticmethod\n    def set_real(fmu, refs, values):\n        fmu.setReal(refs, values)\n\n    @staticmethod\n    def get_real(fmu, refs):\n        return fmu.getReal(refs)\n\n    @staticmethod\n    def set_integer(fmu, refs, values):\n        fmu.setInteger(refs, values)\n\n    @staticmethod\n    def get_integer(fmu, refs):\n        return fmu.getInteger(refs)\n\n    @staticmethod\n    def do_step(fmu, current_time, step_size):\n        fmu.doStep(current_time, step_size)\n        return StepResult()\n\n    @staticmethod\n    def get_derivatives(fmu, n_states):\n        if n_states == 0:\n            return np.array([])\n        derivatives = (ctypes.c_double * n_states)()\n        fmu.getDerivatives(derivatives, n_states)\n        return np.array(derivatives)\n\n    @staticmethod\n    def update_discrete_states(fmu):\n        result = fmu.newDiscreteStates()\n        return EventInfo(\n            discrete_states_need_update=result[0],\n            terminate_simulation=result[1],\n            nominals_changed=result[2],\n            values_changed=result[3],\n            next_event_time_defined=result[4],\n            next_event_time=result[5],\n        )\n\n    @staticmethod\n    def setup_experiment(fmu, tolerance, start_time, stop_time):\n        fmu.setupExperiment(tolerance=tolerance, startTime=start_time, stopTime=stop_time)\n\n    @staticmethod\n    def enter_initialization_mode(fmu, tolerance, start_time, stop_time):\n        fmu.enterInitializationMode()\n\n    @staticmethod\n    def exit_initialization_mode(fmu, mode):\n        # FMI 2.0 doesn't return event info from exitInitializationMode\n        fmu.exitInitializationMode()\n        return None",
+          "bases": [],
+          "methods": [
+            {
+              "name": "set_real",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef set_real(fmu, refs, values):\n    fmu.setReal(refs, values)",
+              "signature": "(fmu, refs, values)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "values",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "get_real",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef get_real(fmu, refs):\n    return fmu.getReal(refs)",
+              "signature": "(fmu, refs)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "set_integer",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef set_integer(fmu, refs, values):\n    fmu.setInteger(refs, values)",
+              "signature": "(fmu, refs, values)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "values",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "get_integer",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef get_integer(fmu, refs):\n    return fmu.getInteger(refs)",
+              "signature": "(fmu, refs)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "do_step",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef do_step(fmu, current_time, step_size):\n    fmu.doStep(current_time, step_size)\n    return StepResult()",
+              "signature": "(fmu, current_time, step_size)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "current_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "step_size",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "get_derivatives",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef get_derivatives(fmu, n_states):\n    if n_states == 0:\n        return np.array([])\n    derivatives = (ctypes.c_double * n_states)()\n    fmu.getDerivatives(derivatives, n_states)\n    return np.array(derivatives)",
+              "signature": "(fmu, n_states)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "n_states",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "update_discrete_states",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef update_discrete_states(fmu):\n    result = fmu.newDiscreteStates()\n    return EventInfo(\n        discrete_states_need_update=result[0],\n        terminate_simulation=result[1],\n        nominals_changed=result[2],\n        values_changed=result[3],\n        next_event_time_defined=result[4],\n        next_event_time=result[5],\n    )",
+              "signature": "(fmu)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "setup_experiment",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef setup_experiment(fmu, tolerance, start_time, stop_time):\n    fmu.setupExperiment(tolerance=tolerance, startTime=start_time, stopTime=stop_time)",
+              "signature": "(fmu, tolerance, start_time, stop_time)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "tolerance",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "start_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "stop_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "enter_initialization_mode",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef enter_initialization_mode(fmu, tolerance, start_time, stop_time):\n    fmu.enterInitializationMode()",
+              "signature": "(fmu, tolerance, start_time, stop_time)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "tolerance",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "start_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "stop_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "exit_initialization_mode",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef exit_initialization_mode(fmu, mode):\n    # FMI 2.0 doesn't return event info from exitInitializationMode\n    fmu.exitInitializationMode()\n    return None",
+              "signature": "(fmu, mode)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "mode",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            }
+          ],
+          "attributes": [],
+          "parameters": []
+        },
+        {
+          "name": "_FMI3Ops",
+          "description": "FMI 3.0 specific operations.",
+          "docstring_html": "<p>FMI 3.0 specific operations.</p>\n",
+          "source": "class _FMI3Ops:\n    \"\"\"FMI 3.0 specific operations.\"\"\"\n\n    @staticmethod\n    def set_real(fmu, refs, values):\n        fmu.setFloat64(refs, values)\n\n    @staticmethod\n    def get_real(fmu, refs):\n        return fmu.getFloat64(refs)\n\n    @staticmethod\n    def set_integer(fmu, refs, values):\n        fmu.setInt64(refs, values)\n\n    @staticmethod\n    def get_integer(fmu, refs):\n        return fmu.getInt64(refs)\n\n    @staticmethod\n    def do_step(fmu, current_time, step_size):\n        event, terminate, early, last_time = fmu.doStep(current_time, step_size)\n        return StepResult(\n            event_encountered=event,\n            terminate_simulation=terminate,\n            early_return=early,\n            last_successful_time=last_time,\n        )\n\n    @staticmethod\n    def get_derivatives(fmu, n_states):\n        if n_states == 0:\n            return np.array([])\n        derivatives = (ctypes.c_double * n_states)()\n        fmu.getContinuousStateDerivatives(derivatives, n_states)\n        return np.array(derivatives)\n\n    @staticmethod\n    def update_discrete_states(fmu):\n        result = fmu.updateDiscreteStates()\n        return EventInfo(\n            discrete_states_need_update=result[0],\n            terminate_simulation=result[1],\n            nominals_changed=result[2],\n            values_changed=result[3],\n            next_event_time_defined=result[4],\n            next_event_time=result[5],\n        )\n\n    @staticmethod\n    def setup_experiment(fmu, tolerance, start_time, stop_time):\n        # FMI 3.0 passes these to enterInitializationMode instead\n        pass\n\n    @staticmethod\n    def enter_initialization_mode(fmu, tolerance, start_time, stop_time):\n        fmu.enterInitializationMode(tolerance=tolerance, startTime=start_time, stopTime=stop_time)\n\n    @staticmethod\n    def exit_initialization_mode(fmu, mode):\n        result = fmu.exitInitializationMode()\n        # FMI 3.0 Model Exchange returns event info\n        if mode == \"model_exchange\" and hasattr(result, \"nextEventTimeDefined\"):\n            return EventInfo(\n                discrete_states_need_update=bool(\n                    getattr(result, \"discreteStatesNeedUpdate\", False)\n                ),\n                terminate_simulation=bool(getattr(result, \"terminateSimulation\", False)),\n                nominals_changed=bool(getattr(result, \"nominalsOfContinuousStatesChanged\", False)),\n                values_changed=bool(getattr(result, \"valuesOfContinuousStatesChanged\", False)),\n                next_event_time_defined=bool(getattr(result, \"nextEventTimeDefined\", False)),\n                next_event_time=float(getattr(result, \"nextEventTime\", 0.0)),\n            )\n        return None",
+          "bases": [],
+          "methods": [
+            {
+              "name": "set_real",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef set_real(fmu, refs, values):\n    fmu.setFloat64(refs, values)",
+              "signature": "(fmu, refs, values)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "values",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "get_real",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef get_real(fmu, refs):\n    return fmu.getFloat64(refs)",
+              "signature": "(fmu, refs)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "set_integer",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef set_integer(fmu, refs, values):\n    fmu.setInt64(refs, values)",
+              "signature": "(fmu, refs, values)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "values",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "get_integer",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef get_integer(fmu, refs):\n    return fmu.getInt64(refs)",
+              "signature": "(fmu, refs)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "do_step",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef do_step(fmu, current_time, step_size):\n    event, terminate, early, last_time = fmu.doStep(current_time, step_size)\n    return StepResult(\n        event_encountered=event,\n        terminate_simulation=terminate,\n        early_return=early,\n        last_successful_time=last_time,\n    )",
+              "signature": "(fmu, current_time, step_size)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "current_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "step_size",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "get_derivatives",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef get_derivatives(fmu, n_states):\n    if n_states == 0:\n        return np.array([])\n    derivatives = (ctypes.c_double * n_states)()\n    fmu.getContinuousStateDerivatives(derivatives, n_states)\n    return np.array(derivatives)",
+              "signature": "(fmu, n_states)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "n_states",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "update_discrete_states",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef update_discrete_states(fmu):\n    result = fmu.updateDiscreteStates()\n    return EventInfo(\n        discrete_states_need_update=result[0],\n        terminate_simulation=result[1],\n        nominals_changed=result[2],\n        values_changed=result[3],\n        next_event_time_defined=result[4],\n        next_event_time=result[5],\n    )",
+              "signature": "(fmu)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "setup_experiment",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef setup_experiment(fmu, tolerance, start_time, stop_time):\n    # FMI 3.0 passes these to enterInitializationMode instead\n    pass",
+              "signature": "(fmu, tolerance, start_time, stop_time)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "tolerance",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "start_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "stop_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "enter_initialization_mode",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef enter_initialization_mode(fmu, tolerance, start_time, stop_time):\n    fmu.enterInitializationMode(tolerance=tolerance, startTime=start_time, stopTime=stop_time)",
+              "signature": "(fmu, tolerance, start_time, stop_time)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "tolerance",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "start_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "stop_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            },
+            {
+              "name": "exit_initialization_mode",
+              "description": "",
+              "docstring_html": "",
+              "source": "@staticmethod\ndef exit_initialization_mode(fmu, mode):\n    result = fmu.exitInitializationMode()\n    # FMI 3.0 Model Exchange returns event info\n    if mode == \"model_exchange\" and hasattr(result, \"nextEventTimeDefined\"):\n        return EventInfo(\n            discrete_states_need_update=bool(\n                getattr(result, \"discreteStatesNeedUpdate\", False)\n            ),\n            terminate_simulation=bool(getattr(result, \"terminateSimulation\", False)),\n            nominals_changed=bool(getattr(result, \"nominalsOfContinuousStatesChanged\", False)),\n            values_changed=bool(getattr(result, \"valuesOfContinuousStatesChanged\", False)),\n            next_event_time_defined=bool(getattr(result, \"nextEventTimeDefined\", False)),\n            next_event_time=float(getattr(result, \"nextEventTime\", 0.0)),\n        )\n    return None",
+              "signature": "(fmu, mode)",
+              "parameters": [
+                {
+                  "name": "fmu",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "mode",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "staticmethod"
+            }
+          ],
+          "attributes": [],
+          "parameters": []
+        },
+        {
+          "name": "FMUWrapper",
+          "description": "Version-agnostic wrapper for FMI 2.0 and 3.0 FMUs.",
+          "docstring_html": "<p>Version-agnostic wrapper for FMI 2.0 and 3.0 FMUs.</p>\n<p>This class provides a unified interface for working with FMUs regardless of\nFMI version (2.0 or 3.0) or interface type (Co-Simulation or Model Exchange).\nIt handles all version-specific API differences internally.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>fmu_path <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>path to the FMU file (.fmu)</dd>\n<dt>instance_name <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str, optional</span></dt>\n<dd>name for the FMU instance (default: 'fmu_instance')</dd>\n<dt>mode <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str, optional</span></dt>\n<dd>FMU interface mode: 'cosimulation' or 'model_exchange' (default: 'cosimulation')</dd>\n</dl>\n<p><strong>Attributes</strong></p>\n<dl class=\"docutils\">\n<dt>fmu_path <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>path to the FMU file</dd>\n<dt>instance_name <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>name of the FMU instance</dd>\n<dt>mode <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>interface mode ('cosimulation' or 'model_exchange')</dd>\n<dt>model_description <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">ModelDescription</span></dt>\n<dd>FMI model description from FMPy (use this for metadata access)</dd>\n<dt>fmu <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">FMU2Slave | FMU3Slave | FMU2Model | FMU3Model</span></dt>\n<dd>underlying FMPy FMU instance</dd>\n<dt>fmi_version <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>detected FMI version ('2.0' or '3.0')</dd>\n<dt>n_states <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int</span></dt>\n<dd>number of continuous states (Model Exchange only)</dd>\n<dt>n_event_indicators <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int</span></dt>\n<dd>number of event indicators (Model Exchange only)</dd>\n<dt>input_refs <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">dict</span></dt>\n<dd>mapping from input variable names to value references</dd>\n<dt>output_refs <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">dict</span></dt>\n<dd>mapping from output variable names to value references</dd>\n</dl>\n",
+          "source": "class FMUWrapper:\n    \"\"\"Version-agnostic wrapper for FMI 2.0 and 3.0 FMUs.\n\n    This class provides a unified interface for working with FMUs regardless of\n    FMI version (2.0 or 3.0) or interface type (Co-Simulation or Model Exchange).\n    It handles all version-specific API differences internally.\n\n    Parameters\n    ----------\n    fmu_path : str\n        path to the FMU file (.fmu)\n    instance_name : str, optional\n        name for the FMU instance (default: 'fmu_instance')\n    mode : str, optional\n        FMU interface mode: 'cosimulation' or 'model_exchange' (default: 'cosimulation')\n\n    Attributes\n    ----------\n    fmu_path : str\n        path to the FMU file\n    instance_name : str\n        name of the FMU instance\n    mode : str\n        interface mode ('cosimulation' or 'model_exchange')\n    model_description : ModelDescription\n        FMI model description from FMPy (use this for metadata access)\n    fmu : FMU2Slave | FMU3Slave | FMU2Model | FMU3Model\n        underlying FMPy FMU instance\n    fmi_version : str\n        detected FMI version ('2.0' or '3.0')\n    n_states : int\n        number of continuous states (Model Exchange only)\n    n_event_indicators : int\n        number of event indicators (Model Exchange only)\n    input_refs : dict\n        mapping from input variable names to value references\n    output_refs : dict\n        mapping from output variable names to value references\n    \"\"\"\n\n    def __init__(self, fmu_path, instance_name=\"fmu_instance\", mode=\"cosimulation\"):\n\n        # Import FMPy (lazy import to avoid dependency if not used)\n        try:\n            from fmpy import extract, read_model_description\n            from fmpy.fmi2 import FMU2Model, FMU2Slave\n            from fmpy.fmi3 import FMU3Model, FMU3Slave\n        except ImportError:\n            raise ImportError(\"FMPy is required for FMU support. Install with: pip install fmpy\")\n\n        self.fmu_path = fmu_path\n        self.instance_name = instance_name\n        self.mode = mode.lower()\n\n        if self.mode not in [\"cosimulation\", \"model_exchange\"]:\n            raise ValueError(f\"Invalid mode '{mode}'. Must be 'cosimulation' or 'model_exchange'\")\n\n        # Read model description and detect FMI version\n        self.model_description = read_model_description(fmu_path)\n        self.fmi_version = self.model_description.fmiVersion\n\n        # Select version-specific operations\n        self._ops = _FMI2Ops if self.fmi_version.startswith(\"2.\") else _FMI3Ops\n\n        # Extract FMU\n        self.unzipdir = extract(fmu_path)\n\n        # Build variable lookup maps\n        self._build_variable_maps()\n\n        # Get state and event info for Model Exchange\n        if self.mode == \"model_exchange\":\n            self.n_states = self.model_description.numberOfContinuousStates\n            self.n_event_indicators = self.model_description.numberOfEventIndicators\n            self._build_state_derivative_maps()\n        else:\n            self.n_states = 0\n            self.n_event_indicators = 0\n            self._state_refs = []\n            self._derivative_refs = []\n\n        # Instantiate appropriate FMU class based on version and mode\n        self.fmu = self._create_fmu_instance(FMU2Slave, FMU2Model, FMU3Slave, FMU3Model)\n\n    def _create_fmu_instance(self, FMU2Slave, FMU2Model, FMU3Slave, FMU3Model):\n        \"\"\"Create the appropriate FMU instance based on version and mode.\"\"\"\n        md = self.model_description\n\n        if self.fmi_version.startswith(\"2.\"):\n            if self.mode == \"cosimulation\":\n                return FMU2Slave(\n                    guid=md.guid,\n                    unzipDirectory=self.unzipdir,\n                    modelIdentifier=md.coSimulation.modelIdentifier,\n                    instanceName=self.instance_name,\n                )\n            else:\n                return FMU2Model(\n                    guid=md.guid,\n                    unzipDirectory=self.unzipdir,\n                    modelIdentifier=md.modelExchange.modelIdentifier,\n                    instanceName=self.instance_name,\n                )\n        elif self.fmi_version.startswith(\"3.\"):\n            if self.mode == \"cosimulation\":\n                return FMU3Slave(\n                    guid=md.guid,\n                    unzipDirectory=self.unzipdir,\n                    modelIdentifier=md.coSimulation.modelIdentifier,\n                    instanceName=self.instance_name,\n                )\n            else:\n                return FMU3Model(\n                    guid=md.guid,\n                    unzipDirectory=self.unzipdir,\n                    modelIdentifier=md.modelExchange.modelIdentifier,\n                    instanceName=self.instance_name,\n                )\n        else:\n            raise ValueError(f\"Unsupported FMI version: {self.fmi_version}\")\n\n    def _build_variable_maps(self):\n        \"\"\"Build internal variable name to reference mappings.\"\"\"\n        self.variable_map = {var.name: var for var in self.model_description.modelVariables}\n        self.input_refs = {}\n        self.output_refs = {}\n\n        for variable in self.model_description.modelVariables:\n            if variable.causality == \"input\":\n                self.input_refs[variable.name] = variable.valueReference\n            elif variable.causality == \"output\":\n                self.output_refs[variable.name] = variable.valueReference\n\n    def _build_state_derivative_maps(self):\n        \"\"\"Build state and derivative value reference lists (Model Exchange only).\n\n        In FMI, state variables have a 'derivative' attribute pointing to their\n        derivative variable. This method extracts the ordered lists of value\n        references needed for Jacobian computation via directional derivatives.\n        \"\"\"\n        self._state_refs = []\n        self._derivative_refs = []\n\n        for var in self.model_description.modelVariables:\n            if var.derivative is not None:\n                # This variable is a state (it has a derivative)\n                self._state_refs.append(var.valueReference)\n                self._derivative_refs.append(var.derivative.valueReference)\n\n    # ===================================================================================\n    # CONVENIENCE METHODS FOR BLOCK INITIALIZATION\n    # ===================================================================================\n\n    def create_port_registers(self) -> Tuple[Register, Register]:\n        \"\"\"Create input and output registers for block I/O.\n\n        Returns\n        -------\n        inputs : Register\n            input register with FMU input variable names as labels\n        outputs : Register\n            output register with FMU output variable names as labels\n        \"\"\"\n        port_map_in = {name: idx for idx, name in enumerate(self.input_refs.keys())}\n        port_map_out = {name: idx for idx, name in enumerate(self.output_refs.keys())}\n\n        inputs = Register(size=len(port_map_in), mapping=port_map_in)\n        outputs = Register(size=len(port_map_out), mapping=port_map_out)\n\n        return inputs, outputs\n\n    def initialize(\n        self, start_values=None, start_time=0.0, stop_time=None, tolerance=None\n    ) -> Optional[EventInfo]:\n        \"\"\"Complete FMU initialization sequence.\n\n        Performs: instantiate -> setup_experiment -> enter_initialization_mode\n        -> set start values -> exit_initialization_mode\n\n        Parameters\n        ----------\n        start_values : dict, optional\n            dictionary of variable names and their initial values\n        start_time : float, optional\n            simulation start time (default: 0.0)\n        stop_time : float, optional\n            simulation stop time\n        tolerance : float, optional\n            tolerance for integration/event detection\n\n        Returns\n        -------\n        event_info : EventInfo or None\n            event information for FMI 3.0 Model Exchange, None otherwise\n        \"\"\"\n        self.instantiate()\n        self.setup_experiment(tolerance=tolerance, start_time=start_time, stop_time=stop_time)\n        self.enter_initialization_mode()\n\n        if start_values:\n            for name, value in start_values.items():\n                self.set_variable(name, value)\n\n        return self.exit_initialization_mode()\n\n    @property\n    def default_step_size(self) -> Optional[float]:\n        \"\"\"Get default step size from FMU's default experiment, if defined.\"\"\"\n        de = self.model_description.defaultExperiment\n        if de is not None:\n            return getattr(de, \"stepSize\", None)\n        return None\n\n    @property\n    def default_tolerance(self) -> Optional[float]:\n        \"\"\"Get default tolerance from FMU's default experiment, if defined.\"\"\"\n        de = self.model_description.defaultExperiment\n        if de is not None:\n            return getattr(de, \"tolerance\", None)\n        return None\n\n    @property\n    def needs_completed_integrator_step(self) -> bool:\n        \"\"\"Check if FMU requires completedIntegratorStep notifications (Model Exchange only).\"\"\"\n        if self.mode != \"model_exchange\":\n            return False\n        me = self.model_description.modelExchange\n        return not getattr(me, \"completedIntegratorStepNotNeeded\", False)\n\n    @property\n    def provides_jacobian(self) -> bool:\n        \"\"\"Check if FMU provides directional derivatives for Jacobian computation.\"\"\"\n        if self.mode == \"model_exchange\":\n            me = self.model_description.modelExchange\n            return getattr(me, \"providesDirectionalDerivative\", False)\n        elif self.mode == \"cosimulation\":\n            cs = self.model_description.coSimulation\n            return getattr(cs, \"providesDirectionalDerivative\", False)\n        return False\n\n    def get_state_jacobian(self):\n        \"\"\"Compute Jacobian of state derivatives w.r.t. states (Model Exchange only).\n\n        Uses FMU's directional derivative capability to compute ∂ẋ/∂x.\n        Requires the FMU to have providesDirectionalDerivative=true.\n\n        Returns\n        -------\n        jacobian : np.ndarray\n            n_states x n_states Jacobian matrix, or None if not supported\n        \"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\"get_state_jacobian() is only available for Model Exchange FMUs\")\n\n        if not self.provides_jacobian:\n            return None\n\n        if self.n_states == 0:\n            return np.array([]).reshape(0, 0)\n\n        # Build Jacobian column by column using directional derivatives\n        jacobian = np.zeros((self.n_states, self.n_states))\n        seed = np.zeros(self.n_states)\n\n        for j in range(self.n_states):\n            seed[j] = 1.0\n            col = self.fmu.getDirectionalDerivative(\n                self._derivative_refs, self._state_refs, seed.tolist()\n            )\n            jacobian[:, j] = col\n            seed[j] = 0.0\n\n        return jacobian\n\n    # ===================================================================================\n    # FMU LIFECYCLE METHODS\n    # ===================================================================================\n\n    def instantiate(self, visible=False, logging_on=False):\n        \"\"\"Instantiate the FMU.\"\"\"\n        self.fmu.instantiate(visible=visible, loggingOn=logging_on)\n\n    def setup_experiment(self, tolerance=None, start_time=0.0, stop_time=None):\n        \"\"\"Setup experiment parameters.\"\"\"\n        self._tolerance = tolerance\n        self._start_time = start_time\n        self._stop_time = stop_time\n        self._ops.setup_experiment(self.fmu, tolerance, start_time, stop_time)\n\n    def enter_initialization_mode(self):\n        \"\"\"Enter initialization mode.\"\"\"\n        self._ops.enter_initialization_mode(\n            self.fmu, self._tolerance, self._start_time, self._stop_time\n        )\n\n    def exit_initialization_mode(self) -> Optional[EventInfo]:\n        \"\"\"Exit initialization mode and return event information.\"\"\"\n        return self._ops.exit_initialization_mode(self.fmu, self.mode)\n\n    def reset(self):\n        \"\"\"Reset FMU to initial state.\"\"\"\n        self.fmu.reset()\n\n    def terminate(self):\n        \"\"\"Terminate FMU.\"\"\"\n        self.fmu.terminate()\n\n    def free_instance(self):\n        \"\"\"Free FMU instance and resources.\"\"\"\n        self.fmu.freeInstance()\n\n    # ===================================================================================\n    # VARIABLE ACCESS METHODS\n    # ===================================================================================\n\n    def set_real(self, refs, values):\n        \"\"\"Set real-valued variables by reference.\"\"\"\n        values = np.atleast_1d(values)\n        self._ops.set_real(self.fmu, refs, values)\n\n    def get_real(self, refs):\n        \"\"\"Get real-valued variables by reference.\"\"\"\n        return np.array(self._ops.get_real(self.fmu, refs))\n\n    def set_variable(self, name, value):\n        \"\"\"Set a single variable by name (automatically detects type).\"\"\"\n        variable = self.variable_map.get(name)\n        if variable is None:\n            raise ValueError(f\"Variable '{name}' not found in FMU\")\n\n        vr = variable.valueReference\n        var_type = variable.type\n\n        if var_type in [\"Real\", \"Float64\", \"Float32\"]:\n            self._ops.set_real(self.fmu, [vr], [float(value)])\n        elif var_type in [\"Integer\", \"Int64\", \"Int32\", \"Int16\", \"Int8\"]:\n            self._ops.set_integer(self.fmu, [vr], [int(value)])\n        elif var_type == \"Boolean\":\n            self.fmu.setBoolean([vr], [bool(value)])\n        else:\n            raise ValueError(f\"Unsupported variable type: {var_type}\")\n\n    def set_inputs_from_array(self, values):\n        \"\"\"Set all FMU inputs from an array.\"\"\"\n        if len(self.input_refs) > 0:\n            input_vrefs = list(self.input_refs.values())\n            self.set_real(input_vrefs, values)\n\n    def get_outputs_as_array(self):\n        \"\"\"Get all FMU outputs as an array.\"\"\"\n        if len(self.output_refs) == 0:\n            return np.array([])\n        output_vrefs = list(self.output_refs.values())\n        return self.get_real(output_vrefs)\n\n    # ===================================================================================\n    # CO-SIMULATION METHODS\n    # ===================================================================================\n\n    def do_step(self, current_time, step_size) -> StepResult:\n        \"\"\"Perform a co-simulation step.\"\"\"\n        if self.mode != \"cosimulation\":\n            raise RuntimeError(\"do_step() is only available for Co-Simulation FMUs\")\n        return self._ops.do_step(self.fmu, current_time, step_size)\n\n    # ===================================================================================\n    # MODEL EXCHANGE METHODS\n    # ===================================================================================\n\n    def set_time(self, time):\n        \"\"\"Set current time (Model Exchange only).\"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\"set_time() is only available for Model Exchange FMUs\")\n        self.fmu.setTime(time)\n\n    def set_continuous_states(self, states):\n        \"\"\"Set continuous states (Model Exchange only).\"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\"set_continuous_states() is only available for Model Exchange FMUs\")\n        if self.n_states == 0:\n            return\n        states = np.atleast_1d(states)\n        x_ctypes = (ctypes.c_double * self.n_states)(*states)\n        self.fmu.setContinuousStates(x_ctypes, self.n_states)\n\n    def get_continuous_states(self):\n        \"\"\"Get continuous states (Model Exchange only).\"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\"get_continuous_states() is only available for Model Exchange FMUs\")\n        if self.n_states == 0:\n            return np.array([])\n        states = (ctypes.c_double * self.n_states)()\n        self.fmu.getContinuousStates(states, self.n_states)\n        return np.array(states)\n\n    def get_derivatives(self):\n        \"\"\"Get state derivatives (Model Exchange only).\"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\"get_derivatives() is only available for Model Exchange FMUs\")\n        return self._ops.get_derivatives(self.fmu, self.n_states)\n\n    def get_event_indicators(self):\n        \"\"\"Get event indicators (Model Exchange only).\"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\"get_event_indicators() is only available for Model Exchange FMUs\")\n        if self.n_event_indicators == 0:\n            return np.array([])\n        indicators = (ctypes.c_double * self.n_event_indicators)()\n        self.fmu.getEventIndicators(indicators, self.n_event_indicators)\n        return np.array(indicators)\n\n    def enter_event_mode(self):\n        \"\"\"Enter event mode (Model Exchange only).\"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\"enter_event_mode() is only available for Model Exchange FMUs\")\n        self.fmu.enterEventMode()\n\n    def enter_continuous_time_mode(self):\n        \"\"\"Enter continuous time mode (Model Exchange only).\"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\n                \"enter_continuous_time_mode() is only available for Model Exchange FMUs\"\n            )\n        self.fmu.enterContinuousTimeMode()\n\n    def update_discrete_states(self) -> EventInfo:\n        \"\"\"Update discrete states during event iteration (Model Exchange only).\"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\"update_discrete_states() is only available for Model Exchange FMUs\")\n        return self._ops.update_discrete_states(self.fmu)\n\n    def completed_integrator_step(self) -> Tuple[bool, bool]:\n        \"\"\"Notify FMU that integrator step completed (Model Exchange only).\n\n        Returns\n        -------\n        enter_event_mode : bool\n            whether FMU requests event mode\n        terminate_simulation : bool\n            whether FMU requests simulation termination\n        \"\"\"\n        if self.mode != \"model_exchange\":\n            raise RuntimeError(\n                \"completed_integrator_step() is only available for Model Exchange FMUs\"\n            )\n        return self.fmu.completedIntegratorStep()\n\n    def __del__(self):\n        \"\"\"Cleanup FMU resources on deletion.\"\"\"\n        try:\n            self.terminate()\n            self.free_instance()\n        except Exception:\n            # Best-effort cleanup; the FMU may already be torn down.\n            pass",
+          "bases": [],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, fmu_path, instance_name=\"fmu_instance\", mode=\"cosimulation\"):\n\n    # Import FMPy (lazy import to avoid dependency if not used)\n    try:\n        from fmpy import extract, read_model_description\n        from fmpy.fmi2 import FMU2Model, FMU2Slave\n        from fmpy.fmi3 import FMU3Model, FMU3Slave\n    except ImportError:\n        raise ImportError(\"FMPy is required for FMU support. Install with: pip install fmpy\")\n\n    self.fmu_path = fmu_path\n    self.instance_name = instance_name\n    self.mode = mode.lower()\n\n    if self.mode not in [\"cosimulation\", \"model_exchange\"]:\n        raise ValueError(f\"Invalid mode '{mode}'. Must be 'cosimulation' or 'model_exchange'\")\n\n    # Read model description and detect FMI version\n    self.model_description = read_model_description(fmu_path)\n    self.fmi_version = self.model_description.fmiVersion\n\n    # Select version-specific operations\n    self._ops = _FMI2Ops if self.fmi_version.startswith(\"2.\") else _FMI3Ops\n\n    # Extract FMU\n    self.unzipdir = extract(fmu_path)\n\n    # Build variable lookup maps\n    self._build_variable_maps()\n\n    # Get state and event info for Model Exchange\n    if self.mode == \"model_exchange\":\n        self.n_states = self.model_description.numberOfContinuousStates\n        self.n_event_indicators = self.model_description.numberOfEventIndicators\n        self._build_state_derivative_maps()\n    else:\n        self.n_states = 0\n        self.n_event_indicators = 0\n        self._state_refs = []\n        self._derivative_refs = []\n\n    # Instantiate appropriate FMU class based on version and mode\n    self.fmu = self._create_fmu_instance(FMU2Slave, FMU2Model, FMU3Slave, FMU3Model)",
+              "signature": "(fmu_path, instance_name = 'fmu_instance', mode = 'cosimulation')",
+              "parameters": [
+                {
+                  "name": "fmu_path",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "instance_name",
+                  "type": null,
+                  "default": "'fmu_instance'",
+                  "description": ""
+                },
+                {
+                  "name": "mode",
+                  "type": null,
+                  "default": "'cosimulation'",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_create_fmu_instance",
+              "description": "Create the appropriate FMU instance based on version and mode.",
+              "docstring_html": "<p>Create the appropriate FMU instance based on version and mode.</p>\n",
+              "source": "def _create_fmu_instance(self, FMU2Slave, FMU2Model, FMU3Slave, FMU3Model):\n    \"\"\"Create the appropriate FMU instance based on version and mode.\"\"\"\n    md = self.model_description\n\n    if self.fmi_version.startswith(\"2.\"):\n        if self.mode == \"cosimulation\":\n            return FMU2Slave(\n                guid=md.guid,\n                unzipDirectory=self.unzipdir,\n                modelIdentifier=md.coSimulation.modelIdentifier,\n                instanceName=self.instance_name,\n            )\n        else:\n            return FMU2Model(\n                guid=md.guid,\n                unzipDirectory=self.unzipdir,\n                modelIdentifier=md.modelExchange.modelIdentifier,\n                instanceName=self.instance_name,\n            )\n    elif self.fmi_version.startswith(\"3.\"):\n        if self.mode == \"cosimulation\":\n            return FMU3Slave(\n                guid=md.guid,\n                unzipDirectory=self.unzipdir,\n                modelIdentifier=md.coSimulation.modelIdentifier,\n                instanceName=self.instance_name,\n            )\n        else:\n            return FMU3Model(\n                guid=md.guid,\n                unzipDirectory=self.unzipdir,\n                modelIdentifier=md.modelExchange.modelIdentifier,\n                instanceName=self.instance_name,\n            )\n    else:\n        raise ValueError(f\"Unsupported FMI version: {self.fmi_version}\")",
+              "signature": "(FMU2Slave, FMU2Model, FMU3Slave, FMU3Model)",
+              "parameters": [
+                {
+                  "name": "FMU2Slave",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "FMU2Model",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "FMU3Slave",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "FMU3Model",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_build_variable_maps",
+              "description": "Build internal variable name to reference mappings.",
+              "docstring_html": "<p>Build internal variable name to reference mappings.</p>\n",
+              "source": "def _build_variable_maps(self):\n    \"\"\"Build internal variable name to reference mappings.\"\"\"\n    self.variable_map = {var.name: var for var in self.model_description.modelVariables}\n    self.input_refs = {}\n    self.output_refs = {}\n\n    for variable in self.model_description.modelVariables:\n        if variable.causality == \"input\":\n            self.input_refs[variable.name] = variable.valueReference\n        elif variable.causality == \"output\":\n            self.output_refs[variable.name] = variable.valueReference",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_build_state_derivative_maps",
+              "description": "Build state and derivative value reference lists (Model Exchange only).",
+              "docstring_html": "<p>Build state and derivative value reference lists (Model Exchange only).</p>\n<p>In FMI, state variables have a 'derivative' attribute pointing to their\nderivative variable. This method extracts the ordered lists of value\nreferences needed for Jacobian computation via directional derivatives.</p>\n",
+              "source": "def _build_state_derivative_maps(self):\n    \"\"\"Build state and derivative value reference lists (Model Exchange only).\n\n    In FMI, state variables have a 'derivative' attribute pointing to their\n    derivative variable. This method extracts the ordered lists of value\n    references needed for Jacobian computation via directional derivatives.\n    \"\"\"\n    self._state_refs = []\n    self._derivative_refs = []\n\n    for var in self.model_description.modelVariables:\n        if var.derivative is not None:\n            # This variable is a state (it has a derivative)\n            self._state_refs.append(var.valueReference)\n            self._derivative_refs.append(var.derivative.valueReference)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "create_port_registers",
+              "description": "Create input and output registers for block I/O.",
+              "docstring_html": "<p>Create input and output registers for block I/O.</p>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>inputs <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">Register</span></dt>\n<dd>input register with FMU input variable names as labels</dd>\n<dt>outputs <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">Register</span></dt>\n<dd>output register with FMU output variable names as labels</dd>\n</dl>\n",
+              "source": "def create_port_registers(self) -> Tuple[Register, Register]:\n    \"\"\"Create input and output registers for block I/O.\n\n    Returns\n    -------\n    inputs : Register\n        input register with FMU input variable names as labels\n    outputs : Register\n        output register with FMU output variable names as labels\n    \"\"\"\n    port_map_in = {name: idx for idx, name in enumerate(self.input_refs.keys())}\n    port_map_out = {name: idx for idx, name in enumerate(self.output_refs.keys())}\n\n    inputs = Register(size=len(port_map_in), mapping=port_map_in)\n    outputs = Register(size=len(port_map_out), mapping=port_map_out)\n\n    return inputs, outputs",
+              "signature": "()",
+              "parameters": [],
+              "returns": "Tuple[Register, Register]",
+              "method_type": "method"
+            },
+            {
+              "name": "initialize",
+              "description": "Complete FMU initialization sequence.",
+              "docstring_html": "<p>Complete FMU initialization sequence.</p>\n<p>Performs: instantiate -&gt; setup_experiment -&gt; enter_initialization_mode\n-&gt; set start values -&gt; exit_initialization_mode</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>start_values <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">dict, optional</span></dt>\n<dd>dictionary of variable names and their initial values</dd>\n<dt>start_time <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>simulation start time (default: 0.0)</dd>\n<dt>stop_time <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>simulation stop time</dd>\n<dt>tolerance <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>tolerance for integration/event detection</dd>\n</dl>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>event_info <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">EventInfo or None</span></dt>\n<dd>event information for FMI 3.0 Model Exchange, None otherwise</dd>\n</dl>\n",
+              "source": "def initialize(\n    self, start_values=None, start_time=0.0, stop_time=None, tolerance=None\n) -> Optional[EventInfo]:\n    \"\"\"Complete FMU initialization sequence.\n\n    Performs: instantiate -> setup_experiment -> enter_initialization_mode\n    -> set start values -> exit_initialization_mode\n\n    Parameters\n    ----------\n    start_values : dict, optional\n        dictionary of variable names and their initial values\n    start_time : float, optional\n        simulation start time (default: 0.0)\n    stop_time : float, optional\n        simulation stop time\n    tolerance : float, optional\n        tolerance for integration/event detection\n\n    Returns\n    -------\n    event_info : EventInfo or None\n        event information for FMI 3.0 Model Exchange, None otherwise\n    \"\"\"\n    self.instantiate()\n    self.setup_experiment(tolerance=tolerance, start_time=start_time, stop_time=stop_time)\n    self.enter_initialization_mode()\n\n    if start_values:\n        for name, value in start_values.items():\n            self.set_variable(name, value)\n\n    return self.exit_initialization_mode()",
+              "signature": "(start_values = None, start_time = 0.0, stop_time = None, tolerance = None)",
+              "parameters": [
+                {
+                  "name": "start_values",
+                  "type": null,
+                  "default": "None",
+                  "description": "dictionary of variable names and their initial values"
+                },
+                {
+                  "name": "start_time",
+                  "type": null,
+                  "default": "0.0",
+                  "description": "simulation start time (default: 0.0)"
+                },
+                {
+                  "name": "stop_time",
+                  "type": null,
+                  "default": "None",
+                  "description": "simulation stop time"
+                },
+                {
+                  "name": "tolerance",
+                  "type": null,
+                  "default": "None",
+                  "description": "tolerance for integration/event detection"
+                }
+              ],
+              "returns": "Optional[EventInfo]",
+              "method_type": "method"
+            },
+            {
+              "name": "get_state_jacobian",
+              "description": "Compute Jacobian of state derivatives w.r.t. states (Model Exchange only).",
+              "docstring_html": "<p>Compute Jacobian of state derivatives w.r.t. states (Model Exchange only).</p>\n<p>Uses FMU's directional derivative capability to compute ∂ẋ/∂x.\nRequires the FMU to have providesDirectionalDerivative=true.</p>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>jacobian <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">np.ndarray</span></dt>\n<dd>n_states x n_states Jacobian matrix, or None if not supported</dd>\n</dl>\n",
+              "source": "def get_state_jacobian(self):\n    \"\"\"Compute Jacobian of state derivatives w.r.t. states (Model Exchange only).\n\n    Uses FMU's directional derivative capability to compute ∂ẋ/∂x.\n    Requires the FMU to have providesDirectionalDerivative=true.\n\n    Returns\n    -------\n    jacobian : np.ndarray\n        n_states x n_states Jacobian matrix, or None if not supported\n    \"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\"get_state_jacobian() is only available for Model Exchange FMUs\")\n\n    if not self.provides_jacobian:\n        return None\n\n    if self.n_states == 0:\n        return np.array([]).reshape(0, 0)\n\n    # Build Jacobian column by column using directional derivatives\n    jacobian = np.zeros((self.n_states, self.n_states))\n    seed = np.zeros(self.n_states)\n\n    for j in range(self.n_states):\n        seed[j] = 1.0\n        col = self.fmu.getDirectionalDerivative(\n            self._derivative_refs, self._state_refs, seed.tolist()\n        )\n        jacobian[:, j] = col\n        seed[j] = 0.0\n\n    return jacobian",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "instantiate",
+              "description": "Instantiate the FMU.",
+              "docstring_html": "<p>Instantiate the FMU.</p>\n",
+              "source": "def instantiate(self, visible=False, logging_on=False):\n    \"\"\"Instantiate the FMU.\"\"\"\n    self.fmu.instantiate(visible=visible, loggingOn=logging_on)",
+              "signature": "(visible = False, logging_on = False)",
+              "parameters": [
+                {
+                  "name": "visible",
+                  "type": null,
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "logging_on",
+                  "type": null,
+                  "default": "False",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "setup_experiment",
+              "description": "Setup experiment parameters.",
+              "docstring_html": "<p>Setup experiment parameters.</p>\n",
+              "source": "def setup_experiment(self, tolerance=None, start_time=0.0, stop_time=None):\n    \"\"\"Setup experiment parameters.\"\"\"\n    self._tolerance = tolerance\n    self._start_time = start_time\n    self._stop_time = stop_time\n    self._ops.setup_experiment(self.fmu, tolerance, start_time, stop_time)",
+              "signature": "(tolerance = None, start_time = 0.0, stop_time = None)",
+              "parameters": [
+                {
+                  "name": "tolerance",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "start_time",
+                  "type": null,
+                  "default": "0.0",
+                  "description": ""
+                },
+                {
+                  "name": "stop_time",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "enter_initialization_mode",
+              "description": "Enter initialization mode.",
+              "docstring_html": "<p>Enter initialization mode.</p>\n",
+              "source": "def enter_initialization_mode(self):\n    \"\"\"Enter initialization mode.\"\"\"\n    self._ops.enter_initialization_mode(\n        self.fmu, self._tolerance, self._start_time, self._stop_time\n    )",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "exit_initialization_mode",
+              "description": "Exit initialization mode and return event information.",
+              "docstring_html": "<p>Exit initialization mode and return event information.</p>\n",
+              "source": "def exit_initialization_mode(self) -> Optional[EventInfo]:\n    \"\"\"Exit initialization mode and return event information.\"\"\"\n    return self._ops.exit_initialization_mode(self.fmu, self.mode)",
+              "signature": "()",
+              "parameters": [],
+              "returns": "Optional[EventInfo]",
+              "method_type": "method"
+            },
+            {
+              "name": "reset",
+              "description": "Reset FMU to initial state.",
+              "docstring_html": "<p>Reset FMU to initial state.</p>\n",
+              "source": "def reset(self):\n    \"\"\"Reset FMU to initial state.\"\"\"\n    self.fmu.reset()",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "terminate",
+              "description": "Terminate FMU.",
+              "docstring_html": "<p>Terminate FMU.</p>\n",
+              "source": "def terminate(self):\n    \"\"\"Terminate FMU.\"\"\"\n    self.fmu.terminate()",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "free_instance",
+              "description": "Free FMU instance and resources.",
+              "docstring_html": "<p>Free FMU instance and resources.</p>\n",
+              "source": "def free_instance(self):\n    \"\"\"Free FMU instance and resources.\"\"\"\n    self.fmu.freeInstance()",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "set_real",
+              "description": "Set real-valued variables by reference.",
+              "docstring_html": "<p>Set real-valued variables by reference.</p>\n",
+              "source": "def set_real(self, refs, values):\n    \"\"\"Set real-valued variables by reference.\"\"\"\n    values = np.atleast_1d(values)\n    self._ops.set_real(self.fmu, refs, values)",
+              "signature": "(refs, values)",
+              "parameters": [
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "values",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "get_real",
+              "description": "Get real-valued variables by reference.",
+              "docstring_html": "<p>Get real-valued variables by reference.</p>\n",
+              "source": "def get_real(self, refs):\n    \"\"\"Get real-valued variables by reference.\"\"\"\n    return np.array(self._ops.get_real(self.fmu, refs))",
+              "signature": "(refs)",
+              "parameters": [
+                {
+                  "name": "refs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "set_variable",
+              "description": "Set a single variable by name (automatically detects type).",
+              "docstring_html": "<p>Set a single variable by name (automatically detects type).</p>\n",
+              "source": "def set_variable(self, name, value):\n    \"\"\"Set a single variable by name (automatically detects type).\"\"\"\n    variable = self.variable_map.get(name)\n    if variable is None:\n        raise ValueError(f\"Variable '{name}' not found in FMU\")\n\n    vr = variable.valueReference\n    var_type = variable.type\n\n    if var_type in [\"Real\", \"Float64\", \"Float32\"]:\n        self._ops.set_real(self.fmu, [vr], [float(value)])\n    elif var_type in [\"Integer\", \"Int64\", \"Int32\", \"Int16\", \"Int8\"]:\n        self._ops.set_integer(self.fmu, [vr], [int(value)])\n    elif var_type == \"Boolean\":\n        self.fmu.setBoolean([vr], [bool(value)])\n    else:\n        raise ValueError(f\"Unsupported variable type: {var_type}\")",
+              "signature": "(name, value)",
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "value",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "set_inputs_from_array",
+              "description": "Set all FMU inputs from an array.",
+              "docstring_html": "<p>Set all FMU inputs from an array.</p>\n",
+              "source": "def set_inputs_from_array(self, values):\n    \"\"\"Set all FMU inputs from an array.\"\"\"\n    if len(self.input_refs) > 0:\n        input_vrefs = list(self.input_refs.values())\n        self.set_real(input_vrefs, values)",
+              "signature": "(values)",
+              "parameters": [
+                {
+                  "name": "values",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "get_outputs_as_array",
+              "description": "Get all FMU outputs as an array.",
+              "docstring_html": "<p>Get all FMU outputs as an array.</p>\n",
+              "source": "def get_outputs_as_array(self):\n    \"\"\"Get all FMU outputs as an array.\"\"\"\n    if len(self.output_refs) == 0:\n        return np.array([])\n    output_vrefs = list(self.output_refs.values())\n    return self.get_real(output_vrefs)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "do_step",
+              "description": "Perform a co-simulation step.",
+              "docstring_html": "<p>Perform a co-simulation step.</p>\n",
+              "source": "def do_step(self, current_time, step_size) -> StepResult:\n    \"\"\"Perform a co-simulation step.\"\"\"\n    if self.mode != \"cosimulation\":\n        raise RuntimeError(\"do_step() is only available for Co-Simulation FMUs\")\n    return self._ops.do_step(self.fmu, current_time, step_size)",
+              "signature": "(current_time, step_size)",
+              "parameters": [
+                {
+                  "name": "current_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "step_size",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": "StepResult",
+              "method_type": "method"
+            },
+            {
+              "name": "set_time",
+              "description": "Set current time (Model Exchange only).",
+              "docstring_html": "<p>Set current time (Model Exchange only).</p>\n",
+              "source": "def set_time(self, time):\n    \"\"\"Set current time (Model Exchange only).\"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\"set_time() is only available for Model Exchange FMUs\")\n    self.fmu.setTime(time)",
+              "signature": "(time)",
+              "parameters": [
+                {
+                  "name": "time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "set_continuous_states",
+              "description": "Set continuous states (Model Exchange only).",
+              "docstring_html": "<p>Set continuous states (Model Exchange only).</p>\n",
+              "source": "def set_continuous_states(self, states):\n    \"\"\"Set continuous states (Model Exchange only).\"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\"set_continuous_states() is only available for Model Exchange FMUs\")\n    if self.n_states == 0:\n        return\n    states = np.atleast_1d(states)\n    x_ctypes = (ctypes.c_double * self.n_states)(*states)\n    self.fmu.setContinuousStates(x_ctypes, self.n_states)",
+              "signature": "(states)",
+              "parameters": [
+                {
+                  "name": "states",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "get_continuous_states",
+              "description": "Get continuous states (Model Exchange only).",
+              "docstring_html": "<p>Get continuous states (Model Exchange only).</p>\n",
+              "source": "def get_continuous_states(self):\n    \"\"\"Get continuous states (Model Exchange only).\"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\"get_continuous_states() is only available for Model Exchange FMUs\")\n    if self.n_states == 0:\n        return np.array([])\n    states = (ctypes.c_double * self.n_states)()\n    self.fmu.getContinuousStates(states, self.n_states)\n    return np.array(states)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "get_derivatives",
+              "description": "Get state derivatives (Model Exchange only).",
+              "docstring_html": "<p>Get state derivatives (Model Exchange only).</p>\n",
+              "source": "def get_derivatives(self):\n    \"\"\"Get state derivatives (Model Exchange only).\"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\"get_derivatives() is only available for Model Exchange FMUs\")\n    return self._ops.get_derivatives(self.fmu, self.n_states)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "get_event_indicators",
+              "description": "Get event indicators (Model Exchange only).",
+              "docstring_html": "<p>Get event indicators (Model Exchange only).</p>\n",
+              "source": "def get_event_indicators(self):\n    \"\"\"Get event indicators (Model Exchange only).\"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\"get_event_indicators() is only available for Model Exchange FMUs\")\n    if self.n_event_indicators == 0:\n        return np.array([])\n    indicators = (ctypes.c_double * self.n_event_indicators)()\n    self.fmu.getEventIndicators(indicators, self.n_event_indicators)\n    return np.array(indicators)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "enter_event_mode",
+              "description": "Enter event mode (Model Exchange only).",
+              "docstring_html": "<p>Enter event mode (Model Exchange only).</p>\n",
+              "source": "def enter_event_mode(self):\n    \"\"\"Enter event mode (Model Exchange only).\"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\"enter_event_mode() is only available for Model Exchange FMUs\")\n    self.fmu.enterEventMode()",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "enter_continuous_time_mode",
+              "description": "Enter continuous time mode (Model Exchange only).",
+              "docstring_html": "<p>Enter continuous time mode (Model Exchange only).</p>\n",
+              "source": "def enter_continuous_time_mode(self):\n    \"\"\"Enter continuous time mode (Model Exchange only).\"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\n            \"enter_continuous_time_mode() is only available for Model Exchange FMUs\"\n        )\n    self.fmu.enterContinuousTimeMode()",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "update_discrete_states",
+              "description": "Update discrete states during event iteration (Model Exchange only).",
+              "docstring_html": "<p>Update discrete states during event iteration (Model Exchange only).</p>\n",
+              "source": "def update_discrete_states(self) -> EventInfo:\n    \"\"\"Update discrete states during event iteration (Model Exchange only).\"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\"update_discrete_states() is only available for Model Exchange FMUs\")\n    return self._ops.update_discrete_states(self.fmu)",
+              "signature": "()",
+              "parameters": [],
+              "returns": "EventInfo",
+              "method_type": "method"
+            },
+            {
+              "name": "completed_integrator_step",
+              "description": "Notify FMU that integrator step completed (Model Exchange only).",
+              "docstring_html": "<p>Notify FMU that integrator step completed (Model Exchange only).</p>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>enter_event_mode <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether FMU requests event mode</dd>\n<dt>terminate_simulation <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>whether FMU requests simulation termination</dd>\n</dl>\n",
+              "source": "def completed_integrator_step(self) -> Tuple[bool, bool]:\n    \"\"\"Notify FMU that integrator step completed (Model Exchange only).\n\n    Returns\n    -------\n    enter_event_mode : bool\n        whether FMU requests event mode\n    terminate_simulation : bool\n        whether FMU requests simulation termination\n    \"\"\"\n    if self.mode != \"model_exchange\":\n        raise RuntimeError(\n            \"completed_integrator_step() is only available for Model Exchange FMUs\"\n        )\n    return self.fmu.completedIntegratorStep()",
+              "signature": "()",
+              "parameters": [],
+              "returns": "Tuple[bool, bool]",
+              "method_type": "method"
+            },
+            {
+              "name": "__del__",
+              "description": "Cleanup FMU resources on deletion.",
+              "docstring_html": "<p>Cleanup FMU resources on deletion.</p>\n",
+              "source": "def __del__(self):\n    \"\"\"Cleanup FMU resources on deletion.\"\"\"\n    try:\n        self.terminate()\n        self.free_instance()\n    except Exception:\n        # Best-effort cleanup; the FMU may already be torn down.\n        pass",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "fmu_path",
+              "description": "",
+              "type": null,
+              "value": "fmu_path"
+            },
+            {
+              "name": "instance_name",
+              "description": "",
+              "type": null,
+              "value": "instance_name"
+            },
+            {
+              "name": "mode",
+              "description": "",
+              "type": null,
+              "value": "mode.lower()"
+            },
+            {
+              "name": "model_description",
+              "description": "",
+              "type": null,
+              "value": "read_model_description(fmu_path)"
+            },
+            {
+              "name": "fmi_version",
+              "description": "",
+              "type": null,
+              "value": "self.model_description.fmiVersion"
+            },
+            {
+              "name": "_ops",
+              "description": "",
+              "type": null,
+              "value": "_FMI2Ops if self.fmi_version.startswith('2.') else _FMI3Ops"
+            },
+            {
+              "name": "unzipdir",
+              "description": "",
+              "type": null,
+              "value": "extract(fmu_path)"
+            },
+            {
+              "name": "n_states",
+              "description": "",
+              "type": null,
+              "value": "self.model_description.numberOfContinuousStates"
+            },
+            {
+              "name": "n_event_indicators",
+              "description": "",
+              "type": null,
+              "value": "self.model_description.numberOfEventIndicators"
+            },
+            {
+              "name": "_state_refs",
+              "description": "",
+              "type": null,
+              "value": "[]"
+            },
+            {
+              "name": "_derivative_refs",
+              "description": "",
+              "type": null,
+              "value": "[]"
+            },
+            {
+              "name": "fmu",
+              "description": "",
+              "type": null,
+              "value": "self._create_fmu_instance(FMU2Slave, FMU2Model, FMU3Slave, FMU3Model)"
+            },
+            {
+              "name": "default_step_size",
+              "description": "Get default step size from FMU's default experiment, if defined.",
+              "type": "Optional[float]",
+              "value": null
+            },
+            {
+              "name": "default_tolerance",
+              "description": "Get default tolerance from FMU's default experiment, if defined.",
+              "type": "Optional[float]",
+              "value": null
+            },
+            {
+              "name": "needs_completed_integrator_step",
+              "description": "Check if FMU requires completedIntegratorStep notifications (Model Exchange only).",
+              "type": "bool",
+              "value": null
+            },
+            {
+              "name": "provides_jacobian",
+              "description": "Check if FMU provides directional derivatives for Jacobian computation.",
+              "type": "bool",
+              "value": null
+            }
+          ],
+          "parameters": [
+            {
+              "name": "fmu_path",
+              "type": null,
+              "default": null,
+              "description": "path to the FMU file (.fmu)"
+            },
+            {
+              "name": "instance_name",
+              "type": null,
+              "default": "'fmu_instance'",
+              "description": "name for the FMU instance (default: 'fmu_instance')"
+            },
+            {
+              "name": "mode",
+              "type": null,
+              "default": "'cosimulation'",
+              "description": "FMU interface mode: 'cosimulation' or 'model_exchange' (default: 'cosimulation')"
+            }
+          ]
+        }
+      ],
+      "functions": []
+    }
+  }
+}
