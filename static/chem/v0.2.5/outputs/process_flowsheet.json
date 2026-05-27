@@ -1,0 +1,24 @@
+{
+  "cells": {
+    "5": {
+      "stdout": "10:55:04 - INFO - LOGGING (log: True)\n10:55:04 - INFO - BLOCKS (total: 13, dynamic: 1, static: 12, eventful: 0)\n10:55:04 - INFO - GRAPH (nodes: 13, edges: 16, alg. depth: 3, loop depth: 0, runtime: 0.254ms)\n10:55:04 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n10:55:04 - INFO - --------------------   1% | 0.0s<0.3s | 3950.8 it/s\n10:55:04 - INFO - ####----------------  20% | 0.1s<0.2s | 4386.8 it/s\n10:55:04 - INFO - ########------------  40% | 0.1s<0.1s | 4402.2 it/s\n10:55:04 - INFO - ############--------  60% | 0.2s<0.1s | 4526.8 it/s\n10:55:04 - INFO - ################----  80% | 0.2s<0.0s | 4471.5 it/s\n10:55:04 - INFO - #################### 100% | 0.3s<--:-- | 4483.9 it/s\n10:55:04 - INFO - FINISHED -> TRANSIENT (total steps: 1001, successful: 1001, runtime: 252.60 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "7": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "process_flowsheet_0.svg"
+      ]
+    },
+    "9": {
+      "stdout": "Process Steady State\n=============================================\nUnit             Flow [m³/s]      T [K]\n---------------------------------------------\nFresh feed              0.05      300.0\nSecond stream           0.05      310.0\nMixer outlet          0.1000     305.00\nHeater outlet         0.1000     305.48\nCSTR outlet                —     305.46\n\nReactor C_A = 1.9452 mol/m³ (feed = 2.0 mol/m³)\nConversion = 2.7%\n",
+      "stderr": null,
+      "figures": []
+    }
+  },
+  "executedAt": "2026-05-27T10:55:05.890999+00:00",
+  "duration": 6713,
+  "success": true
+}

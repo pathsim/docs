@@ -1,0 +1,40 @@
+{
+  "package": "batt",
+  "tag": "v0.2.1",
+  "notebooks": [
+    {
+      "slug": "01-spme-discharge",
+      "file": "01_spme_discharge.ipynb",
+      "title": "Constant-Current Discharge with the SPMe",
+      "description": "Constant-current (CC) discharge simulation using CellElectrothermal, which wraps",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    },
+    {
+      "slug": "02-electrothermal-coupling",
+      "file": "02_electrothermal_coupling.ipynb",
+      "title": "Electrothermal Coupling with an External Thermal Model",
+      "description": "CellElectrical uses PyBaMM's isothermal electrochemistry and exposes heat generation",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    },
+    {
+      "slug": "03-dfn-cosimulation",
+      "file": "03_dfn_cosimulation.ipynb",
+      "title": "High-Fidelity DFN Simulation via Co-Simulation",
+      "description": "The Doyle–Fuller–Newman (DFN) model produces a DAE system after discretisation",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "advanced",
+      "title": "Advanced Topics",
+      "order": 7
+    }
+  ]
+}
