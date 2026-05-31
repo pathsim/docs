@@ -1,7 +1,33 @@
 {
-  "cells": {},
-  "executedAt": "2026-05-31T07:30:53.996644+00:00",
-  "duration": 4052,
-  "success": false,
-  "error": "y, resources)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 204, in _async_wait_for_ready\n    raise RuntimeError(msg)\nRuntimeError: Kernel died before replying to kernel_info"
+  "cells": {
+    "16": {
+      "stdout": "12:38:55 - INFO - LOGGING (log: True)\n12:38:55 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n12:38:55 - INFO - GRAPH (nodes: 4, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.037ms)\n12:38:55 - INFO - STARTING -> TRANSIENT (Duration: 10.00s)\n12:38:55 - INFO - --------------------   1% | 0.0s<0.1s | 2974.7 it/s\n12:38:55 - INFO - ####----------------  20% | 0.0s<0.0s | 4342.1 it/s\n12:38:55 - INFO - ########------------  40% | 0.1s<0.0s | 4043.1 it/s\n12:38:55 - INFO - ############--------  60% | 0.1s<0.0s | 5498.7 it/s\n12:38:55 - INFO - ################----  80% | 0.1s<0.0s | 4369.0 it/s\n12:38:55 - INFO - #################### 100% | 0.1s<--:-- | 4360.5 it/s\n12:38:55 - INFO - FINISHED -> TRANSIENT (total steps: 415, successful: 363, runtime: 134.93 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "20": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "bouncing_ball_0.svg"
+      ]
+    },
+    "22": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "bouncing_ball_1.svg"
+      ]
+    },
+    "24": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "bouncing_ball_2.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-05-31T12:38:57.467550+00:00",
+  "duration": 6098,
+  "success": true
 }
