@@ -1,12 +1,12 @@
 {
   "cells": {
     "9": {
-      "stdout": "18:32:28 - INFO - LOGGING (log: True)\n18:32:28 - INFO - BLOCKS (total: 9, dynamic: 3, static: 6, eventful: 0)\n18:32:28 - INFO - GRAPH (nodes: 9, edges: 14, alg. depth: 5, loop depth: 0, runtime: 0.202ms)\n",
+      "stdout": "00:51:35 - INFO - LOGGING (log: True)\n00:51:35 - INFO - BLOCKS (total: 9, dynamic: 3, static: 6, eventful: 0)\n00:51:35 - INFO - GRAPH (nodes: 9, edges: 14, alg. depth: 5, loop depth: 0, runtime: 2.331ms)\n",
       "stderr": null,
       "figures": []
     },
     "11": {
-      "stdout": "18:32:28 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n18:32:28 - INFO - --------------------   1% | 0.0s<1.7s | 953.6 it/s\n18:32:29 - INFO - ####----------------  20% | 0.4s<02:56:25 | 900.8 it/s\n18:32:29 - INFO - ########------------  40% | 0.8s<1.0s | 904.5 it/s\n18:32:29 - INFO - ############--------  60% | 1.2s<36:41 | 926.8 it/s\n18:32:30 - INFO - ################----  80% | 1.5s<0.4s | 910.4 it/s\n18:32:30 - INFO - #################### 100% | 1.8s<--:-- | 916.8 it/s\n18:32:30 - INFO - FINISHED -> TRANSIENT (total steps: 1662, successful: 1232, runtime: 1817.64 ms)\n",
+      "stdout": "00:51:36 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n00:51:36 - INFO - --------------------   1% | 0.0s<2.5s | 529.5 it/s\n00:51:36 - INFO - ####----------------  20% | 0.6s<03:25:26 | 812.2 it/s\n00:51:37 - INFO - ########------------  40% | 1.0s<1.4s | 641.3 it/s\n00:51:37 - INFO - ############--------  60% | 1.6s<01:14:30 | 567.7 it/s\n00:51:38 - INFO - ################----  80% | 2.1s<0.5s | 526.1 it/s\n00:51:38 - INFO - #################### 100% | 2.7s<--:-- | 628.2 it/s\n00:51:38 - INFO - FINISHED -> TRANSIENT (total steps: 1658, successful: 1234, runtime: 2665.86 ms)\n",
       "stderr": null,
       "figures": []
     },
@@ -20,7 +20,7 @@
       ]
     }
   },
-  "executedAt": "2026-05-30T18:32:31.905801+00:00",
-  "duration": 7400,
+  "executedAt": "2026-05-31T00:51:40.166933+00:00",
+  "duration": 9635,
   "success": true
 }
