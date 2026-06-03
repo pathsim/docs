@@ -1,19 +1,7 @@
 {
-  "cells": {
-    "17": {
-      "stdout": "07:55:36 - INFO - LOGGING (log: True)\n07:55:36 - INFO - BLOCKS (total: 2, dynamic: 1, static: 1, eventful: 0)\n07:55:36 - INFO - GRAPH (nodes: 2, edges: 1, alg. depth: 1, loop depth: 0, runtime: 0.018ms)\n07:55:36 - INFO - STARTING -> TRANSIENT (Duration: 2000.00s)\n07:55:36 - INFO - --------------------   1% | 0.5s<14.2s | 36.7 it/s\n07:55:36 - INFO - #####---------------  27% | 0.8s<1.3s | 23.0 it/s\n07:55:37 - INFO - ########------------  40% | 1.2s<6.6s | 27.6 it/s\n07:55:39 - INFO - ########------------  41% | 3.1s<13.3s | 48.4 it/s\n07:55:39 - INFO - #############-------  67% | 3.6s<0.6s | 21.3 it/s\n07:55:40 - INFO - ################----  80% | 4.0s<2.2s | 26.8 it/s\n07:55:42 - INFO - ################----  81% | 5.8s<3.7s | 119.3 it/s\n07:55:42 - INFO - #################### 100% | 6.1s<--:-- | 37.9 it/s\n07:55:42 - INFO - FINISHED -> TRANSIENT (total steps: 341, successful: 234, runtime: 6120.16 ms)\n",
-      "stderr": null,
-      "figures": []
-    },
-    "19": {
-      "stdout": null,
-      "stderr": null,
-      "figures": [
-        "nested_subsystems_0.svg"
-      ]
-    }
-  },
-  "executedAt": "2026-06-03T07:55:43.727714+00:00",
-  "duration": 11853,
-  "success": true
+  "cells": {},
+  "executedAt": "2026-06-03T13:51:11.167196+00:00",
+  "duration": 3059,
+  "success": false,
+  "error": "y, resources)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 204, in _async_wait_for_ready\n    raise RuntimeError(msg)\nRuntimeError: Kernel died before replying to kernel_info"
 }
