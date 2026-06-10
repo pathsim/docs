@@ -1,7 +1,7 @@
 {
   "cells": {
     "20": {
-      "stdout": "13:22:58 - INFO - LOGGING (log: True)\n13:22:58 - INFO - BLOCKS (total: 17, dynamic: 3, static: 14, eventful: 2)\n13:22:58 - INFO - GRAPH (nodes: 17, edges: 22, alg. depth: 6, loop depth: 0, runtime: 0.211ms)\n13:22:58 - INFO - STARTING -> TRANSIENT (Duration: 30.00s)\n13:22:58 - INFO - --------------------   1% | 0.1s<5.3s | 1115.7 it/s\n13:22:59 - INFO - ###-----------------  16% | 1.1s<9.8s | 805.4 it/s\n13:22:59 - INFO - ####----------------  20% | 1.3s<7.7s | 724.6 it/s\n13:23:00 - INFO - #######-------------  39% | 2.3s<3.6s | 787.8 it/s\n13:23:00 - INFO - ########------------  40% | 2.4s<4.6s | 819.1 it/s\n13:23:01 - INFO - ###########---------  56% | 3.4s<2.4s | 854.5 it/s\n13:23:02 - INFO - ############--------  60% | 3.7s<2.5s | 776.2 it/s\n13:23:03 - INFO - ##############------  74% | 4.7s<1.5s | 866.8 it/s\n13:23:03 - INFO - ################----  80% | 5.0s<1.2s | 880.8 it/s\n13:23:04 - INFO - ##################--  93% | 6.0s<0.5s | 803.2 it/s\n13:23:04 - INFO - #################### 100% | 6.6s<--:-- | 903.6 it/s\n13:23:04 - INFO - FINISHED -> TRANSIENT (total steps: 5837, successful: 4938, runtime: 6553.71 ms)\n",
+      "stdout": "19:07:28 - INFO - LOGGING (log: True)\n19:07:28 - INFO - BLOCKS (total: 17, dynamic: 3, static: 14, eventful: 2)\n19:07:28 - INFO - GRAPH (nodes: 17, edges: 22, alg. depth: 6, loop depth: 0, runtime: 0.158ms)\n19:07:28 - INFO - STARTING -> TRANSIENT (Duration: 30.00s)\n19:07:28 - INFO - --------------------   1% | 0.2s<10.0s | 599.5 it/s\n19:07:29 - INFO - ##------------------  12% | 1.2s<6.7s | 615.2 it/s\n19:07:30 - INFO - ####----------------  20% | 1.9s<9.1s | 617.0 it/s\n19:07:31 - INFO - ######--------------  32% | 2.9s<4.8s | 768.3 it/s\n19:07:32 - INFO - ########------------  40% | 3.4s<6.7s | 579.6 it/s\n19:07:33 - INFO - ##########----------  50% | 4.4s<6.1s | 796.1 it/s\n19:07:33 - INFO - ############--------  60% | 5.0s<1.4s | 1340.7 it/s\n19:07:34 - INFO - ################----  80% | 6.0s<0.8s | 1343.1 it/s\n19:07:35 - INFO - ###################-  99% | 7.0s<0.0s | 1121.6 it/s\n19:07:35 - INFO - #################### 100% | 7.0s<--:-- | 733.0 it/s\n19:07:35 - INFO - FINISHED -> TRANSIENT (total steps: 5837, successful: 4938, runtime: 6991.26 ms)\n",
       "stderr": null,
       "figures": []
     },
@@ -14,7 +14,7 @@
       ]
     }
   },
-  "executedAt": "2026-06-10T13:23:08.658507+00:00",
-  "duration": 15075,
+  "executedAt": "2026-06-10T19:07:37.176298+00:00",
+  "duration": 12500,
   "success": true
 }
