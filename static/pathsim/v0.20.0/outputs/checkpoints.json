@@ -1,7 +1,36 @@
 {
-  "cells": {},
-  "executedAt": "2026-06-13T12:46:00.824341+00:00",
-  "duration": 3914,
-  "success": false,
-  "error": "y, resources)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 204, in _async_wait_for_ready\n    raise RuntimeError(msg)\nRuntimeError: Kernel died before replying to kernel_info"
+  "cells": {
+    "9": {
+      "stdout": "18:38:21 - INFO - LOGGING (log: True)\n18:38:21 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n18:38:21 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.049ms)\n18:38:21 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n18:38:21 - INFO - --------------------   1% | 0.0s<0.6s | 9246.7 it/s\n18:38:21 - INFO - ####----------------  20% | 0.2s<0.5s | 10102.0 it/s\n18:38:21 - INFO - ########------------  40% | 0.3s<0.3s | 10347.6 it/s\n18:38:21 - INFO - ############--------  60% | 0.4s<0.2s | 10254.5 it/s\n18:38:22 - INFO - ################----  80% | 0.5s<0.1s | 10199.1 it/s\n18:38:22 - INFO - #################### 100% | 0.6s<--:-- | 9541.6 it/s\n18:38:22 - INFO - FINISHED -> TRANSIENT (total steps: 6001, successful: 6001, runtime: 648.38 ms)\n",
+      "stderr": null,
+      "figures": [
+        "checkpoints_0.svg"
+      ]
+    },
+    "12": {
+      "stdout": "Checkpoint saved at t = 60.0s\n",
+      "stderr": null,
+      "figures": []
+    },
+    "14": {
+      "stdout": "PathSim version: 0.22.2\nSimulation time: 60.0s\nSolver: SSPRK22\nBlocks saved:\n  ODE_0 (ODE)\n  ODE_1 (ODE)\n  Function_0 (Function)\n  Scope_0 (Scope)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "17": {
+      "stdout": "18:38:22 - INFO - LOGGING (log: True)\n18:38:22 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n18:38:22 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.044ms)\n18:38:22 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n18:38:22 - INFO - --------------------   1% | 0.0s<0.6s | 9427.4 it/s\n18:38:22 - INFO - ####----------------  20% | 0.1s<0.5s | 10158.3 it/s\n18:38:22 - INFO - ########------------  40% | 0.2s<0.4s | 9901.4 it/s\n18:38:22 - INFO - ############--------  60% | 0.4s<0.2s | 10203.5 it/s\n18:38:22 - INFO - ################----  80% | 0.5s<0.1s | 10489.4 it/s\n18:38:23 - INFO - #################### 100% | 0.6s<--:-- | 10326.0 it/s\n18:38:23 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 607.96 ms)\n18:38:23 - INFO - LOGGING (log: True)\n18:38:23 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n18:38:23 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.040ms)\n18:38:23 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n18:38:23 - INFO - --------------------   1% | 0.0s<0.6s | 9828.2 it/s\n18:38:23 - INFO - ####----------------  20% | 0.1s<0.5s | 10360.6 it/s\n18:38:23 - INFO - ########------------  40% | 0.2s<0.4s | 10113.1 it/s\n18:38:23 - INFO - ############--------  60% | 0.4s<0.2s | 10352.8 it/s\n18:38:23 - INFO - ################----  80% | 0.5s<0.1s | 10131.4 it/s\n18:38:23 - INFO - #################### 100% | 0.6s<--:-- | 10620.2 it/s\n18:38:23 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 559.80 ms)\n18:38:23 - INFO - LOGGING (log: True)\n18:38:23 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n18:38:23 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.036ms)\n18:38:23 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n18:38:23 - INFO - --------------------   1% | 0.0s<0.5s | 12134.3 it/s\n18:38:23 - INFO - ####----------------  20% | 0.1s<0.4s | 12036.6 it/s\n18:38:23 - INFO - ########------------  40% | 0.2s<0.3s | 14250.7 it/s\n18:38:24 - INFO - ############--------  60% | 0.4s<0.2s | 11803.4 it/s\n18:38:24 - INFO - ################----  80% | 0.5s<0.1s | 11101.6 it/s\n18:38:24 - INFO - #################### 100% | 0.6s<--:-- | 11514.5 it/s\n18:38:24 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 572.06 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "checkpoints_1.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-06-13T18:38:25.453227+00:00",
+  "duration": 7697,
+  "success": true
 }
