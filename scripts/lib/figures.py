@@ -118,7 +118,16 @@ class FigureCollector:
     # -------------------------------------------------------------- HTML pass
 
     def process_html(self, html: str, source_file: Path | None = None) -> str:
-        """Resolve, collect and rewrite ``<img src>`` paths in docstring HTML."""
+        """Resolve, collect and rewrite figure paths in docstring HTML.
+
+        docutils renders SVG images as ``<object data=...>`` and raster images as
+        ``<img src=...>``. We normalize the former to ``<img>`` (uniform handling,
+        lazy-loadable, covered by the frontend base-path rewrite), then resolve
+        every ``src`` against the figure roots.
+        """
+        if "<object" in html:
+            html = self._objects_to_img(html)
+
         if "<img" not in html:
             return html
 
@@ -127,9 +136,34 @@ class FigureCollector:
             new = self._resolve_src(src)
             if new is None or new == src:
                 return match.group(0)
-            return match.group(0).replace(src, new, 1)
+            # Rewrite only the captured src value, never the surrounding tag
+            # (alt="" often repeats the filename and must stay untouched).
+            return match.group("pre") + new + match.group("post")
 
-        return re.sub(r'<img[^>]*\ssrc=["\'](?P<src>[^"\']+)["\']', repl, html)
+        return re.sub(
+            r'(?P<pre><img[^>]*?\ssrc=["\'])(?P<src>[^"\']+)(?P<post>["\'])',
+            repl,
+            html,
+        )
+
+    def _objects_to_img(self, html: str) -> str:
+        """Convert docutils SVG ``<object data=...>`` tags into ``<img src=...>``."""
+
+        def conv(match: re.Match) -> str:
+            tag = match.group(0)
+            data = re.search(r'\bdata=["\']([^"\']+)["\']', tag)
+            if not data:
+                return tag
+            cls = re.search(r'\bclass=["\']([^"\']+)["\']', tag)
+            cls_attr = f' class="{cls.group(1)}"' if cls else ""
+            return f'<img src="{data.group(1)}"{cls_attr} alt="" />'
+
+        return re.sub(
+            r'<object\b[^>]*\btype=["\']image/svg\+xml["\'][^>]*>.*?</object>',
+            conv,
+            html,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
 
     def _resolve_src(self, src: str) -> str | None:
         # Leave absolute URLs / data URIs untouched.
@@ -318,6 +352,9 @@ def _replace_tikz_blocks(rst: str, render) -> str:
         code = "\n".join(b[common:] if b.strip() else "" for b in body).strip("\n")
 
         out.append(render(code, indent))
+        # Guarantee a blank line so the replacement block is not glued to the
+        # paragraph that follows (the body loop consumes the original separator).
+        out.append("")
 
     return "\n".join(out)
 
