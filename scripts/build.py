@@ -29,6 +29,7 @@ from lib.config import (
     PACKAGES,
     MIN_SUPPORTED_VERSIONS,
     STATIC_DIR,
+    TIKZ_CACHE_DIR,
 )
 from lib.git import (
     get_tags,
@@ -365,7 +366,7 @@ def _make_figure_collector(package_id, tag, repo_path, output_dir):
         tag=tag,
         figures_dir=output_dir / "figures",
         source_roots=source_roots,
-        cache_dir=STATIC_DIR / ".tikz-cache",
+        cache_dir=TIKZ_CACHE_DIR,
         tikz_preamble=preamble,
     )
 

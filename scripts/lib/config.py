@@ -11,6 +11,11 @@ ROOT_DIR = PROJECT_ROOT.parent  # Parent of pathsim-docs (contains pathsim repos
 STATIC_DIR = PROJECT_ROOT / "static"
 GENERATED_DIR = PROJECT_ROOT / "src" / "lib" / "api" / "generated"
 
+# Persistent build-time cache for rendered TikZ diagrams. Kept outside static/
+# so it is neither committed (git add static/) nor shipped with the site; it is
+# restored across CI runs via actions/cache.
+TIKZ_CACHE_DIR = PROJECT_ROOT / ".tikz-cache"
+
 # Package configuration
 PACKAGES = {
     "pathsim": {
