@@ -105,11 +105,16 @@ class FigureCollector:
         return _replace_tikz_blocks(rst, self._render_tikz_block)
 
     def _render_tikz_block(self, code: str, indent: str) -> str:
-        """Render one TikZ block; return replacement RST (image or code fallback)."""
-        rel = self.render_tikz(code)
-        if rel:
+        """Render one TikZ block; return replacement RST (inline SVG or fallback)."""
+        svg = self.render_tikz(code)
+        if svg:
             self.tikz_rendered += 1
-            return f"{indent}.. image:: {rel}\n{indent}   :class: tikz-figure\n"
+            # Inline the SVG via a raw-HTML block: currentColor then inherits the
+            # page text color (dark-mode legible) and there is no extra request.
+            # Collapse to a single line so internal blank lines can't terminate
+            # the raw block early.
+            inner = " ".join(f'<div class="tikz-figure">{svg}</div>'.split("\n"))
+            return f"{indent}.. raw:: html\n\n{indent}   {inner}\n"
         # Degrade gracefully: show the source instead of breaking the build.
         self.tikz_failed += 1
         body = "\n".join(f"{indent}   {line}" for line in code.splitlines())
@@ -191,35 +196,27 @@ class FigureCollector:
 
     def render_tikz(self, code: str) -> str | None:
         """
-        Compile TikZ ``code`` to an SVG under figures_dir/tikz/, content-cached.
+        Compile TikZ ``code`` to inline-ready SVG markup, content-cached on disk.
 
-        Returns the figures-relative path (e.g. "tikz/<hash>.svg") or None if the
-        toolchain is unavailable or compilation failed.
+        Returns the themed SVG string (XML prolog stripped, black -> currentColor)
+        or None if the toolchain is unavailable or compilation failed. Results are
+        cached by content hash so unchanged diagrams are not recompiled on the
+        6-hourly rebuilds.
         """
         code = code.strip()
         digest = hashlib.sha256((self.tikz_preamble + "\n" + code).encode("utf-8")).hexdigest()[:16]
-        rel = f"tikz/{digest}.svg"
-        dest = self.figures_dir / rel
-        if dest.exists():
-            return rel
-
-        # Persistent cross-build cache so unchanged diagrams are not recompiled.
         cached = self.cache_dir / f"{digest}.svg"
         if cached.exists():
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(cached, dest)
-            return rel
+            return cached.read_text(encoding="utf-8")
 
         svg = self._compile_tikz(code)
         if svg is None:
             return None
 
-        svg = _themeify_svg(svg)
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(svg, encoding="utf-8")
+        svg = _svg_for_inline(_themeify_svg(svg))
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         cached.write_text(svg, encoding="utf-8")
-        return rel
+        return svg
 
     def _resolve_toolchain(self) -> tuple[str | None, str | None]:
         if self._engine is None:
@@ -357,6 +354,12 @@ def _replace_tikz_blocks(rst: str, render) -> str:
         out.append("")
 
     return "\n".join(out)
+
+
+def _svg_for_inline(svg: str) -> str:
+    """Strip the XML prolog/comments so the SVG can be inlined into HTML."""
+    idx = svg.find("<svg")
+    return svg[idx:].strip() if idx != -1 else svg.strip()
 
 
 _BLACK = r"(?:#000000|#000|black|rgb\(0,\s*0,\s*0\))"
