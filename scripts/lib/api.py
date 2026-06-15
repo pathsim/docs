@@ -22,8 +22,18 @@ except ImportError:
 from .config import SKIP_PATTERNS
 
 
-def extract_api(package_id: str, source_path: Path, root_modules: list[str]) -> dict[str, Any]:
-    """Extract API documentation for a package."""
+def extract_api(
+    package_id: str,
+    source_path: Path,
+    root_modules: list[str],
+    collector: Any = None,
+) -> dict[str, Any]:
+    """Extract API documentation for a package.
+
+    Args:
+        collector: Optional FigureCollector that resolves/renders docstring
+            figures and TikZ diagrams into the served figures directory.
+    """
     if not source_path.exists():
         print(f"    Warning: Source path not found: {source_path}")
         return {"package": package_id, "modules": {}}
@@ -40,7 +50,7 @@ def extract_api(package_id: str, source_path: Path, root_modules: list[str]) -> 
                 continue
 
             try:
-                module_data = _extract_module(source_path, module_path)
+                module_data = _extract_module(source_path, module_path, collector)
                 if module_data and (module_data["classes"] or module_data["functions"]):
                     result["modules"][module_path] = module_data
             except Exception as e:
@@ -89,7 +99,7 @@ def _should_skip_module(name: str) -> bool:
     return False
 
 
-def _extract_module(source_path: Path, module_path: str) -> dict | None:
+def _extract_module(source_path: Path, module_path: str, collector: Any = None) -> dict | None:
     """Extract a single module."""
     try:
         loader = GriffeLoader(
@@ -98,17 +108,18 @@ def _extract_module(source_path: Path, module_path: str) -> dict | None:
             allow_inspection=False,
         )
         module = loader.load(module_path)
-        return _extract_module_obj(module, module_path)
+        return _extract_module_obj(module, module_path, collector)
     except Exception:
         return None
 
 
-def _extract_module_obj(obj: griffe.Object, module_path: str) -> dict:
+def _extract_module_obj(obj: griffe.Object, module_path: str, collector: Any = None) -> dict:
     """Extract module data from griffe object."""
+    module_docstring = obj.docstring.value if getattr(obj, "docstring", None) else ""
     module_data = {
         "name": module_path,
-        "description": "",
-        "docstring_html": "",
+        "description": _extract_first_line(module_docstring),
+        "docstring_html": _rst_to_html(module_docstring, collector, _source_of(obj)),
         "classes": [],
         "functions": [],
     }
@@ -125,17 +136,26 @@ def _extract_module_obj(obj: griffe.Object, module_path: str) -> dict:
 
         try:
             if member.is_class:
-                class_data = _extract_class(member)
+                class_data = _extract_class(member, collector)
                 if class_data:
                     module_data["classes"].append(class_data)
             elif member.is_function:
-                func_data = _extract_function(member)
+                func_data = _extract_function(member, collector)
                 if func_data:
                     module_data["functions"].append(func_data)
         except Exception:
             continue
 
     return module_data
+
+
+def _source_of(obj: "griffe.Object") -> Path | None:
+    """Best-effort source file path for a griffe object."""
+    try:
+        fp = getattr(obj, "filepath", None)
+        return Path(fp) if fp else None
+    except Exception:
+        return None
 
 
 def _should_skip_member(name: str) -> bool:
@@ -159,15 +179,16 @@ def _is_defined_here(member: griffe.Object, module_path: str) -> bool:
         return True
 
 
-def _extract_class(cls: griffe.Class) -> dict | None:
+def _extract_class(cls: griffe.Class, collector: Any = None) -> dict | None:
     """Extract class documentation."""
     try:
         docstring = cls.docstring.value if cls.docstring else ""
+        source_file = _source_of(cls)
 
         class_data = {
             "name": cls.name,
             "description": _extract_first_line(docstring),
-            "docstring_html": _rst_to_html(docstring),
+            "docstring_html": _rst_to_html(docstring, collector, source_file),
             "source": _extract_source(cls),
             "bases": [],
             "methods": [],
@@ -206,7 +227,7 @@ def _extract_class(cls: griffe.Class) -> dict | None:
 
                 try:
                     if member.is_function:
-                        method_data = _extract_method(member)
+                        method_data = _extract_method(member, collector)
                         if method_data:
                             class_data["methods"].append(method_data)
                     elif member.is_attribute:
@@ -221,7 +242,7 @@ def _extract_class(cls: griffe.Class) -> dict | None:
         return None
 
 
-def _extract_function(func: griffe.Function) -> dict | None:
+def _extract_function(func: griffe.Function, collector: Any = None) -> dict | None:
     """Extract function documentation."""
     try:
         docstring = func.docstring.value if func.docstring else ""
@@ -229,7 +250,7 @@ def _extract_function(func: griffe.Function) -> dict | None:
         return {
             "name": func.name,
             "description": _extract_first_line(docstring),
-            "docstring_html": _rst_to_html(docstring),
+            "docstring_html": _rst_to_html(docstring, collector, _source_of(func)),
             "source": _extract_source(func),
             "signature": _get_signature(func),
             "parameters": _extract_parameters(func, docstring),
@@ -239,7 +260,7 @@ def _extract_function(func: griffe.Function) -> dict | None:
         return None
 
 
-def _extract_method(method: griffe.Function) -> dict | None:
+def _extract_method(method: griffe.Function, collector: Any = None) -> dict | None:
     """Extract method documentation."""
     try:
         docstring = method.docstring.value if method.docstring else ""
@@ -260,7 +281,7 @@ def _extract_method(method: griffe.Function) -> dict | None:
         return {
             "name": method.name,
             "description": _extract_first_line(docstring),
-            "docstring_html": _rst_to_html(docstring),
+            "docstring_html": _rst_to_html(docstring, collector, _source_of(method)),
             "source": _extract_source(method),
             "signature": _get_signature(method),
             "parameters": _extract_parameters(method, docstring),
@@ -402,8 +423,12 @@ def _extract_param_description(docstring: str, param_name: str) -> str:
     return ""
 
 
-def _rst_to_html(rst_text: str) -> str:
-    """Convert RST docstring to HTML."""
+def _rst_to_html(rst_text: str, collector: Any = None, source_file: Path | None = None) -> str:
+    """Convert RST docstring to HTML.
+
+    When a FigureCollector is supplied, ``.. tikz::`` blocks are rendered to SVG
+    before parsing and ``<img>`` references are resolved/optimized afterwards.
+    """
     if not rst_text:
         return ""
 
@@ -413,6 +438,8 @@ def _rst_to_html(rst_text: str) -> str:
     try:
         processed = _preprocess_numpy_docstring(rst_text)
         processed = _preprocess_rst_roles(processed)
+        if collector is not None:
+            processed = collector.preprocess_rst(processed, source_file)
 
         parts = publish_parts(
             processed,
@@ -425,7 +452,10 @@ def _rst_to_html(rst_text: str) -> str:
                 "syntax_highlight": "short",
             }
         )
-        return parts["body"]
+        body = parts["body"]
+        if collector is not None:
+            body = collector.process_html(body, source_file)
+        return body
     except Exception:
         return _markdown_fallback(rst_text)
 

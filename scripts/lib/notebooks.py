@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import CATEGORY_MAPPINGS, CATEGORIES, NON_EXECUTABLE
+from .images import optimize_image
 
 
 def copy_notebooks(source_dir: Path, target_dir: Path, docs_root: Path | None = None) -> list[dict]:
@@ -47,10 +48,21 @@ def copy_notebooks(source_dir: Path, target_dir: Path, docs_root: Path | None = 
     if mplstyle_source.exists():
         shutil.copy2(mplstyle_source, target_dir / "pathsim_docs.mplstyle")
 
-    # Copy referenced figures by searching docs directory
+    # Copy referenced figures by searching docs directory. Raster figures are
+    # re-encoded to WebP, which renames foo.png -> foo.webp; the returned mapping
+    # lets us keep the notebook markdown refs and thumbnails in sync.
     if all_figure_refs:
         search_root = docs_root or source_dir.parent
-        copy_notebook_figures(all_figure_refs, search_root, target_dir)
+        rename_map = copy_notebook_figures(all_figure_refs, search_root, target_dir)
+
+        if rename_map:
+            # Rewrite image refs inside the copied notebooks...
+            for nb_path in sorted(notebooks_dir.glob("*.ipynb")):
+                _remap_notebook_image_refs(nb_path, rename_map)
+            # ...and the thumbnails recorded in the metadata.
+            for meta in notebooks:
+                if meta.get("thumbnail"):
+                    meta["thumbnail"] = _remap_basename(meta["thumbnail"], rename_map)
 
     return notebooks
 
@@ -102,16 +114,20 @@ def extract_figure_paths(notebook_path: Path) -> set[str]:
     return figure_refs
 
 
-def copy_notebook_figures(figure_refs: set[str], search_root: Path, target_dir: Path) -> int:
+def copy_notebook_figures(figure_refs: set[str], search_root: Path, target_dir: Path) -> dict[str, str]:
     """
-    Search for referenced figures in the docs directory and copy them.
+    Search for referenced figures in the docs directory, copy and optimize them.
+
+    Raster figures are re-encoded to WebP; vector figures (SVG) are copied as-is.
 
     Args:
         figure_refs: Set of figure filenames to find
         search_root: Root directory to search in
         target_dir: Output directory for this version
 
-    Returns number of figures copied.
+    Returns a mapping {original_basename: served_basename} for every figure that
+    was placed (e.g. {"diagram.png": "diagram.webp", "icon.svg": "icon.svg"}),
+    so callers can keep references pointing at the optimized files.
     """
     figures_dir = target_dir / "figures"
     figures_dir.mkdir(parents=True, exist_ok=True)
@@ -123,39 +139,84 @@ def copy_notebook_figures(figure_refs: set[str], search_root: Path, target_dir: 
             # Use lowercase filename as key for case-insensitive matching
             image_index[img_path.name.lower()] = img_path
 
-    copied = 0
+    rename_map: dict[str, str] = {}
     not_found = []
 
     for ref in figure_refs:
         ref_lower = ref.lower()
         if ref_lower in image_index:
             src_path = image_index[ref_lower]
-            # Determine target path - preserve subdirectory structure if in figures_g etc
+            # Determine target dir - preserve subdirectory structure if in figures_g etc
             rel_parts = src_path.relative_to(search_root).parts
-            # Check if it's in a subdirectory of figures
+            dest_dir = figures_dir
             if "figures" in rel_parts:
                 fig_idx = rel_parts.index("figures")
                 sub_parts = rel_parts[fig_idx + 1:]
                 if len(sub_parts) > 1:
                     # Has subdirectory (e.g., figures_g)
-                    subdir = figures_dir / sub_parts[0]
-                    subdir.mkdir(parents=True, exist_ok=True)
-                    dest_path = subdir / sub_parts[-1]
-                else:
-                    dest_path = figures_dir / sub_parts[-1] if sub_parts else figures_dir / src_path.name
-            else:
-                dest_path = figures_dir / src_path.name
+                    dest_dir = figures_dir / sub_parts[0]
 
-            if not dest_path.exists():
-                shutil.copy2(src_path, dest_path)
-                copied += 1
+            served_name = optimize_image(src_path, dest_dir)
+            rename_map[src_path.name] = served_name
         else:
             not_found.append(ref)
 
     if not_found:
         print(f"      Warning: {len(not_found)} figures not found: {not_found[:3]}{'...' if len(not_found) > 3 else ''}")
 
-    return copied
+    return rename_map
+
+
+def _remap_basename(ref: str, rename_map: dict[str, str]) -> str:
+    """
+    Rewrite the basename of a figure reference using rename_map.
+
+    Matches on basename (case-insensitive) so a markdown ref like
+    "../figures/diagram.png" becomes "../figures/diagram.webp" while leaving the
+    surrounding path untouched. References not in the map are returned unchanged.
+    """
+    norm = ref.replace("\\", "/")
+    basename = norm.rsplit("/", 1)[-1]
+    # Case-insensitive lookup against the recorded original filenames.
+    for original, served in rename_map.items():
+        if basename.lower() == original.lower() and basename != served:
+            return norm[: len(norm) - len(basename)] + served
+    return ref
+
+
+def _remap_notebook_image_refs(notebook_path: Path, rename_map: dict[str, str]) -> None:
+    """Rewrite image references inside a copied notebook's markdown/raw cells."""
+    try:
+        with open(notebook_path, "r", encoding="utf-8") as f:
+            notebook = json.load(f)
+    except (json.JSONDecodeError, UnicodeDecodeError, OSError):
+        return
+
+    # Precompute the simple basename substitutions that actually change.
+    subs = {orig: served for orig, served in rename_map.items() if orig != served}
+    if not subs:
+        return
+
+    changed = False
+    for cell in notebook.get("cells", []):
+        if cell.get("cell_type") not in ("markdown", "raw"):
+            continue
+        source = cell.get("source", [])
+        as_list = isinstance(source, list)
+        text = "".join(source) if as_list else source
+
+        new_text = text
+        for orig, served in subs.items():
+            if orig in new_text:
+                new_text = new_text.replace(orig, served)
+
+        if new_text != text:
+            cell["source"] = new_text.splitlines(keepends=True) if as_list else new_text
+            changed = True
+
+    if changed:
+        with open(notebook_path, "w", encoding="utf-8") as f:
+            json.dump(notebook, f, indent=1, ensure_ascii=False)
 
 
 def copy_figures(source_dir: Path, target_dir: Path):

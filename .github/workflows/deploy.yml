@@ -41,6 +41,27 @@ jobs:
       - name: Fetch Pyodide runtime
         run: python scripts/fetch-pyodide.py
 
+      # TikZ diagrams in docstrings are compiled to SVG at build time. tectonic
+      # is a self-contained LaTeX engine (fetches packages on demand, cached
+      # below); dvisvgm converts the PDF to SVG. If this step ever fails the
+      # build still succeeds — TikZ blocks degrade to their source listing.
+      - name: Cache Tectonic packages and rendered diagrams
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/Tectonic
+            .tikz-cache
+          key: tectonic-${{ runner.os }}-v1
+
+      - name: Install TeX toolchain for TikZ diagrams
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends dvisvgm
+          curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net | sh
+          sudo install -m 0755 tectonic /usr/local/bin/tectonic
+          tectonic --version
+          dvisvgm --version | head -n 1
+
       # Build all versions (API, notebooks, outputs, figures, roadmaps)
       # Uses smart caching: historical versions only built once, latest always rebuilt
       - name: Build documentation

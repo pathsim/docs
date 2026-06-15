@@ -29,6 +29,7 @@ from lib.config import (
     PACKAGES,
     MIN_SUPPORTED_VERSIONS,
     STATIC_DIR,
+    TIKZ_CACHE_DIR,
 )
 from lib.git import (
     get_tags,
@@ -40,6 +41,7 @@ from lib.git import (
     parse_version,
 )
 from lib.api import extract_api
+from lib.figures import FigureCollector, DEFAULT_TIKZ_PREAMBLE
 from lib.notebooks import (
     copy_notebooks,
     copy_figures,
@@ -345,6 +347,30 @@ def get_versions_to_build(
     return to_build, to_delete
 
 
+def _make_figure_collector(package_id, tag, repo_path, output_dir):
+    """Build a FigureCollector for docstring figures + TikZ for this version."""
+    docs_source = repo_path / "docs" / "source"
+    source_roots = [docs_source] if docs_source.exists() else [repo_path]
+
+    # Optional per-package TikZ preamble override.
+    preamble = DEFAULT_TIKZ_PREAMBLE
+    preamble_file = docs_source / "tikz_preamble.tex"
+    if preamble_file.exists():
+        try:
+            preamble = preamble_file.read_text(encoding="utf-8")
+        except Exception:
+            pass
+
+    return FigureCollector(
+        package_id=package_id,
+        tag=tag,
+        figures_dir=output_dir / "figures",
+        source_roots=source_roots,
+        cache_dir=TIKZ_CACHE_DIR,
+        tikz_preamble=preamble,
+    )
+
+
 def build_version(
     package_id: str,
     tag: str,
@@ -373,11 +399,15 @@ def build_version(
     try:
         # 1. Extract API
         print(f"    Extracting API...")
+        collector = _make_figure_collector(package_id, tag, repo_path, output_dir)
         api_data = extract_api(
             package_id,
             pkg_config["source"],
             pkg_config["root_modules"],
+            collector,
         )
+        if collector and (collector.tikz_rendered or collector.tikz_failed):
+            print(f"      TikZ: {collector.tikz_rendered} rendered, {collector.tikz_failed} fell back to source")
 
         if api_data["modules"]:
             api_path = output_dir / "api.json"

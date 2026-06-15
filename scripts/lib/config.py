@@ -11,6 +11,11 @@ ROOT_DIR = PROJECT_ROOT.parent  # Parent of pathsim-docs (contains pathsim repos
 STATIC_DIR = PROJECT_ROOT / "static"
 GENERATED_DIR = PROJECT_ROOT / "src" / "lib" / "api" / "generated"
 
+# Persistent build-time cache for rendered TikZ diagrams. Kept outside static/
+# so it is neither committed (git add static/) nor shipped with the site; it is
+# restored across CI runs via actions/cache.
+TIKZ_CACHE_DIR = PROJECT_ROOT / ".tikz-cache"
+
 # Package configuration
 PACKAGES = {
     "pathsim": {
@@ -205,3 +210,61 @@ CATEGORIES = [
 # Execution settings
 MAX_WORKERS = 4  # Parallel notebook execution
 NOTEBOOK_TIMEOUT = 300  # 5 minutes per notebook
+
+# ---------------------------------------------------------------------------
+# Image / figure optimization
+# ---------------------------------------------------------------------------
+# Every raster figure that lands in the served static/ tree is re-encoded to
+# WebP at build time so the site stays snappy. SVG (and other vector formats)
+# are passed through untouched — they are already small and scale crisply.
+
+# Raster extensions that get re-encoded to WebP. Anything not in this set and
+# not vector is copied verbatim.
+RASTER_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff"}
+
+# Vector formats are never rasterized; copied as-is.
+VECTOR_EXTENSIONS = {".svg"}
+
+# WebP quality for lossy sources (photos, JPEGs). 0-100.
+WEBP_QUALITY = 82
+
+# Pillow compression effort, 0 (fast) - 6 (best/slowest).
+WEBP_METHOD = 6
+
+# Source extensions that should be encoded losslessly (flat-color diagrams,
+# screenshots, anything with sharp edges or text where lossy artifacts show).
+WEBP_LOSSLESS_EXTENSIONS = {".png", ".gif", ".bmp"}
+
+# ---------------------------------------------------------------------------
+# TikZ rendering (docstring `.. tikz::` directive -> SVG at build time)
+# ---------------------------------------------------------------------------
+# Candidate LaTeX engines, tried in order. tectonic is preferred in CI (single
+# self-contained binary, fetches packages on demand); pdflatex/lualatex cover
+# local builds (e.g. MiKTeX on Windows).
+TIKZ_LATEX_ENGINES = ["tectonic", "lualatex", "pdflatex"]
+
+# Candidate PDF->SVG converters, tried in order. dvisvgm embeds fonts as paths
+# (crispest result); pdftocairo/pdf2svg are fallbacks.
+TIKZ_PDF_TO_SVG = ["dvisvgm", "pdftocairo", "pdf2svg"]
+
+# Seconds before a single TikZ compile is abandoned.
+TIKZ_TIMEOUT = 60
+
+# Color baked into rendered TikZ diagrams. Matches the docs muted text color
+# (--text-muted in app.css, constant across light/dark), so diagrams render on a
+# transparent background and blend seamlessly into the surrounding prose.
+TIKZ_COLOR = "#808090"
+
+# Diagrams are displayed font-relative (em), not stretched to the column width:
+# the SVG carries intrinsic pt dimensions (from the \large = 12pt TeX typesetting),
+# and this factor maps pt -> em. We target the KaTeX math size (1.3em, see
+# .katex in app.css) so diagram labels match the rendered formulas: 1.3em / 12pt.
+# TikZ/LaTeX and KaTeX both use Computer Modern, so the font weight already matches.
+TIKZ_KATEX_EM = 1.3
+TIKZ_LARGE_PT = 12.0
+TIKZ_EM_PER_PT = TIKZ_KATEX_EM / TIKZ_LARGE_PT
+
+# dvisvgm outlines glyphs to filled paths (PDF input has no live fonts), which
+# render lighter than KaTeX's hinted web fonts. We add a hairline stroke in the
+# glyph color to embolden them to a comparable weight. Value is in SVG pt units.
+TIKZ_GLYPH_STROKE_PT = 0.22

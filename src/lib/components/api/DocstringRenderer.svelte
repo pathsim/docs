@@ -19,8 +19,34 @@
 	let processedHtml = $derived.by(() => {
 		// Subscribe to crossref store to trigger re-processing when index loads
 		$crossrefIndexStore;
-		return processCrossRefs(html, base);
+		return rewriteFigures(processCrossRefs(html, base), base);
 	});
+
+	// Docstring figures are emitted by the build as root-relative paths
+	// ("{package}/{tag}/figures/..."). Prefix the deployment base so they resolve
+	// from the site root (not the current route), and lazy-load them.
+	function rewriteFigures(rawHtml: string, basePath: string): string {
+		return rawHtml.replace(/<img\b[^>]*>/gi, (tag) => {
+			let t = tag.replace(
+				/(\ssrc=["'])([^"']+)(["'])/i,
+				(m, pre, src, post) => {
+					if (
+						/^(https?:)?\/\//i.test(src) ||
+						src.startsWith('data:') ||
+						src.startsWith('/') ||
+						(basePath && src.startsWith(basePath + '/'))
+					) {
+						return m;
+					}
+					return `${pre}${basePath}/${src}${post}`;
+				}
+			);
+			if (!/\bloading=/i.test(t)) {
+				t = t.replace(/^<img\b/i, '<img loading="lazy"');
+			}
+			return t;
+		});
+	}
 
 	let container: HTMLDivElement | undefined = $state();
 	let katexLoaded = $state(false);
@@ -418,6 +444,26 @@
 
 	.docstring-content :global(p:last-child) {
 		margin-bottom: 0;
+	}
+
+	/* Docstring figures */
+	.docstring-content :global(img) {
+		max-width: 100%;
+		height: auto;
+		display: block;
+		margin: var(--space-md, 1rem) auto;
+	}
+
+	/* TikZ diagrams are SVG files (referenced by <img>) recolored at build time to
+	   the muted text color on a transparent background, so they blend into the
+	   prose with no container needed. */
+	/* Width is set per-diagram in em (font-relative) on the element itself; we
+	   only center it and cap it so it never overflows the column. */
+	.docstring-content :global(img.tikz-figure) {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		margin: var(--space-md, 1rem) auto;
 	}
 
 	/* Code block styles are in app.css */
