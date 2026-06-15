@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import MAX_WORKERS, NOTEBOOK_TIMEOUT
+from .images import encode_bytes
 
 
 # Setup code to configure matplotlib for SVG output
@@ -211,28 +212,23 @@ def _execute_single_notebook(
             elif output_type in ("display_data", "execute_result"):
                 data = output.get("data", {})
 
-                # Extract images - prefer SVG, fall back to PNG/JPEG
+                # Extract images - prefer SVG (kept vector), fall back to raster
+                # which is re-encoded to WebP for a snappy frontend.
                 for mime_type in ["image/svg+xml", "image/png", "image/jpeg"]:
                     if mime_type in data:
-                        ext = {
-                            "image/svg+xml": "svg",
-                            "image/png": "png",
-                            "image/jpeg": "jpg",
-                        }[mime_type]
-
-                        figure_name = f"{name}_{figure_count}.{ext}"
-                        figure_path = figures_dir / figure_name
-
-                        # Decode and save
                         img_data = data[mime_type]
+                        if isinstance(img_data, list):
+                            img_data = "".join(img_data)
+
+                        stem = f"{name}_{figure_count}"
                         if mime_type == "image/svg+xml":
-                            if isinstance(img_data, list):
-                                img_data = "".join(img_data)
-                            figure_path.write_text(img_data, encoding="utf-8")
+                            figure_name = f"{stem}.svg"
+                            (figures_dir / figure_name).write_text(img_data, encoding="utf-8")
                         else:
-                            if isinstance(img_data, list):
-                                img_data = "".join(img_data)
-                            figure_path.write_bytes(base64.b64decode(img_data))
+                            source_ext = ".png" if mime_type == "image/png" else ".jpg"
+                            figure_name = encode_bytes(
+                                base64.b64decode(img_data), figures_dir, stem, source_ext
+                            )
 
                         cell_output["figures"].append(figure_name)
                         figure_count += 1
