@@ -235,3 +235,22 @@ TIKZ_PDF_TO_SVG = ["dvisvgm", "pdftocairo", "pdf2svg"]
 
 # Seconds before a single TikZ compile is abandoned.
 TIKZ_TIMEOUT = 60
+
+# Color baked into rendered TikZ diagrams. Matches the docs muted text color
+# (--text-muted in app.css, constant across light/dark), so diagrams render on a
+# transparent background and blend seamlessly into the surrounding prose.
+TIKZ_COLOR = "#808090"
+
+# Diagrams are displayed font-relative (em), not stretched to the column width:
+# the SVG carries intrinsic pt dimensions (from the \large = 12pt TeX typesetting),
+# and this factor maps pt -> em. We target the KaTeX math size (1.3em, see
+# .katex in app.css) so diagram labels match the rendered formulas: 1.3em / 12pt.
+# TikZ/LaTeX and KaTeX both use Computer Modern, so the font weight already matches.
+TIKZ_KATEX_EM = 1.3
+TIKZ_LARGE_PT = 12.0
+TIKZ_EM_PER_PT = TIKZ_KATEX_EM / TIKZ_LARGE_PT
+
+# dvisvgm outlines glyphs to filled paths (PDF input has no live fonts), which
+# render lighter than KaTeX's hinted web fonts. We add a hairline stroke in the
+# glyph color to embolden them to a comparable weight. Value is in SVG pt units.
+TIKZ_GLYPH_STROKE_PT = 0.22

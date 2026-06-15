@@ -10,11 +10,11 @@ the frontend can serve them like any other figure:
    WebP (SVG passed through), and the ``<img src>`` rewritten to the served
    ``{package}/{tag}/figures/...`` path.
 
-2. **Inline TikZ** — a docstring may carry a ``.. tikz::`` block whose body is
+2. **TikZ diagrams** — a docstring may carry a ``.. tikz::`` block whose body is
    TikZ source. It is compiled to SVG at build time (tectonic in CI, pdflatex /
-   lualatex locally) and cached by content hash so unchanged diagrams are not
-   recompiled on the 6-hourly rebuilds. Black strokes/fills are mapped to
-   ``currentColor`` so diagrams stay legible in both light and dark mode.
+   lualatex locally), saved into the figures directory and referenced by
+   ``<img>`` like any other figure. Results are cached by content hash so
+   unchanged diagrams are not recompiled on the 6-hourly rebuilds.
 
 The :class:`FigureCollector` is created once per (package, tag) and threaded
 through the API extractor. If the LaTeX toolchain is missing the TikZ block
@@ -30,6 +30,9 @@ import subprocess
 from pathlib import Path
 
 from .config import (
+    TIKZ_COLOR,
+    TIKZ_EM_PER_PT,
+    TIKZ_GLYPH_STROKE_PT,
     TIKZ_LATEX_ENGINES,
     TIKZ_PDF_TO_SVG,
     TIKZ_TIMEOUT,
@@ -45,6 +48,8 @@ DEFAULT_TIKZ_PREAMBLE = r"""
 \usepackage{tikz}
 \usepackage{amsmath}
 \usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,backgrounds,fit,decorations.pathmorphing}
+% Bolder defaults so diagrams read well at docs scale: thicker lines, larger font.
+\tikzset{every picture/.style={line width=0.7pt, font=\large}}
 """
 
 
@@ -105,20 +110,31 @@ class FigureCollector:
         return _replace_tikz_blocks(rst, self._render_tikz_block)
 
     def _render_tikz_block(self, code: str, indent: str) -> str:
-        """Render one TikZ block; return replacement RST (inline SVG or fallback)."""
-        svg = self.render_tikz(code)
-        if svg:
+        """Render one TikZ block; return replacement RST (image ref or fallback)."""
+        rel = self.render_tikz(code)
+        if rel:
             self.tikz_rendered += 1
-            # Inline the SVG via a raw-HTML block: currentColor then inherits the
-            # page text color (dark-mode legible) and there is no extra request.
-            # Collapse to a single line so internal blank lines can't terminate
-            # the raw block early.
-            inner = " ".join(f'<div class="tikz-figure">{svg}</div>'.split("\n"))
-            return f"{indent}.. raw:: html\n\n{indent}   {inner}\n"
+            # Size font-relative (em) from the SVG's intrinsic pt width, so the
+            # diagram scales with the surrounding text rather than the column.
+            width_em = self._svg_width_em(self.figures_dir / rel)
+            width_opt = f"\n{indent}   :width: {width_em:.2f}em" if width_em else ""
+            return f"{indent}.. image:: {rel}\n{indent}   :class: tikz-figure{width_opt}\n"
         # Degrade gracefully: show the source instead of breaking the build.
         self.tikz_failed += 1
         body = "\n".join(f"{indent}   {line}" for line in code.splitlines())
         return f"{indent}.. code-block:: latex\n\n{body}\n"
+
+    @staticmethod
+    def _svg_width_em(svg_path: Path) -> float | None:
+        """Read an SVG's intrinsic pt width and convert it to em (font-relative)."""
+        try:
+            head = svg_path.read_text(encoding="utf-8", errors="replace")[:400]
+        except OSError:
+            return None
+        m = re.search(r"<svg\b[^>]*?\bwidth=['\"]([0-9.]+)pt['\"]", head)
+        if not m:
+            return None
+        return float(m.group(1)) * TIKZ_EM_PER_PT
 
     # -------------------------------------------------------------- HTML pass
 
@@ -159,9 +175,14 @@ class FigureCollector:
             data = re.search(r'\bdata=["\']([^"\']+)["\']', tag)
             if not data:
                 return tag
-            cls = re.search(r'\bclass=["\']([^"\']+)["\']', tag)
-            cls_attr = f' class="{cls.group(1)}"' if cls else ""
-            return f'<img src="{data.group(1)}"{cls_attr} alt="" />'
+            # Carry over the attributes docutils put on the <object> so per-diagram
+            # sizing (style/width/height) and the class survive the conversion.
+            attrs = ""
+            for name in ("class", "style", "width", "height"):
+                a = re.search(rf'\b{name}=(["\'])(.*?)\1', tag)
+                if a:
+                    attrs += f' {name}="{a.group(2)}"'
+            return f'<img src="{data.group(1)}"{attrs} alt="" />'
 
         return re.sub(
             r'<object\b[^>]*\btype=["\']image/svg\+xml["\'][^>]*>.*?</object>',
@@ -196,27 +217,40 @@ class FigureCollector:
 
     def render_tikz(self, code: str) -> str | None:
         """
-        Compile TikZ ``code`` to inline-ready SVG markup, content-cached on disk.
+        Compile TikZ ``code`` to an SVG file under figures_dir/tikz/, content-cached.
 
-        Returns the themed SVG string (XML prolog stripped, black -> currentColor)
-        or None if the toolchain is unavailable or compilation failed. Results are
-        cached by content hash so unchanged diagrams are not recompiled on the
-        6-hourly rebuilds.
+        The SVG is saved to disk and referenced by ``<img>`` like any other figure.
+        Returns the figures-relative path (e.g. "tikz/<hash>.svg") or None if the
+        toolchain is unavailable or compilation failed. A persistent cache keyed by
+        content hash avoids recompiling unchanged diagrams on the 6-hourly rebuilds.
         """
         code = code.strip()
-        digest = hashlib.sha256((self.tikz_preamble + "\n" + code).encode("utf-8")).hexdigest()[:16]
+        # Color is part of the cache key so changing TIKZ_COLOR invalidates it.
+        key = f"{self.tikz_preamble}\n{TIKZ_COLOR}\n{code}"
+        digest = hashlib.sha256(key.encode("utf-8")).hexdigest()[:16]
+        rel = f"tikz/{digest}.svg"
+        dest = self.figures_dir / rel
+        if dest.exists():
+            return rel
+
+        # Persistent cross-build cache so unchanged diagrams are not recompiled.
         cached = self.cache_dir / f"{digest}.svg"
         if cached.exists():
-            return cached.read_text(encoding="utf-8")
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(cached, dest)
+            return rel
 
         svg = self._compile_tikz(code)
         if svg is None:
             return None
 
-        svg = _svg_for_inline(_themeify_svg(svg))
+        svg = _recolor_svg(svg, TIKZ_COLOR)
+        svg = _embolden_glyphs(svg, TIKZ_COLOR, TIKZ_GLYPH_STROKE_PT)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(svg, encoding="utf-8")
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         cached.write_text(svg, encoding="utf-8")
-        return svg
+        return rel
 
     def _resolve_toolchain(self) -> tuple[str | None, str | None]:
         if self._engine is None:
@@ -356,33 +390,59 @@ def _replace_tikz_blocks(rst: str, render) -> str:
     return "\n".join(out)
 
 
-def _svg_for_inline(svg: str) -> str:
-    """Strip the XML prolog/comments so the SVG can be inlined into HTML."""
-    idx = svg.find("<svg")
-    return svg[idx:].strip() if idx != -1 else svg.strip()
-
-
 _BLACK = r"(?:#000000|#000|black|rgb\(0,\s*0,\s*0\))"
 
 
-def _themeify_svg(svg: str) -> str:
-    """Map pure-black strokes/fills to currentColor for light/dark legibility.
+def _recolor_svg(svg: str, color: str) -> str:
+    """Recolor black line art to ``color`` (background stays transparent).
 
-    Handles both attribute form (``stroke='#000'`` / ``fill="#000000"``, single or
-    double quoted) and CSS form (``fill:#000000``) emitted by dvisvgm/pdftocairo.
+    dvisvgm emits black line art on a transparent background. We swap black for
+    the docs muted text color so diagrams blend into the prose:
+
+    - **explicit** black strokes/fills (the drawn paths) are rewritten directly,
+      both attribute form (``stroke='#000'``) and CSS form (``fill:#000000``);
+    - text/math glyphs are emitted as ``<path>`` with *no* fill, so they fall
+      back to the SVG default (black). Setting ``fill``/``color`` on the root
+      ``<svg>`` makes those inherit the muted color, while explicitly stroked
+      lines (``fill='none'``) are unaffected.
     """
-    # Attribute form: fill='...'/ stroke="..."
     svg = re.sub(
         rf"\b(fill|stroke)=(['\"]){_BLACK}\2",
-        lambda m: f'{m.group(1)}="currentColor"',
+        lambda m: f'{m.group(1)}="{color}"',
         svg,
         flags=re.IGNORECASE,
     )
-    # CSS form inside style="..." or <style>
     svg = re.sub(
         rf"\b(fill|stroke):\s*{_BLACK}",
-        lambda m: f"{m.group(1)}:currentColor",
+        lambda m: f"{m.group(1)}:{color}",
         svg,
         flags=re.IGNORECASE,
     )
+
+    # Default color for glyph paths that carry no explicit fill.
+    def _inject(match: re.Match) -> str:
+        attrs = match.group(2)
+        if re.search(r"\bfill=", attrs):
+            return match.group(0)
+        return f"{match.group(1)}{attrs} fill=\"{color}\"{match.group(3)}"
+
+    svg = re.sub(r"(<svg\b)([^>]*?)(\s*>)", _inject, svg, count=1)
     return svg
+
+
+def _embolden_glyphs(svg: str, color: str, width: float) -> str:
+    """Add a hairline stroke to fill-only glyph paths so text matches KaTeX weight.
+
+    Targets ``<path>`` elements that carry neither ``stroke=`` nor ``fill=`` (the
+    outlined glyphs, which inherit the root fill). Drawn lines and box outlines
+    already have an explicit ``stroke``/``fill`` and are left untouched.
+    """
+    if width <= 0:
+        return svg
+
+    def _add(match: re.Match) -> str:
+        return (f'<path stroke="{color}" stroke-width="{width:g}" '
+                f'stroke-linejoin="round"{match.group(1)}')
+
+    # <path ...> with no stroke= and no fill= up to the closing '>'.
+    return re.sub(r"<path\b(?![^>]*\b(?:stroke|fill)=)([^>]*>)", _add, svg)

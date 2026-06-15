@@ -30,7 +30,7 @@ At build time the file is:
 A missing figure is logged as a warning and left as-is; it never breaks the
 build.
 
-## 2. Inline TikZ diagrams
+## 2. TikZ diagrams
 
 Write TikZ directly in the docstring with a `.. tikz::` block. The body is
 either a full `tikzpicture` environment or just bare drawing commands (which are
@@ -48,12 +48,19 @@ At build time each block is:
 
 - **compiled to SVG** (tectonic in CI, pdflatex/lualatex locally),
 - **content-hash cached** so unchanged diagrams are not recompiled,
-- **inlined** into the page so it loads without an extra request, and
-- **themed**: pure-black strokes/fills become `currentColor`, so diagrams stay
-  legible in both light and dark mode.
+- **saved** into the served figures directory and referenced by `<img>` like any
+  other figure,
+- **recolored** to the muted text color (`--text-muted`, constant across light
+  and dark) on a transparent background, so it blends into the prose with no
+  container, and
+- **sized font-relative** (em): the diagram scales with the surrounding text and
+  its labels match the KaTeX math size and weight, rather than stretching to the
+  column width.
 
 If the LaTeX toolchain is unavailable the block **degrades to a code listing**
-of its source rather than breaking the build.
+of its source rather than breaking the build. Diagram appearance is tuned via
+constants in `scripts/lib/config.py` (`TIKZ_COLOR`, `TIKZ_KATEX_EM`,
+`TIKZ_GLYPH_STROKE_PT`, and the `DEFAULT_TIKZ_PREAMBLE` line width/font).
 
 ### Local toolchain
 

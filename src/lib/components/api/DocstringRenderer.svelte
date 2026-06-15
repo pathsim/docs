@@ -454,18 +454,16 @@
 		margin: var(--space-md, 1rem) auto;
 	}
 
-	/* TikZ diagrams are inlined as SVG. Black strokes/fills are mapped to
-	   currentColor at build time, so inheriting the page text color keeps them
-	   legible in dark mode. */
-	.docstring-content :global(.tikz-figure) {
-		margin: var(--space-md, 1rem) auto;
-		text-align: center;
-		color: var(--text-base, currentColor);
-	}
-
-	.docstring-content :global(.tikz-figure svg) {
-		max-width: min(100%, 32rem);
+	/* TikZ diagrams are SVG files (referenced by <img>) recolored at build time to
+	   the muted text color on a transparent background, so they blend into the
+	   prose with no container needed. */
+	/* Width is set per-diagram in em (font-relative) on the element itself; we
+	   only center it and cap it so it never overflows the column. */
+	.docstring-content :global(img.tikz-figure) {
+		display: block;
+		max-width: 100%;
 		height: auto;
+		margin: var(--space-md, 1rem) auto;
 	}
 
 	/* Code block styles are in app.css */
