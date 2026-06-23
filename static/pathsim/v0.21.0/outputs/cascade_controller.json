@@ -1,7 +1,26 @@
 {
-  "cells": {},
-  "executedAt": "2026-06-23T13:10:57.215372+00:00",
-  "duration": 182796,
-  "success": false,
-  "error": " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 208, in _async_wait_for_ready\n    raise RuntimeError(\"Kernel didn't respond in %d seconds\" % timeout)\nRuntimeError: Kernel didn't respond in 180 seconds"
+  "cells": {
+    "9": {
+      "stdout": "18:52:48 - INFO - LOGGING (log: True)\n18:52:48 - INFO - BLOCKS (total: 9, dynamic: 3, static: 6, eventful: 0)\n18:52:48 - INFO - GRAPH (nodes: 9, edges: 14, alg. depth: 5, loop depth: 0, runtime: 0.138ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "11": {
+      "stdout": "18:52:48 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n18:52:48 - INFO - --------------------   1% | 0.0s<2.3s | 584.3 it/s\n18:52:49 - INFO - ####----------------  20% | 0.6s<03:24:54 | 789.3 it/s\n18:52:49 - INFO - ########------------  40% | 1.0s<1.7s | 660.8 it/s\n18:52:50 - INFO - ############--------  60% | 1.6s<01:11:58 | 575.7 it/s\n18:52:51 - INFO - ################----  80% | 2.1s<0.5s | 568.8 it/s\n18:52:51 - INFO - #################### 100% | 2.6s<--:-- | 519.7 it/s\n18:52:51 - INFO - FINISHED -> TRANSIENT (total steps: 1649, successful: 1222, runtime: 2644.79 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "13": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "cascade_controller_0.svg",
+        "cascade_controller_1.svg",
+        "cascade_controller_2.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-06-23T18:52:53.300679+00:00",
+  "duration": 9826,
+  "success": true
 }
