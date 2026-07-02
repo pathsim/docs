@@ -490,6 +490,13 @@ def generate_package_manifest(package_id: str, dry_run: bool = False):
             continue
         version_tags.append(version_dir.name)
 
+    # Only list versions at or above the package's minimum supported version.
+    # Guards against stale on-disk build dirs from before a MIN bump leaking
+    # into the manifest (and thus the version picker).
+    min_version = MIN_SUPPORTED_VERSIONS.get(package_id, "0.1")
+    min_v = parse_version("v" + min_version)
+    version_tags = [t for t in version_tags if parse_version(t) >= min_v]
+
     if not version_tags:
         print(f"  No versions found for {package_id}")
         return

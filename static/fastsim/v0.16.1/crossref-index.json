@@ -1,25 +1,4 @@
 {
-  "fastsim": {
-    "name": "fastsim",
-    "type": "module",
-    "packageId": "fastsim",
-    "moduleName": "fastsim",
-    "path": "fastsim/v0.16.1/api#fastsim"
-  },
-  "Connection": {
-    "name": "Connection",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.ir",
-    "path": "fastsim/v0.16.1/api#Connection"
-  },
-  "fastsim.Connection": {
-    "name": "Connection",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.ir",
-    "path": "fastsim/v0.16.1/api#Connection"
-  },
   "fastsim.adapter": {
     "name": "fastsim.adapter",
     "type": "module",
@@ -40,6 +19,34 @@
     "packageId": "fastsim",
     "moduleName": "fastsim.adapter",
     "path": "fastsim/v0.16.1/api#adapt"
+  },
+  "fastsim.connection": {
+    "name": "fastsim.connection",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.connection",
+    "path": "fastsim/v0.16.1/api#fastsim-connection"
+  },
+  "Connection": {
+    "name": "Connection",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.16.1/api#Connection"
+  },
+  "fastsim.connection.Connection": {
+    "name": "Connection",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.connection",
+    "path": "fastsim/v0.16.1/api#Connection"
+  },
+  "fastsim.Connection": {
+    "name": "Connection",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.16.1/api#Connection"
   },
   "fastsim.exceptions": {
     "name": "fastsim.exceptions",
@@ -414,7 +421,7 @@
     "name": "Interface",
     "type": "class",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural",
+    "moduleName": "fastsim.subsystem",
     "path": "fastsim/v0.16.1/api#Interface"
   },
   "fastsim.ir.Interface": {
@@ -428,7 +435,7 @@
     "name": "Interface",
     "type": "class",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural",
+    "moduleName": "fastsim.subsystem",
     "path": "fastsim/v0.16.1/api#Interface"
   },
   "Interface.parse": {
@@ -530,7 +537,7 @@
     "name": "Subsystem",
     "type": "class",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural",
+    "moduleName": "fastsim.subsystem",
     "path": "fastsim/v0.16.1/api#Subsystem"
   },
   "fastsim.ir.Subsystem": {
@@ -544,7 +551,7 @@
     "name": "Subsystem",
     "type": "class",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural",
+    "moduleName": "fastsim.subsystem",
     "path": "fastsim/v0.16.1/api#Subsystem"
   },
   "Subsystem.parse": {
@@ -1078,25 +1085,25 @@
     "parentClass": "Simulation",
     "path": "fastsim/v0.16.1/api#Simulation.to_ir_json"
   },
-  "fastsim.structural": {
-    "name": "fastsim.structural",
+  "fastsim.subsystem": {
+    "name": "fastsim.subsystem",
     "type": "module",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural",
-    "path": "fastsim/v0.16.1/api#fastsim-structural"
+    "moduleName": "fastsim.subsystem",
+    "path": "fastsim/v0.16.1/api#fastsim-subsystem"
   },
-  "fastsim.structural.Interface": {
+  "fastsim.subsystem.Interface": {
     "name": "Interface",
     "type": "class",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural",
+    "moduleName": "fastsim.subsystem",
     "path": "fastsim/v0.16.1/api#Interface"
   },
-  "fastsim.structural.Subsystem": {
+  "fastsim.subsystem.Subsystem": {
     "name": "Subsystem",
     "type": "class",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural",
+    "moduleName": "fastsim.subsystem",
     "path": "fastsim/v0.16.1/api#Subsystem"
   },
   "fastsim.blocks": {

@@ -1,22 +1,6 @@
 [
   {
     "type": "module",
-    "name": "fastsim",
-    "description": "",
-    "path": "fastsim/v0.16.1/api#fastsim",
-    "packageId": "fastsim",
-    "moduleName": "fastsim"
-  },
-  {
-    "type": "class",
-    "name": "Connection",
-    "description": "Directed connection between block ports.",
-    "path": "fastsim/v0.16.1/api#Connection",
-    "packageId": "fastsim",
-    "moduleName": "fastsim"
-  },
-  {
-    "type": "module",
     "name": "fastsim.adapter",
     "description": "",
     "path": "fastsim/v0.16.1/api#fastsim-adapter",
@@ -30,6 +14,22 @@
     "path": "fastsim/v0.16.1/api#adapt",
     "packageId": "fastsim",
     "moduleName": "fastsim.adapter"
+  },
+  {
+    "type": "module",
+    "name": "fastsim.connection",
+    "description": "",
+    "path": "fastsim/v0.16.1/api#fastsim-connection",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.connection"
+  },
+  {
+    "type": "class",
+    "name": "Connection",
+    "description": "Class to handle input-output relations of blocks by connecting them (directed graph)",
+    "path": "fastsim/v0.16.1/api#Connection",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.connection"
   },
   {
     "type": "module",
@@ -849,27 +849,27 @@
   },
   {
     "type": "module",
-    "name": "fastsim.structural",
+    "name": "fastsim.subsystem",
     "description": "",
-    "path": "fastsim/v0.16.1/api#fastsim-structural",
+    "path": "fastsim/v0.16.1/api#fastsim-subsystem",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural"
+    "moduleName": "fastsim.subsystem"
   },
   {
     "type": "class",
     "name": "Interface",
-    "description": "Interface block of a subsystem: exposes inner block ports at the",
+    "description": "Bare-bone block that serves as a data interface for the 'Subsystem' class.",
     "path": "fastsim/v0.16.1/api#Interface",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural"
+    "moduleName": "fastsim.subsystem"
   },
   {
     "type": "class",
     "name": "Subsystem",
-    "description": "Hierarchical subsystem: encapsulates blocks and connections as a single",
+    "description": "Subsystem class that holds its own blocks and connecions and",
     "path": "fastsim/v0.16.1/api#Subsystem",
     "packageId": "fastsim",
-    "moduleName": "fastsim.structural"
+    "moduleName": "fastsim.subsystem"
   },
   {
     "type": "module",
@@ -1716,7 +1716,7 @@
   {
     "type": "class",
     "name": "ZeroCrossing",
-    "description": "Event that triggers when an event function crosses zero in either",
+    "description": "Subclass of base 'Event' that triggers if the event function crosses zero.",
     "path": "fastsim/v0.16.1/api#ZeroCrossing",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
@@ -1724,7 +1724,7 @@
   {
     "type": "class",
     "name": "ZeroCrossingUp",
-    "description": "Event that triggers only on an upward (negative-to-positive) zero",
+    "description": "Modification of standard 'ZeroCrossing' event where events are only triggered",
     "path": "fastsim/v0.16.1/api#ZeroCrossingUp",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
@@ -1732,7 +1732,7 @@
   {
     "type": "class",
     "name": "ZeroCrossingDown",
-    "description": "Event that triggers only on a downward (positive-to-negative) zero",
+    "description": "Modification of standard 'ZeroCrossing' event where events are only triggered",
     "path": "fastsim/v0.16.1/api#ZeroCrossingDown",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
@@ -1740,7 +1740,7 @@
   {
     "type": "class",
     "name": "Schedule",
-    "description": "Event that triggers on a periodic time schedule (a fixed start time and",
+    "description": "Subclass of base 'Event' that triggers dependent on the evaluation time.",
     "path": "fastsim/v0.16.1/api#Schedule",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
@@ -1748,7 +1748,7 @@
   {
     "type": "class",
     "name": "ScheduleList",
-    "description": "Event that triggers at an explicit list of scheduled times, invoking its",
+    "description": "Subclass of base 'Schedule' that triggers dependent on the evaluation time.",
     "path": "fastsim/v0.16.1/api#ScheduleList",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
@@ -1756,7 +1756,7 @@
   {
     "type": "class",
     "name": "Condition",
-    "description": "Event that triggers when a user-supplied boolean condition becomes true,",
+    "description": "Subclass of base 'Event' that triggers if the event function evaluates to 'True',",
     "path": "fastsim/v0.16.1/api#Condition",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
@@ -1796,7 +1796,7 @@
   {
     "type": "class",
     "name": "SSPRK22",
-    "description": "Strong Stability Preserving Runge-Kutta, 2 stages, 2nd order (Heun).",
+    "description": "Two-stage, 2nd order Strong Stability Preserving (SSP) Runge-Kutta method.",
     "path": "fastsim/v0.16.1/api#SSPRK22",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1804,7 +1804,7 @@
   {
     "type": "class",
     "name": "SSPRK33",
-    "description": "Strong Stability Preserving Runge-Kutta, 3 stages, 3rd order (Shu-Osher).",
+    "description": "Three-stage, 3rd order optimal SSP Runge-Kutta method.",
     "path": "fastsim/v0.16.1/api#SSPRK33",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1812,7 +1812,7 @@
   {
     "type": "class",
     "name": "SSPRK34",
-    "description": "Strong Stability Preserving Runge-Kutta, 4 stages, 3rd order, with an enlarged stability region.",
+    "description": "Four-stage, 3rd order SSP Runge-Kutta method with SSP coefficient 2.",
     "path": "fastsim/v0.16.1/api#SSPRK34",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1820,7 +1820,7 @@
   {
     "type": "class",
     "name": "RK4",
-    "description": "Classic Runge-Kutta, 4 stages, 4th order.",
+    "description": "Classical four-stage, 4th order explicit Runge-Kutta method.",
     "path": "fastsim/v0.16.1/api#RK4",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1828,7 +1828,7 @@
   {
     "type": "class",
     "name": "EUF",
-    "description": "Explicit (forward) Euler, 1st order. The simplest explicit integrator; fixed step, non-stiff.",
+    "description": "Explicit forward Euler method. First-order, single-stage.",
     "path": "fastsim/v0.16.1/api#EUF",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1836,7 +1836,7 @@
   {
     "type": "class",
     "name": "EUB",
-    "description": "Implicit (backward) Euler, 1st order. L-stable, fixed step; a robust choice for stiff problems.",
+    "description": "Implicit backward Euler method. First-order, A-stable and L-stable.",
     "path": "fastsim/v0.16.1/api#EUB",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1844,7 +1844,7 @@
   {
     "type": "class",
     "name": "RKF21",
-    "description": "Runge-Kutta-Fehlberg embedded pair, orders 2 and 1, for adaptive step-size control.",
+    "description": "Three-stage, 2nd order Runge-Kutta-Fehlberg method with embedded 1st order error estimate.",
     "path": "fastsim/v0.16.1/api#RKF21",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1852,7 +1852,7 @@
   {
     "type": "class",
     "name": "RKBS32",
-    "description": "Bogacki-Shampine embedded pair, orders 3 and 2 (the method behind MATLAB's ode23).",
+    "description": "Bogacki-Shampine 3(2) pair. Four-stage, 3rd order with FSAL property.",
     "path": "fastsim/v0.16.1/api#RKBS32",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1860,7 +1860,7 @@
   {
     "type": "class",
     "name": "RKF45",
-    "description": "Runge-Kutta-Fehlberg embedded pair, orders 4 and 5, for adaptive step-size control.",
+    "description": "Runge-Kutta-Fehlberg 4(5) pair. Six stages, 4th order propagation with",
     "path": "fastsim/v0.16.1/api#RKF45",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1868,7 +1868,7 @@
   {
     "type": "class",
     "name": "RKCK54",
-    "description": "Cash-Karp embedded Runge-Kutta pair, orders 5 and 4, for adaptive step-size control.",
+    "description": "Cash-Karp 5(4) pair. Six stages, 5th order with embedded 4th order",
     "path": "fastsim/v0.16.1/api#RKCK54",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1876,7 +1876,7 @@
   {
     "type": "class",
     "name": "RKDP54",
-    "description": "Dormand-Prince embedded Runge-Kutta pair, orders 5 and 4 (the method behind MATLAB's ode45).",
+    "description": "Dormand-Prince 5(4) pair (DOPRI5). Seven stages, 5th order with",
     "path": "fastsim/v0.16.1/api#RKDP54",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1884,7 +1884,7 @@
   {
     "type": "class",
     "name": "RKV65",
-    "description": "Verner embedded Runge-Kutta pair, orders 6 and 5, for adaptive step-size control.",
+    "description": "Verner 6(5) \"most robust\" pair. Nine stages, 6th order with",
     "path": "fastsim/v0.16.1/api#RKV65",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1892,7 +1892,7 @@
   {
     "type": "class",
     "name": "RKF78",
-    "description": "Runge-Kutta-Fehlberg embedded pair, orders 7 and 8, for adaptive step-size control.",
+    "description": "Runge-Kutta-Fehlberg 7(8) pair. Thirteen stages, 7th order propagation",
     "path": "fastsim/v0.16.1/api#RKF78",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1900,7 +1900,7 @@
   {
     "type": "class",
     "name": "RKDP87",
-    "description": "Dormand-Prince embedded Runge-Kutta pair, orders 8 and 7, for adaptive step-size control.",
+    "description": "Dormand-Prince 8(7) pair (DOP853). Thirteen stages, 8th order with",
     "path": "fastsim/v0.16.1/api#RKDP87",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1908,7 +1908,7 @@
   {
     "type": "class",
     "name": "DIRK2",
-    "description": "Diagonally Implicit Runge-Kutta, 2nd order.",
+    "description": "Two-stage, 2nd order DIRK method. L-stable, SSP-optimal, symplectic.",
     "path": "fastsim/v0.16.1/api#DIRK2",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1916,7 +1916,7 @@
   {
     "type": "class",
     "name": "DIRK3",
-    "description": "Diagonally Implicit Runge-Kutta, 3rd order. L-stable, for stiff problems.",
+    "description": "Four-stage, 3rd order L-stable DIRK method. Stiffly accurate.",
     "path": "fastsim/v0.16.1/api#DIRK3",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1924,7 +1924,7 @@
   {
     "type": "class",
     "name": "ESDIRK4",
-    "description": "Explicit-first-stage Singly Diagonally Implicit Runge-Kutta, 4th order.",
+    "description": "Six-stage, 4th order ESDIRK method. L-stable and stiffly accurate.",
     "path": "fastsim/v0.16.1/api#ESDIRK4",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1932,7 +1932,7 @@
   {
     "type": "class",
     "name": "ESDIRK32",
-    "description": "Explicit-first-stage Singly Diagonally Implicit Runge-Kutta embedded pair, orders 3 and 2, for adaptive step-size control.",
+    "description": "Four-stage, 3rd order ESDIRK method with embedded 2nd order error",
     "path": "fastsim/v0.16.1/api#ESDIRK32",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1940,7 +1940,7 @@
   {
     "type": "class",
     "name": "ESDIRK43",
-    "description": "Explicit-first-stage Singly Diagonally Implicit Runge-Kutta embedded pair, orders 4 and 3, for adaptive step-size control.",
+    "description": "Six-stage, 4th order ESDIRK method with embedded 3rd order error",
     "path": "fastsim/v0.16.1/api#ESDIRK43",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1948,7 +1948,7 @@
   {
     "type": "class",
     "name": "ESDIRK54",
-    "description": "Explicit-first-stage Singly Diagonally Implicit Runge-Kutta embedded pair, orders 5 and 4, for adaptive step-size control.",
+    "description": "Seven-stage, 5th order ESDIRK method with embedded 4th order error",
     "path": "fastsim/v0.16.1/api#ESDIRK54",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1956,7 +1956,7 @@
   {
     "type": "class",
     "name": "GEAR52A",
-    "description": "Gear-type backward differentiation formula (BDF) with adaptive order (up to 5) and adaptive step size.",
+    "description": "Variable-step, variable-order BDF (orders 2--5). Adapts both timestep",
     "path": "fastsim/v0.16.1/api#GEAR52A",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
@@ -1964,7 +1964,7 @@
   {
     "type": "class",
     "name": "SteadyState",
-    "description": "Steady-state (DC operating point) solver.",
+    "description": "Pseudo-solver for computing the DC operating point (steady state).",
     "path": "fastsim/v0.16.1/api#SteadyState",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
