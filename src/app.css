@@ -141,6 +141,16 @@
 	--shadow-glow: 0 0 20px rgba(0, 112, 192, 0.25);
 }
 
+/* FastSim docs: switch the accent from PathSim blue to the FastSim red while
+   browsing the fastsim package (set via data-package on <html> in the layout).
+   Placed after the theme blocks so it wins for both light and dark. */
+[data-package='fastsim'] {
+	--accent: #d14129;
+	--accent-hover: #e24e30;
+	--accent-bg: rgba(209, 65, 41, 0.15);
+	--shadow-glow: 0 0 20px rgba(209, 65, 41, 0.25);
+}
+
 /* Reset */
 *,
 *::before,
