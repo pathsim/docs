@@ -1,0 +1,58 @@
+[
+  {
+    "type": "module",
+    "name": "fastsim.blocks",
+    "description": "",
+    "path": "fastsim/v0.3.0/api#fastsim-blocks",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks"
+  },
+  {
+    "type": "class",
+    "name": "TransferFunction",
+    "description": "Transfer function in pole-residue-constant form.",
+    "path": "fastsim/v0.3.0/api#TransferFunction",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks"
+  },
+  {
+    "type": "module",
+    "name": "fastsim.jit.compiler",
+    "description": "",
+    "path": "fastsim/v0.3.0/api#fastsim-jit-compiler",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.compiler"
+  },
+  {
+    "type": "class",
+    "name": "JitCompileError",
+    "description": "Raised when a function cannot be JIT compiled.",
+    "path": "fastsim/v0.3.0/api#JitCompileError",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.compiler"
+  },
+  {
+    "type": "function",
+    "name": "try_compile",
+    "description": "Try to compile a Python function to JIT IR.",
+    "path": "fastsim/v0.3.0/api#try_compile",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.compiler"
+  },
+  {
+    "type": "module",
+    "name": "fastsim.jit.interpreter",
+    "description": "",
+    "path": "fastsim/v0.3.0/api#fastsim-jit-interpreter",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.interpreter"
+  },
+  {
+    "type": "function",
+    "name": "interpret",
+    "description": "Interpret a JIT IR dict and return output values.",
+    "path": "fastsim/v0.3.0/api#interpret",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.interpreter"
+  }
+]

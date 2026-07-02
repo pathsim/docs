@@ -27,12 +27,18 @@ def extract_api(
     source_path: Path,
     root_modules: list[str],
     collector: Any = None,
+    stub_package: bool = False,
 ) -> dict[str, Any]:
     """Extract API documentation for a package.
 
     Args:
         collector: Optional FigureCollector that resolves/renders docstring
             figures and TikZ diagrams into the served figures directory.
+        stub_package: For compiled/Rust-backed packages documented via committed
+            .pyi stubs (e.g. fastsim). Keeps the API page to the curated public
+            surface: drops module-level docstrings (implementation notes),
+            drops source snippets (the stub, not the real code), and hides
+            private (underscore-prefixed) members.
     """
     if not source_path.exists():
         print(f"    Warning: Source path not found: {source_path}")
@@ -51,12 +57,37 @@ def extract_api(
 
             try:
                 module_data = _extract_module(source_path, module_path, collector)
+                if module_data and stub_package:
+                    _apply_stub_package(module_data)
                 if module_data and (module_data["classes"] or module_data["functions"]):
                     result["modules"][module_path] = module_data
             except Exception as e:
                 print(f"    Warning: Failed to extract {module_path}: {e}")
 
     return result
+
+
+def _apply_stub_package(module_data: dict) -> None:
+    """In-place: reduce a module to its curated public surface for a stub
+    package — drop the module docstring, drop source snippets, and hide
+    private (underscore-prefixed) classes, functions and methods."""
+    module_data["description"] = ""
+    module_data["docstring_html"] = ""
+    module_data["classes"] = [
+        c for c in module_data["classes"] if not c["name"].startswith("_")
+    ]
+    module_data["functions"] = [
+        f for f in module_data["functions"] if not f["name"].startswith("_")
+    ]
+    for cls in module_data["classes"]:
+        cls["source"] = None
+        cls["methods"] = [
+            m for m in cls.get("methods", []) if not m["name"].startswith("_")
+        ]
+        for method in cls["methods"]:
+            method["source"] = None
+    for func in module_data["functions"]:
+        func["source"] = None
 
 
 def _discover_modules(source_path: Path, root_module: str) -> list[str]:
@@ -173,7 +204,12 @@ def _is_defined_here(member: griffe.Object, module_path: str) -> bool:
         if hasattr(member, 'canonical_path'):
             canonical = str(member.canonical_path)
             source_module = canonical.rsplit('.', 1)[0] if '.' in canonical else canonical
-            return source_module == module_path
+            if source_module == module_path:
+                return True
+            # Re-exports from an internal (underscore-prefixed) submodule are
+            # documented on the parent (e.g. fastsim.blocks re-exports its
+            # generated classes from fastsim.blocks._generated).
+            return source_module.startswith(module_path + "._")
         return True
     except Exception:
         return True

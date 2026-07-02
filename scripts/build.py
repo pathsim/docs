@@ -405,6 +405,7 @@ def build_version(
             pkg_config["source"],
             pkg_config["root_modules"],
             collector,
+            stub_package=pkg_config.get("stub_package", False),
         )
         if collector and (collector.tikz_rendered or collector.tikz_failed):
             print(f"      TikZ: {collector.tikz_rendered} rendered, {collector.tikz_failed} fell back to source")
