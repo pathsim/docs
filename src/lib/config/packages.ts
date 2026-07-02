@@ -11,7 +11,7 @@ export const external = {
 	consulting: 'https://milanrother.com/#services'
 };
 
-export type PackageId = 'pathsim' | 'chem' | 'batt' | 'vehicle' | 'flight' | 'rf' | 'fmi';
+export type PackageId = 'pathsim' | 'fastsim' | 'chem' | 'batt' | 'vehicle' | 'flight' | 'rf' | 'fmi';
 
 export interface Feature {
 	title: string;
@@ -129,6 +129,59 @@ scope.plot()`,
 		pyodidePackages: [
 			{ pip: 'pathsim', import: 'pathsim', pre: true }
 		]
+	},
+	fastsim: {
+		id: 'fastsim',
+		name: 'FastSim',
+		shortName: 'fastsim',
+		description: 'Rust reimplementation of PathSim with an identical Python API, JIT compilation, and standalone C code generation.',
+		logo: 'fastsim_logo.png',
+		docs: 'fastsim',
+		api: 'fastsim/api',
+		pypi: null,
+		conda: null,
+		github: `${external.github}/fastsim`,
+		features: [
+			{ title: 'Rust Core', description: 'Native Rust engine with an identical PathSim Python API — swap the import' },
+			{ title: '21 Solvers', description: 'Explicit, implicit, and adaptive integrators, mirroring pathsim.solvers' },
+			{ title: 'JIT + Autodiff', description: 'Traces Python functions to Rust IR with symbolic Jacobians' },
+			{ title: 'C Code Generation', description: 'Generate standalone C from a simulation for embedded deployment' },
+			{ title: 'DAE Blocks', description: 'Mass-matrix, semi-explicit, and fully-implicit DAE blocks' },
+			{ title: 'WebAssembly', description: 'Compiles to WASM and runs in the browser via Pyodide' }
+		],
+		installation: [],
+		quickstart: {
+			description: 'FastSim mirrors the PathSim API — the same block-diagram code runs on the Rust engine by swapping the import.',
+			code: `from fastsim import Simulation, Connection
+from fastsim.blocks import Integrator, Amplifier, Scope
+
+# Create blocks
+integ = Integrator(1.0)   # Initial value x(0) = 1.0
+amp = Amplifier(-0.5)     # Gain = -0.5
+scope = Scope()           # Records the output
+
+# Create connections
+connections = [
+    Connection(integ, amp, scope),  # integ -> amp, integ -> scope
+    Connection(amp, integ)          # amp -> integ (feedback)
+]
+
+# Build and run simulation
+sim = Simulation([integ, amp, scope], connections)
+sim.run(10.0)
+
+# Plot results
+scope.plot()`,
+			title: 'Example'
+		},
+		apiModules: [
+			{ name: 'fastsim', description: 'Main module with Simulation, Connection, and Subsystem classes' },
+			{ name: 'fastsim.blocks', description: 'Block library (Integrator, Amplifier, Scope, DAE blocks, etc.)' },
+			{ name: 'fastsim.solvers', description: 'Numerical integrators' },
+			{ name: 'fastsim.events', description: 'Event handling (zero-crossing, scheduled)' },
+			{ name: 'fastsim.jit', description: 'JIT compilation and automatic differentiation' }
+		],
+		pyodidePackages: []
 	},
 	chem: {
 		id: 'chem',
@@ -342,7 +395,7 @@ sco.plot()`,
 };
 
 // Ordered list for tabs/navigation
-export const packageOrder: PackageId[] = ['pathsim', 'chem', 'batt', 'vehicle', 'flight', 'rf', 'fmi'];
+export const packageOrder: PackageId[] = ['pathsim', 'fastsim', 'chem', 'batt', 'vehicle', 'flight', 'rf', 'fmi'];
 
 // Sidebar navigation (auto-generated from package config)
 export interface SidebarItem {

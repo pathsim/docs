@@ -1,0 +1,535 @@
+{
+  "package": "fastsim",
+  "modules": {
+    "fastsim.adapter": {
+      "name": "fastsim.adapter",
+      "description": "",
+      "docstring_html": "",
+      "classes": [],
+      "functions": [
+        {
+          "name": "adapt",
+          "description": "Clone `cls` onto the fastsim engine.",
+          "docstring_html": "<p>Clone <cite>cls</cite> onto the fastsim engine.</p>\n<p>The clone keeps <cite>cls</cite>'s name, module, qualname, attributes and custom\nmethods; only the pathsim bases in its MRO are substituted for their\nfastsim equivalents from the registry. Subclasses further up the chain are\nadapted recursively, so a hierarchy like\n<tt class=\"docutils literal\">Process <span class=\"pre\">-&gt;</span> ResidenceTime <span class=\"pre\">-&gt;</span> DynamicalSystem</tt> is fully rebased.</p>\n<p>Methods that carry an implicit <tt class=\"docutils literal\">__class__</tt> cell (anything using bare\n<tt class=\"docutils literal\">super()</tt>) are copied with a fresh cell pointing at the new clone — so\n<tt class=\"docutils literal\">super()</tt> keeps finding the right MRO.</p>\n<p>This is a clone, not in-place mutation: the original <cite>cls</cite> is untouched\nand <tt class=\"docutils literal\">isinstance(obj, cls)</tt> on an adapted instance returns <tt class=\"docutils literal\">False</tt>. Use\nthe returned class when constructing blocks for a fastsim Simulation.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>cls <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">type</span></dt>\n<dd>Toolbox block class to adapt.</dd>\n<dt>strict <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool, default True</span></dt>\n<dd>Raise <tt class=\"docutils literal\">TypeError</tt> if any ancestor in the cloned chain overrides a\nmethod/property of the fastsim base. With <tt class=\"docutils literal\">strict=False</tt> the override\nis kept and a warning is emitted.</dd>\n</dl>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>type</dt>\n<dd>New class, rebased on fastsim.</dd>\n</dl>\n",
+          "source": null,
+          "signature": "(cls: type, strict: bool = True, _memo: Optional[dict[type, type]] = None)",
+          "parameters": [
+            {
+              "name": "cls",
+              "type": "type",
+              "default": null,
+              "description": "Toolbox block class to adapt."
+            },
+            {
+              "name": "strict",
+              "type": "bool",
+              "default": "True",
+              "description": "Raise ``TypeError`` if any ancestor in the cloned chain overrides a method/property of the fastsim base. With ``strict=False`` the override is kept and a warning is emitted."
+            },
+            {
+              "name": "_memo",
+              "type": "Optional[dict[type, type]]",
+              "default": "None",
+              "description": ""
+            }
+          ],
+          "returns": "type"
+        }
+      ]
+    },
+    "fastsim.port": {
+      "name": "fastsim.port",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "CaptureShim",
+          "description": "Stand-in for a pathsim ``Solver`` that captures the RHS, never integrates.",
+          "docstring_html": "<p>Stand-in for a pathsim <tt class=\"docutils literal\">Solver</tt> that captures the RHS, never integrates.</p>\n<p>Installed on a wrapped pathsim block as <tt class=\"docutils literal\">block.engine</tt> for Tier-3 ports.\nThe block's own <tt class=\"docutils literal\">step</tt> / <tt class=\"docutils literal\">solve</tt> call <tt class=\"docutils literal\">engine.step(f, dt)</tt> /\n<tt class=\"docutils literal\">engine.solve(f, J, dt)</tt> — we store <tt class=\"docutils literal\">f</tt> so the fastsim wrapper can\nforward it to the real engine. <tt class=\"docutils literal\">state</tt> is written by the wrapper before\neach evaluation so the wrapped block sees the current integrator state.</p>\n",
+          "source": null,
+          "bases": [],
+          "methods": [
+            {
+              "name": "get",
+              "description": "",
+              "docstring_html": "",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "set",
+              "description": "",
+              "docstring_html": "",
+              "source": null,
+              "signature": "(x)",
+              "parameters": [
+                {
+                  "name": "x",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "step",
+              "description": "",
+              "docstring_html": "",
+              "source": null,
+              "signature": "(f, dt)",
+              "parameters": [
+                {
+                  "name": "f",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "dt",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "solve",
+              "description": "",
+              "docstring_html": "",
+              "source": null,
+              "signature": "(f, J, dt)",
+              "parameters": [
+                {
+                  "name": "f",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "J",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "dt",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "buffer",
+              "description": "",
+              "docstring_html": "",
+              "source": null,
+              "signature": "(dt)",
+              "parameters": [
+                {
+                  "name": "dt",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "revert",
+              "description": "",
+              "docstring_html": "",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "reset",
+              "description": "",
+              "docstring_html": "",
+              "source": null,
+              "signature": "(initial_value = None)",
+              "parameters": [
+                {
+                  "name": "initial_value",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "_x",
+              "description": "",
+              "type": null,
+              "value": "np.atleast_1d(np.asarray(initial_value, dtype=float)).copy()"
+            },
+            {
+              "name": "_f",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "state",
+              "description": "",
+              "type": null,
+              "value": null
+            }
+          ],
+          "parameters": [
+            {
+              "name": "initial_value",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "port",
+          "description": "Port a pathsim block onto the fastsim engine, accelerating where possible.",
+          "docstring_html": "<p>Port a pathsim block onto the fastsim engine, accelerating where possible.</p>\n<p>Accepts a pathsim block <em>class</em> or <em>instance</em> and returns a fastsim-native\nequivalent. The block is accelerated as far as it can be and falls back to a\nfaithful Python shim otherwise. fastsim blocks and classes pass through\nunchanged. Each decision is logged to the <tt class=\"docutils literal\">fastsim.port</tt> logger.</p>\n<p>The strategy is chosen automatically:</p>\n<ul class=\"simple\">\n<li><em>passthrough</em> -- the input is already a fastsim block (or block class).</li>\n<li><em>accelerate</em> -- the block exposes clean <tt class=\"docutils literal\">op_dyn</tt> / <tt class=\"docutils literal\">op_alg</tt> operators\nand overrides no engine hooks; its right-hand-side callables are extracted\nand JIT-traced into the Rust core, running at full native speed.</li>\n<li><em>shim</em> -- a block with custom <tt class=\"docutils literal\">step</tt> / <tt class=\"docutils literal\">solve</tt> or internal events keeps\nits own methods while fastsim's engine drives the integration through a\ncapture shim; internal events are translated to fastsim events.</li>\n</ul>\n<p>Passing a class is the intended path for pathsim <em>toolbox</em> blocks: port the\nclass once, then construct instances and wire them with fastsim\n<tt class=\"docutils literal\">Connection</tt> objects as usual.</p>\n<div class=\"section\" id=\"example\">\n<h4>Example</h4>\n<p>Use a pathsim toolbox block class inside a fastsim simulation:</p>\n<pre class=\"code python literal-block\">\n<span class=\"kn\">from</span> <span class=\"nn\">fastsim</span> <span class=\"kn\">import</span> <span class=\"n\">Simulation</span><span class=\"p\">,</span> <span class=\"n\">Connection</span><span class=\"p\">,</span> <span class=\"n\">port</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">chem_toolbox</span> <span class=\"kn\">import</span> <span class=\"n\">Reactor</span>          <span class=\"c1\"># a pathsim block class</span><span class=\"w\">\n\n</span><span class=\"n\">Reactor</span> <span class=\"o\">=</span> <span class=\"n\">port</span><span class=\"p\">(</span><span class=\"n\">Reactor</span><span class=\"p\">)</span>                   <span class=\"c1\"># port once</span><span class=\"w\">\n</span><span class=\"n\">r</span> <span class=\"o\">=</span> <span class=\"n\">Reactor</span><span class=\"p\">(</span><span class=\"n\">rate</span><span class=\"o\">=</span><span class=\"mf\">2.0</span><span class=\"p\">)</span>                     <span class=\"c1\"># instances are fastsim blocks</span><span class=\"w\">\n</span><span class=\"n\">sim</span> <span class=\"o\">=</span> <span class=\"n\">Simulation</span><span class=\"p\">(</span><span class=\"w\">\n</span>    <span class=\"n\">blocks</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">r</span><span class=\"p\">,</span> <span class=\"n\">scope</span><span class=\"p\">],</span><span class=\"w\">\n</span>    <span class=\"n\">connections</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">r</span><span class=\"p\">,</span> <span class=\"n\">scope</span><span class=\"p\">)],</span>   <span class=\"c1\"># wired like any fastsim block</span><span class=\"w\">\n</span>    <span class=\"p\">)</span>\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>obj <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">type | pathsim.blocks.Block</span></dt>\n<dd>A pathsim block class or instance, or an already-fastsim block (class).</dd>\n</dl>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>type | fastsim.blocks.Block</dt>\n<dd>A fastsim-native block class when <cite>obj</cite> is a class, otherwise a\nfastsim-native block instance. Build connections against the returned\nobject.</dd>\n</dl>\n</div>\n",
+          "source": null,
+          "signature": "(obj)",
+          "parameters": [
+            {
+              "name": "obj",
+              "type": null,
+              "default": null,
+              "description": "A pathsim block class or instance, or an already-fastsim block (class)."
+            }
+          ],
+          "returns": null
+        }
+      ]
+    },
+    "fastsim.simulation": {
+      "name": "fastsim.simulation",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "Simulation",
+          "description": "Transient simulation that accepts fastsim *and* pathsim blocks alike.",
+          "docstring_html": "<p>Transient simulation that accepts fastsim <em>and</em> pathsim blocks alike.</p>\n<p>A drop-in replacement for the core <tt class=\"docutils literal\">Simulation</tt> that makes block\nprovenance irrelevant at the call site: every block in <cite>blocks</cite> is run\nthrough :func:`fastsim.port.port` before reaching the Rust engine. fastsim\nblocks pass through untouched; pathsim blocks are accelerated where possible\nand shimmed otherwise. Each porting decision is logged to the\n<tt class=\"docutils literal\">fastsim.port</tt> logger and surfaced on stdout when <cite>log</cite> is set, alongside\nthe run log.</p>\n<p>All other behaviour, methods and attributes (<tt class=\"docutils literal\">run</tt>, <tt class=\"docutils literal\">reset</tt>,\n<tt class=\"docutils literal\">steadystate</tt>, <tt class=\"docutils literal\">add_block</tt>, <tt class=\"docutils literal\">time</tt>, <tt class=\"docutils literal\">blocks</tt>, ...) are those of the\ncore simulation engine and are delegated transparently.</p>\n<div class=\"section\" id=\"note\">\n<h4>Note</h4>\n<p>fastsim <tt class=\"docutils literal\">Connection</tt> objects only accept fastsim blocks, so a connected\nblock must already be ported by the time the connection is built (the\n<em>port-first</em> convention). Auto-porting therefore covers blocks supplied\nun-ported in <cite>blocks</cite>; for connected toolbox blocks, port the class first\n(<tt class=\"docutils literal\">MyBlock = port(MyBlock)</tt>).</p>\n</div>\n<div class=\"section\" id=\"example\">\n<h4>Example</h4>\n<p>A pathsim block instance and a fastsim block in the same system:</p>\n<pre class=\"code python literal-block\">\n<span class=\"kn\">from</span> <span class=\"nn\">fastsim</span> <span class=\"kn\">import</span> <span class=\"n\">Simulation</span><span class=\"p\">,</span> <span class=\"n\">Connection</span><span class=\"p\">,</span> <span class=\"n\">port</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">fastsim.blocks</span> <span class=\"kn\">import</span> <span class=\"n\">Scope</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">pathsim.blocks</span> <span class=\"kn\">import</span> <span class=\"n\">Integrator</span>      <span class=\"c1\"># a pathsim block</span><span class=\"w\">\n\n</span><span class=\"n\">integ</span> <span class=\"o\">=</span> <span class=\"n\">port</span><span class=\"p\">(</span><span class=\"n\">Integrator</span><span class=\"p\">())</span>                 <span class=\"c1\"># port-first for wiring</span><span class=\"w\">\n</span><span class=\"n\">scope</span> <span class=\"o\">=</span> <span class=\"n\">Scope</span><span class=\"p\">()</span><span class=\"w\">\n</span><span class=\"n\">sim</span> <span class=\"o\">=</span> <span class=\"n\">Simulation</span><span class=\"p\">(</span><span class=\"w\">\n</span>    <span class=\"n\">blocks</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">integ</span><span class=\"p\">,</span> <span class=\"n\">scope</span><span class=\"p\">],</span><span class=\"w\">\n</span>    <span class=\"n\">connections</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">integ</span><span class=\"p\">,</span> <span class=\"n\">scope</span><span class=\"p\">)],</span><span class=\"w\">\n</span>    <span class=\"p\">)</span><span class=\"w\">\n</span><span class=\"n\">sim</span><span class=\"o\">.</span><span class=\"n\">run</span><span class=\"p\">(</span><span class=\"mi\">10</span><span class=\"p\">)</span>\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>blocks <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">list[Block], optional</span></dt>\n<dd>Blocks in the system. fastsim and pathsim blocks may be mixed; pathsim\nblocks are ported automatically.</dd>\n<dt>connections <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">list[Connection], optional</span></dt>\n<dd>Connections between block ports (built against fastsim / ported blocks).</dd>\n<dt>Solver <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">Solver, optional</span></dt>\n<dd>Numerical integrator class (default <tt class=\"docutils literal\">SSPRK22</tt>); forwarded to the core\nengine along with any further keyword arguments (<tt class=\"docutils literal\">dt</tt>, <tt class=\"docutils literal\">log</tt>,\n<tt class=\"docutils literal\">tolerance_lte_abs</tt>, ...).</dd>\n</dl>\n</div>\n",
+          "source": null,
+          "bases": [],
+          "methods": [
+            {
+              "name": "run_streaming",
+              "description": "Run the simulation as a generator, yielding at a fixed rate.",
+              "docstring_html": "<p>Run the simulation as a generator, yielding at a fixed rate.</p>\n<p>Drop-in for pathsim's <tt class=\"docutils literal\">run_streaming</tt>: a Python generator that\nadvances the engine and yields at a fixed WALL-CLOCK rate (<cite>tickrate</cite>\nyields per real second). Each yield is the return value of\n<cite>func_callback</cite> (or <tt class=\"docutils literal\">None</tt>), so a caller can extract intermediate\nresults, inject mutations, or stop between ticks. Unlike the core\nengine's blocking <tt class=\"docutils literal\">run_streaming</tt> (which runs to completion and\nreturns all frames at once), this cedes control between chunks, making\nit suitable for live UIs.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>duration <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>simulation time to advance (in time units)</dd>\n<dt>reset <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>reset the simulation before running (default False)</dd>\n<dt>adaptive <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>use adaptive timesteps if the solver is adaptive (default True)</dd>\n<dt>tickrate <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>number of yields per time unit, i.e. <tt class=\"docutils literal\">duration * tickrate</tt> ticks\ntotal (default 10)</dd>\n<dt>func_callback <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">callable, optional</span></dt>\n<dd>called with no arguments at each tick; its return value is yielded</dd>\n</dl>\n<p><strong>Yields</strong></p>\n<dl class=\"docutils\">\n<dt>object</dt>\n<dd><tt class=\"docutils literal\">func_callback()</tt> if callable, else <tt class=\"docutils literal\">None</tt>; a final value is\nalways yielded once the run completes.</dd>\n</dl>\n",
+              "source": null,
+              "signature": "(duration = 10.0, reset = False, adaptive = True, tickrate = 10.0, func_callback = None)",
+              "parameters": [
+                {
+                  "name": "duration",
+                  "type": null,
+                  "default": "10.0",
+                  "description": "simulation time to advance (in time units)"
+                },
+                {
+                  "name": "reset",
+                  "type": null,
+                  "default": "False",
+                  "description": "reset the simulation before running (default False)"
+                },
+                {
+                  "name": "adaptive",
+                  "type": null,
+                  "default": "True",
+                  "description": "use adaptive timesteps if the solver is adaptive (default True)"
+                },
+                {
+                  "name": "tickrate",
+                  "type": null,
+                  "default": "10.0",
+                  "description": "number of yields per time unit, i.e. ``duration * tickrate`` ticks total (default 10)"
+                },
+                {
+                  "name": "func_callback",
+                  "type": null,
+                  "default": "None",
+                  "description": "called with no arguments at each tick; its return value is yielded"
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [],
+          "parameters": [
+            {
+              "name": "blocks",
+              "type": null,
+              "default": "None",
+              "description": "Blocks in the system. fastsim and pathsim blocks may be mixed; pathsim blocks are ported automatically."
+            },
+            {
+              "name": "connections",
+              "type": null,
+              "default": "None",
+              "description": "Connections between block ports (built against fastsim / ported blocks)."
+            },
+            {
+              "name": "events",
+              "type": null,
+              "default": "None",
+              "description": ""
+            },
+            {
+              "name": "dt",
+              "type": null,
+              "default": "0.01",
+              "description": ""
+            },
+            {
+              "name": "dt_min",
+              "type": null,
+              "default": "1e-16",
+              "description": ""
+            },
+            {
+              "name": "dt_max",
+              "type": null,
+              "default": "None",
+              "description": ""
+            },
+            {
+              "name": "Solver",
+              "type": null,
+              "default": "None",
+              "description": "Numerical integrator class (default ``SSPRK22``); forwarded to the core engine along with any further keyword arguments (``dt``, ``log``, ``tolerance_lte_abs``, ...)."
+            },
+            {
+              "name": "tolerance_fpi",
+              "type": null,
+              "default": "1e-10",
+              "description": ""
+            },
+            {
+              "name": "iterations_max",
+              "type": null,
+              "default": "200",
+              "description": ""
+            },
+            {
+              "name": "log",
+              "type": null,
+              "default": "True",
+              "description": ""
+            },
+            {
+              "name": "diagnostics",
+              "type": null,
+              "default": "False",
+              "description": ""
+            },
+            {
+              "name": "solver_kwargs",
+              "type": null,
+              "default": "{}",
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "fastsim.blocks": {
+      "name": "fastsim.blocks",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "Scope",
+          "description": "Scope block with plot() method for quick visualization.",
+          "docstring_html": "<p>Scope block with plot() method for quick visualization.</p>\n",
+          "source": null,
+          "bases": [
+            "fastsim._fastsim.Block"
+          ],
+          "methods": [
+            {
+              "name": "plot",
+              "description": "Plot recorded data with interactive legend picking.",
+              "docstring_html": "<p>Plot recorded data with interactive legend picking.</p>\n",
+              "source": null,
+              "signature": "(args = (), kwargs = {})",
+              "parameters": [
+                {
+                  "name": "args",
+                  "type": null,
+                  "default": "()",
+                  "description": ""
+                },
+                {
+                  "name": "kwargs",
+                  "type": null,
+                  "default": "{}",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [],
+          "parameters": [
+            {
+              "name": "labels",
+              "type": null,
+              "default": "None",
+              "description": ""
+            },
+            {
+              "name": "sampling_period",
+              "type": null,
+              "default": "None",
+              "description": ""
+            },
+            {
+              "name": "t_wait",
+              "type": null,
+              "default": "0.0",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "Spectrum",
+          "description": "Spectrum block with plot() method for frequency-domain visualization.",
+          "docstring_html": "<p>Spectrum block with plot() method for frequency-domain visualization.</p>\n",
+          "source": null,
+          "bases": [
+            "fastsim._fastsim.Block"
+          ],
+          "methods": [
+            {
+              "name": "plot",
+              "description": "Plot frequency spectrum with interactive legend picking.",
+              "docstring_html": "<p>Plot frequency spectrum with interactive legend picking.</p>\n",
+              "source": null,
+              "signature": "(args = (), kwargs = {})",
+              "parameters": [
+                {
+                  "name": "args",
+                  "type": null,
+                  "default": "()",
+                  "description": ""
+                },
+                {
+                  "name": "kwargs",
+                  "type": null,
+                  "default": "{}",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [],
+          "parameters": [
+            {
+              "name": "freq",
+              "type": null,
+              "default": "None",
+              "description": ""
+            },
+            {
+              "name": "t_wait",
+              "type": null,
+              "default": "0.0",
+              "description": ""
+            },
+            {
+              "name": "alpha",
+              "type": null,
+              "default": "0.0",
+              "description": ""
+            },
+            {
+              "name": "labels",
+              "type": null,
+              "default": "None",
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "fastsim.jit": {
+      "name": "fastsim.jit",
+      "description": "",
+      "docstring_html": "",
+      "classes": [],
+      "functions": [
+        {
+          "name": "jit",
+          "description": "Trace and compile a Python function to optimised Rust IR.",
+          "docstring_html": "<p>Trace and compile a Python function to optimised Rust IR.</p>\n<p>The returned callable evaluates the function in Rust with zero Python\noverhead per call.  Tracing is lazy by default (on first call) or\neager if <tt class=\"docutils literal\">n_x</tt> is provided.</p>\n<p>Supported operations: arithmetic, <tt class=\"docutils literal\"><span class=\"pre\">np.sin/cos/tan/exp/log/tanh/...</span></tt>,\n<tt class=\"docutils literal\">np.dot</tt>, <tt class=\"docutils literal\">np.clip</tt>, <tt class=\"docutils literal\">np.where</tt>, <tt class=\"docutils literal\">np.linalg.norm</tt>,\n<tt class=\"docutils literal\">np.cross</tt>, matrix multiply (<tt class=\"docutils literal\">&#64;</tt>), <tt class=\"docutils literal\">np.sum</tt>, and more.\nUnsupported patterns fall back to the original Python function.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>func <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">callable</span></dt>\n<dd>Python function with signature <tt class=\"docutils literal\">f(x)</tt> or <tt class=\"docutils literal\">f(x, t)</tt>.</dd>\n<dt>n_x <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int, optional</span></dt>\n<dd>Input dimension for eager tracing.  If omitted, tracing is\ndeferred to the first call.</dd>\n</dl>\n",
+          "source": null,
+          "signature": "(func, n_x = None)",
+          "parameters": [
+            {
+              "name": "func",
+              "type": null,
+              "default": null,
+              "description": "Python function with signature ``f(x)`` or ``f(x, t)``."
+            },
+            {
+              "name": "n_x",
+              "type": null,
+              "default": "None",
+              "description": "Input dimension for eager tracing. If omitted, tracing is deferred to the first call."
+            }
+          ],
+          "returns": null
+        },
+        {
+          "name": "jacobian",
+          "description": "Compute the Jacobian of a Python function via symbolic AD.",
+          "docstring_html": "<p>Compute the Jacobian of a Python function via symbolic AD.</p>\n<p>The returned callable evaluates the full Jacobian matrix in Rust.\nDifferentiation is performed symbolically on the traced computation\ngraph — no finite differences, no tape replay.  The Jacobian graph\nis optimised (constant folding, CSE) before evaluation.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>func <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">callable</span></dt>\n<dd>Python function with signature <tt class=\"docutils literal\">f(x)</tt> or <tt class=\"docutils literal\">f(x, t)</tt>.\nMust return a list/array of floats.</dd>\n<dt>n_x <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int, optional</span></dt>\n<dd>Input dimension for eager tracing.</dd>\n</dl>\n",
+          "source": null,
+          "signature": "(func, n_x = None)",
+          "parameters": [
+            {
+              "name": "func",
+              "type": null,
+              "default": null,
+              "description": "Python function with signature ``f(x)`` or ``f(x, t)``. Must return a list/array of floats."
+            },
+            {
+              "name": "n_x",
+              "type": null,
+              "default": "None",
+              "description": "Input dimension for eager tracing."
+            }
+          ],
+          "returns": null
+        }
+      ]
+    }
+  }
+}
