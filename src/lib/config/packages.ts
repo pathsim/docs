@@ -175,7 +175,7 @@ scope.plot()`,
 			title: 'Example'
 		},
 		apiModules: [
-			{ name: 'fastsim', description: 'Main module with Simulation, Connection, and Subsystem classes' },
+			{ name: 'fastsim', description: 'Main module with Simulation, Connection, Interface and Subsystem classes' },
 			{ name: 'fastsim.blocks', description: 'Block library (Integrator, Amplifier, Scope, DAE blocks, etc.)' },
 			{ name: 'fastsim.solvers', description: 'Numerical integrators' },
 			{ name: 'fastsim.events', description: 'Event handling (zero-crossing, scheduled)' },

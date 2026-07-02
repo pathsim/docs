@@ -1,6 +1,321 @@
 [
   {
     "type": "module",
+    "name": "fastsim",
+    "description": "",
+    "path": "fastsim/v0.16.1/api#fastsim",
+    "packageId": "fastsim",
+    "moduleName": "fastsim"
+  },
+  {
+    "type": "class",
+    "name": "Connection",
+    "description": "Class to handle input-output relations of blocks by connecting them (directed graph)",
+    "path": "fastsim/v0.16.1/api#Connection",
+    "packageId": "fastsim",
+    "moduleName": "fastsim"
+  },
+  {
+    "type": "class",
+    "name": "Interface",
+    "description": "Bare-bone block that serves as a data interface for the 'Subsystem' class.",
+    "path": "fastsim/v0.16.1/api#Interface",
+    "packageId": "fastsim",
+    "moduleName": "fastsim"
+  },
+  {
+    "type": "class",
+    "name": "Subsystem",
+    "description": "Subsystem class that holds its own blocks and connecions and",
+    "path": "fastsim/v0.16.1/api#Subsystem",
+    "packageId": "fastsim",
+    "moduleName": "fastsim"
+  },
+  {
+    "type": "class",
+    "name": "Simulation",
+    "description": "Transient simulation that accepts fastsim *and* pathsim blocks alike.",
+    "path": "fastsim/v0.16.1/api#Simulation",
+    "packageId": "fastsim",
+    "moduleName": "fastsim"
+  },
+  {
+    "type": "method",
+    "name": "to_ir",
+    "description": "Export the assembled model as hierarchical IR.",
+    "path": "fastsim/v0.16.1/api#Simulation.to_ir",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "to_c",
+    "description": "Generate standalone C99 source from the assembled model.",
+    "path": "fastsim/v0.16.1/api#Simulation.to_c",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "run_streaming",
+    "description": "Run the simulation as a generator, yielding at a fixed rate.",
+    "path": "fastsim/v0.16.1/api#Simulation.run_streaming",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "add_block",
+    "description": "Add a block, or a list of blocks.  Accepts either a single `Block`",
+    "path": "fastsim/v0.16.1/api#Simulation.add_block",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "add_connection",
+    "description": "Add a connection, or a list of connections.",
+    "path": "fastsim/v0.16.1/api#Simulation.add_connection",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "add_event",
+    "description": "Add an event (or list of events) to the simulation.",
+    "path": "fastsim/v0.16.1/api#Simulation.add_event",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "compile",
+    "description": "Statically compile this model into a fused `dX/dt = F(X, t)` tape (see",
+    "path": "fastsim/v0.16.1/api#Simulation.compile",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "delinearize",
+    "description": "Revert a previous linearization, restoring the original nonlinear blocks.",
+    "path": "fastsim/v0.16.1/api#Simulation.delinearize",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "enable_wct_trace",
+    "description": "Enable per-timestep wall-clock recording.  Subsequent `run` /",
+    "path": "fastsim/v0.16.1/api#Simulation.enable_wct_trace",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "linearize",
+    "description": "Linearize the system about the current operating point (state and inputs), replacing nonlinear blocks with their local linear approximation.",
+    "path": "fastsim/v0.16.1/api#Simulation.linearize",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "pending_ops",
+    "description": "Return a handle on the simulation's mutation queue.  Equivalent",
+    "path": "fastsim/v0.16.1/api#Simulation.pending_ops",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "periodic_steady_state",
+    "description": "Find the periodic steady-state limit cycle of period `period` by",
+    "path": "fastsim/v0.16.1/api#Simulation.periodic_steady_state",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "plot",
+    "description": "Plot the recorded results from all Scope blocks in the simulation.",
+    "path": "fastsim/v0.16.1/api#Simulation.plot",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "remove_block",
+    "description": "Remove a block (or list of blocks) from the simulation.",
+    "path": "fastsim/v0.16.1/api#Simulation.remove_block",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "remove_connection",
+    "description": "Remove a connection (or list of connections) from the simulation.",
+    "path": "fastsim/v0.16.1/api#Simulation.remove_connection",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "remove_event",
+    "description": "Remove an event (or list of events) from the simulation.",
+    "path": "fastsim/v0.16.1/api#Simulation.remove_event",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset all blocks to their initial state and the simulation time to zero (or to ``time`` if given).",
+    "path": "fastsim/v0.16.1/api#Simulation.reset",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "run",
+    "description": "Run the simulation for a given duration.",
+    "path": "fastsim/v0.16.1/api#Simulation.run",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "run_begin",
+    "description": "Begin a chunked, cooperative run (for the streaming generator).",
+    "path": "fastsim/v0.16.1/api#Simulation.run_begin",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "run_end",
+    "description": "Finalize a chunked streaming run (logs FINISHED/INTERRUPTED). Call once",
+    "path": "fastsim/v0.16.1/api#Simulation.run_end",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "run_realtime",
+    "description": "Run synchronized to wall-clock time with optional speed factor.",
+    "path": "fastsim/v0.16.1/api#Simulation.run_realtime",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "run_until",
+    "description": "Advance up to `target_time` (a chunk boundary). `end_time` is the true",
+    "path": "fastsim/v0.16.1/api#Simulation.run_until",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "steadystate",
+    "description": "Find the steady-state (DC operating point) of the system by root-finding on the residual rather than time integration.",
+    "path": "fastsim/v0.16.1/api#Simulation.steadystate",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "stop",
+    "description": "Signal a running simulation to stop cleanly at the next timestep boundary.",
+    "path": "fastsim/v0.16.1/api#Simulation.stop",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "take_wct_trace",
+    "description": "Drain the per-timestep wall-clock buffer and return the recorded",
+    "path": "fastsim/v0.16.1/api#Simulation.take_wct_trace",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "to_fmu",
+    "description": "Export this model as a source FMU (FMI 3.0, Model Exchange) written to",
+    "path": "fastsim/v0.16.1/api#Simulation.to_fmu",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "to_ir_json",
+    "description": "Export the assembled model as hierarchical IR (JSON). Each block is",
+    "path": "fastsim/v0.16.1/api#Simulation.to_ir_json",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "class",
+    "name": "StopSimulation",
+    "description": "Raised by a block or model to signal that the simulation should stop",
+    "path": "fastsim/v0.16.1/api#StopSimulation",
+    "packageId": "fastsim",
+    "moduleName": "fastsim"
+  },
+  {
+    "type": "function",
+    "name": "adapt",
+    "description": "Clone `cls` onto the fastsim engine.",
+    "path": "fastsim/v0.16.1/api#adapt",
+    "packageId": "fastsim",
+    "moduleName": "fastsim"
+  },
+  {
+    "type": "function",
+    "name": "random_uniform",
+    "description": "Stateless uniform draw in ``[0, 1)``, keyed by ``key``.",
+    "path": "fastsim/v0.16.1/api#random_uniform",
+    "packageId": "fastsim",
+    "moduleName": "fastsim"
+  },
+  {
+    "type": "function",
+    "name": "random_normal",
+    "description": "Stateless standard-normal draw ``N(0, 1)``, keyed by ``key``.",
+    "path": "fastsim/v0.16.1/api#random_normal",
+    "packageId": "fastsim",
+    "moduleName": "fastsim"
+  },
+  {
+    "type": "module",
     "name": "fastsim.adapter",
     "description": "",
     "path": "fastsim/v0.16.1/api#fastsim-adapter",

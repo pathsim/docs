@@ -1,6 +1,816 @@
 {
   "package": "fastsim",
   "modules": {
+    "fastsim": {
+      "name": "fastsim",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "Connection",
+          "description": "Class to handle input-output relations of blocks by connecting them (directed graph)",
+          "docstring_html": "<p>Class to handle input-output relations of blocks by connecting them (directed graph)\nand transfering data from the output port of the source block to the input port of\nthe target block.</p>\n<p>The default ports for connection are (0) -&gt; (0), since these are the default inputs\nthat are used in the SISO blocks.</p>\n<p><strong>Examples</strong></p>\n<p>Lets assume we have some generic blocks</p>\n<pre class=\"code python literal-block\">\n<span class=\"kn\">from</span> <span class=\"nn\">pathsim.blocks._block</span> <span class=\"kn\">import</span> <span class=\"n\">Block</span><span class=\"w\">\n\n</span><span class=\"n\">B1</span> <span class=\"o\">=</span> <span class=\"n\">Block</span><span class=\"p\">()</span><span class=\"w\">\n</span><span class=\"n\">B2</span> <span class=\"o\">=</span> <span class=\"n\">Block</span><span class=\"p\">()</span><span class=\"w\">\n</span><span class=\"n\">B3</span> <span class=\"o\">=</span> <span class=\"n\">Block</span><span class=\"p\">()</span>\n</pre>\n<p>that we want to connect. We initialize a 'Connection' with the blocks directly\nas the arguments if we want to connect the default ports (0) -&gt; (0)</p>\n<pre class=\"code python literal-block\">\n<span class=\"kn\">from</span> <span class=\"nn\">pathsim</span> <span class=\"kn\">import</span> <span class=\"n\">Connection</span><span class=\"w\">\n\n</span><span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">,</span> <span class=\"n\">B2</span><span class=\"p\">)</span>\n</pre>\n<p>which is a connection from block 'B1' to 'B2'. If we want to explicitly declare\nthe input and output ports we can do that by utilizing the '__getitem__' method\nof the blocks</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">],</span> <span class=\"n\">B2</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">])</span>\n</pre>\n<p>which is exactly the default port setup. Connecting output port (1) of 'B1' to\nthe default input port (0) of 'B2' do</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">],</span> <span class=\"n\">B2</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">])</span>\n</pre>\n<p>or just</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">],</span> <span class=\"n\">B2</span><span class=\"p\">)</span><span class=\"o\">.</span>\n</pre>\n<p>The 'Connection' class also supports multiple targets for a single source.\nThis is specified by just adding more blocks with their respective ports into\nthe constructor like this:</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">,</span> <span class=\"n\">B2</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">],</span> <span class=\"n\">B2</span><span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">],</span> <span class=\"n\">B3</span><span class=\"p\">)</span>\n</pre>\n<p>The port definitions follow the same structure as for single target connections.</p>\n<p>'self'-connections also work without a problem. This is useful for modeling direct\nfeedback of a block to itself.</p>\n<p>Port definitions support slicing. This enables direct MIMO connections. For example\nconnecting ports 0, 1, 2 of 'B1' to ports 1, 2, 3 of 'B2' works like this:</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">:</span><span class=\"mi\">2</span><span class=\"p\">],</span> <span class=\"n\">B2</span><span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">:</span><span class=\"mi\">3</span><span class=\"p\">])</span>\n</pre>\n<p>Port definitions also support lists and tuples of 'int'. For example the slice\nabove is identical to this:</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">,</span> <span class=\"mi\">1</span><span class=\"p\">],</span> <span class=\"n\">B2</span><span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">,</span> <span class=\"mi\">2</span><span class=\"p\">])</span>\n</pre>\n<p>Or to be more programmatic about it, like this:</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">prts_1</span> <span class=\"o\">=</span> <span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">,</span> <span class=\"mi\">1</span><span class=\"p\">]</span><span class=\"w\">\n</span><span class=\"n\">prts_2</span> <span class=\"o\">=</span> <span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">,</span> <span class=\"mi\">2</span><span class=\"p\">]</span><span class=\"w\">\n\n</span><span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">[</span><span class=\"n\">prts_1</span><span class=\"p\">],</span> <span class=\"n\">B2</span><span class=\"p\">[</span><span class=\"n\">prts_2</span><span class=\"p\">])</span>\n</pre>\n<p>Another way to define the ports is by using strings. Some blocks have internal\naliases for the ports that can be used instead of the integer port indices to\ndefine the connections (or access the port data):</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">[</span><span class=\"s2\">&quot;out&quot;</span><span class=\"p\">],</span> <span class=\"n\">B2</span><span class=\"p\">[</span><span class=\"s2\">&quot;in&quot;</span><span class=\"p\">])</span>\n</pre>\n<p>Or mixed with integer port indices:</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">C</span> <span class=\"o\">=</span> <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">B1</span><span class=\"p\">[</span><span class=\"s2\">&quot;out&quot;</span><span class=\"p\">],</span> <span class=\"n\">B2</span><span class=\"p\">[</span><span class=\"s2\">&quot;in&quot;</span><span class=\"p\">])</span>\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>source <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">PortReference, Block</span></dt>\n<dd>source block and optional source output port</dd>\n<dt>targets <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">tuple[PortReference], tuple[Block]</span></dt>\n<dd>target blocks and optional target input ports</dd>\n</dl>\n<p><strong>Attributes</strong></p>\n<dl class=\"docutils\">\n<dt>_active <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>flag to set 'Connection' as active or inactive</dd>\n</dl>\n",
+          "source": null,
+          "bases": [
+            "fastsim._fastsim.Connection"
+          ],
+          "methods": [],
+          "attributes": [],
+          "parameters": []
+        },
+        {
+          "name": "Interface",
+          "description": "Bare-bone block that serves as a data interface for the 'Subsystem' class.",
+          "docstring_html": "<p>Bare-bone block that serves as a data interface for the 'Subsystem' class.</p>\n<p>It works like this:</p>\n<ul class=\"simple\">\n<li>Internal blocks of the subsystem are connected to the inputs and outputs\nof this Interface block via the internal connections.</li>\n<li>It behaves like a normal block (inherits the main 'Block' class methods).</li>\n<li>It implements some special methods to get and set the inputs and outputs\nof the blocks, that are used to translate between the internal blocks of the\nsubsystem and the inputs and outputs of the subsystem.</li>\n<li>Handles data transfer to and from the internal subsystem blocks\nto and from the inputs and outputs of the subsystem.</li>\n</ul>\n",
+          "source": null,
+          "bases": [
+            "fastsim.blocks._shim._ShimBlock"
+          ],
+          "methods": [],
+          "attributes": [
+            {
+              "name": "_factory_name",
+              "description": "",
+              "type": null,
+              "value": "'Interface'"
+            },
+            {
+              "name": "_param_defaults",
+              "description": "",
+              "type": null,
+              "value": "{}"
+            }
+          ],
+          "parameters": []
+        },
+        {
+          "name": "Subsystem",
+          "description": "Subsystem class that holds its own blocks and connecions and",
+          "docstring_html": "<p>Subsystem class that holds its own blocks and connecions and\ncan natively interface with the main simulation loop.</p>\n<p>IO interface is realized by a special 'Interface' block, that has extra\nmethods for setting and getting inputs and outputs and serves\nas the interface of the internal blocks to the outside.</p>\n<p>The subsystem doesnt use its 'inputs' and 'outputs' dicts directly.\nIt exclusively handles data transfer via the 'Interface' block.</p>\n<p>This class can be used just like any other block during the simulation,\nsince it implements the required methods 'update' for the fixed-point\niteration (resolving algebraic loops with instant time blocks),\nthe 'step' method that performs timestepping (especially for dynamic\nblocks with internal states) and the 'solve' method for solving the\nimplicit update equation for implicit solvers.</p>\n<div class=\"section\" id=\"example\">\n<h4>Example</h4>\n<p>This is how we can wrap up multiple blocks within a subsystem.\nIn this case vanderpol system built from discrete components\ninstead of using an ODE block (in practice you should use\na monolithic ODE whenever possible due to performance).</p>\n<pre class=\"code python literal-block\">\n<span class=\"kn\">from</span> <span class=\"nn\">pathsim</span> <span class=\"kn\">import</span> <span class=\"n\">Subsystem</span><span class=\"p\">,</span> <span class=\"n\">Interface</span><span class=\"p\">,</span> <span class=\"n\">Connection</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">pathsim.blocks</span> <span class=\"kn\">import</span> <span class=\"n\">Integrator</span><span class=\"p\">,</span> <span class=\"n\">Function</span><span class=\"w\">\n\n</span><span class=\"c1\">#van der Pol parameter</span><span class=\"w\">\n</span><span class=\"n\">mu</span> <span class=\"o\">=</span> <span class=\"mi\">1000</span><span class=\"w\">\n\n</span><span class=\"c1\">#blocks in the subsystem</span><span class=\"w\">\n</span><span class=\"n\">If</span> <span class=\"o\">=</span> <span class=\"n\">Interface</span><span class=\"p\">()</span> <span class=\"c1\"># this is the interface to the outside</span><span class=\"w\">\n</span><span class=\"n\">I1</span> <span class=\"o\">=</span> <span class=\"n\">Integrator</span><span class=\"p\">(</span><span class=\"mi\">2</span><span class=\"p\">)</span><span class=\"w\">\n</span><span class=\"n\">I2</span> <span class=\"o\">=</span> <span class=\"n\">Integrator</span><span class=\"p\">(</span><span class=\"mi\">0</span><span class=\"p\">)</span><span class=\"w\">\n</span><span class=\"n\">Fn</span> <span class=\"o\">=</span> <span class=\"n\">Function</span><span class=\"p\">(</span><span class=\"k\">lambda</span> <span class=\"n\">x1</span><span class=\"p\">,</span> <span class=\"n\">x2</span><span class=\"p\">:</span> <span class=\"n\">mu</span><span class=\"o\">*</span><span class=\"p\">(</span><span class=\"mi\">1</span> <span class=\"o\">-</span> <span class=\"n\">x1</span><span class=\"o\">**</span><span class=\"mi\">2</span><span class=\"p\">)</span><span class=\"o\">*</span><span class=\"n\">x2</span> <span class=\"o\">-</span> <span class=\"n\">x1</span><span class=\"p\">)</span><span class=\"w\">\n\n</span><span class=\"n\">sub_blocks</span> <span class=\"o\">=</span> <span class=\"p\">[</span><span class=\"n\">If</span><span class=\"p\">,</span> <span class=\"n\">I1</span><span class=\"p\">,</span> <span class=\"n\">I2</span><span class=\"p\">,</span> <span class=\"n\">Fn</span><span class=\"p\">]</span><span class=\"w\">\n\n</span><span class=\"c1\">#connections in the subsystem</span><span class=\"w\">\n</span><span class=\"n\">sub_connections</span> <span class=\"o\">=</span> <span class=\"p\">[</span><span class=\"w\">\n</span>    <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">I2</span><span class=\"p\">,</span> <span class=\"n\">I1</span><span class=\"p\">,</span> <span class=\"n\">Fn</span><span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">],</span> <span class=\"n\">If</span><span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">]),</span><span class=\"w\">\n</span>    <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">I1</span><span class=\"p\">,</span> <span class=\"n\">Fn</span><span class=\"p\">,</span> <span class=\"n\">If</span><span class=\"p\">),</span><span class=\"w\">\n</span>    <span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">Fn</span><span class=\"p\">,</span> <span class=\"n\">I2</span><span class=\"p\">)</span><span class=\"w\">\n</span>    <span class=\"p\">]</span><span class=\"w\">\n\n</span><span class=\"c1\">#the subsystem acts just like a normal block</span><span class=\"w\">\n</span><span class=\"n\">vdp</span> <span class=\"o\">=</span> <span class=\"n\">Subsystem</span><span class=\"p\">(</span><span class=\"n\">sub_blocks</span><span class=\"p\">,</span> <span class=\"n\">sub_connections</span><span class=\"p\">)</span>\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>blocks <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">list[Block] | None</span></dt>\n<dd>internal blocks of the subsystem</dd>\n<dt>connections <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">list[Connection] | None</span></dt>\n<dd>internal connections of the subsystem</dd>\n</dl>\n<p>events : list[Event] | None\ntolerance_fpi : float</p>\n<blockquote>\nabsolute tolerance for convergence of algebraic loops\ndefault see ´SIM_TOLERANCE_FPI´ in ´_constants.py´</blockquote>\n<dl class=\"docutils\">\n<dt>iterations_max <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int</span></dt>\n<dd>maximum allowed number of iterations for algebraic loop\nsolver, default see ´SIM_ITERATIONS_MAX´ in ´_constants.py´</dd>\n</dl>\n<p><strong>Attributes</strong></p>\n<dl class=\"docutils\">\n<dt>interface <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">Interface</span></dt>\n<dd>internal interface block for data transfer to the outside</dd>\n<dt>graph <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">Graph</span></dt>\n<dd>internal graph representation for fast system funcion\nevluations using DAG with algebraic depths</dd>\n<dt>boosters <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">None | list[ConnectionBooster]</span></dt>\n<dd>list of boosters (fixed point accelerators) that wrap\nalgebraic loop closing connections assembled from the\nsystem graph</dd>\n</dl>\n</div>\n",
+          "source": null,
+          "bases": [
+            "fastsim.blocks._shim._ShimBlock"
+          ],
+          "methods": [],
+          "attributes": [
+            {
+              "name": "_factory_name",
+              "description": "",
+              "type": null,
+              "value": "'Subsystem'"
+            },
+            {
+              "name": "_param_defaults",
+              "description": "",
+              "type": null,
+              "value": "{'blocks': None, 'connections': None, 'events': None, 'iterations_max': 200}"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "blocks",
+              "type": null,
+              "default": "None",
+              "description": "internal blocks of the subsystem"
+            },
+            {
+              "name": "connections",
+              "type": null,
+              "default": "None",
+              "description": "internal connections of the subsystem"
+            },
+            {
+              "name": "events",
+              "type": null,
+              "default": "None",
+              "description": ""
+            },
+            {
+              "name": "iterations_max",
+              "type": null,
+              "default": "200",
+              "description": "maximum allowed number of iterations for algebraic loop solver, default see ´SIM_ITERATIONS_MAX´ in ´_constants.py´"
+            },
+            {
+              "name": "kwargs",
+              "type": null,
+              "default": "{}",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "Simulation",
+          "description": "Transient simulation that accepts fastsim *and* pathsim blocks alike.",
+          "docstring_html": "<p>Transient simulation that accepts fastsim <em>and</em> pathsim blocks alike.</p>\n<p>A drop-in replacement for the core <tt class=\"docutils literal\">Simulation</tt> that makes block\nprovenance irrelevant at the call site: every block in <cite>blocks</cite> is run\nthrough :func:`fastsim.port.port` before reaching the Rust engine. fastsim\nblocks pass through untouched; pathsim blocks are accelerated where possible\nand shimmed otherwise. Each porting decision is logged to the\n<tt class=\"docutils literal\">fastsim.port</tt> logger and surfaced on stdout when <cite>log</cite> is set, alongside\nthe run log.</p>\n<p>All other behaviour, methods and attributes (<tt class=\"docutils literal\">run</tt>, <tt class=\"docutils literal\">reset</tt>,\n<tt class=\"docutils literal\">steadystate</tt>, <tt class=\"docutils literal\">add_block</tt>, <tt class=\"docutils literal\">time</tt>, <tt class=\"docutils literal\">blocks</tt>, ...) are those of the\ncore simulation engine and are delegated transparently.</p>\n<div class=\"section\" id=\"note\">\n<h4>Note</h4>\n<p>fastsim <tt class=\"docutils literal\">Connection</tt> objects only accept fastsim blocks, so a connected\nblock must already be ported by the time the connection is built (the\n<em>port-first</em> convention). Auto-porting therefore covers blocks supplied\nun-ported in <cite>blocks</cite>; for connected toolbox blocks, port the class first\n(<tt class=\"docutils literal\">MyBlock = port(MyBlock)</tt>).</p>\n</div>\n<div class=\"section\" id=\"example\">\n<h4>Example</h4>\n<p>A pathsim block instance and a fastsim block in the same system:</p>\n<pre class=\"code python literal-block\">\n<span class=\"kn\">from</span> <span class=\"nn\">fastsim</span> <span class=\"kn\">import</span> <span class=\"n\">Simulation</span><span class=\"p\">,</span> <span class=\"n\">Connection</span><span class=\"p\">,</span> <span class=\"n\">port</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">fastsim.blocks</span> <span class=\"kn\">import</span> <span class=\"n\">Scope</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">pathsim.blocks</span> <span class=\"kn\">import</span> <span class=\"n\">Integrator</span>      <span class=\"c1\"># a pathsim block</span><span class=\"w\">\n\n</span><span class=\"n\">integ</span> <span class=\"o\">=</span> <span class=\"n\">port</span><span class=\"p\">(</span><span class=\"n\">Integrator</span><span class=\"p\">())</span>                 <span class=\"c1\"># port-first for wiring</span><span class=\"w\">\n</span><span class=\"n\">scope</span> <span class=\"o\">=</span> <span class=\"n\">Scope</span><span class=\"p\">()</span><span class=\"w\">\n</span><span class=\"n\">sim</span> <span class=\"o\">=</span> <span class=\"n\">Simulation</span><span class=\"p\">(</span><span class=\"w\">\n</span>    <span class=\"n\">blocks</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">integ</span><span class=\"p\">,</span> <span class=\"n\">scope</span><span class=\"p\">],</span><span class=\"w\">\n</span>    <span class=\"n\">connections</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">integ</span><span class=\"p\">,</span> <span class=\"n\">scope</span><span class=\"p\">)],</span><span class=\"w\">\n</span>    <span class=\"p\">)</span><span class=\"w\">\n</span><span class=\"n\">sim</span><span class=\"o\">.</span><span class=\"n\">run</span><span class=\"p\">(</span><span class=\"mi\">10</span><span class=\"p\">)</span>\n</pre>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>blocks <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">list[Block], optional</span></dt>\n<dd>Blocks in the system. fastsim and pathsim blocks may be mixed; pathsim\nblocks are ported automatically.</dd>\n<dt>connections <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">list[Connection], optional</span></dt>\n<dd>Connections between block ports (built against fastsim / ported blocks).</dd>\n<dt>Solver <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">Solver, optional</span></dt>\n<dd>Numerical integrator class (default <tt class=\"docutils literal\">SSPRK22</tt>); forwarded to the core\nengine along with any further keyword arguments (<tt class=\"docutils literal\">dt</tt>, <tt class=\"docutils literal\">log</tt>,\n<tt class=\"docutils literal\">tolerance_lte_abs</tt>, ...).</dd>\n</dl>\n</div>\n",
+          "source": null,
+          "bases": [],
+          "methods": [
+            {
+              "name": "to_ir",
+              "description": "Export the assembled model as hierarchical IR.",
+              "docstring_html": "<p>Export the assembled model as hierarchical IR.</p>\n<p>Returns a :class:`fastsim.ir.Module`: a typed, inspectable snapshot of\nthe model where each block is lowered to its scalar op-graph (for code\ngeneration / verification) or recorded as a typed <tt class=\"docutils literal\">extern</tt> call, with\nnested subsystems recursed.</p>\n",
+              "source": null,
+              "signature": "(name = 'model')",
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": null,
+                  "default": "'model'",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "to_c",
+              "description": "Generate standalone C99 source from the assembled model.",
+              "docstring_html": "<p>Generate standalone C99 source from the assembled model.</p>\n<p>Lowers the model straight to C in-process (no IR JSON round-trip):\nreturns a dict mapping each file name to its C source (<tt class=\"docutils literal\">model.h</tt> +\n<tt class=\"docutils literal\">model.c</tt> by default). See :meth:`fastsim.ir.Module.to_c` for the full\noption list (<tt class=\"docutils literal\">numeric</tt>, <tt class=\"docutils literal\">reductions</tt>, <tt class=\"docutils literal\">structure</tt>, <tt class=\"docutils literal\">layout</tt>,\n<tt class=\"docutils literal\">solver</tt>, <tt class=\"docutils literal\">api</tt>). The code generator is built into\nthe <tt class=\"docutils literal\">fastsim</tt> extension under the <tt class=\"docutils literal\">codegen</tt> feature; if the wheel was\nbuilt without it, <tt class=\"docutils literal\">to_c</tt> raises <tt class=\"docutils literal\">AttributeError</tt>.</p>\n",
+              "source": null,
+              "signature": "(name = 'model', options = {})",
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": null,
+                  "default": "'model'",
+                  "description": ""
+                },
+                {
+                  "name": "options",
+                  "type": null,
+                  "default": "{}",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "run_streaming",
+              "description": "Run the simulation as a generator, yielding at a fixed rate.",
+              "docstring_html": "<p>Run the simulation as a generator, yielding at a fixed rate.</p>\n<p>Drop-in for pathsim's <tt class=\"docutils literal\">run_streaming</tt>: a Python generator that\nadvances the engine and yields at a fixed WALL-CLOCK rate (<cite>tickrate</cite>\nyields per real second). Each yield is the return value of\n<cite>func_callback</cite> (or <tt class=\"docutils literal\">None</tt>), so a caller can extract intermediate\nresults, inject mutations, or stop between ticks. Unlike the core\nengine's blocking <tt class=\"docutils literal\">run_streaming</tt> (which runs to completion and\nreturns all frames at once), this cedes control between chunks, making\nit suitable for live UIs.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>duration <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>simulation time to advance (in time units)</dd>\n<dt>reset <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>reset the simulation before running (default False)</dd>\n<dt>adaptive <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool</span></dt>\n<dd>use adaptive timesteps if the solver is adaptive (default True)</dd>\n<dt>tickrate <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>number of yields per time unit, i.e. <tt class=\"docutils literal\">duration * tickrate</tt> ticks\ntotal (default 10)</dd>\n<dt>func_callback <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">callable, optional</span></dt>\n<dd>called with no arguments at each tick; its return value is yielded</dd>\n</dl>\n<p><strong>Yields</strong></p>\n<dl class=\"docutils\">\n<dt>object</dt>\n<dd><tt class=\"docutils literal\">func_callback()</tt> if callable, else <tt class=\"docutils literal\">None</tt>; a final value is\nalways yielded once the run completes.</dd>\n</dl>\n",
+              "source": null,
+              "signature": "(duration = 10.0, reset = False, adaptive = True, tickrate = 10.0, func_callback = None)",
+              "parameters": [
+                {
+                  "name": "duration",
+                  "type": null,
+                  "default": "10.0",
+                  "description": "simulation time to advance (in time units)"
+                },
+                {
+                  "name": "reset",
+                  "type": null,
+                  "default": "False",
+                  "description": "reset the simulation before running (default False)"
+                },
+                {
+                  "name": "adaptive",
+                  "type": null,
+                  "default": "True",
+                  "description": "use adaptive timesteps if the solver is adaptive (default True)"
+                },
+                {
+                  "name": "tickrate",
+                  "type": null,
+                  "default": "10.0",
+                  "description": "number of yields per time unit, i.e. ``duration * tickrate`` ticks total (default 10)"
+                },
+                {
+                  "name": "func_callback",
+                  "type": null,
+                  "default": "None",
+                  "description": "called with no arguments at each tick; its return value is yielded"
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "add_block",
+              "description": "Add a block, or a list of blocks.  Accepts either a single `Block`",
+              "docstring_html": "<p>Add a block, or a list of blocks.  Accepts either a single <cite>Block</cite>\nor any iterable of <cite>Block</cite>.  If a <cite>run()</cite> is currently active\n(e.g. called from inside a <cite>Schedule.func_act</cite> callback), the\noperation is queued onto the simulation's pending-ops queue and\napplied at the next timestep boundary; otherwise it is applied\nsynchronously.  The bulk path stays inside Rust — no per-block\nPython⇄Rust boundary crossing.</p>\n",
+              "source": null,
+              "signature": "(arg)",
+              "parameters": [
+                {
+                  "name": "arg",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "add_connection",
+              "description": "Add a connection, or a list of connections.",
+              "docstring_html": "<p>Add a connection, or a list of connections.</p>\n",
+              "source": null,
+              "signature": "(arg)",
+              "parameters": [
+                {
+                  "name": "arg",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "add_event",
+              "description": "Add an event (or list of events) to the simulation.",
+              "docstring_html": "<p>Add an event (or list of events) to the simulation.</p>\n",
+              "source": null,
+              "signature": "(event)",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "compile",
+              "description": "Statically compile this model into a fused `dX/dt = F(X, t)` tape (see",
+              "docstring_html": "<p>Statically compile this model into a fused <cite>dX/dt = F(X, t)</cite> tape (see\n<cite>compile</cite>). Discrete and event-driven blocks are supported (memory joins a\nglobal <cite>M</cite> vector; block-internal zero-cross/schedule/condition events drive\nan event-aware run loop). Raises <cite>ValueError</cite> with a precise reason if the\nmodel is outside the static subset (opaque/extern block whose math lowers to\na call, algebraic loop, no continuous state, simulation-level events). Sinks\nbecome recorded taps; subsystems are flattened.</p>\n<p>The compiled simulation inherits this simulation's solver, adaptive\ntolerances (<cite>tolerance_lte_abs</cite>/<cite>tolerance_lte_rel</cite>), timestep <cite>dt</cite> and\nlogging, so a compiled run integrates the same problem with the same\nmethod by default. Override any of these afterwards via <cite>set_solver</cite> /\n<cite>dt</cite> / <cite>log</cite> on the returned object.</p>\n",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "delinearize",
+              "description": "Revert a previous linearization, restoring the original nonlinear blocks.",
+              "docstring_html": "<p>Revert a previous linearization, restoring the original nonlinear blocks.</p>\n",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "enable_wct_trace",
+              "description": "Enable per-timestep wall-clock recording.  Subsequent `run` /",
+              "docstring_html": "<p>Enable per-timestep wall-clock recording.  Subsequent <cite>run</cite> /\n<cite>timestep</cite> calls append elapsed seconds for each step into an\ninternal buffer.  Negligible overhead (~30 ns/step) when enabled,\nzero overhead when off.</p>\n",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "linearize",
+              "description": "Linearize the system about the current operating point (state and inputs), replacing nonlinear blocks with their local linear approximation.",
+              "docstring_html": "<p>Linearize the system about the current operating point (state and inputs), replacing nonlinear blocks with their local linear approximation.</p>\n",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "pending_ops",
+              "description": "Return a handle on the simulation's mutation queue.  Equivalent",
+              "docstring_html": "<p>Return a handle on the simulation's mutation queue.  Equivalent\nto calling <cite>sim.add_block(...)</cite> etc. directly from a callback,\nkept for explicit-batching use cases.</p>\n",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "periodic_steady_state",
+              "description": "Find the periodic steady-state limit cycle of period `period` by",
+              "docstring_html": "<p>Find the periodic steady-state limit cycle of period <cite>period</cite> by\nmatrix-free Anderson-accelerated shooting on the period map\n<cite>g(x_0) = x(T; x_0)</cite>.</p>\n<p>One outer iteration:</p>\n<ol class=\"arabic simple\">\n<li>Integrate the system over <cite>[0, T]</cite> with the inner ODE solver\n(a regular transient <cite>run(period, ...)</cite>).</li>\n<li>Per dynamic block, run one matrix-free Anderson step on\n<cite>(x_start, x_end)</cite>, mutating <cite>x_start</cite> toward the limit-cycle\nperiod-start state.</li>\n<li>Check the max WRMS-scaled residual <cite>‖x(T) − x(0)‖</cite> across all\ndynamic blocks against the simulation's <cite>NLS_COEF</cite> threshold\n(same convergence semantics as every other implicit-stage /\nsteady-state residual).</li>\n<li>If not converged: reset <cite>sim.time = 0</cite> and event schedules,\nrepeat from step 1.</li>\n</ol>\n<p>After convergence, one final transient run over <cite>[0, T]</cite> records\nthe converged limit-cycle trajectory in Scope blocks.</p>\n<p>Anderson needs only function evaluations (one period integration\nper outer iteration) — no monodromy matrix <cite>Φ = ∂x(T)/∂x(0)</cite> to\nassemble or factorize.  Converges in roughly 5–15 iterations on\nsmooth, mildly-coupled periodic systems.  DAE blocks pass through\ntransparently — their <cite>engine_postprocess</cite> installs the\nappropriate <cite>StageBuilder</cite> on the PSS-augmented engine, exactly\nas with any other solver factory.</p>\n<p>PSS pays off when the natural settling time is long relative to\nthe forcing period (high-Q resonators, weakly-damped loops, large\nLC filters).  On strongly-damped systems where a plain transient\nsettles in a handful of periods, <cite>sim.run()</cite> is faster — the\nshooting iteration carries a fixed overhead (warm-up + final\nsample-run) that only amortizes when many periods would otherwise\nbe needed.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>period <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Period length <cite>T</cite> (in simulation time units).  Must be positive.</dd>\n<dt>Solver <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">type, optional</span></dt>\n<dd>Inner ODE solver class (e.g. <cite>RKDP54</cite>, <cite>ESDIRK43</cite>, <cite>GEAR52A</cite>).\nDefaults to the simulation's current solver.</dd>\n<dt>tolerance_lte_abs <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>Absolute WRMS weight for both the inner solver's LTE control\nand the outer shooting convergence test.  Defaults to the\ncurrent solver's setting.</dd>\n<dt>tolerance_lte_rel <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>Relative WRMS weight, same dual role as above.  Defaults to\nthe current solver's setting.</dd>\n<dt>adaptive <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool, optional</span></dt>\n<dd>Enable adaptive timestepping during the period integration.\nOnly honored when the inner solver is adaptive.  Default <cite>True</cite>.</dd>\n<dt>reset <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool, optional</span></dt>\n<dd>If <cite>True</cite>, restore all blocks to their <cite>initial_value</cite> before\nshooting starts.  If <cite>False</cite>, seed shooting from the current\nsimulation state — useful after a transient warm-up that\nproduces a good initial guess.  Default <cite>False</cite>.</dd>\n</dl>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>dict</dt>\n<dd>Aggregate run statistics summed across all shooting iterations\nplus the final sample run: <cite>total_steps</cite>, <cite>successful_steps</cite>,\n<cite>rejected_steps</cite>, <cite>total_evals</cite>, <cite>total_solver_its</cite>, <cite>runtime_ms</cite>.</dd>\n</dl>\n<p><strong>Notes</strong></p>\n<p>State-flipping events (relays, hysteresis, mode-switching) make\n<cite>x(T; x_0)</cite> non-smooth at the boundaries where the event\nactivation changes, which may stall Anderson convergence.  If\nshooting fails to converge within <cite>SIM_PSS_ITERATIONS_MAX</cite> (50)\niterations, a warning is logged and the best-so-far state is\nretained.</p>\n",
+              "source": null,
+              "signature": "(period, Solver = None, tolerance_lte_abs = None, tolerance_lte_rel = None, adaptive = True, reset = False)",
+              "parameters": [
+                {
+                  "name": "period",
+                  "type": null,
+                  "default": null,
+                  "description": "Period length `T` (in simulation time units). Must be positive."
+                },
+                {
+                  "name": "Solver",
+                  "type": null,
+                  "default": "None",
+                  "description": "Inner ODE solver class (e.g. `RKDP54`, `ESDIRK43`, `GEAR52A`). Defaults to the simulation's current solver."
+                },
+                {
+                  "name": "tolerance_lte_abs",
+                  "type": null,
+                  "default": "None",
+                  "description": "Absolute WRMS weight for both the inner solver's LTE control and the outer shooting convergence test. Defaults to the current solver's setting."
+                },
+                {
+                  "name": "tolerance_lte_rel",
+                  "type": null,
+                  "default": "None",
+                  "description": "Relative WRMS weight, same dual role as above. Defaults to the current solver's setting."
+                },
+                {
+                  "name": "adaptive",
+                  "type": null,
+                  "default": "True",
+                  "description": "Enable adaptive timestepping during the period integration. Only honored when the inner solver is adaptive. Default `True`."
+                },
+                {
+                  "name": "reset",
+                  "type": null,
+                  "default": "False",
+                  "description": "If `True`, restore all blocks to their `initial_value` before shooting starts. If `False`, seed shooting from the current simulation state — useful after a transient warm-up that produces a good initial guess. Default `False`."
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "plot",
+              "description": "Plot the recorded results from all Scope blocks in the simulation.",
+              "docstring_html": "<p>Plot the recorded results from all Scope blocks in the simulation.</p>\n",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "remove_block",
+              "description": "Remove a block (or list of blocks) from the simulation.",
+              "docstring_html": "<p>Remove a block (or list of blocks) from the simulation.</p>\n",
+              "source": null,
+              "signature": "(arg)",
+              "parameters": [
+                {
+                  "name": "arg",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "remove_connection",
+              "description": "Remove a connection (or list of connections) from the simulation.",
+              "docstring_html": "<p>Remove a connection (or list of connections) from the simulation.</p>\n",
+              "source": null,
+              "signature": "(arg)",
+              "parameters": [
+                {
+                  "name": "arg",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "remove_event",
+              "description": "Remove an event (or list of events) from the simulation.",
+              "docstring_html": "<p>Remove an event (or list of events) from the simulation.</p>\n",
+              "source": null,
+              "signature": "(event)",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "reset",
+              "description": "Reset all blocks to their initial state and the simulation time to zero (or to ``time`` if given).",
+              "docstring_html": "<p>Reset all blocks to their initial state and the simulation time to zero (or to <tt class=\"docutils literal\">time</tt> if given).</p>\n",
+              "source": null,
+              "signature": "(time = None)",
+              "parameters": [
+                {
+                  "name": "time",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "run",
+              "description": "Run the simulation for a given duration.",
+              "docstring_html": "<p>Run the simulation for a given duration.</p>\n",
+              "source": null,
+              "signature": "(duration = 10.0, reset = False, adaptive = True)",
+              "parameters": [
+                {
+                  "name": "duration",
+                  "type": null,
+                  "default": "10.0",
+                  "description": ""
+                },
+                {
+                  "name": "reset",
+                  "type": null,
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "adaptive",
+                  "type": null,
+                  "default": "True",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "run_begin",
+              "description": "Begin a chunked, cooperative run (for the streaming generator).",
+              "docstring_html": "<p>Begin a chunked, cooperative run (for the streaming generator).\nDoes the one-time setup (optional reset + initial eval/sample); pair\nwith repeated <cite>run_until</cite> calls. Unlike <cite>run_streaming</cite>, this path is\nsim-time driven (no wall-clock), so it is WASM-safe and lets Python\nown the yield/step loop, injecting mutations between chunks.</p>\n",
+              "source": null,
+              "signature": "(reset = False, duration = 10.0)",
+              "parameters": [
+                {
+                  "name": "reset",
+                  "type": null,
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "duration",
+                  "type": null,
+                  "default": "10.0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "run_end",
+              "description": "Finalize a chunked streaming run (logs FINISHED/INTERRUPTED). Call once",
+              "docstring_html": "<p>Finalize a chunked streaming run (logs FINISHED/INTERRUPTED). Call once\nafter the last <cite>run_until</cite>.</p>\n",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "run_realtime",
+              "description": "Run synchronized to wall-clock time with optional speed factor.",
+              "docstring_html": "<p>Run synchronized to wall-clock time with optional speed factor.</p>\n",
+              "source": null,
+              "signature": "(duration = 10.0, reset = False, adaptive = True, tickrate = 30.0, speed = 1.0, func_callback = None)",
+              "parameters": [
+                {
+                  "name": "duration",
+                  "type": null,
+                  "default": "10.0",
+                  "description": ""
+                },
+                {
+                  "name": "reset",
+                  "type": null,
+                  "default": "False",
+                  "description": ""
+                },
+                {
+                  "name": "adaptive",
+                  "type": null,
+                  "default": "True",
+                  "description": ""
+                },
+                {
+                  "name": "tickrate",
+                  "type": null,
+                  "default": "30.0",
+                  "description": ""
+                },
+                {
+                  "name": "speed",
+                  "type": null,
+                  "default": "1.0",
+                  "description": ""
+                },
+                {
+                  "name": "func_callback",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "run_until",
+              "description": "Advance up to `target_time` (a chunk boundary). `end_time` is the true",
+              "docstring_html": "<p>Advance up to <cite>target_time</cite> (a chunk boundary). <cite>end_time</cite> is the true\nrun end (for adaptive overshoot prevention). Returns step counts.</p>\n",
+              "source": null,
+              "signature": "(target_time, end_time, adaptive = True)",
+              "parameters": [
+                {
+                  "name": "target_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "end_time",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "adaptive",
+                  "type": null,
+                  "default": "True",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "steadystate",
+              "description": "Find the steady-state (DC operating point) of the system by root-finding on the residual rather than time integration.",
+              "docstring_html": "<p>Find the steady-state (DC operating point) of the system by root-finding on the residual rather than time integration.</p>\n",
+              "source": null,
+              "signature": "(reset)",
+              "parameters": [
+                {
+                  "name": "reset",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "stop",
+              "description": "Signal a running simulation to stop cleanly at the next timestep boundary.",
+              "docstring_html": "<p>Signal a running simulation to stop cleanly at the next timestep boundary.</p>\n",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "take_wct_trace",
+              "description": "Drain the per-timestep wall-clock buffer and return the recorded",
+              "docstring_html": "<p>Drain the per-timestep wall-clock buffer and return the recorded\ntimes in seconds.  Leaves recording enabled with an empty buffer.\nReturns an empty list if tracing was never enabled.</p>\n",
+              "source": null,
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "to_fmu",
+              "description": "Export this model as a source FMU (FMI 3.0, Model Exchange) written to",
+              "docstring_html": "<p>Export this model as a source FMU (FMI 3.0, Model Exchange) written to\n<cite>path</cite> (conventionally <cite>*.fmu</cite>).</p>\n<p>Builds the IR straight from the live model (the same <cite>module_from_sim</cite>\npath as <cite>compile</cite>/<cite>to_c</cite>), lowers it through the struct-API C backend,\nwraps it in the FMI Model-Exchange C layer, and zips the C sources with a\ngenerated <cite>modelDescription.xml</cite>. The result is a <em>source</em> FMU: it ships\nthe C plus a <cite>buildDescription.xml</cite> so an importer compiles it on its own\nplatform.</p>\n<p>Phase-1 scope: closed (input-free) continuous models with state and no\nevents. Raises <cite>ValueError</cite> for a model outside that subset (no\ncontinuous state, events, or an opaque block the backend cannot lower).\nThe optional <cite>start_time</cite> / <cite>stop_time</cite> / <cite>tolerance</cite> / <cite>step_size</cite>\npopulate <cite>&lt;DefaultExperiment&gt;</cite>; <cite>instantiation_token</cite> overrides the\ndefault <cite>{fastsim-&lt;id&gt;}</cite>.</p>\n",
+              "source": null,
+              "signature": "(path, name = 'model', start_time = None, stop_time = None, tolerance = None, step_size = None, instantiation_token = None)",
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "name",
+                  "type": null,
+                  "default": "'model'",
+                  "description": ""
+                },
+                {
+                  "name": "start_time",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "stop_time",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "tolerance",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "step_size",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "instantiation_token",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "to_ir_json",
+              "description": "Export the assembled model as hierarchical IR (JSON). Each block is",
+              "docstring_html": "<p>Export the assembled model as hierarchical IR (JSON). Each block is\neither lowered to its op-graph (for codegen / verification) or recorded\nas a typed <cite>extern</cite> call; nested subsystems recurse. See <cite>src/ir</cite>.</p>\n",
+              "source": null,
+              "signature": "(name = 'model')",
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": null,
+                  "default": "'model'",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [],
+          "parameters": [
+            {
+              "name": "blocks",
+              "type": null,
+              "default": "None",
+              "description": "Blocks in the system. fastsim and pathsim blocks may be mixed; pathsim blocks are ported automatically."
+            },
+            {
+              "name": "connections",
+              "type": null,
+              "default": "None",
+              "description": "Connections between block ports (built against fastsim / ported blocks)."
+            },
+            {
+              "name": "events",
+              "type": null,
+              "default": "None",
+              "description": ""
+            },
+            {
+              "name": "dt",
+              "type": null,
+              "default": "0.01",
+              "description": ""
+            },
+            {
+              "name": "dt_min",
+              "type": null,
+              "default": "1e-16",
+              "description": ""
+            },
+            {
+              "name": "dt_max",
+              "type": null,
+              "default": "None",
+              "description": ""
+            },
+            {
+              "name": "Solver",
+              "type": null,
+              "default": "None",
+              "description": "Numerical integrator class (default ``SSPRK22``); forwarded to the core engine along with any further keyword arguments (``dt``, ``log``, ``tolerance_lte_abs``, ...)."
+            },
+            {
+              "name": "tolerance_fpi",
+              "type": null,
+              "default": "1e-10",
+              "description": ""
+            },
+            {
+              "name": "iterations_max",
+              "type": null,
+              "default": "200",
+              "description": ""
+            },
+            {
+              "name": "log",
+              "type": null,
+              "default": "True",
+              "description": ""
+            },
+            {
+              "name": "diagnostics",
+              "type": null,
+              "default": "False",
+              "description": ""
+            },
+            {
+              "name": "solver_kwargs",
+              "type": null,
+              "default": "{}",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "StopSimulation",
+          "description": "Raised by a block or model to signal that the simulation should stop",
+          "docstring_html": "<p>Raised by a block or model to signal that the simulation should stop\nimmediately. The run loop catches it and terminates cleanly, as if <cite>stop()</cite>\nhad been called. Drop-in compatible with pathsim.exceptions.StopSimulation.</p>\n",
+          "source": null,
+          "bases": [
+            "fastsim._fastsim.StopSimulation"
+          ],
+          "methods": [],
+          "attributes": [],
+          "parameters": []
+        }
+      ],
+      "functions": [
+        {
+          "name": "adapt",
+          "description": "Clone `cls` onto the fastsim engine.",
+          "docstring_html": "<p>Clone <cite>cls</cite> onto the fastsim engine.</p>\n<p>The clone keeps <cite>cls</cite>'s name, module, qualname, attributes and custom\nmethods; only the pathsim bases in its MRO are substituted for their\nfastsim equivalents from the registry. Subclasses further up the chain are\nadapted recursively, so a hierarchy like\n<tt class=\"docutils literal\">Process <span class=\"pre\">-&gt;</span> ResidenceTime <span class=\"pre\">-&gt;</span> DynamicalSystem</tt> is fully rebased.</p>\n<p>Methods that carry an implicit <tt class=\"docutils literal\">__class__</tt> cell (anything using bare\n<tt class=\"docutils literal\">super()</tt>) are copied with a fresh cell pointing at the new clone — so\n<tt class=\"docutils literal\">super()</tt> keeps finding the right MRO.</p>\n<p>This is a clone, not in-place mutation: the original <cite>cls</cite> is untouched\nand <tt class=\"docutils literal\">isinstance(obj, cls)</tt> on an adapted instance returns <tt class=\"docutils literal\">False</tt>. Use\nthe returned class when constructing blocks for a fastsim Simulation.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>cls <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">type</span></dt>\n<dd>Toolbox block class to adapt.</dd>\n<dt>strict <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool, default True</span></dt>\n<dd>Raise <tt class=\"docutils literal\">TypeError</tt> if any ancestor in the cloned chain overrides a\nmethod/property of the fastsim base. With <tt class=\"docutils literal\">strict=False</tt> the override\nis kept and a warning is emitted.</dd>\n</dl>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>type</dt>\n<dd>New class, rebased on fastsim.</dd>\n</dl>\n<p><strong>See Also</strong></p>\n<dl class=\"docutils\">\n<dt>port <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">Adapt <em>and</em> accelerate a pathsim block (class or instance),</span></dt>\n<dd>JIT-tracing its right-hand side into the Rust core where possible.\nPrefer <cite>port</cite> for plain simulation speed-ups; use <cite>adapt</cite> when you need\nthe rebased <em>class</em> itself (e.g. to subclass it further or inspect its\nMRO).</dd>\n</dl>\n<p><strong>Examples</strong></p>\n<p>Take a pathsim toolbox block class and run it on the fast Rust engine. The\nadapted class behaves exactly like the original — same constructor, same\nattributes — but its <cite>pathsim</cite> bases are swapped for their fastsim\nequivalents, so it plugs straight into a fastsim <cite>Simulation</cite>:</p>\n<pre class=\"code python literal-block\">\n<span class=\"kn\">from</span> <span class=\"nn\">fastsim</span> <span class=\"kn\">import</span> <span class=\"n\">Simulation</span><span class=\"p\">,</span> <span class=\"n\">Connection</span><span class=\"p\">,</span> <span class=\"n\">adapt</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">fastsim.blocks</span> <span class=\"kn\">import</span> <span class=\"n\">Scope</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">chem_toolbox</span> <span class=\"kn\">import</span> <span class=\"n\">Reactor</span>          <span class=\"c1\"># a pathsim-based block class</span><span class=\"w\">\n\n</span><span class=\"n\">FastReactor</span> <span class=\"o\">=</span> <span class=\"n\">adapt</span><span class=\"p\">(</span><span class=\"n\">Reactor</span><span class=\"p\">)</span>              <span class=\"c1\"># rebased onto the fastsim engine</span><span class=\"w\">\n</span><span class=\"n\">r</span> <span class=\"o\">=</span> <span class=\"n\">FastReactor</span><span class=\"p\">(</span><span class=\"n\">rate</span><span class=\"o\">=</span><span class=\"mf\">2.0</span><span class=\"p\">,</span> <span class=\"n\">volume</span><span class=\"o\">=</span><span class=\"mf\">1.5</span><span class=\"p\">)</span>     <span class=\"c1\"># constructed like the original</span><span class=\"w\">\n</span><span class=\"n\">sco</span> <span class=\"o\">=</span> <span class=\"n\">Scope</span><span class=\"p\">()</span><span class=\"w\">\n\n</span><span class=\"n\">sim</span> <span class=\"o\">=</span> <span class=\"n\">Simulation</span><span class=\"p\">(</span><span class=\"w\">\n</span>    <span class=\"n\">blocks</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">r</span><span class=\"p\">,</span> <span class=\"n\">sco</span><span class=\"p\">],</span><span class=\"w\">\n</span>    <span class=\"n\">connections</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">r</span><span class=\"p\">,</span> <span class=\"n\">sco</span><span class=\"p\">)],</span><span class=\"w\">\n</span><span class=\"p\">)</span><span class=\"w\">\n</span><span class=\"n\">sim</span><span class=\"o\">.</span><span class=\"n\">run</span><span class=\"p\">(</span><span class=\"mf\">10.0</span><span class=\"p\">)</span>\n</pre>\n<p>The original class is untouched, so both engines can be used side by side:</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">r_slow</span> <span class=\"o\">=</span> <span class=\"n\">Reactor</span><span class=\"p\">(</span><span class=\"n\">rate</span><span class=\"o\">=</span><span class=\"mf\">2.0</span><span class=\"p\">,</span> <span class=\"n\">volume</span><span class=\"o\">=</span><span class=\"mf\">1.5</span><span class=\"p\">)</span>    <span class=\"c1\"># still the pathsim block</span><span class=\"w\">\n</span><span class=\"nb\">isinstance</span><span class=\"p\">(</span><span class=\"n\">r</span><span class=\"p\">,</span> <span class=\"n\">Reactor</span><span class=\"p\">)</span>                    <span class=\"c1\"># False — `adapt` returns a clone</span>\n</pre>\n<p>A whole inheritance chain is rebased in one call. Given\n<tt class=\"docutils literal\">Process <span class=\"pre\">-&gt;</span> ResidenceTime <span class=\"pre\">-&gt;</span> pathsim.blocks.DynamicalSystem</tt>, <tt class=\"docutils literal\">adapt</tt>\nwalks the MRO and substitutes the pathsim base, keeping <cite>Process</cite>'s and\n<cite>ResidenceTime</cite>'s own methods intact.</p>\n",
+          "source": null,
+          "signature": "(cls: type, strict: bool = True, _memo: Optional[dict[type, type]] = None)",
+          "parameters": [
+            {
+              "name": "cls",
+              "type": "type",
+              "default": null,
+              "description": "Toolbox block class to adapt."
+            },
+            {
+              "name": "strict",
+              "type": "bool",
+              "default": "True",
+              "description": "Raise ``TypeError`` if any ancestor in the cloned chain overrides a method/property of the fastsim base. With ``strict=False`` the override is kept and a warning is emitted."
+            },
+            {
+              "name": "_memo",
+              "type": "Optional[dict[type, type]]",
+              "default": "None",
+              "description": ""
+            }
+          ],
+          "returns": "type"
+        },
+        {
+          "name": "random_uniform",
+          "description": "Stateless uniform draw in ``[0, 1)``, keyed by ``key``.",
+          "docstring_html": "<p>Stateless uniform draw in <tt class=\"docutils literal\">[0, 1)</tt>, keyed by <tt class=\"docutils literal\">key</tt>.</p>\n<ul class=\"simple\">\n<li><tt class=\"docutils literal\">key</tt> a <tt class=\"docutils literal\">JitTracer</tt> (inside a trace): records one SSA hash node.</li>\n<li><tt class=\"docutils literal\">key</tt> a Python/NumPy scalar: pure-Python hash (bit-identical to the trace).</li>\n<li><tt class=\"docutils literal\">key</tt> an <tt class=\"docutils literal\">ndarray</tt>: element-wise draws (eager fallback path).</li>\n</ul>\n",
+          "source": null,
+          "signature": "(key)",
+          "parameters": [
+            {
+              "name": "key",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        },
+        {
+          "name": "random_normal",
+          "description": "Stateless standard-normal draw ``N(0, 1)``, keyed by ``key``.",
+          "docstring_html": "<p>Stateless standard-normal draw <tt class=\"docutils literal\">N(0, 1)</tt>, keyed by <tt class=\"docutils literal\">key</tt>.</p>\n<p>Box-Muller over two decorrelated uniform draws. Polymorphic like\n:func:`random_uniform`; the traced and eager paths agree bit-for-bit.</p>\n",
+          "source": null,
+          "signature": "(key)",
+          "parameters": [
+            {
+              "name": "key",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        }
+      ]
+    },
     "fastsim.adapter": {
       "name": "fastsim.adapter",
       "description": "",
@@ -10,7 +820,7 @@
         {
           "name": "adapt",
           "description": "Clone `cls` onto the fastsim engine.",
-          "docstring_html": "<p>Clone <cite>cls</cite> onto the fastsim engine.</p>\n<p>The clone keeps <cite>cls</cite>'s name, module, qualname, attributes and custom\nmethods; only the pathsim bases in its MRO are substituted for their\nfastsim equivalents from the registry. Subclasses further up the chain are\nadapted recursively, so a hierarchy like\n<tt class=\"docutils literal\">Process <span class=\"pre\">-&gt;</span> ResidenceTime <span class=\"pre\">-&gt;</span> DynamicalSystem</tt> is fully rebased.</p>\n<p>Methods that carry an implicit <tt class=\"docutils literal\">__class__</tt> cell (anything using bare\n<tt class=\"docutils literal\">super()</tt>) are copied with a fresh cell pointing at the new clone — so\n<tt class=\"docutils literal\">super()</tt> keeps finding the right MRO.</p>\n<p>This is a clone, not in-place mutation: the original <cite>cls</cite> is untouched\nand <tt class=\"docutils literal\">isinstance(obj, cls)</tt> on an adapted instance returns <tt class=\"docutils literal\">False</tt>. Use\nthe returned class when constructing blocks for a fastsim Simulation.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>cls <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">type</span></dt>\n<dd>Toolbox block class to adapt.</dd>\n<dt>strict <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool, default True</span></dt>\n<dd>Raise <tt class=\"docutils literal\">TypeError</tt> if any ancestor in the cloned chain overrides a\nmethod/property of the fastsim base. With <tt class=\"docutils literal\">strict=False</tt> the override\nis kept and a warning is emitted.</dd>\n</dl>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>type</dt>\n<dd>New class, rebased on fastsim.</dd>\n</dl>\n",
+          "docstring_html": "<p>Clone <cite>cls</cite> onto the fastsim engine.</p>\n<p>The clone keeps <cite>cls</cite>'s name, module, qualname, attributes and custom\nmethods; only the pathsim bases in its MRO are substituted for their\nfastsim equivalents from the registry. Subclasses further up the chain are\nadapted recursively, so a hierarchy like\n<tt class=\"docutils literal\">Process <span class=\"pre\">-&gt;</span> ResidenceTime <span class=\"pre\">-&gt;</span> DynamicalSystem</tt> is fully rebased.</p>\n<p>Methods that carry an implicit <tt class=\"docutils literal\">__class__</tt> cell (anything using bare\n<tt class=\"docutils literal\">super()</tt>) are copied with a fresh cell pointing at the new clone — so\n<tt class=\"docutils literal\">super()</tt> keeps finding the right MRO.</p>\n<p>This is a clone, not in-place mutation: the original <cite>cls</cite> is untouched\nand <tt class=\"docutils literal\">isinstance(obj, cls)</tt> on an adapted instance returns <tt class=\"docutils literal\">False</tt>. Use\nthe returned class when constructing blocks for a fastsim Simulation.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>cls <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">type</span></dt>\n<dd>Toolbox block class to adapt.</dd>\n<dt>strict <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">bool, default True</span></dt>\n<dd>Raise <tt class=\"docutils literal\">TypeError</tt> if any ancestor in the cloned chain overrides a\nmethod/property of the fastsim base. With <tt class=\"docutils literal\">strict=False</tt> the override\nis kept and a warning is emitted.</dd>\n</dl>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>type</dt>\n<dd>New class, rebased on fastsim.</dd>\n</dl>\n<p><strong>See Also</strong></p>\n<dl class=\"docutils\">\n<dt>port <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">Adapt <em>and</em> accelerate a pathsim block (class or instance),</span></dt>\n<dd>JIT-tracing its right-hand side into the Rust core where possible.\nPrefer <cite>port</cite> for plain simulation speed-ups; use <cite>adapt</cite> when you need\nthe rebased <em>class</em> itself (e.g. to subclass it further or inspect its\nMRO).</dd>\n</dl>\n<p><strong>Examples</strong></p>\n<p>Take a pathsim toolbox block class and run it on the fast Rust engine. The\nadapted class behaves exactly like the original — same constructor, same\nattributes — but its <cite>pathsim</cite> bases are swapped for their fastsim\nequivalents, so it plugs straight into a fastsim <cite>Simulation</cite>:</p>\n<pre class=\"code python literal-block\">\n<span class=\"kn\">from</span> <span class=\"nn\">fastsim</span> <span class=\"kn\">import</span> <span class=\"n\">Simulation</span><span class=\"p\">,</span> <span class=\"n\">Connection</span><span class=\"p\">,</span> <span class=\"n\">adapt</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">fastsim.blocks</span> <span class=\"kn\">import</span> <span class=\"n\">Scope</span><span class=\"w\">\n</span><span class=\"kn\">from</span> <span class=\"nn\">chem_toolbox</span> <span class=\"kn\">import</span> <span class=\"n\">Reactor</span>          <span class=\"c1\"># a pathsim-based block class</span><span class=\"w\">\n\n</span><span class=\"n\">FastReactor</span> <span class=\"o\">=</span> <span class=\"n\">adapt</span><span class=\"p\">(</span><span class=\"n\">Reactor</span><span class=\"p\">)</span>              <span class=\"c1\"># rebased onto the fastsim engine</span><span class=\"w\">\n</span><span class=\"n\">r</span> <span class=\"o\">=</span> <span class=\"n\">FastReactor</span><span class=\"p\">(</span><span class=\"n\">rate</span><span class=\"o\">=</span><span class=\"mf\">2.0</span><span class=\"p\">,</span> <span class=\"n\">volume</span><span class=\"o\">=</span><span class=\"mf\">1.5</span><span class=\"p\">)</span>     <span class=\"c1\"># constructed like the original</span><span class=\"w\">\n</span><span class=\"n\">sco</span> <span class=\"o\">=</span> <span class=\"n\">Scope</span><span class=\"p\">()</span><span class=\"w\">\n\n</span><span class=\"n\">sim</span> <span class=\"o\">=</span> <span class=\"n\">Simulation</span><span class=\"p\">(</span><span class=\"w\">\n</span>    <span class=\"n\">blocks</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">r</span><span class=\"p\">,</span> <span class=\"n\">sco</span><span class=\"p\">],</span><span class=\"w\">\n</span>    <span class=\"n\">connections</span><span class=\"o\">=</span><span class=\"p\">[</span><span class=\"n\">Connection</span><span class=\"p\">(</span><span class=\"n\">r</span><span class=\"p\">,</span> <span class=\"n\">sco</span><span class=\"p\">)],</span><span class=\"w\">\n</span><span class=\"p\">)</span><span class=\"w\">\n</span><span class=\"n\">sim</span><span class=\"o\">.</span><span class=\"n\">run</span><span class=\"p\">(</span><span class=\"mf\">10.0</span><span class=\"p\">)</span>\n</pre>\n<p>The original class is untouched, so both engines can be used side by side:</p>\n<pre class=\"code python literal-block\">\n<span class=\"n\">r_slow</span> <span class=\"o\">=</span> <span class=\"n\">Reactor</span><span class=\"p\">(</span><span class=\"n\">rate</span><span class=\"o\">=</span><span class=\"mf\">2.0</span><span class=\"p\">,</span> <span class=\"n\">volume</span><span class=\"o\">=</span><span class=\"mf\">1.5</span><span class=\"p\">)</span>    <span class=\"c1\"># still the pathsim block</span><span class=\"w\">\n</span><span class=\"nb\">isinstance</span><span class=\"p\">(</span><span class=\"n\">r</span><span class=\"p\">,</span> <span class=\"n\">Reactor</span><span class=\"p\">)</span>                    <span class=\"c1\"># False — `adapt` returns a clone</span>\n</pre>\n<p>A whole inheritance chain is rebased in one call. Given\n<tt class=\"docutils literal\">Process <span class=\"pre\">-&gt;</span> ResidenceTime <span class=\"pre\">-&gt;</span> pathsim.blocks.DynamicalSystem</tt>, <tt class=\"docutils literal\">adapt</tt>\nwalks the MRO and substitutes the pathsim base, keeping <cite>Process</cite>'s and\n<cite>ResidenceTime</cite>'s own methods intact.</p>\n",
           "source": null,
           "signature": "(cls: type, strict: bool = True, _memo: Optional[dict[type, type]] = None)",
           "parameters": [

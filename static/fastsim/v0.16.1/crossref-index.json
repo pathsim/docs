@@ -1,10 +1,296 @@
 {
-  "fastsim.adapter": {
-    "name": "fastsim.adapter",
+  "fastsim": {
+    "name": "fastsim",
     "type": "module",
     "packageId": "fastsim",
-    "moduleName": "fastsim.adapter",
-    "path": "fastsim/v0.16.1/api#fastsim-adapter"
+    "moduleName": "fastsim",
+    "path": "fastsim/v0.16.1/api#fastsim"
+  },
+  "Connection": {
+    "name": "Connection",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.16.1/api#Connection"
+  },
+  "fastsim.Connection": {
+    "name": "Connection",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.16.1/api#Connection"
+  },
+  "Interface": {
+    "name": "Interface",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.subsystem",
+    "path": "fastsim/v0.16.1/api#Interface"
+  },
+  "fastsim.Interface": {
+    "name": "Interface",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.subsystem",
+    "path": "fastsim/v0.16.1/api#Interface"
+  },
+  "Subsystem": {
+    "name": "Subsystem",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.subsystem",
+    "path": "fastsim/v0.16.1/api#Subsystem"
+  },
+  "fastsim.Subsystem": {
+    "name": "Subsystem",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.subsystem",
+    "path": "fastsim/v0.16.1/api#Subsystem"
+  },
+  "Simulation": {
+    "name": "Simulation",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "path": "fastsim/v0.16.1/api#Simulation"
+  },
+  "fastsim.Simulation": {
+    "name": "Simulation",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "path": "fastsim/v0.16.1/api#Simulation"
+  },
+  "Simulation.to_ir": {
+    "name": "to_ir",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.to_ir"
+  },
+  "Simulation.to_c": {
+    "name": "to_c",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.to_c"
+  },
+  "Simulation.run_streaming": {
+    "name": "run_streaming",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.run_streaming"
+  },
+  "Simulation.add_block": {
+    "name": "add_block",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.add_block"
+  },
+  "Simulation.add_connection": {
+    "name": "add_connection",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.add_connection"
+  },
+  "Simulation.add_event": {
+    "name": "add_event",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.add_event"
+  },
+  "Simulation.compile": {
+    "name": "compile",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.compile"
+  },
+  "Simulation.delinearize": {
+    "name": "delinearize",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.delinearize"
+  },
+  "Simulation.enable_wct_trace": {
+    "name": "enable_wct_trace",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.enable_wct_trace"
+  },
+  "Simulation.linearize": {
+    "name": "linearize",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.linearize"
+  },
+  "Simulation.pending_ops": {
+    "name": "pending_ops",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.pending_ops"
+  },
+  "Simulation.periodic_steady_state": {
+    "name": "periodic_steady_state",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.periodic_steady_state"
+  },
+  "Simulation.plot": {
+    "name": "plot",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.plot"
+  },
+  "Simulation.remove_block": {
+    "name": "remove_block",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.remove_block"
+  },
+  "Simulation.remove_connection": {
+    "name": "remove_connection",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.remove_connection"
+  },
+  "Simulation.remove_event": {
+    "name": "remove_event",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.remove_event"
+  },
+  "Simulation.reset": {
+    "name": "reset",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.reset"
+  },
+  "Simulation.run": {
+    "name": "run",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.run"
+  },
+  "Simulation.run_begin": {
+    "name": "run_begin",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.run_begin"
+  },
+  "Simulation.run_end": {
+    "name": "run_end",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.run_end"
+  },
+  "Simulation.run_realtime": {
+    "name": "run_realtime",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.run_realtime"
+  },
+  "Simulation.run_until": {
+    "name": "run_until",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.run_until"
+  },
+  "Simulation.steadystate": {
+    "name": "steadystate",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.steadystate"
+  },
+  "Simulation.stop": {
+    "name": "stop",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.stop"
+  },
+  "Simulation.take_wct_trace": {
+    "name": "take_wct_trace",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.take_wct_trace"
+  },
+  "Simulation.to_fmu": {
+    "name": "to_fmu",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.to_fmu"
+  },
+  "Simulation.to_ir_json": {
+    "name": "to_ir_json",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.16.1/api#Simulation.to_ir_json"
+  },
+  "StopSimulation": {
+    "name": "StopSimulation",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.exceptions",
+    "path": "fastsim/v0.16.1/api#StopSimulation"
+  },
+  "fastsim.StopSimulation": {
+    "name": "StopSimulation",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.exceptions",
+    "path": "fastsim/v0.16.1/api#StopSimulation"
   },
   "adapt": {
     "name": "adapt",
@@ -12,6 +298,48 @@
     "packageId": "fastsim",
     "moduleName": "fastsim.adapter",
     "path": "fastsim/v0.16.1/api#adapt"
+  },
+  "fastsim.adapt": {
+    "name": "adapt",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "path": "fastsim/v0.16.1/api#adapt"
+  },
+  "random_uniform": {
+    "name": "random_uniform",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.random",
+    "path": "fastsim/v0.16.1/api#random_uniform"
+  },
+  "fastsim.random_uniform": {
+    "name": "random_uniform",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "path": "fastsim/v0.16.1/api#random_uniform"
+  },
+  "random_normal": {
+    "name": "random_normal",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.random",
+    "path": "fastsim/v0.16.1/api#random_normal"
+  },
+  "fastsim.random_normal": {
+    "name": "random_normal",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "path": "fastsim/v0.16.1/api#random_normal"
+  },
+  "fastsim.adapter": {
+    "name": "fastsim.adapter",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.adapter",
+    "path": "fastsim/v0.16.1/api#fastsim-adapter"
   },
   "fastsim.adapter.adapt": {
     "name": "adapt",
@@ -27,25 +355,11 @@
     "moduleName": "fastsim.connection",
     "path": "fastsim/v0.16.1/api#fastsim-connection"
   },
-  "Connection": {
-    "name": "Connection",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.ir",
-    "path": "fastsim/v0.16.1/api#Connection"
-  },
   "fastsim.connection.Connection": {
     "name": "Connection",
     "type": "class",
     "packageId": "fastsim",
     "moduleName": "fastsim.connection",
-    "path": "fastsim/v0.16.1/api#Connection"
-  },
-  "fastsim.Connection": {
-    "name": "Connection",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.ir",
     "path": "fastsim/v0.16.1/api#Connection"
   },
   "fastsim.exceptions": {
@@ -55,21 +369,7 @@
     "moduleName": "fastsim.exceptions",
     "path": "fastsim/v0.16.1/api#fastsim-exceptions"
   },
-  "StopSimulation": {
-    "name": "StopSimulation",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.exceptions",
-    "path": "fastsim/v0.16.1/api#StopSimulation"
-  },
   "fastsim.exceptions.StopSimulation": {
-    "name": "StopSimulation",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.exceptions",
-    "path": "fastsim/v0.16.1/api#StopSimulation"
-  },
-  "fastsim.StopSimulation": {
     "name": "StopSimulation",
     "type": "class",
     "packageId": "fastsim",
@@ -417,25 +717,11 @@
     "parentClass": "Connection",
     "path": "fastsim/v0.16.1/api#Connection.parse"
   },
-  "Interface": {
-    "name": "Interface",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.subsystem",
-    "path": "fastsim/v0.16.1/api#Interface"
-  },
   "fastsim.ir.Interface": {
     "name": "Interface",
     "type": "class",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
-    "path": "fastsim/v0.16.1/api#Interface"
-  },
-  "fastsim.Interface": {
-    "name": "Interface",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.subsystem",
     "path": "fastsim/v0.16.1/api#Interface"
   },
   "Interface.parse": {
@@ -533,25 +819,11 @@
     "parentClass": "Schedule",
     "path": "fastsim/v0.16.1/api#Schedule.parse"
   },
-  "Subsystem": {
-    "name": "Subsystem",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.subsystem",
-    "path": "fastsim/v0.16.1/api#Subsystem"
-  },
   "fastsim.ir.Subsystem": {
     "name": "Subsystem",
     "type": "class",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
-    "path": "fastsim/v0.16.1/api#Subsystem"
-  },
-  "fastsim.Subsystem": {
-    "name": "Subsystem",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.subsystem",
     "path": "fastsim/v0.16.1/api#Subsystem"
   },
   "Subsystem.parse": {
@@ -813,26 +1085,12 @@
     "moduleName": "fastsim.random",
     "path": "fastsim/v0.16.1/api#fastsim-random"
   },
-  "random_uniform": {
-    "name": "random_uniform",
-    "type": "function",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.random",
-    "path": "fastsim/v0.16.1/api#random_uniform"
-  },
   "fastsim.random.random_uniform": {
     "name": "random_uniform",
     "type": "function",
     "packageId": "fastsim",
     "moduleName": "fastsim.random",
     "path": "fastsim/v0.16.1/api#random_uniform"
-  },
-  "random_normal": {
-    "name": "random_normal",
-    "type": "function",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.random",
-    "path": "fastsim/v0.16.1/api#random_normal"
   },
   "fastsim.random.random_normal": {
     "name": "random_normal",
@@ -848,242 +1106,12 @@
     "moduleName": "fastsim.simulation",
     "path": "fastsim/v0.16.1/api#fastsim-simulation"
   },
-  "Simulation": {
-    "name": "Simulation",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "path": "fastsim/v0.16.1/api#Simulation"
-  },
   "fastsim.simulation.Simulation": {
     "name": "Simulation",
     "type": "class",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "path": "fastsim/v0.16.1/api#Simulation"
-  },
-  "fastsim.Simulation": {
-    "name": "Simulation",
-    "type": "class",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "path": "fastsim/v0.16.1/api#Simulation"
-  },
-  "Simulation.to_ir": {
-    "name": "to_ir",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.to_ir"
-  },
-  "Simulation.to_c": {
-    "name": "to_c",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.to_c"
-  },
-  "Simulation.run_streaming": {
-    "name": "run_streaming",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.run_streaming"
-  },
-  "Simulation.add_block": {
-    "name": "add_block",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.add_block"
-  },
-  "Simulation.add_connection": {
-    "name": "add_connection",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.add_connection"
-  },
-  "Simulation.add_event": {
-    "name": "add_event",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.add_event"
-  },
-  "Simulation.compile": {
-    "name": "compile",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.compile"
-  },
-  "Simulation.delinearize": {
-    "name": "delinearize",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.delinearize"
-  },
-  "Simulation.enable_wct_trace": {
-    "name": "enable_wct_trace",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.enable_wct_trace"
-  },
-  "Simulation.linearize": {
-    "name": "linearize",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.linearize"
-  },
-  "Simulation.pending_ops": {
-    "name": "pending_ops",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.pending_ops"
-  },
-  "Simulation.periodic_steady_state": {
-    "name": "periodic_steady_state",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.periodic_steady_state"
-  },
-  "Simulation.plot": {
-    "name": "plot",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.plot"
-  },
-  "Simulation.remove_block": {
-    "name": "remove_block",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.remove_block"
-  },
-  "Simulation.remove_connection": {
-    "name": "remove_connection",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.remove_connection"
-  },
-  "Simulation.remove_event": {
-    "name": "remove_event",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.remove_event"
-  },
-  "Simulation.reset": {
-    "name": "reset",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.reset"
-  },
-  "Simulation.run": {
-    "name": "run",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.run"
-  },
-  "Simulation.run_begin": {
-    "name": "run_begin",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.run_begin"
-  },
-  "Simulation.run_end": {
-    "name": "run_end",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.run_end"
-  },
-  "Simulation.run_realtime": {
-    "name": "run_realtime",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.run_realtime"
-  },
-  "Simulation.run_until": {
-    "name": "run_until",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.run_until"
-  },
-  "Simulation.steadystate": {
-    "name": "steadystate",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.steadystate"
-  },
-  "Simulation.stop": {
-    "name": "stop",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.stop"
-  },
-  "Simulation.take_wct_trace": {
-    "name": "take_wct_trace",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.take_wct_trace"
-  },
-  "Simulation.to_fmu": {
-    "name": "to_fmu",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.to_fmu"
-  },
-  "Simulation.to_ir_json": {
-    "name": "to_ir_json",
-    "type": "method",
-    "packageId": "fastsim",
-    "moduleName": "fastsim.simulation",
-    "parentClass": "Simulation",
-    "path": "fastsim/v0.16.1/api#Simulation.to_ir_json"
   },
   "fastsim.subsystem": {
     "name": "fastsim.subsystem",

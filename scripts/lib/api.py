@@ -209,7 +209,14 @@ def _is_defined_here(member: griffe.Object, module_path: str) -> bool:
             # Re-exports from an internal (underscore-prefixed) submodule are
             # documented on the parent (e.g. fastsim.blocks re-exports its
             # generated classes from fastsim.blocks._generated).
-            return source_module.startswith(module_path + "._")
+            if source_module.startswith(module_path + "._"):
+                return True
+            # The top-level package module (no dot) re-exports the public,
+            # root-level API (`from pkg import Simulation, Connection, ...`);
+            # document those there too, matching the `from pkg import` surface.
+            if "." not in module_path:
+                return True
+            return False
         return True
     except Exception:
         return True
