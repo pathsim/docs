@@ -1,140 +1,12 @@
 {
-  "pathsim.connection": {
-    "name": "pathsim.connection",
+  "pathsim": {
+    "name": "pathsim",
     "type": "module",
     "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "path": "pathsim/v0.20.0/api#pathsim-connection"
-  },
-  "Connection": {
-    "name": "Connection",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "path": "pathsim/v0.20.0/api#Connection"
-  },
-  "pathsim.connection.Connection": {
-    "name": "Connection",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "path": "pathsim/v0.20.0/api#Connection"
-  },
-  "pathsim.Connection": {
-    "name": "Connection",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "path": "pathsim/v0.20.0/api#Connection"
-  },
-  "Connection.__init__": {
-    "name": "__init__",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "parentClass": "Connection",
-    "path": "pathsim/v0.20.0/api#Connection.__init__"
-  },
-  "Connection._validate_dimensions": {
-    "name": "_validate_dimensions",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "parentClass": "Connection",
-    "path": "pathsim/v0.20.0/api#Connection._validate_dimensions"
-  },
-  "Connection._validate_ports": {
-    "name": "_validate_ports",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "parentClass": "Connection",
-    "path": "pathsim/v0.20.0/api#Connection._validate_ports"
-  },
-  "Connection.get_blocks": {
-    "name": "get_blocks",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "parentClass": "Connection",
-    "path": "pathsim/v0.20.0/api#Connection.get_blocks"
-  },
-  "Connection.on": {
-    "name": "on",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "parentClass": "Connection",
-    "path": "pathsim/v0.20.0/api#Connection.on"
-  },
-  "Connection.off": {
-    "name": "off",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "parentClass": "Connection",
-    "path": "pathsim/v0.20.0/api#Connection.off"
-  },
-  "Connection.update": {
-    "name": "update",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "parentClass": "Connection",
-    "path": "pathsim/v0.20.0/api#Connection.update"
-  },
-  "Duplex": {
-    "name": "Duplex",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "path": "pathsim/v0.20.0/api#Duplex"
-  },
-  "pathsim.connection.Duplex": {
-    "name": "Duplex",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "path": "pathsim/v0.20.0/api#Duplex"
-  },
-  "pathsim.Duplex": {
-    "name": "Duplex",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "path": "pathsim/v0.20.0/api#Duplex"
-  },
-  "Duplex.__init__": {
-    "name": "__init__",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "parentClass": "Duplex",
-    "path": "pathsim/v0.20.0/api#Duplex.__init__"
-  },
-  "Duplex.update": {
-    "name": "update",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.connection",
-    "parentClass": "Duplex",
-    "path": "pathsim/v0.20.0/api#Duplex.update"
-  },
-  "pathsim.simulation": {
-    "name": "pathsim.simulation",
-    "type": "module",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.simulation",
-    "path": "pathsim/v0.20.0/api#pathsim-simulation"
+    "moduleName": "pathsim",
+    "path": "pathsim/v0.20.0/api#pathsim"
   },
   "Simulation": {
-    "name": "Simulation",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.simulation",
-    "path": "pathsim/v0.20.0/api#Simulation"
-  },
-  "pathsim.simulation.Simulation": {
     "name": "Simulation",
     "type": "class",
     "packageId": "pathsim",
@@ -476,50 +348,107 @@
     "parentClass": "Simulation",
     "path": "pathsim/v0.20.0/api#Simulation.run_realtime"
   },
-  "pathsim.subsystem": {
-    "name": "pathsim.subsystem",
-    "type": "module",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.subsystem",
-    "path": "pathsim/v0.20.0/api#pathsim-subsystem"
-  },
-  "Interface": {
-    "name": "Interface",
+  "Connection": {
+    "name": "Connection",
     "type": "class",
     "packageId": "pathsim",
-    "moduleName": "pathsim.subsystem",
-    "path": "pathsim/v0.20.0/api#Interface"
+    "moduleName": "pathsim.connection",
+    "path": "pathsim/v0.20.0/api#Connection"
   },
-  "pathsim.subsystem.Interface": {
-    "name": "Interface",
+  "pathsim.Connection": {
+    "name": "Connection",
     "type": "class",
     "packageId": "pathsim",
-    "moduleName": "pathsim.subsystem",
-    "path": "pathsim/v0.20.0/api#Interface"
+    "moduleName": "pathsim.connection",
+    "path": "pathsim/v0.20.0/api#Connection"
   },
-  "pathsim.Interface": {
-    "name": "Interface",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.subsystem",
-    "path": "pathsim/v0.20.0/api#Interface"
-  },
-  "Interface.register_port_map": {
-    "name": "register_port_map",
+  "Connection.__init__": {
+    "name": "__init__",
     "type": "method",
     "packageId": "pathsim",
-    "moduleName": "pathsim.subsystem",
-    "parentClass": "Interface",
-    "path": "pathsim/v0.20.0/api#Interface.register_port_map"
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection",
+    "path": "pathsim/v0.20.0/api#Connection.__init__"
   },
-  "Subsystem": {
-    "name": "Subsystem",
+  "Connection._validate_dimensions": {
+    "name": "_validate_dimensions",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection",
+    "path": "pathsim/v0.20.0/api#Connection._validate_dimensions"
+  },
+  "Connection._validate_ports": {
+    "name": "_validate_ports",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection",
+    "path": "pathsim/v0.20.0/api#Connection._validate_ports"
+  },
+  "Connection.get_blocks": {
+    "name": "get_blocks",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection",
+    "path": "pathsim/v0.20.0/api#Connection.get_blocks"
+  },
+  "Connection.on": {
+    "name": "on",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection",
+    "path": "pathsim/v0.20.0/api#Connection.on"
+  },
+  "Connection.off": {
+    "name": "off",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection",
+    "path": "pathsim/v0.20.0/api#Connection.off"
+  },
+  "Connection.update": {
+    "name": "update",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection",
+    "path": "pathsim/v0.20.0/api#Connection.update"
+  },
+  "Duplex": {
+    "name": "Duplex",
     "type": "class",
     "packageId": "pathsim",
-    "moduleName": "pathsim.subsystem",
-    "path": "pathsim/v0.20.0/api#Subsystem"
+    "moduleName": "pathsim.connection",
+    "path": "pathsim/v0.20.0/api#Duplex"
   },
-  "pathsim.subsystem.Subsystem": {
+  "pathsim.Duplex": {
+    "name": "Duplex",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "path": "pathsim/v0.20.0/api#Duplex"
+  },
+  "Duplex.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Duplex",
+    "path": "pathsim/v0.20.0/api#Duplex.__init__"
+  },
+  "Duplex.update": {
+    "name": "update",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Duplex",
+    "path": "pathsim/v0.20.0/api#Duplex.update"
+  },
+  "Subsystem": {
     "name": "Subsystem",
     "type": "class",
     "packageId": "pathsim",
@@ -749,12 +678,168 @@
     "parentClass": "Subsystem",
     "path": "pathsim/v0.20.0/api#Subsystem.buffer"
   },
-  "pathsim.blocks._block": {
-    "name": "pathsim.blocks._block",
+  "Interface": {
+    "name": "Interface",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "path": "pathsim/v0.20.0/api#Interface"
+  },
+  "pathsim.Interface": {
+    "name": "Interface",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "path": "pathsim/v0.20.0/api#Interface"
+  },
+  "Interface.register_port_map": {
+    "name": "register_port_map",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Interface",
+    "path": "pathsim/v0.20.0/api#Interface.register_port_map"
+  },
+  "LoggerManager": {
+    "name": "LoggerManager",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "path": "pathsim/v0.20.0/api#LoggerManager"
+  },
+  "pathsim.LoggerManager": {
+    "name": "LoggerManager",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "path": "pathsim/v0.20.0/api#LoggerManager"
+  },
+  "LoggerManager.__new__": {
+    "name": "__new__",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "parentClass": "LoggerManager",
+    "path": "pathsim/v0.20.0/api#LoggerManager.__new__"
+  },
+  "LoggerManager.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "parentClass": "LoggerManager",
+    "path": "pathsim/v0.20.0/api#LoggerManager.__init__"
+  },
+  "LoggerManager._setup_root_logger": {
+    "name": "_setup_root_logger",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "parentClass": "LoggerManager",
+    "path": "pathsim/v0.20.0/api#LoggerManager._setup_root_logger"
+  },
+  "LoggerManager.configure": {
+    "name": "configure",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "parentClass": "LoggerManager",
+    "path": "pathsim/v0.20.0/api#LoggerManager.configure"
+  },
+  "LoggerManager.get_logger": {
+    "name": "get_logger",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "parentClass": "LoggerManager",
+    "path": "pathsim/v0.20.0/api#LoggerManager.get_logger"
+  },
+  "LoggerManager.set_level": {
+    "name": "set_level",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "parentClass": "LoggerManager",
+    "path": "pathsim/v0.20.0/api#LoggerManager.set_level"
+  },
+  "LoggerManager.is_enabled": {
+    "name": "is_enabled",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "parentClass": "LoggerManager",
+    "path": "pathsim/v0.20.0/api#LoggerManager.is_enabled"
+  },
+  "LoggerManager.get_effective_level": {
+    "name": "get_effective_level",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.logger",
+    "parentClass": "LoggerManager",
+    "path": "pathsim/v0.20.0/api#LoggerManager.get_effective_level"
+  },
+  "pathsim.connection": {
+    "name": "pathsim.connection",
     "type": "module",
     "packageId": "pathsim",
-    "moduleName": "pathsim.blocks._block",
-    "path": "pathsim/v0.20.0/api#pathsim-blocks-_block"
+    "moduleName": "pathsim.connection",
+    "path": "pathsim/v0.20.0/api#pathsim-connection"
+  },
+  "pathsim.connection.Connection": {
+    "name": "Connection",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "path": "pathsim/v0.20.0/api#Connection"
+  },
+  "pathsim.connection.Duplex": {
+    "name": "Duplex",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "path": "pathsim/v0.20.0/api#Duplex"
+  },
+  "pathsim.simulation": {
+    "name": "pathsim.simulation",
+    "type": "module",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "path": "pathsim/v0.20.0/api#pathsim-simulation"
+  },
+  "pathsim.simulation.Simulation": {
+    "name": "Simulation",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "path": "pathsim/v0.20.0/api#Simulation"
+  },
+  "pathsim.subsystem": {
+    "name": "pathsim.subsystem",
+    "type": "module",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "path": "pathsim/v0.20.0/api#pathsim-subsystem"
+  },
+  "pathsim.subsystem.Interface": {
+    "name": "Interface",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "path": "pathsim/v0.20.0/api#Interface"
+  },
+  "pathsim.subsystem.Subsystem": {
+    "name": "Subsystem",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "path": "pathsim/v0.20.0/api#Subsystem"
+  },
+  "pathsim.blocks": {
+    "name": "pathsim.blocks",
+    "type": "module",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks",
+    "path": "pathsim/v0.20.0/api#pathsim-blocks"
   },
   "Block": {
     "name": "Block",
@@ -763,11 +848,11 @@
     "moduleName": "pathsim.blocks._block",
     "path": "pathsim/v0.20.0/api#Block"
   },
-  "pathsim.blocks._block.Block": {
+  "pathsim.blocks.Block": {
     "name": "Block",
     "type": "class",
     "packageId": "pathsim",
-    "moduleName": "pathsim.blocks._block",
+    "moduleName": "pathsim.blocks",
     "path": "pathsim/v0.20.0/api#Block"
   },
   "pathsim.Block": {
@@ -936,6 +1021,20 @@
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
     "path": "pathsim/v0.20.0/api#Block.step"
+  },
+  "pathsim.blocks._block": {
+    "name": "pathsim.blocks._block",
+    "type": "module",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "path": "pathsim/v0.20.0/api#pathsim-blocks-_block"
+  },
+  "pathsim.blocks._block.Block": {
+    "name": "Block",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "path": "pathsim/v0.20.0/api#Block"
   },
   "pathsim.blocks.adder": {
     "name": "pathsim.blocks.adder",
@@ -4835,12 +4934,12 @@
     "parentClass": "Wrapper",
     "path": "pathsim/v0.20.0/api#Wrapper.dec"
   },
-  "pathsim.events._event": {
-    "name": "pathsim.events._event",
+  "pathsim.events": {
+    "name": "pathsim.events",
     "type": "module",
     "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
-    "path": "pathsim/v0.20.0/api#pathsim-events-_event"
+    "moduleName": "pathsim.events",
+    "path": "pathsim/v0.20.0/api#pathsim-events"
   },
   "Event": {
     "name": "Event",
@@ -4849,11 +4948,11 @@
     "moduleName": "pathsim.events._event",
     "path": "pathsim/v0.20.0/api#Event"
   },
-  "pathsim.events._event.Event": {
+  "pathsim.events.Event": {
     "name": "Event",
     "type": "class",
     "packageId": "pathsim",
-    "moduleName": "pathsim.events._event",
+    "moduleName": "pathsim.events",
     "path": "pathsim/v0.20.0/api#Event"
   },
   "pathsim.Event": {
@@ -4942,6 +5041,20 @@
     "moduleName": "pathsim.events._event",
     "parentClass": "Event",
     "path": "pathsim/v0.20.0/api#Event.load_checkpoint"
+  },
+  "pathsim.events._event": {
+    "name": "pathsim.events._event",
+    "type": "module",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "path": "pathsim/v0.20.0/api#pathsim-events-_event"
+  },
+  "pathsim.events._event.Event": {
+    "name": "Event",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "path": "pathsim/v0.20.0/api#Event"
   },
   "pathsim.events.condition": {
     "name": "pathsim.events.condition",
@@ -5523,57 +5636,118 @@
     "parentClass": "DynamicOperator",
     "path": "pathsim/v0.20.0/api#DynamicOperator.reset"
   },
-  "pathsim.solvers._rungekutta": {
-    "name": "pathsim.solvers._rungekutta",
+  "pathsim.solvers": {
+    "name": "pathsim.solvers",
     "type": "module",
     "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._rungekutta",
-    "path": "pathsim/v0.20.0/api#pathsim-solvers-_rungekutta"
+    "moduleName": "pathsim.solvers",
+    "path": "pathsim/v0.20.0/api#pathsim-solvers"
   },
-  "ExplicitRungeKutta": {
-    "name": "ExplicitRungeKutta",
+  "ImplicitSolver": {
+    "name": "ImplicitSolver",
     "type": "class",
     "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._rungekutta",
-    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta"
+    "moduleName": "pathsim.solvers._solver",
+    "path": "pathsim/v0.20.0/api#ImplicitSolver"
   },
-  "pathsim.solvers._rungekutta.ExplicitRungeKutta": {
-    "name": "ExplicitRungeKutta",
+  "pathsim.solvers.ImplicitSolver": {
+    "name": "ImplicitSolver",
     "type": "class",
     "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._rungekutta",
-    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta"
+    "moduleName": "pathsim.solvers",
+    "path": "pathsim/v0.20.0/api#ImplicitSolver"
   },
-  "pathsim.ExplicitRungeKutta": {
-    "name": "ExplicitRungeKutta",
+  "pathsim.ImplicitSolver": {
+    "name": "ImplicitSolver",
     "type": "class",
     "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._rungekutta",
-    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta"
+    "moduleName": "pathsim.solvers._solver",
+    "path": "pathsim/v0.20.0/api#ImplicitSolver"
   },
-  "ExplicitRungeKutta.__init__": {
+  "ImplicitSolver.__init__": {
     "name": "__init__",
     "type": "method",
     "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._rungekutta",
-    "parentClass": "ExplicitRungeKutta",
-    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta.__init__"
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver",
+    "path": "pathsim/v0.20.0/api#ImplicitSolver.__init__"
   },
-  "ExplicitRungeKutta.error_controller": {
-    "name": "error_controller",
+  "ImplicitSolver.buffer": {
+    "name": "buffer",
     "type": "method",
     "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._rungekutta",
-    "parentClass": "ExplicitRungeKutta",
-    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta.error_controller"
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver",
+    "path": "pathsim/v0.20.0/api#ImplicitSolver.buffer"
   },
-  "ExplicitRungeKutta.step": {
-    "name": "step",
+  "ImplicitSolver.solve": {
+    "name": "solve",
     "type": "method",
     "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._rungekutta",
-    "parentClass": "ExplicitRungeKutta",
-    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta.step"
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver",
+    "path": "pathsim/v0.20.0/api#ImplicitSolver.solve"
+  },
+  "ImplicitSolver.integrate_singlestep": {
+    "name": "integrate_singlestep",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver",
+    "path": "pathsim/v0.20.0/api#ImplicitSolver.integrate_singlestep"
+  },
+  "ImplicitSolver.integrate": {
+    "name": "integrate",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver",
+    "path": "pathsim/v0.20.0/api#ImplicitSolver.integrate"
+  },
+  "ExplicitSolver": {
+    "name": "ExplicitSolver",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "path": "pathsim/v0.20.0/api#ExplicitSolver"
+  },
+  "pathsim.solvers.ExplicitSolver": {
+    "name": "ExplicitSolver",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers",
+    "path": "pathsim/v0.20.0/api#ExplicitSolver"
+  },
+  "pathsim.ExplicitSolver": {
+    "name": "ExplicitSolver",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "path": "pathsim/v0.20.0/api#ExplicitSolver"
+  },
+  "ExplicitSolver.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ExplicitSolver",
+    "path": "pathsim/v0.20.0/api#ExplicitSolver.__init__"
+  },
+  "ExplicitSolver.integrate_singlestep": {
+    "name": "integrate_singlestep",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ExplicitSolver",
+    "path": "pathsim/v0.20.0/api#ExplicitSolver.integrate_singlestep"
+  },
+  "ExplicitSolver.integrate": {
+    "name": "integrate",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ExplicitSolver",
+    "path": "pathsim/v0.20.0/api#ExplicitSolver.integrate"
   },
   "DiagonallyImplicitRungeKutta": {
     "name": "DiagonallyImplicitRungeKutta",
@@ -5582,11 +5756,11 @@
     "moduleName": "pathsim.solvers._rungekutta",
     "path": "pathsim/v0.20.0/api#DiagonallyImplicitRungeKutta"
   },
-  "pathsim.solvers._rungekutta.DiagonallyImplicitRungeKutta": {
+  "pathsim.solvers.DiagonallyImplicitRungeKutta": {
     "name": "DiagonallyImplicitRungeKutta",
     "type": "class",
     "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._rungekutta",
+    "moduleName": "pathsim.solvers",
     "path": "pathsim/v0.20.0/api#DiagonallyImplicitRungeKutta"
   },
   "pathsim.DiagonallyImplicitRungeKutta": {
@@ -5627,6 +5801,72 @@
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "DiagonallyImplicitRungeKutta",
     "path": "pathsim/v0.20.0/api#DiagonallyImplicitRungeKutta.step"
+  },
+  "ExplicitRungeKutta": {
+    "name": "ExplicitRungeKutta",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta"
+  },
+  "pathsim.solvers.ExplicitRungeKutta": {
+    "name": "ExplicitRungeKutta",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers",
+    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta"
+  },
+  "pathsim.ExplicitRungeKutta": {
+    "name": "ExplicitRungeKutta",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta"
+  },
+  "ExplicitRungeKutta.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "ExplicitRungeKutta",
+    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta.__init__"
+  },
+  "ExplicitRungeKutta.error_controller": {
+    "name": "error_controller",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "ExplicitRungeKutta",
+    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta.error_controller"
+  },
+  "ExplicitRungeKutta.step": {
+    "name": "step",
+    "type": "method",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "ExplicitRungeKutta",
+    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta.step"
+  },
+  "pathsim.solvers._rungekutta": {
+    "name": "pathsim.solvers._rungekutta",
+    "type": "module",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "path": "pathsim/v0.20.0/api#pathsim-solvers-_rungekutta"
+  },
+  "pathsim.solvers._rungekutta.ExplicitRungeKutta": {
+    "name": "ExplicitRungeKutta",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "path": "pathsim/v0.20.0/api#ExplicitRungeKutta"
+  },
+  "pathsim.solvers._rungekutta.DiagonallyImplicitRungeKutta": {
+    "name": "DiagonallyImplicitRungeKutta",
+    "type": "class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "path": "pathsim/v0.20.0/api#DiagonallyImplicitRungeKutta"
   },
   "pathsim.solvers._solver": {
     "name": "pathsim.solvers._solver",
@@ -5784,13 +6024,6 @@
     "parentClass": "Solver",
     "path": "pathsim/v0.20.0/api#Solver.interpolate"
   },
-  "ExplicitSolver": {
-    "name": "ExplicitSolver",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "path": "pathsim/v0.20.0/api#ExplicitSolver"
-  },
   "pathsim.solvers._solver.ExplicitSolver": {
     "name": "ExplicitSolver",
     "type": "class",
@@ -5798,97 +6031,12 @@
     "moduleName": "pathsim.solvers._solver",
     "path": "pathsim/v0.20.0/api#ExplicitSolver"
   },
-  "pathsim.ExplicitSolver": {
-    "name": "ExplicitSolver",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "path": "pathsim/v0.20.0/api#ExplicitSolver"
-  },
-  "ExplicitSolver.__init__": {
-    "name": "__init__",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "parentClass": "ExplicitSolver",
-    "path": "pathsim/v0.20.0/api#ExplicitSolver.__init__"
-  },
-  "ExplicitSolver.integrate_singlestep": {
-    "name": "integrate_singlestep",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "parentClass": "ExplicitSolver",
-    "path": "pathsim/v0.20.0/api#ExplicitSolver.integrate_singlestep"
-  },
-  "ExplicitSolver.integrate": {
-    "name": "integrate",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "parentClass": "ExplicitSolver",
-    "path": "pathsim/v0.20.0/api#ExplicitSolver.integrate"
-  },
-  "ImplicitSolver": {
-    "name": "ImplicitSolver",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "path": "pathsim/v0.20.0/api#ImplicitSolver"
-  },
   "pathsim.solvers._solver.ImplicitSolver": {
     "name": "ImplicitSolver",
     "type": "class",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "path": "pathsim/v0.20.0/api#ImplicitSolver"
-  },
-  "pathsim.ImplicitSolver": {
-    "name": "ImplicitSolver",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "path": "pathsim/v0.20.0/api#ImplicitSolver"
-  },
-  "ImplicitSolver.__init__": {
-    "name": "__init__",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "parentClass": "ImplicitSolver",
-    "path": "pathsim/v0.20.0/api#ImplicitSolver.__init__"
-  },
-  "ImplicitSolver.buffer": {
-    "name": "buffer",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "parentClass": "ImplicitSolver",
-    "path": "pathsim/v0.20.0/api#ImplicitSolver.buffer"
-  },
-  "ImplicitSolver.solve": {
-    "name": "solve",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "parentClass": "ImplicitSolver",
-    "path": "pathsim/v0.20.0/api#ImplicitSolver.solve"
-  },
-  "ImplicitSolver.integrate_singlestep": {
-    "name": "integrate_singlestep",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "parentClass": "ImplicitSolver",
-    "path": "pathsim/v0.20.0/api#ImplicitSolver.integrate_singlestep"
-  },
-  "ImplicitSolver.integrate": {
-    "name": "integrate",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.solvers._solver",
-    "parentClass": "ImplicitSolver",
-    "path": "pathsim/v0.20.0/api#ImplicitSolver.integrate"
   },
   "pathsim.solvers.bdf": {
     "name": "pathsim.solvers.bdf",
@@ -8319,90 +8467,12 @@
     "moduleName": "pathsim.utils.logger",
     "path": "pathsim/v0.20.0/api#pathsim-utils-logger"
   },
-  "LoggerManager": {
-    "name": "LoggerManager",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "path": "pathsim/v0.20.0/api#LoggerManager"
-  },
   "pathsim.utils.logger.LoggerManager": {
     "name": "LoggerManager",
     "type": "class",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "path": "pathsim/v0.20.0/api#LoggerManager"
-  },
-  "pathsim.LoggerManager": {
-    "name": "LoggerManager",
-    "type": "class",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "path": "pathsim/v0.20.0/api#LoggerManager"
-  },
-  "LoggerManager.__new__": {
-    "name": "__new__",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "parentClass": "LoggerManager",
-    "path": "pathsim/v0.20.0/api#LoggerManager.__new__"
-  },
-  "LoggerManager.__init__": {
-    "name": "__init__",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "parentClass": "LoggerManager",
-    "path": "pathsim/v0.20.0/api#LoggerManager.__init__"
-  },
-  "LoggerManager._setup_root_logger": {
-    "name": "_setup_root_logger",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "parentClass": "LoggerManager",
-    "path": "pathsim/v0.20.0/api#LoggerManager._setup_root_logger"
-  },
-  "LoggerManager.configure": {
-    "name": "configure",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "parentClass": "LoggerManager",
-    "path": "pathsim/v0.20.0/api#LoggerManager.configure"
-  },
-  "LoggerManager.get_logger": {
-    "name": "get_logger",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "parentClass": "LoggerManager",
-    "path": "pathsim/v0.20.0/api#LoggerManager.get_logger"
-  },
-  "LoggerManager.set_level": {
-    "name": "set_level",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "parentClass": "LoggerManager",
-    "path": "pathsim/v0.20.0/api#LoggerManager.set_level"
-  },
-  "LoggerManager.is_enabled": {
-    "name": "is_enabled",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "parentClass": "LoggerManager",
-    "path": "pathsim/v0.20.0/api#LoggerManager.is_enabled"
-  },
-  "LoggerManager.get_effective_level": {
-    "name": "get_effective_level",
-    "type": "method",
-    "packageId": "pathsim",
-    "moduleName": "pathsim.utils.logger",
-    "parentClass": "LoggerManager",
-    "path": "pathsim/v0.20.0/api#LoggerManager.get_effective_level"
   },
   "pathsim.utils.mutable": {
     "name": "pathsim.utils.mutable",
