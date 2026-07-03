@@ -1,7 +1,24 @@
 {
-  "cells": {},
-  "executedAt": "2026-07-03T14:00:09.182803+00:00",
-  "duration": 3827,
-  "success": false,
-  "error": "y, resources)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 204, in _async_wait_for_ready\n    raise RuntimeError(msg)\nRuntimeError: Kernel died before replying to kernel_info"
+  "cells": {
+    "22": {
+      "stdout": "19:20:09 - INFO - LOGGING (log: True)\n19:20:09 - INFO - BLOCKS (total: 15, dynamic: 2, static: 13, eventful: 0)\n19:20:09 - INFO - GRAPH (nodes: 15, edges: 18, alg. depth: 7, loop depth: 0, runtime: 3.180ms)\n19:20:09 - INFO - STARTING -> TRANSIENT (Duration: 5.00s)\n19:20:09 - INFO - --------------------   1% | 0.3s<6.6s | 731.3 it/s\n19:20:10 - INFO - #-------------------   6% | 1.3s<26.0s | 865.9 it/s\n19:20:11 - INFO - ##------------------  10% | 2.3s<46.3s | 778.5 it/s\n19:20:12 - INFO - ##------------------  14% | 3.3s<6.1s | 736.0 it/s\n19:20:13 - INFO - ###-----------------  19% | 4.3s<8.8s | 803.9 it/s\n19:20:13 - INFO - ####----------------  20% | 4.5s<5.5s | 786.4 it/s\n19:20:14 - INFO - ####----------------  24% | 5.5s<30.5s | 703.4 it/s\n19:20:15 - INFO - #####---------------  28% | 6.5s<05:15 | 741.9 it/s\n19:20:16 - INFO - ######--------------  31% | 7.5s<02:19 | 717.1 it/s\n19:20:17 - INFO - #######-------------  35% | 8.5s<9.4s | 711.4 it/s\n19:20:18 - INFO - #######-------------  38% | 9.5s<22.0s | 726.2 it/s\n19:20:19 - INFO - ########------------  40% | 9.9s<4.5s | 762.1 it/s\n19:20:20 - INFO - ########------------  44% | 10.9s<9.0s | 685.9 it/s\n19:20:21 - INFO - #########-----------  47% | 11.9s<02:06 | 847.3 it/s\n19:20:22 - INFO - ##########----------  50% | 12.9s<01:48 | 745.9 it/s\n19:20:23 - INFO - ###########---------  55% | 13.9s<29.5s | 930.7 it/s\n19:20:24 - INFO - ###########---------  59% | 14.9s<10.4s | 706.9 it/s\n19:20:24 - INFO - ############--------  60% | 15.0s<1.6s | 1650.6 it/s\n19:20:25 - INFO - ############--------  63% | 16.0s<01:04 | 838.3 it/s\n19:20:26 - INFO - #############-------  66% | 17.0s<23.9s | 751.6 it/s\n19:20:27 - INFO - #############-------  69% | 18.0s<3.5s | 830.2 it/s\n19:20:28 - INFO - ##############------  72% | 19.0s<15.9s | 809.2 it/s\n19:20:29 - INFO - ###############-----  75% | 20.0s<01:06 | 716.3 it/s\n19:20:30 - INFO - ###############-----  79% | 21.0s<3.5s | 1580.9 it/s\n19:20:30 - INFO - ################----  80% | 21.2s<1.3s | 849.6 it/s\n19:20:31 - INFO - ################----  83% | 22.2s<23.1s | 793.5 it/s\n19:20:32 - INFO - #################---  85% | 23.2s<1.2s | 843.6 it/s\n19:20:33 - INFO - #################---  88% | 24.2s<35.0s | 703.7 it/s\n19:20:34 - INFO - ##################--  91% | 25.2s<1.2s | 778.5 it/s\n19:20:35 - INFO - ##################--  94% | 26.2s<19.8s | 706.6 it/s\n19:20:36 - INFO - ###################-  96% | 27.2s<7.7s | 726.2 it/s\n19:20:37 - INFO - ###################-  99% | 28.2s<0.2s | 713.6 it/s\n19:20:37 - INFO - #################### 100% | 28.6s<--:-- | 733.3 it/s\n19:20:37 - INFO - FINISHED -> TRANSIENT (total steps: 22965, successful: 15038, runtime: 28554.11 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "24": {
+      "stdout": "19:20:37 - INFO - LOGGING (log: True)\n19:20:37 - INFO - BLOCKS (total: 15, dynamic: 2, static: 13, eventful: 0)\n19:20:37 - INFO - GRAPH (nodes: 15, edges: 18, alg. depth: 7, loop depth: 0, runtime: 0.142ms)\n19:20:37 - INFO - STARTING -> TRANSIENT (Duration: 5.00s)\n19:20:37 - INFO - --------------------   1% | 0.0s<0.5s | 588.1 it/s\n19:20:37 - INFO - #################### 100% | 0.0s<--:-- | 647.2 it/s\n19:20:37 - INFO - FINISHED -> TRANSIENT (total steps: 9, successful: 9, runtime: 17.21 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "26": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "abs_braking_0.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-07-03T19:20:40.745052+00:00",
+  "duration": 36233,
+  "success": true
 }
