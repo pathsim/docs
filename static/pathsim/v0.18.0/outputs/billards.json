@@ -1,12 +1,12 @@
 {
   "cells": {
     "11": {
-      "stdout": "19:58:34 - INFO - LOGGING (log: True)\n19:58:34 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n19:58:34 - INFO - GRAPH (nodes: 4, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.045ms)\n",
+      "stdout": "02:45:33 - INFO - LOGGING (log: True)\n02:45:33 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n02:45:33 - INFO - GRAPH (nodes: 4, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.042ms)\n",
       "stderr": null,
       "figures": []
     },
     "12": {
-      "stdout": "19:58:34 - INFO - STARTING -> TRANSIENT (Duration: 7.00s)\n19:58:34 - INFO - --------------------   1% | 0.0s<0.3s | 2183.3 it/s\n19:58:34 - INFO - ####----------------  20% | 0.1s<0.2s | 2684.4 it/s\n19:58:35 - INFO - ########------------  40% | 0.1s<0.4s | 2695.3 it/s\n19:58:35 - INFO - ############--------  60% | 0.2s<0.1s | 2731.7 it/s\n19:58:35 - INFO - ################----  80% | 0.3s<0.1s | 2610.5 it/s\n19:58:35 - INFO - #################### 100% | 0.3s<--:-- | 2744.1 it/s\n19:58:35 - INFO - FINISHED -> TRANSIENT (total steps: 818, successful: 778, runtime: 329.91 ms)\n",
+      "stdout": "02:45:33 - INFO - STARTING -> TRANSIENT (Duration: 7.00s)\n02:45:33 - INFO - --------------------   1% | 0.0s<0.3s | 2273.7 it/s\n02:45:33 - INFO - ####----------------  20% | 0.1s<0.2s | 2670.5 it/s\n02:45:33 - INFO - ########------------  40% | 0.1s<0.3s | 3580.2 it/s\n02:45:33 - INFO - ############--------  60% | 0.2s<0.1s | 3601.4 it/s\n02:45:33 - INFO - ################----  80% | 0.2s<0.0s | 3022.6 it/s\n02:45:33 - INFO - #################### 100% | 0.3s<--:-- | 4330.1 it/s\n02:45:33 - INFO - FINISHED -> TRANSIENT (total steps: 818, successful: 778, runtime: 267.65 ms)\n",
       "stderr": null,
       "figures": []
     },
@@ -25,7 +25,7 @@
       ]
     }
   },
-  "executedAt": "2026-07-02T19:58:36.601373+00:00",
-  "duration": 6495,
+  "executedAt": "2026-07-03T02:45:35.157736+00:00",
+  "duration": 6371,
   "success": true
 }

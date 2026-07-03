@@ -1,0 +1,116 @@
+[
+  {
+    "type": "module",
+    "name": "fastsim.blocks",
+    "description": "",
+    "path": "fastsim/v0.2.0/api#fastsim-blocks",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks"
+  },
+  {
+    "type": "class",
+    "name": "Source",
+    "description": "Source block with automatic JIT compilation.",
+    "path": "fastsim/v0.2.0/api#Source",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks"
+  },
+  {
+    "type": "class",
+    "name": "ODE",
+    "description": "ODE block with automatic JIT compilation.",
+    "path": "fastsim/v0.2.0/api#ODE",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks"
+  },
+  {
+    "type": "method",
+    "name": "set",
+    "description": "",
+    "path": "fastsim/v0.2.0/api#ODE.set",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "parentClass": "ODE"
+  },
+  {
+    "type": "class",
+    "name": "Function",
+    "description": "Function block with automatic JIT compilation.",
+    "path": "fastsim/v0.2.0/api#Function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks"
+  },
+  {
+    "type": "class",
+    "name": "TransferFunction",
+    "description": "Transfer function in pole-residue-constant form.",
+    "path": "fastsim/v0.2.0/api#TransferFunction",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks"
+  },
+  {
+    "type": "class",
+    "name": "DynamicalSystem",
+    "description": "DynamicalSystem with automatic JIT compilation of func_dyn and func_alg.",
+    "path": "fastsim/v0.2.0/api#DynamicalSystem",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks"
+  },
+  {
+    "type": "method",
+    "name": "set",
+    "description": "",
+    "path": "fastsim/v0.2.0/api#DynamicalSystem.set",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "parentClass": "DynamicalSystem"
+  },
+  {
+    "type": "class",
+    "name": "DynamicalFunction",
+    "description": "DynamicalFunction with automatic JIT compilation.",
+    "path": "fastsim/v0.2.0/api#DynamicalFunction",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks"
+  },
+  {
+    "type": "module",
+    "name": "fastsim.jit.compiler",
+    "description": "",
+    "path": "fastsim/v0.2.0/api#fastsim-jit-compiler",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.compiler"
+  },
+  {
+    "type": "class",
+    "name": "JitCompileError",
+    "description": "Raised when a function cannot be JIT compiled.",
+    "path": "fastsim/v0.2.0/api#JitCompileError",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.compiler"
+  },
+  {
+    "type": "function",
+    "name": "try_compile",
+    "description": "Try to compile a Python function to JIT IR.",
+    "path": "fastsim/v0.2.0/api#try_compile",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.compiler"
+  },
+  {
+    "type": "module",
+    "name": "fastsim.jit.interpreter",
+    "description": "",
+    "path": "fastsim/v0.2.0/api#fastsim-jit-interpreter",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.interpreter"
+  },
+  {
+    "type": "function",
+    "name": "interpret",
+    "description": "Interpret a JIT IR dict and return output values.",
+    "path": "fastsim/v0.2.0/api#interpret",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit.interpreter"
+  }
+]

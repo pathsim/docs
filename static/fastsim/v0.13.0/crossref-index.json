@@ -1,0 +1,982 @@
+{
+  "fastsim": {
+    "name": "fastsim",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "path": "fastsim/v0.13.0/api#fastsim"
+  },
+  "Simulation": {
+    "name": "Simulation",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "path": "fastsim/v0.13.0/api#Simulation"
+  },
+  "fastsim.Simulation": {
+    "name": "Simulation",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "path": "fastsim/v0.13.0/api#Simulation"
+  },
+  "Simulation.to_ir": {
+    "name": "to_ir",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.13.0/api#Simulation.to_ir"
+  },
+  "Simulation.to_c": {
+    "name": "to_c",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.13.0/api#Simulation.to_c"
+  },
+  "Simulation.run_streaming": {
+    "name": "run_streaming",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation",
+    "path": "fastsim/v0.13.0/api#Simulation.run_streaming"
+  },
+  "CaptureShim": {
+    "name": "CaptureShim",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "path": "fastsim/v0.13.0/api#CaptureShim"
+  },
+  "fastsim.CaptureShim": {
+    "name": "CaptureShim",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "path": "fastsim/v0.13.0/api#CaptureShim"
+  },
+  "CaptureShim.get": {
+    "name": "get",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "parentClass": "CaptureShim",
+    "path": "fastsim/v0.13.0/api#CaptureShim.get"
+  },
+  "CaptureShim.set": {
+    "name": "set",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "parentClass": "CaptureShim",
+    "path": "fastsim/v0.13.0/api#CaptureShim.set"
+  },
+  "CaptureShim.step": {
+    "name": "step",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "parentClass": "CaptureShim",
+    "path": "fastsim/v0.13.0/api#CaptureShim.step"
+  },
+  "CaptureShim.solve": {
+    "name": "solve",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "parentClass": "CaptureShim",
+    "path": "fastsim/v0.13.0/api#CaptureShim.solve"
+  },
+  "CaptureShim.buffer": {
+    "name": "buffer",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "parentClass": "CaptureShim",
+    "path": "fastsim/v0.13.0/api#CaptureShim.buffer"
+  },
+  "CaptureShim.revert": {
+    "name": "revert",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "parentClass": "CaptureShim",
+    "path": "fastsim/v0.13.0/api#CaptureShim.revert"
+  },
+  "CaptureShim.reset": {
+    "name": "reset",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "parentClass": "CaptureShim",
+    "path": "fastsim/v0.13.0/api#CaptureShim.reset"
+  },
+  "adapt": {
+    "name": "adapt",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.adapter",
+    "path": "fastsim/v0.13.0/api#adapt"
+  },
+  "fastsim.adapt": {
+    "name": "adapt",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "path": "fastsim/v0.13.0/api#adapt"
+  },
+  "random_uniform": {
+    "name": "random_uniform",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.random",
+    "path": "fastsim/v0.13.0/api#random_uniform"
+  },
+  "fastsim.random_uniform": {
+    "name": "random_uniform",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "path": "fastsim/v0.13.0/api#random_uniform"
+  },
+  "random_normal": {
+    "name": "random_normal",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.random",
+    "path": "fastsim/v0.13.0/api#random_normal"
+  },
+  "fastsim.random_normal": {
+    "name": "random_normal",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "path": "fastsim/v0.13.0/api#random_normal"
+  },
+  "fastsim.adapter": {
+    "name": "fastsim.adapter",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.adapter",
+    "path": "fastsim/v0.13.0/api#fastsim-adapter"
+  },
+  "fastsim.adapter.adapt": {
+    "name": "adapt",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.adapter",
+    "path": "fastsim/v0.13.0/api#adapt"
+  },
+  "fastsim.ir": {
+    "name": "fastsim.ir",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#fastsim-ir"
+  },
+  "Tagged": {
+    "name": "Tagged",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Tagged"
+  },
+  "fastsim.ir.Tagged": {
+    "name": "Tagged",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Tagged"
+  },
+  "fastsim.Tagged": {
+    "name": "Tagged",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Tagged"
+  },
+  "Tagged.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Tagged",
+    "path": "fastsim/v0.13.0/api#Tagged.parse"
+  },
+  "Port": {
+    "name": "Port",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Port"
+  },
+  "fastsim.ir.Port": {
+    "name": "Port",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Port"
+  },
+  "fastsim.Port": {
+    "name": "Port",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Port"
+  },
+  "Port.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Port",
+    "path": "fastsim/v0.13.0/api#Port.parse"
+  },
+  "Ports": {
+    "name": "Ports",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Ports"
+  },
+  "fastsim.ir.Ports": {
+    "name": "Ports",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Ports"
+  },
+  "fastsim.Ports": {
+    "name": "Ports",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Ports"
+  },
+  "Ports.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Ports",
+    "path": "fastsim/v0.13.0/api#Ports.parse"
+  },
+  "Param": {
+    "name": "Param",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Param"
+  },
+  "fastsim.ir.Param": {
+    "name": "Param",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Param"
+  },
+  "fastsim.Param": {
+    "name": "Param",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Param"
+  },
+  "Param.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Param",
+    "path": "fastsim/v0.13.0/api#Param.parse"
+  },
+  "StateVar": {
+    "name": "StateVar",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#StateVar"
+  },
+  "fastsim.ir.StateVar": {
+    "name": "StateVar",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#StateVar"
+  },
+  "fastsim.StateVar": {
+    "name": "StateVar",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#StateVar"
+  },
+  "StateVar.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "StateVar",
+    "path": "fastsim/v0.13.0/api#StateVar.parse"
+  },
+  "MemorySlot": {
+    "name": "MemorySlot",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#MemorySlot"
+  },
+  "fastsim.ir.MemorySlot": {
+    "name": "MemorySlot",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#MemorySlot"
+  },
+  "fastsim.MemorySlot": {
+    "name": "MemorySlot",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#MemorySlot"
+  },
+  "MemorySlot.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "MemorySlot",
+    "path": "fastsim/v0.13.0/api#MemorySlot.parse"
+  },
+  "Region": {
+    "name": "Region",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Region"
+  },
+  "fastsim.ir.Region": {
+    "name": "Region",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Region"
+  },
+  "fastsim.Region": {
+    "name": "Region",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Region"
+  },
+  "Region.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Region",
+    "path": "fastsim/v0.13.0/api#Region.parse"
+  },
+  "Regions": {
+    "name": "Regions",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Regions"
+  },
+  "fastsim.ir.Regions": {
+    "name": "Regions",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Regions"
+  },
+  "fastsim.Regions": {
+    "name": "Regions",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Regions"
+  },
+  "Regions.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Regions",
+    "path": "fastsim/v0.13.0/api#Regions.parse"
+  },
+  "Event": {
+    "name": "Event",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Event"
+  },
+  "fastsim.ir.Event": {
+    "name": "Event",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Event"
+  },
+  "fastsim.Event": {
+    "name": "Event",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Event"
+  },
+  "Event.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Event",
+    "path": "fastsim/v0.13.0/api#Event.parse"
+  },
+  "Block": {
+    "name": "Block",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Block"
+  },
+  "fastsim.ir.Block": {
+    "name": "Block",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Block"
+  },
+  "fastsim.Block": {
+    "name": "Block",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Block"
+  },
+  "Block.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Block",
+    "path": "fastsim/v0.13.0/api#Block.parse"
+  },
+  "PortRef": {
+    "name": "PortRef",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#PortRef"
+  },
+  "fastsim.ir.PortRef": {
+    "name": "PortRef",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#PortRef"
+  },
+  "fastsim.PortRef": {
+    "name": "PortRef",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#PortRef"
+  },
+  "PortRef.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "PortRef",
+    "path": "fastsim/v0.13.0/api#PortRef.parse"
+  },
+  "Connection": {
+    "name": "Connection",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Connection"
+  },
+  "fastsim.ir.Connection": {
+    "name": "Connection",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Connection"
+  },
+  "fastsim.Connection": {
+    "name": "Connection",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Connection"
+  },
+  "Connection.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Connection",
+    "path": "fastsim/v0.13.0/api#Connection.parse"
+  },
+  "Interface": {
+    "name": "Interface",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Interface"
+  },
+  "fastsim.ir.Interface": {
+    "name": "Interface",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Interface"
+  },
+  "fastsim.Interface": {
+    "name": "Interface",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Interface"
+  },
+  "Interface.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Interface",
+    "path": "fastsim/v0.13.0/api#Interface.parse"
+  },
+  "DagGroup": {
+    "name": "DagGroup",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#DagGroup"
+  },
+  "fastsim.ir.DagGroup": {
+    "name": "DagGroup",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#DagGroup"
+  },
+  "fastsim.DagGroup": {
+    "name": "DagGroup",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#DagGroup"
+  },
+  "DagGroup.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "DagGroup",
+    "path": "fastsim/v0.13.0/api#DagGroup.parse"
+  },
+  "Scc": {
+    "name": "Scc",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Scc"
+  },
+  "fastsim.ir.Scc": {
+    "name": "Scc",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Scc"
+  },
+  "fastsim.Scc": {
+    "name": "Scc",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Scc"
+  },
+  "Scc.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Scc",
+    "path": "fastsim/v0.13.0/api#Scc.parse"
+  },
+  "Schedule": {
+    "name": "Schedule",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Schedule"
+  },
+  "fastsim.ir.Schedule": {
+    "name": "Schedule",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Schedule"
+  },
+  "fastsim.Schedule": {
+    "name": "Schedule",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Schedule"
+  },
+  "Schedule.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Schedule",
+    "path": "fastsim/v0.13.0/api#Schedule.parse"
+  },
+  "Subsystem": {
+    "name": "Subsystem",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Subsystem"
+  },
+  "fastsim.ir.Subsystem": {
+    "name": "Subsystem",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Subsystem"
+  },
+  "fastsim.Subsystem": {
+    "name": "Subsystem",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Subsystem"
+  },
+  "Subsystem.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Subsystem",
+    "path": "fastsim/v0.13.0/api#Subsystem.parse"
+  },
+  "Subsystem.blocks": {
+    "name": "blocks",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Subsystem",
+    "path": "fastsim/v0.13.0/api#Subsystem.blocks"
+  },
+  "Subsystem.subsystems": {
+    "name": "subsystems",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Subsystem",
+    "path": "fastsim/v0.13.0/api#Subsystem.subsystems"
+  },
+  "ExternDecl": {
+    "name": "ExternDecl",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#ExternDecl"
+  },
+  "fastsim.ir.ExternDecl": {
+    "name": "ExternDecl",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#ExternDecl"
+  },
+  "fastsim.ExternDecl": {
+    "name": "ExternDecl",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#ExternDecl"
+  },
+  "ExternDecl.parse": {
+    "name": "parse",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "ExternDecl",
+    "path": "fastsim/v0.13.0/api#ExternDecl.parse"
+  },
+  "Module": {
+    "name": "Module",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Module"
+  },
+  "fastsim.ir.Module": {
+    "name": "Module",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Module"
+  },
+  "fastsim.Module": {
+    "name": "Module",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "path": "fastsim/v0.13.0/api#Module"
+  },
+  "Module.from_dict": {
+    "name": "from_dict",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.from_dict"
+  },
+  "Module.from_json": {
+    "name": "from_json",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.from_json"
+  },
+  "Module.from_json_file": {
+    "name": "from_json_file",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.from_json_file"
+  },
+  "Module.to_json": {
+    "name": "to_json",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.to_json"
+  },
+  "Module.to_json_file": {
+    "name": "to_json_file",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.to_json_file"
+  },
+  "Module.to_c": {
+    "name": "to_c",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.to_c"
+  },
+  "Module.blocks": {
+    "name": "blocks",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.blocks"
+  },
+  "Module.find": {
+    "name": "find",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.find"
+  },
+  "Module.extern_blocks": {
+    "name": "extern_blocks",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.extern_blocks"
+  },
+  "Module.summary": {
+    "name": "summary",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.ir",
+    "parentClass": "Module",
+    "path": "fastsim/v0.13.0/api#Module.summary"
+  },
+  "fastsim.port": {
+    "name": "fastsim.port",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "path": "fastsim/v0.13.0/api#fastsim-port"
+  },
+  "fastsim.port.CaptureShim": {
+    "name": "CaptureShim",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "path": "fastsim/v0.13.0/api#CaptureShim"
+  },
+  "port": {
+    "name": "port",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "path": "fastsim/v0.13.0/api#port"
+  },
+  "fastsim.port.port": {
+    "name": "port",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.port",
+    "path": "fastsim/v0.13.0/api#port"
+  },
+  "fastsim.random": {
+    "name": "fastsim.random",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.random",
+    "path": "fastsim/v0.13.0/api#fastsim-random"
+  },
+  "fastsim.random.random_uniform": {
+    "name": "random_uniform",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.random",
+    "path": "fastsim/v0.13.0/api#random_uniform"
+  },
+  "fastsim.random.random_normal": {
+    "name": "random_normal",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.random",
+    "path": "fastsim/v0.13.0/api#random_normal"
+  },
+  "fastsim.simulation": {
+    "name": "fastsim.simulation",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "path": "fastsim/v0.13.0/api#fastsim-simulation"
+  },
+  "fastsim.simulation.Simulation": {
+    "name": "Simulation",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "path": "fastsim/v0.13.0/api#Simulation"
+  },
+  "fastsim.blocks": {
+    "name": "fastsim.blocks",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "path": "fastsim/v0.13.0/api#fastsim-blocks"
+  },
+  "Scope": {
+    "name": "Scope",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "path": "fastsim/v0.13.0/api#Scope"
+  },
+  "fastsim.blocks.Scope": {
+    "name": "Scope",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "path": "fastsim/v0.13.0/api#Scope"
+  },
+  "fastsim.Scope": {
+    "name": "Scope",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "path": "fastsim/v0.13.0/api#Scope"
+  },
+  "Scope.plot": {
+    "name": "plot",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "parentClass": "Scope",
+    "path": "fastsim/v0.13.0/api#Scope.plot"
+  },
+  "Spectrum": {
+    "name": "Spectrum",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "path": "fastsim/v0.13.0/api#Spectrum"
+  },
+  "fastsim.blocks.Spectrum": {
+    "name": "Spectrum",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "path": "fastsim/v0.13.0/api#Spectrum"
+  },
+  "fastsim.Spectrum": {
+    "name": "Spectrum",
+    "type": "class",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "path": "fastsim/v0.13.0/api#Spectrum"
+  },
+  "Spectrum.plot": {
+    "name": "plot",
+    "type": "method",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks",
+    "parentClass": "Spectrum",
+    "path": "fastsim/v0.13.0/api#Spectrum.plot"
+  },
+  "fastsim.jit": {
+    "name": "fastsim.jit",
+    "type": "module",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit",
+    "path": "fastsim/v0.13.0/api#fastsim-jit"
+  },
+  "jit": {
+    "name": "jit",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit",
+    "path": "fastsim/v0.13.0/api#jit"
+  },
+  "fastsim.jit.jit": {
+    "name": "jit",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit",
+    "path": "fastsim/v0.13.0/api#jit"
+  },
+  "jacobian": {
+    "name": "jacobian",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit",
+    "path": "fastsim/v0.13.0/api#jacobian"
+  },
+  "fastsim.jit.jacobian": {
+    "name": "jacobian",
+    "type": "function",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.jit",
+    "path": "fastsim/v0.13.0/api#jacobian"
+  }
+}
