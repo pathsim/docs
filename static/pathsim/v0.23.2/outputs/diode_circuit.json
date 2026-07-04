@@ -1,0 +1,34 @@
+{
+  "cells": {
+    "11": {
+      "stdout": "13:17:24 - INFO - LOGGING (log: True)\n13:17:24 - INFO - BLOCKS (total: 6, dynamic: 0, static: 6, eventful: 0)\n13:17:24 - INFO - GRAPH (nodes: 6, edges: 7, alg. depth: 1, loop depth: 3, runtime: 0.150ms)\n13:17:24 - INFO - STARTING -> TRANSIENT (Duration: 2.00s)\n13:17:24 - INFO - --------------------   1% | 0.0s<1.1s | 176.0 it/s\n13:17:25 - INFO - ####----------------  20% | 0.2s<0.5s | 305.7 it/s\n13:17:25 - INFO - ########------------  40% | 0.2s<0.0s | 10212.7 it/s\n13:17:25 - INFO - ############--------  60% | 0.3s<0.1s | 962.9 it/s\n13:17:25 - INFO - ################----  80% | 0.3s<0.0s | 21244.3 it/s\n13:17:25 - INFO - #################### 100% | 0.3s<--:-- | 10702.4 it/s\n13:17:25 - INFO - FINISHED -> TRANSIENT (total steps: 200, successful: 200, runtime: 310.15 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "13": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "diode_circuit_0.svg",
+        "diode_circuit_1.svg"
+      ]
+    },
+    "15": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "diode_circuit_2.svg"
+      ]
+    },
+    "17": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "diode_circuit_3.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-07-04T13:17:26.889406+00:00",
+  "duration": 6863,
+  "success": true
+}
