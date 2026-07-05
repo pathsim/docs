@@ -1,7 +1,7 @@
 {
   "cells": {
     "11": {
-      "stdout": "13:27:18 - INFO - LOGGING (log: True)\n13:27:18 - INFO - BLOCKS (total: 13, dynamic: 3, static: 10, eventful: 0)\n13:27:18 - INFO - GRAPH (nodes: 13, edges: 20, alg. depth: 4, loop depth: 0, runtime: 0.127ms)\n13:27:18 - INFO - STARTING -> TRANSIENT (Duration: 50.00s)\n13:27:18 - INFO - --------------------   1% | 0.1s<5.1s | 1128.1 it/s\n13:27:18 - INFO - ####----------------  20% | 0.5s<1.7s | 1273.1 it/s\n13:27:19 - INFO - ########------------  40% | 1.3s<2.5s | 743.1 it/s\n13:27:20 - INFO - ############--------  60% | 2.3s<2.1s | 1128.3 it/s\n13:27:21 - INFO - ###############-----  79% | 3.3s<1.4s | 1122.3 it/s\n13:27:21 - INFO - ################----  80% | 3.3s<0.8s | 1137.1 it/s\n13:27:22 - INFO - #################### 100% | 4.2s<--:-- | 1140.8 it/s\n13:27:22 - INFO - FINISHED -> TRANSIENT (total steps: 4669, successful: 4057, runtime: 4237.50 ms)\n",
+      "stdout": "19:16:04 - INFO - LOGGING (log: True)\n19:16:04 - INFO - BLOCKS (total: 13, dynamic: 3, static: 10, eventful: 0)\n19:16:04 - INFO - GRAPH (nodes: 13, edges: 20, alg. depth: 4, loop depth: 0, runtime: 0.136ms)\n19:16:04 - INFO - STARTING -> TRANSIENT (Duration: 50.00s)\n19:16:04 - INFO - --------------------   1% | 0.1s<5.8s | 994.1 it/s\n19:16:05 - INFO - ####----------------  20% | 0.5s<1.8s | 1192.0 it/s\n19:16:06 - INFO - ########------------  40% | 1.3s<1.9s | 980.4 it/s\n19:16:06 - INFO - ############--------  60% | 2.1s<1.8s | 1294.6 it/s\n19:16:07 - INFO - ###############-----  78% | 3.1s<1.0s | 1095.2 it/s\n19:16:07 - INFO - ################----  80% | 3.2s<0.9s | 963.6 it/s\n19:16:08 - INFO - #################### 100% | 4.1s<--:-- | 825.4 it/s\n19:16:08 - INFO - FINISHED -> TRANSIENT (total steps: 4669, successful: 4057, runtime: 4151.06 ms)\n",
       "stderr": null,
       "figures": []
     },
@@ -27,7 +27,7 @@
       ]
     }
   },
-  "executedAt": "2026-07-05T13:27:24.170844+00:00",
-  "duration": 10650,
+  "executedAt": "2026-07-05T19:16:10.597021+00:00",
+  "duration": 10363,
   "success": true
 }
