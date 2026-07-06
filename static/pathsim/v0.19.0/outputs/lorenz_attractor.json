@@ -1,33 +1,7 @@
 {
-  "cells": {
-    "11": {
-      "stdout": "19:24:10 - INFO - LOGGING (log: True)\n19:24:10 - INFO - BLOCKS (total: 13, dynamic: 3, static: 10, eventful: 0)\n19:24:10 - INFO - GRAPH (nodes: 13, edges: 20, alg. depth: 4, loop depth: 0, runtime: 0.129ms)\n19:24:10 - INFO - STARTING -> TRANSIENT (Duration: 50.00s)\n19:24:10 - INFO - --------------------   1% | 0.1s<8.3s | 721.5 it/s\n19:24:10 - INFO - ####----------------  20% | 0.5s<1.4s | 1528.0 it/s\n19:24:11 - INFO - ########------------  40% | 1.2s<0.8s | 2395.5 it/s\n19:24:12 - INFO - ############--------  60% | 2.1s<2.0s | 1187.9 it/s\n19:24:13 - INFO - ################----  80% | 3.0s<0.7s | 1219.4 it/s\n19:24:14 - INFO - #################### 100% | 3.9s<--:-- | 1148.0 it/s\n19:24:14 - INFO - FINISHED -> TRANSIENT (total steps: 4669, successful: 4057, runtime: 3922.24 ms)\n",
-      "stderr": null,
-      "figures": []
-    },
-    "13": {
-      "stdout": null,
-      "stderr": null,
-      "figures": [
-        "lorenz_attractor_0.svg"
-      ]
-    },
-    "15": {
-      "stdout": null,
-      "stderr": null,
-      "figures": [
-        "lorenz_attractor_1.svg"
-      ]
-    },
-    "17": {
-      "stdout": null,
-      "stderr": null,
-      "figures": [
-        "lorenz_attractor_2.svg"
-      ]
-    }
-  },
-  "executedAt": "2026-07-05T19:24:15.671966+00:00",
-  "duration": 10254,
-  "success": true
+  "cells": {},
+  "executedAt": "2026-07-06T02:56:21.897224+00:00",
+  "duration": 3824,
+  "success": false,
+  "error": "y, resources)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 204, in _async_wait_for_ready\n    raise RuntimeError(msg)\nRuntimeError: Kernel died before replying to kernel_info"
 }
