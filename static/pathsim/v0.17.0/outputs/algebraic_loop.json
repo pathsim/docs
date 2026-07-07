@@ -1,26 +1,7 @@
 {
-  "cells": {
-    "14": {
-      "stdout": "20:07:48 - INFO - LOGGING (log: True)\n20:07:48 - INFO - BLOCKS (total: 4, dynamic: 0, static: 4, eventful: 0)\n20:07:48 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 1, loop depth: 2, runtime: 0.126ms)\n20:07:48 - INFO - STARTING -> TRANSIENT (Duration: 5.00s)\n20:07:48 - INFO - --------------------   2% | 0.0s<0.1s | 855.1 it/s\n20:07:48 - INFO - ####----------------  21% | 0.0s<0.0s | 4719.6 it/s\n20:07:48 - INFO - ########------------  40% | 0.0s<0.0s | 4985.0 it/s\n20:07:48 - INFO - ############--------  60% | 0.0s<0.0s | 5059.9 it/s\n20:07:48 - INFO - ################----  80% | 0.0s<0.0s | 4685.5 it/s\n20:07:48 - INFO - #################### 100% | 0.0s<--:-- | 4969.3 it/s\n20:07:48 - INFO - FINISHED -> TRANSIENT (total steps: 51, successful: 51, runtime: 17.40 ms)\n",
-      "stderr": null,
-      "figures": []
-    },
-    "16": {
-      "stdout": null,
-      "stderr": null,
-      "figures": [
-        "algebraic_loop_0.svg"
-      ]
-    },
-    "18": {
-      "stdout": "Maximum error: 2.22e-16\n",
-      "stderr": null,
-      "figures": [
-        "algebraic_loop_1.svg"
-      ]
-    }
-  },
-  "executedAt": "2026-07-06T20:07:50.150113+00:00",
-  "duration": 6306,
-  "success": true
+  "cells": {},
+  "executedAt": "2026-07-07T02:58:50.246175+00:00",
+  "duration": 182810,
+  "success": false,
+  "error": " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 208, in _async_wait_for_ready\n    raise RuntimeError(\"Kernel didn't respond in %d seconds\" % timeout)\nRuntimeError: Kernel didn't respond in 180 seconds"
 }
