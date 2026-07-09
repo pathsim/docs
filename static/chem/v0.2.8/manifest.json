@@ -1,0 +1,128 @@
+{
+  "package": "chem",
+  "tag": "v0.2.8",
+  "notebooks": [
+    {
+      "slug": "vle-calculation",
+      "file": "vle_calculation.ipynb",
+      "title": "Activity Coefficients",
+      "description": "Simulating how NRTL activity coefficients for the ethanol-water system evolve with temperature using PathSim blocks and connections.",
+      "category": "chemical",
+      "tags": [
+        "thermodynamics",
+        "vle"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "cstr-reaction",
+      "file": "cstr_reaction.ipynb",
+      "title": "Continuous Stirred-Tank Reactor",
+      "description": "Simulating the startup transient of an exothermic first-order reaction in a cooled CSTR, showing the dynamic interaction between concentration decay and temperature rise.",
+      "category": "chemical",
+      "tags": [
+        "cstr",
+        "reaction",
+        "dynamics"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "heat-exchanger",
+      "file": "heat_exchanger.ipynb",
+      "title": "Counter-Current Heat Exchanger",
+      "description": "Simulating the startup transient of a counter-current shell-and-tube heat exchanger, showing how temperature profiles develop along the exchanger length.",
+      "category": "chemical",
+      "tags": [
+        "heat-transfer",
+        "dynamics"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "equation-of-state",
+      "file": "equation_of_state.ipynb",
+      "title": "Cubic Equations of State",
+      "description": "Simulating the compressibility factor of methane across a pressure sweep using the Peng-Robinson and Soave-Redlich-Kwong equations of state wired into a PathSim simulation.",
+      "category": "chemical",
+      "tags": [
+        "thermodynamics",
+        "eos"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "flash-distillation",
+      "file": "flash_distillation.ipynb",
+      "title": "Flash Drum and Distillation Column",
+      "description": "Simulating two fundamental separation processes: an isothermal binary flash drum and a multi-tray distillation column built from individual DistillationTray blocks wired in series.",
+      "category": "chemical",
+      "tags": [
+        "separation",
+        "vle",
+        "distillation"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "vapor-pressure-curves",
+      "file": "vapor_pressure_curves.ipynb",
+      "title": "Vapor Pressure Curves",
+      "description": "Comparing vapor pressure correlations for water by sweeping temperature through Antoine, Kirchhoff, and Wagner blocks wired into a PathSim simulation.",
+      "category": "chemical",
+      "tags": [
+        "thermodynamics",
+        "vle"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "multicomponent-flash",
+      "file": "multicomponent_flash.ipynb",
+      "title": "Multi-Component Flash Separation (BTX)",
+      "description": "Simulating an isothermal flash drum for a ternary benzene–toluene–p-xylene (BTX) mixture.",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    },
+    {
+      "slug": "process-flowsheet",
+      "file": "process_flowsheet.ipynb",
+      "title": "Process Flowsheet: Mixer → Heater → CSTR",
+      "description": "A simple process combining multiple unit operations into a flowsheet:",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    },
+    {
+      "slug": "point-kinetics",
+      "file": "point_kinetics.ipynb",
+      "title": "Reactor Point Kinetics",
+      "description": "Simulating the transient neutron population in a nuclear reactor using the point kinetics equations (PKE) with six delayed neutron precursor groups.",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    },
+    {
+      "slug": "valve-characteristics",
+      "file": "valve_characteristics.ipynb",
+      "title": "Valve Flow Characteristics",
+      "description": "Exploring the flow behaviour of the Valve block under varying pressure drop conditions.",
+      "category": "advanced",
+      "tags": [],
+      "executable": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "chemical",
+      "title": "Chemical Engineering",
+      "order": 6
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced Topics",
+      "order": 7
+    }
+  ]
+}
