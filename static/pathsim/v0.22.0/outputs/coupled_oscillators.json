@@ -1,12 +1,12 @@
 {
   "cells": {
     "18": {
-      "stdout": "13:25:02 - INFO - LOGGING (log: True)\n13:25:02 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 0)\n13:25:02 - INFO - GRAPH (nodes: 5, edges: 7, alg. depth: 2, loop depth: 0, runtime: 0.072ms)\n",
+      "stdout": "19:08:30 - INFO - LOGGING (log: True)\n19:08:30 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 0)\n19:08:30 - INFO - GRAPH (nodes: 5, edges: 7, alg. depth: 2, loop depth: 0, runtime: 0.074ms)\n",
       "stderr": null,
       "figures": []
     },
     "20": {
-      "stdout": "13:25:02 - INFO - STARTING -> TRANSIENT (Duration: 75.00s)\n13:25:02 - INFO - RESET (time: 0.0)\n13:25:02 - INFO - --------------------   1% | 0.0s<0.9s | 8385.2 it/s\n13:25:02 - INFO - ####----------------  20% | 0.2s<0.7s | 8003.1 it/s\n13:25:03 - INFO - ########------------  40% | 0.4s<0.6s | 7355.0 it/s\n13:25:03 - INFO - ############--------  60% | 0.6s<0.5s | 6217.4 it/s\n13:25:03 - INFO - ################----  80% | 0.8s<0.2s | 7128.8 it/s\n13:25:03 - INFO - #################### 100% | 1.0s<--:-- | 6824.1 it/s\n13:25:03 - INFO - FINISHED -> TRANSIENT (total steps: 7500, successful: 7500, runtime: 1039.55 ms)\n",
+      "stdout": "19:08:30 - INFO - STARTING -> TRANSIENT (Duration: 75.00s)\n19:08:30 - INFO - RESET (time: 0.0)\n19:08:30 - INFO - --------------------   1% | 0.0s<0.8s | 9420.1 it/s\n19:08:30 - INFO - ####----------------  20% | 0.2s<0.7s | 8098.0 it/s\n19:08:31 - INFO - ########------------  40% | 0.4s<0.6s | 7825.1 it/s\n19:08:31 - INFO - ############--------  60% | 0.5s<0.3s | 8615.1 it/s\n19:08:31 - INFO - ################----  80% | 0.7s<0.2s | 8282.6 it/s\n19:08:31 - INFO - #################### 100% | 0.9s<--:-- | 9412.6 it/s\n19:08:31 - INFO - FINISHED -> TRANSIENT (total steps: 7500, successful: 7500, runtime: 902.68 ms)\n",
       "stderr": null,
       "figures": [
         "coupled_oscillators_0.svg",
@@ -14,7 +14,7 @@
       ]
     }
   },
-  "executedAt": "2026-07-17T13:25:05.382468+00:00",
-  "duration": 6965,
+  "executedAt": "2026-07-17T19:08:33.413860+00:00",
+  "duration": 7227,
   "success": true
 }
