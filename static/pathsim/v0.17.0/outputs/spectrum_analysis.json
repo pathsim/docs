@@ -1,12 +1,12 @@
 {
   "cells": {
     "9": {
-      "stdout": "08:24:00 - INFO - LOGGING (log: True)\n08:24:00 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n08:24:00 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.065ms)\n",
+      "stdout": "13:23:45 - INFO - LOGGING (log: True)\n13:23:45 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n13:23:45 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.081ms)\n",
       "stderr": null,
       "figures": []
     },
     "11": {
-      "stdout": "08:24:00 - INFO - STARTING -> TRANSIENT (Duration: 3.00s)\n08:24:00 - INFO - --------------------   3% | 0.0s<0.1s | 790.0 it/s\n08:24:00 - INFO - ####----------------  20% | 0.0s<0.2s | 2044.7 it/s\n08:24:00 - INFO - ########------------  40% | 0.1s<0.1s | 2024.8 it/s\n08:24:00 - INFO - ############--------  60% | 0.1s<0.0s | 2029.3 it/s\n08:24:00 - INFO - ################----  80% | 0.1s<0.0s | 2100.5 it/s\n08:24:00 - INFO - #################### 100% | 0.1s<--:-- | 1354.7 it/s\n08:24:00 - INFO - FINISHED -> TRANSIENT (total steps: 204, successful: 174, runtime: 112.49 ms)\n",
+      "stdout": "13:23:45 - INFO - STARTING -> TRANSIENT (Duration: 3.00s)\n13:23:45 - INFO - --------------------   3% | 0.0s<0.1s | 534.6 it/s\n13:23:45 - INFO - ####----------------  20% | 0.1s<0.3s | 1046.2 it/s\n13:23:45 - INFO - ########------------  40% | 0.1s<0.1s | 1022.4 it/s\n13:23:45 - INFO - ############--------  60% | 0.2s<0.0s | 1030.3 it/s\n13:23:45 - INFO - ################----  80% | 0.2s<0.0s | 1383.2 it/s\n13:23:45 - INFO - #################### 100% | 0.2s<--:-- | 1988.8 it/s\n13:23:45 - INFO - FINISHED -> TRANSIENT (total steps: 204, successful: 174, runtime: 201.10 ms)\n",
       "stderr": null,
       "figures": [
         "spectrum_analysis_0.svg",
@@ -21,7 +21,7 @@
       ]
     }
   },
-  "executedAt": "2026-07-19T08:24:02.324269+00:00",
-  "duration": 5075,
+  "executedAt": "2026-07-19T13:23:49.906554+00:00",
+  "duration": 8998,
   "success": true
 }
