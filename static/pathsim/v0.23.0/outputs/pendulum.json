@@ -1,12 +1,12 @@
 {
   "cells": {
     "10": {
-      "stdout": "02:37:49 - INFO - LOGGING (log: True)\n02:37:49 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 0)\n02:37:49 - INFO - GRAPH (nodes: 5, edges: 6, alg. depth: 3, loop depth: 0, runtime: 0.074ms)\n",
+      "stdout": "08:56:07 - INFO - LOGGING (log: True)\n08:56:07 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 0)\n08:56:07 - INFO - GRAPH (nodes: 5, edges: 6, alg. depth: 3, loop depth: 0, runtime: 0.064ms)\n",
       "stderr": null,
       "figures": []
     },
     "12": {
-      "stdout": "02:37:49 - INFO - STARTING -> TRANSIENT (Duration: 15.00s)\n02:37:49 - INFO - --------------------   1% | 0.0s<0.3s | 928.6 it/s\n02:37:49 - INFO - ####----------------  20% | 0.0s<0.1s | 1518.3 it/s\n02:37:49 - INFO - ########------------  40% | 0.1s<0.1s | 1518.9 it/s\n02:37:49 - INFO - ############--------  60% | 0.1s<0.0s | 1517.1 it/s\n02:37:49 - INFO - ################----  80% | 0.1s<0.0s | 1515.5 it/s\n02:37:49 - INFO - #################### 100% | 0.2s<--:-- | 1546.5 it/s\n02:37:49 - INFO - FINISHED -> TRANSIENT (total steps: 207, successful: 174, runtime: 152.66 ms)\n",
+      "stdout": "08:56:07 - INFO - STARTING -> TRANSIENT (Duration: 15.00s)\n08:56:07 - INFO - --------------------   1% | 0.0s<0.2s | 1147.4 it/s\n08:56:07 - INFO - ####----------------  20% | 0.0s<0.1s | 2187.9 it/s\n08:56:07 - INFO - ########------------  40% | 0.0s<0.0s | 2272.5 it/s\n08:56:07 - INFO - ############--------  60% | 0.1s<0.0s | 2492.9 it/s\n08:56:07 - INFO - ################----  80% | 0.1s<0.0s | 1574.1 it/s\n08:56:07 - INFO - #################### 100% | 0.1s<--:-- | 1590.8 it/s\n08:56:07 - INFO - FINISHED -> TRANSIENT (total steps: 207, successful: 174, runtime: 122.13 ms)\n",
       "stderr": null,
       "figures": [
         "pendulum_0.svg"
@@ -20,7 +20,7 @@
       ]
     }
   },
-  "executedAt": "2026-07-20T02:37:50.774051+00:00",
-  "duration": 6095,
+  "executedAt": "2026-07-20T08:56:08.957027+00:00",
+  "duration": 6352,
   "success": true
 }
