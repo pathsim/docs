@@ -1,9 +1,66 @@
 [
   {
     "type": "module",
+    "name": "pathsim_batt",
+    "description": "PathSim-Batt: Battery Simulation Blocks for PathSim",
+    "path": "batt/v0.2.2/api#pathsim_batt",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt"
+  },
+  {
+    "type": "class",
+    "name": "LumpedThermal",
+    "description": "Single-node lumped thermal model.",
+    "path": "batt/v0.2.2/api#LumpedThermal",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "batt/v0.2.2/api#LumpedThermal.__init__",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt",
+    "parentClass": "LumpedThermal"
+  },
+  {
+    "type": "class",
+    "name": "CellCoSimElectrical",
+    "description": "Cell block (co-simulation) — electrical outputs only, external thermal coupling.",
+    "path": "batt/v0.2.2/api#CellCoSimElectrical",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt"
+  },
+  {
+    "type": "class",
+    "name": "CellCoSimElectrothermal",
+    "description": "Cell block (co-simulation) — coupled electrical and thermal model.",
+    "path": "batt/v0.2.2/api#CellCoSimElectrothermal",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt"
+  },
+  {
+    "type": "class",
+    "name": "CellElectrical",
+    "description": "Cell block — electrical outputs only, external thermal coupling.",
+    "path": "batt/v0.2.2/api#CellElectrical",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt"
+  },
+  {
+    "type": "class",
+    "name": "CellElectrothermal",
+    "description": "Cell block — coupled electrical and thermal model.",
+    "path": "batt/v0.2.2/api#CellElectrothermal",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt"
+  },
+  {
+    "type": "module",
     "name": "pathsim_batt.cells.pybamm_cell",
     "description": "",
-    "path": "batt/v0.2.1/api#pathsim_batt-cells-pybamm_cell",
+    "path": "batt/v0.2.2/api#pathsim_batt-cells-pybamm_cell",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -11,7 +68,7 @@
     "type": "class",
     "name": "_CellBase",
     "description": "Shared base for PyBaMM cell blocks.",
-    "path": "batt/v0.2.1/api#_CellBase",
+    "path": "batt/v0.2.2/api#_CellBase",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -19,7 +76,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "batt/v0.2.1/api#_CellBase.__init__",
+    "path": "batt/v0.2.2/api#_CellBase.__init__",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell",
     "parentClass": "_CellBase"
@@ -28,7 +85,7 @@
     "type": "method",
     "name": "reset",
     "description": "",
-    "path": "batt/v0.2.1/api#_CellBase.reset",
+    "path": "batt/v0.2.2/api#_CellBase.reset",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell",
     "parentClass": "_CellBase"
@@ -37,7 +94,7 @@
     "type": "class",
     "name": "_CoSimCellBase",
     "description": "Shared base for co-simulation PyBaMM cell blocks.",
-    "path": "batt/v0.2.1/api#_CoSimCellBase",
+    "path": "batt/v0.2.2/api#_CoSimCellBase",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -45,7 +102,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "batt/v0.2.1/api#_CoSimCellBase.__init__",
+    "path": "batt/v0.2.2/api#_CoSimCellBase.__init__",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell",
     "parentClass": "_CoSimCellBase"
@@ -54,7 +111,7 @@
     "type": "method",
     "name": "_build_sim",
     "description": "Create and build a fresh ``pybamm.Simulation`` with default inputs.",
-    "path": "batt/v0.2.1/api#_CoSimCellBase._build_sim",
+    "path": "batt/v0.2.2/api#_CoSimCellBase._build_sim",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell",
     "parentClass": "_CoSimCellBase"
@@ -63,7 +120,7 @@
     "type": "method",
     "name": "_initial_outputs",
     "description": "Compute outputs at t=0 from the built PyBaMM model using default inputs.",
-    "path": "batt/v0.2.1/api#_CoSimCellBase._initial_outputs",
+    "path": "batt/v0.2.2/api#_CoSimCellBase._initial_outputs",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell",
     "parentClass": "_CoSimCellBase"
@@ -72,7 +129,7 @@
     "type": "method",
     "name": "_discrete_step",
     "description": "",
-    "path": "batt/v0.2.1/api#_CoSimCellBase._discrete_step",
+    "path": "batt/v0.2.2/api#_CoSimCellBase._discrete_step",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell",
     "parentClass": "_CoSimCellBase"
@@ -81,7 +138,7 @@
     "type": "method",
     "name": "reset",
     "description": "",
-    "path": "batt/v0.2.1/api#_CoSimCellBase.reset",
+    "path": "batt/v0.2.2/api#_CoSimCellBase.reset",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell",
     "parentClass": "_CoSimCellBase"
@@ -90,7 +147,7 @@
     "type": "class",
     "name": "CellElectrical",
     "description": "Cell block — electrical outputs only, external thermal coupling.",
-    "path": "batt/v0.2.1/api#CellElectrical",
+    "path": "batt/v0.2.2/api#CellElectrical",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -98,7 +155,7 @@
     "type": "class",
     "name": "CellElectrothermal",
     "description": "Cell block — coupled electrical and thermal model.",
-    "path": "batt/v0.2.1/api#CellElectrothermal",
+    "path": "batt/v0.2.2/api#CellElectrothermal",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -106,7 +163,7 @@
     "type": "class",
     "name": "CellCoSimElectrical",
     "description": "Cell block (co-simulation) — electrical outputs only, external thermal coupling.",
-    "path": "batt/v0.2.1/api#CellCoSimElectrical",
+    "path": "batt/v0.2.2/api#CellCoSimElectrical",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -114,7 +171,7 @@
     "type": "class",
     "name": "CellCoSimElectrothermal",
     "description": "Cell block (co-simulation) — coupled electrical and thermal model.",
-    "path": "batt/v0.2.1/api#CellCoSimElectrothermal",
+    "path": "batt/v0.2.2/api#CellCoSimElectrothermal",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -122,7 +179,7 @@
     "type": "function",
     "name": "_prepare_parameter_values",
     "description": "Copy *parameter_values* (defaulting to Chen2020) and mark both",
-    "path": "batt/v0.2.1/api#_prepare_parameter_values",
+    "path": "batt/v0.2.2/api#_prepare_parameter_values",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -130,7 +187,7 @@
     "type": "function",
     "name": "_pick_var",
     "description": "Return the first name in *candidates* present in *variables*.",
-    "path": "batt/v0.2.1/api#_pick_var",
+    "path": "batt/v0.2.2/api#_pick_var",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -138,7 +195,7 @@
     "type": "function",
     "name": "_resolve_output_vars",
     "description": "Map *requested* variable names to names actually present in *available*.",
-    "path": "batt/v0.2.1/api#_resolve_output_vars",
+    "path": "batt/v0.2.2/api#_resolve_output_vars",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -146,15 +203,31 @@
     "type": "function",
     "name": "_detect_soc_direct_scale",
     "description": "Return 1/100 if *soc_direct_var* is in percentage form, else 1.0.",
-    "path": "batt/v0.2.1/api#_detect_soc_direct_scale",
+    "path": "batt/v0.2.2/api#_detect_soc_direct_scale",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell"
+  },
+  {
+    "type": "function",
+    "name": "_inject_model_options",
+    "description": "Return *model* with *required_options* merged into its options if needed.",
+    "path": "batt/v0.2.2/api#_inject_model_options",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
   {
     "type": "function",
     "name": "_inject_thermal_options",
-    "description": "Return *model* with *required_options* merged into its options if needed.",
-    "path": "batt/v0.2.1/api#_inject_thermal_options",
+    "description": "Return *model* with thermal *required_options* merged into its options.",
+    "path": "batt/v0.2.2/api#_inject_thermal_options",
+    "packageId": "batt",
+    "moduleName": "pathsim_batt.cells.pybamm_cell"
+  },
+  {
+    "type": "function",
+    "name": "_inject_ode_options",
+    "description": "",
+    "path": "batt/v0.2.2/api#_inject_ode_options",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -162,7 +235,7 @@
     "type": "function",
     "name": "_build_simulation",
     "description": "Build *sim*, handling model-family-specific initialisation quirks.",
-    "path": "batt/v0.2.1/api#_build_simulation",
+    "path": "batt/v0.2.2/api#_build_simulation",
     "packageId": "batt",
     "moduleName": "pathsim_batt.cells.pybamm_cell"
   },
@@ -170,7 +243,7 @@
     "type": "module",
     "name": "pathsim_batt.thermal.lumped",
     "description": "",
-    "path": "batt/v0.2.1/api#pathsim_batt-thermal-lumped",
+    "path": "batt/v0.2.2/api#pathsim_batt-thermal-lumped",
     "packageId": "batt",
     "moduleName": "pathsim_batt.thermal.lumped"
   },
@@ -178,7 +251,7 @@
     "type": "class",
     "name": "LumpedThermal",
     "description": "Single-node lumped thermal model.",
-    "path": "batt/v0.2.1/api#LumpedThermal",
+    "path": "batt/v0.2.2/api#LumpedThermal",
     "packageId": "batt",
     "moduleName": "pathsim_batt.thermal.lumped"
   },
@@ -186,7 +259,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "batt/v0.2.1/api#LumpedThermal.__init__",
+    "path": "batt/v0.2.2/api#LumpedThermal.__init__",
     "packageId": "batt",
     "moduleName": "pathsim_batt.thermal.lumped",
     "parentClass": "LumpedThermal"
@@ -195,7 +268,7 @@
     "type": "example",
     "name": "Constant-Current Discharge with the SPMe",
     "description": "Constant-current (CC) discharge simulation using CellElectrothermal, which wraps",
-    "path": "batt/v0.2.1/examples/01-spme-discharge",
+    "path": "batt/v0.2.2/examples/01-spme-discharge",
     "packageId": "batt",
     "moduleName": "advanced",
     "tags": []
@@ -204,7 +277,7 @@
     "type": "example",
     "name": "Electrothermal Coupling with an External Thermal Model",
     "description": "CellElectrical uses PyBaMM's isothermal electrochemistry and exposes heat generation",
-    "path": "batt/v0.2.1/examples/02-electrothermal-coupling",
+    "path": "batt/v0.2.2/examples/02-electrothermal-coupling",
     "packageId": "batt",
     "moduleName": "advanced",
     "tags": []
@@ -213,7 +286,7 @@
     "type": "example",
     "name": "High-Fidelity DFN Simulation via Co-Simulation",
     "description": "The Doyle–Fuller–Newman (DFN) model produces a DAE system after discretisation",
-    "path": "batt/v0.2.1/examples/03-dfn-cosimulation",
+    "path": "batt/v0.2.2/examples/03-dfn-cosimulation",
     "packageId": "batt",
     "moduleName": "advanced",
     "tags": []
