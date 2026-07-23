@@ -1,12 +1,12 @@
 {
   "cells": {
     "10": {
-      "stdout": "13:56:32 - INFO - LOGGING (log: True)\n13:56:32 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 0)\n13:56:32 - INFO - GRAPH (nodes: 5, edges: 6, alg. depth: 3, loop depth: 0, runtime: 0.063ms)\n",
+      "stdout": "19:16:38 - INFO - LOGGING (log: True)\n19:16:38 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 0)\n19:16:38 - INFO - GRAPH (nodes: 5, edges: 6, alg. depth: 3, loop depth: 0, runtime: 0.053ms)\n",
       "stderr": null,
       "figures": []
     },
     "12": {
-      "stdout": "13:56:33 - INFO - STARTING -> TRANSIENT (Duration: 15.00s)\n13:56:33 - INFO - --------------------   1% | 0.0s<0.2s | 925.5 it/s\n13:56:33 - INFO - ####----------------  20% | 0.0s<0.1s | 1853.0 it/s\n13:56:33 - INFO - ########------------  40% | 0.1s<0.1s | 1586.6 it/s\n13:56:33 - INFO - ############--------  60% | 0.1s<0.0s | 1803.3 it/s\n13:56:33 - INFO - ################----  80% | 0.1s<0.0s | 1741.0 it/s\n13:56:33 - INFO - #################### 100% | 0.1s<--:-- | 1865.5 it/s\n13:56:33 - INFO - FINISHED -> TRANSIENT (total steps: 207, successful: 174, runtime: 129.66 ms)\n",
+      "stdout": "19:16:38 - INFO - STARTING -> TRANSIENT (Duration: 15.00s)\n19:16:38 - INFO - --------------------   1% | 0.0s<0.2s | 1425.4 it/s\n19:16:38 - INFO - ####----------------  20% | 0.0s<0.1s | 2706.9 it/s\n19:16:38 - INFO - ########------------  40% | 0.0s<0.0s | 2755.5 it/s\n19:16:38 - INFO - ############--------  60% | 0.1s<0.0s | 2745.3 it/s\n19:16:38 - INFO - ################----  80% | 0.1s<0.0s | 2719.0 it/s\n19:16:38 - INFO - #################### 100% | 0.1s<--:-- | 2658.4 it/s\n19:16:38 - INFO - FINISHED -> TRANSIENT (total steps: 207, successful: 174, runtime: 87.07 ms)\n",
       "stderr": null,
       "figures": [
         "pendulum_0.svg"
@@ -20,7 +20,7 @@
       ]
     }
   },
-  "executedAt": "2026-07-23T13:56:34.614732+00:00",
-  "duration": 6500,
+  "executedAt": "2026-07-23T19:16:39.986794+00:00",
+  "duration": 4721,
   "success": true
 }
