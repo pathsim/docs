@@ -1,24 +1,7 @@
 {
-  "cells": {
-    "22": {
-      "stdout": "13:35:46 - INFO - LOGGING (log: True)\n13:35:46 - INFO - BLOCKS (total: 15, dynamic: 2, static: 13, eventful: 0)\n13:35:46 - INFO - GRAPH (nodes: 15, edges: 18, alg. depth: 7, loop depth: 0, runtime: 0.157ms)\n13:35:46 - INFO - STARTING -> TRANSIENT (Duration: 5.00s)\n13:35:46 - INFO - --------------------   1% | 0.2s<6.8s | 710.1 it/s\n13:35:47 - INFO - #-------------------   5% | 1.2s<14.2s | 962.6 it/s\n13:35:48 - INFO - #-------------------   9% | 2.2s<01:15 | 685.3 it/s\n13:35:49 - INFO - ##------------------  13% | 3.2s<6.2s | 718.6 it/s\n13:35:50 - INFO - ###-----------------  17% | 4.2s<20.4s | 513.7 it/s\n13:35:51 - INFO - ####----------------  20% | 4.8s<17.1s | 595.0 it/s\n13:35:52 - INFO - ####----------------  23% | 5.8s<03:15 | 722.2 it/s\n13:35:53 - INFO - #####---------------  27% | 6.8s<22.0s | 684.3 it/s\n13:35:54 - INFO - ######--------------  31% | 7.8s<21.0s | 807.9 it/s\n13:35:55 - INFO - ######--------------  34% | 8.8s<8.0s | 692.9 it/s\n13:35:56 - INFO - #######-------------  38% | 9.8s<2.3s | 1562.3 it/s\n13:35:56 - INFO - ########------------  40% | 10.2s<4.9s | 722.8 it/s\n13:35:57 - INFO - ########------------  43% | 11.2s<42.4s | 748.4 it/s\n13:35:58 - INFO - #########-----------  46% | 12.2s<43.4s | 764.5 it/s\n13:35:59 - INFO - ##########----------  50% | 13.2s<3.9s | 704.7 it/s\n13:36:00 - INFO - ##########----------  53% | 14.2s<01:01 | 706.4 it/s\n13:36:01 - INFO - ###########---------  57% | 15.2s<01:15 | 793.2 it/s\n13:36:02 - INFO - ############--------  60% | 16.1s<3.9s | 708.4 it/s\n13:36:03 - INFO - ############--------  62% | 17.1s<01:00 | 684.5 it/s\n13:36:04 - INFO - #############-------  65% | 18.1s<12.2s | 697.3 it/s\n13:36:05 - INFO - #############-------  68% | 19.1s<36.4s | 702.6 it/s\n13:36:06 - INFO - ##############------  71% | 20.1s<45.9s | 723.7 it/s\n13:36:07 - INFO - ##############------  74% | 21.1s<43.4s | 810.7 it/s\n13:36:08 - INFO - ###############-----  77% | 22.1s<2.1s | 734.7 it/s\n13:36:09 - INFO - ################----  80% | 22.9s<1.7s | 818.1 it/s\n13:36:10 - INFO - ################----  82% | 23.9s<4.5s | 740.4 it/s\n13:36:11 - INFO - #################---  86% | 24.9s<2.2s | 769.3 it/s\n13:36:12 - INFO - #################---  88% | 25.9s<11.3s | 681.9 it/s\n13:36:13 - INFO - ##################--  91% | 26.9s<2.1s | 672.0 it/s\n13:36:14 - INFO - ##################--  94% | 27.9s<2.8s | 983.3 it/s\n13:36:15 - INFO - ###################-  96% | 28.9s<0.7s | 580.1 it/s\n13:36:16 - INFO - ###################-  99% | 29.9s<0.6s | 739.0 it/s\n13:36:16 - INFO - #################### 100% | 30.3s<--:-- | 803.5 it/s\n13:36:16 - INFO - FINISHED -> TRANSIENT (total steps: 22965, successful: 15038, runtime: 30285.90 ms)\n",
-      "stderr": null,
-      "figures": []
-    },
-    "24": {
-      "stdout": "13:36:16 - INFO - LOGGING (log: True)\n13:36:16 - INFO - BLOCKS (total: 15, dynamic: 2, static: 13, eventful: 0)\n13:36:16 - INFO - GRAPH (nodes: 15, edges: 18, alg. depth: 7, loop depth: 0, runtime: 0.129ms)\n13:36:16 - INFO - STARTING -> TRANSIENT (Duration: 5.00s)\n13:36:16 - INFO - --------------------   1% | 0.0s<0.3s | 783.7 it/s\n13:36:16 - INFO - #################### 100% | 0.0s<--:-- | 727.9 it/s\n13:36:16 - INFO - FINISHED -> TRANSIENT (total steps: 9, successful: 9, runtime: 15.70 ms)\n",
-      "stderr": null,
-      "figures": []
-    },
-    "26": {
-      "stdout": null,
-      "stderr": null,
-      "figures": [
-        "abs_braking_0.svg"
-      ]
-    }
-  },
-  "executedAt": "2026-07-24T13:36:19.294497+00:00",
-  "duration": 37635,
-  "success": true
+  "cells": {},
+  "executedAt": "2026-07-24T19:26:56.462559+00:00",
+  "duration": 3245,
+  "success": false,
+  "error": "y, resources)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/exporters/exporter.py\", line 353, in _preprocess\n    nbc, resc = preprocessor(nbc, resc)\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/base.py\", line 48, in __call__\n    return self.preprocess(nb, resources)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbconvert/preprocessors/execute.py\", line 97, in preprocess\n    with self.setup_kernel():\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 603, in setup_kernel\n    self.start_new_kernel_client()\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py\", line 566, in async_start_new_kernel_client\n    await ensure_async(self.kc.wait_for_ready(timeout=self.startup_timeout))\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 214, in ensure_async\n    result = await obj\n             ^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_client/client.py\", line 204, in _async_wait_for_ready\n    raise RuntimeError(msg)\nRuntimeError: Kernel died before replying to kernel_info"
 }
