@@ -1,19 +1,19 @@
 {
   "cells": {
     "5": {
-      "stdout": "08:33:17 - INFO - LOGGING (log: True)\n08:33:17 - INFO - BLOCKS (total: 2, dynamic: 1, static: 1, eventful: 0)\n08:33:17 - INFO - GRAPH (nodes: 2, edges: 1, alg. depth: 1, loop depth: 0, runtime: 0.017ms)\n",
+      "stdout": "13:44:36 - INFO - LOGGING (log: True)\n13:44:36 - INFO - BLOCKS (total: 2, dynamic: 1, static: 1, eventful: 0)\n13:44:36 - INFO - GRAPH (nodes: 2, edges: 1, alg. depth: 1, loop depth: 0, runtime: 0.026ms)\n",
       "stderr": null,
       "figures": []
     },
     "7": {
-      "stdout": "08:33:17 - INFO - STARTING -> TRANSIENT (Duration: 4000.00s)\n08:33:17 - INFO - --------------------   2% | 0.0s<0.1s | 1768.1 it/s\n08:33:17 - INFO - ####----------------  20% | 0.1s<6.0s | 1203.0 it/s\n08:33:17 - INFO - ########------------  40% | 0.3s<1.7s | 1130.0 it/s\n08:33:17 - INFO - ############--------  60% | 0.5s<0.3s | 1007.8 it/s\n08:33:18 - INFO - ################----  80% | 0.7s<0.1s | 988.5 it/s\n08:33:18 - INFO - #################### 100% | 0.8s<--:-- | 1069.0 it/s\n08:33:18 - INFO - FINISHED -> TRANSIENT (total steps: 817, successful: 567, runtime: 837.40 ms)\n",
+      "stdout": "13:44:36 - INFO - STARTING -> TRANSIENT (Duration: 4000.00s)\n13:44:36 - INFO - --------------------   2% | 0.0s<0.2s | 993.7 it/s\n13:44:36 - INFO - ####----------------  20% | 0.2s<11.0s | 662.6 it/s\n13:44:37 - INFO - ########------------  40% | 0.6s<3.1s | 623.2 it/s\n13:44:37 - INFO - ############--------  60% | 0.9s<0.6s | 565.1 it/s\n13:44:37 - INFO - ################----  80% | 1.3s<0.3s | 558.9 it/s\n13:44:38 - INFO - #################### 100% | 1.6s<--:-- | 588.1 it/s\n13:44:38 - INFO - FINISHED -> TRANSIENT (total steps: 817, successful: 567, runtime: 1622.38 ms)\n",
       "stderr": null,
       "figures": [
         "vanderpol_0.svg"
       ]
     }
   },
-  "executedAt": "2026-07-24T08:33:18.921843+00:00",
-  "duration": 3841,
+  "executedAt": "2026-07-24T13:44:38.924501+00:00",
+  "duration": 5356,
   "success": true
 }

@@ -1,12 +1,12 @@
 {
   "cells": {
     "9": {
-      "stdout": "08:32:41 - INFO - LOGGING (log: True)\n08:32:41 - INFO - BLOCKS (total: 9, dynamic: 3, static: 6, eventful: 0)\n08:32:41 - INFO - GRAPH (nodes: 9, edges: 14, alg. depth: 5, loop depth: 0, runtime: 0.105ms)\n",
+      "stdout": "13:43:44 - INFO - LOGGING (log: True)\n13:43:44 - INFO - BLOCKS (total: 9, dynamic: 3, static: 6, eventful: 0)\n13:43:44 - INFO - GRAPH (nodes: 9, edges: 14, alg. depth: 5, loop depth: 0, runtime: 0.137ms)\n",
       "stderr": null,
       "figures": []
     },
     "11": {
-      "stdout": "08:32:41 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n08:32:41 - INFO - --------------------   1% | 0.0s<1.6s | 844.7 it/s\n08:32:41 - INFO - ####----------------  20% | 0.4s<02:45:50 | 949.3 it/s\n08:32:42 - INFO - ########------------  40% | 0.7s<0.5s | 1309.8 it/s\n08:32:42 - INFO - ############--------  60% | 1.0s<31:58 | 1110.6 it/s\n08:32:42 - INFO - ################----  80% | 1.3s<0.2s | 1015.6 it/s\n08:32:42 - INFO - #################### 100% | 1.6s<--:-- | 1213.4 it/s\n08:32:42 - INFO - FINISHED -> TRANSIENT (total steps: 1678, successful: 1243, runtime: 1560.98 ms)\n",
+      "stdout": "13:43:44 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n13:43:44 - INFO - --------------------   1% | 0.0s<2.1s | 539.7 it/s\n13:43:45 - INFO - ####----------------  20% | 0.7s<05:51:55 | 546.6 it/s\n13:43:46 - INFO - ########------------  40% | 1.4s<1.2s | 532.8 it/s\n13:43:46 - INFO - ############--------  60% | 2.0s<03:16:56 | 313.7 it/s\n13:43:47 - INFO - ################----  80% | 2.6s<0.5s | 548.0 it/s\n13:43:47 - INFO - #################### 100% | 3.2s<--:-- | 544.4 it/s\n13:43:47 - INFO - FINISHED -> TRANSIENT (total steps: 1644, successful: 1227, runtime: 3242.30 ms)\n",
       "stderr": null,
       "figures": []
     },
@@ -20,7 +20,7 @@
       ]
     }
   },
-  "executedAt": "2026-07-24T08:32:44.156307+00:00",
-  "duration": 6424,
+  "executedAt": "2026-07-24T13:43:49.514582+00:00",
+  "duration": 9540,
   "success": true
 }
