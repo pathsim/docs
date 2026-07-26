@@ -1,7 +1,33 @@
 {
-  "cells": {},
-  "executedAt": "2026-07-26T13:17:08.497444+00:00",
-  "duration": 5590,
-  "success": false,
-  "error": " 1024\u001b[39m     \u001b[38;5;66;03m#update blocks at algebraic depth (no error control)\u001b[39;00m\n\u001b[32m   1025\u001b[39m     \u001b[38;5;28;01mfor\u001b[39;00m block \u001b[38;5;129;01min\u001b[39;00m blocks_dag:\n\u001b[32m-> \u001b[39m\u001b[32m1026\u001b[39m         \u001b[38;5;28;01mif\u001b[39;00m block: \u001b[30;43mblock\u001b[39;49m\u001b[30;43m.\u001b[39;49m\u001b[30;43mupdate\u001b[39;49m\u001b[30;43m(\u001b[39;49m\u001b[30;43mt\u001b[39;49m\u001b[30;43m)\u001b[39;49m\n\u001b[32m   1028\u001b[39m     \u001b[38;5;66;03m#update connenctions at algebraic depth (data transfer)\u001b[39;00m\n\u001b[32m   1029\u001b[39m     \u001b[38;5;28;01mfor\u001b[39;00m connection \u001b[38;5;129;01min\u001b[39;00m connections_dag:\n\n\u001b[36mFile \u001b[39m\u001b[32m/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pathsim/blocks/sources.py:652\u001b[39m, in \u001b[36mChirpPhaseNoiseSource.update\u001b[39m\u001b[34m(self, t)\u001b[39m\n\u001b[32m    644\u001b[39m \u001b[38;5;250m\u001b[39m\u001b[33;03m\"\"\"Update the block output, assemble phase and evaluate the sinusoid.\u001b[39;00m\n\u001b[32m    645\u001b[39m \u001b[33;03m\u001b[39;00m\n\u001b[32m    646\u001b[39m \u001b[33;03mParameters\u001b[39;00m\n\u001b[32m   (...)\u001b[39m\u001b[32m    649\u001b[39m \u001b[33;03m    evaluation time\u001b[39;00m\n\u001b[32m    650\u001b[39m \u001b[33;03m\"\"\"\u001b[39;00m\n\u001b[32m    651\u001b[39m _phase = \u001b[32m2\u001b[39m * np.pi * (\u001b[38;5;28mself\u001b[39m.engine.state + \u001b[38;5;28mself\u001b[39m.sig_white * \u001b[38;5;28mself\u001b[39m.noise_1) + \u001b[38;5;28mself\u001b[39m.phase\n\u001b[32m--> \u001b[39m\u001b[32m652\u001b[39m \u001b[30;43mself\u001b[39;49m\u001b[30;43m.\u001b[39;49m\u001b[30;43moutputs\u001b[39;49m\u001b[30;43m[\u001b[39;49m\u001b[30;43m0\u001b[39;49m\u001b[30;43m]\u001b[39;49m = \u001b[38;5;28mself\u001b[39m.amplitude * np.sin(_phase)\n\n\u001b[36mFile \u001b[39m\u001b[32m/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pathsim/utils/register.py:128\u001b[39m, in \u001b[36mRegister.__setitem__\u001b[39m\u001b[34m(self, key, value)\u001b[39m\n\u001b[32m    125\u001b[39m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28misinstance\u001b[39m(value, np.ndarray) \u001b[38;5;129;01mand\u001b[39;00m value.ndim == \u001b[32m0\u001b[39m:\n\u001b[32m    126\u001b[39m     value = value.item()\n\u001b[32m--> \u001b[39m\u001b[32m128\u001b[39m \u001b[30;43mself\u001b[39;49m\u001b[30;43m.\u001b[39;49m\u001b[30;43m_data\u001b[39;49m\u001b[30;43m[\u001b[39;49m\u001b[30;43mkey\u001b[39;49m\u001b[30;43m]\u001b[39;49m = value\n\n\u001b[31mValueError\u001b[39m: setting an array element with a sequence."
+  "cells": {
+    "11": {
+      "stdout": "19:13:43 - INFO - LOGGING (log: True)\n19:13:43 - INFO - BLOCKS (total: 7, dynamic: 3, static: 4, eventful: 1)\n19:13:43 - INFO - GRAPH (nodes: 7, edges: 13, alg. depth: 3, loop depth: 0, runtime: 0.084ms)\n19:13:43 - INFO - STARTING -> TRANSIENT (Duration: 0.00s)\n19:13:43 - INFO - --------------------   1% | 0.2s<19.5s | 2540.3 it/s\n19:13:44 - INFO - #-------------------   6% | 1.2s<23.3s | 2008.8 it/s\n19:13:45 - INFO - ##------------------  11% | 2.2s<18.1s | 2458.7 it/s\n19:13:46 - INFO - ###-----------------  16% | 3.2s<16.3s | 2567.9 it/s\n19:13:47 - INFO - ####----------------  20% | 4.0s<16.4s | 2434.3 it/s\n19:13:48 - INFO - #####---------------  25% | 5.0s<8.9s | 4166.9 it/s\n19:13:49 - INFO - ######--------------  30% | 6.0s<13.7s | 2529.6 it/s\n19:13:50 - INFO - #######-------------  35% | 7.0s<13.4s | 2426.2 it/s\n19:13:51 - INFO - ########------------  40% | 7.9s<12.3s | 2440.7 it/s\n19:13:52 - INFO - ########------------  44% | 8.9s<11.3s | 2441.7 it/s\n19:13:53 - INFO - #########-----------  49% | 9.9s<10.3s | 2441.3 it/s\n19:13:54 - INFO - ##########----------  54% | 10.9s<9.1s | 2477.3 it/s\n19:13:55 - INFO - ###########---------  59% | 11.9s<8.2s | 2444.4 it/s\n19:13:55 - INFO - ############--------  60% | 12.0s<8.1s | 2456.9 it/s\n19:13:56 - INFO - #############-------  65% | 13.0s<9.9s | 1743.6 it/s\n19:13:57 - INFO - #############-------  69% | 14.0s<5.1s | 2943.5 it/s\n19:13:58 - INFO - ##############------  74% | 15.0s<5.0s | 2570.5 it/s\n19:13:59 - INFO - ###############-----  79% | 16.0s<3.5s | 2911.4 it/s\n19:13:59 - INFO - ################----  80% | 16.0s<4.3s | 2312.3 it/s\n19:14:00 - INFO - #################---  85% | 17.0s<2.7s | 2754.3 it/s\n19:14:01 - INFO - ##################--  90% | 18.0s<1.2s | 4153.4 it/s\n19:14:02 - INFO - ###################-  95% | 19.0s<0.9s | 2718.5 it/s\n19:14:03 - INFO - ###################-  99% | 20.0s<0.1s | 2573.7 it/s\n19:14:03 - INFO - #################### 100% | 20.1s<--:-- | 2404.3 it/s\n19:14:03 - INFO - FINISHED -> TRANSIENT (total steps: 50000, successful: 50000, runtime: 20112.53 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "13": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmcw_radar_0.svg"
+      ]
+    },
+    "16": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmcw_radar_1.svg"
+      ]
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmcw_radar_2.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-07-26T19:14:06.710215+00:00",
+  "duration": 27349,
+  "success": true
 }

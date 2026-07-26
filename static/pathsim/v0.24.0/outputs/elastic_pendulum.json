@@ -1,0 +1,31 @@
+{
+  "cells": {
+    "17": {
+      "stdout": "19:10:01 - INFO - LOGGING (log: True)\n19:10:01 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 1)\n19:10:01 - INFO - GRAPH (nodes: 5, edges: 9, alg. depth: 2, loop depth: 0, runtime: 0.063ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "18": {
+      "stdout": "19:10:01 - INFO - STARTING -> TRANSIENT (Duration: 10.00s)\n19:10:01 - INFO - --------------------   1% | 0.0s<0.7s | 2645.8 it/s\n19:10:01 - INFO - ####----------------  20% | 0.2s<0.6s | 2736.8 it/s\n19:10:01 - INFO - ########------------  40% | 0.3s<0.4s | 2760.0 it/s\n19:10:02 - INFO - ############--------  60% | 0.5s<0.3s | 3186.6 it/s\n19:10:02 - INFO - ################----  80% | 0.6s<0.2s | 1980.1 it/s\n19:10:02 - INFO - #################### 100% | 0.7s<--:-- | 2975.1 it/s\n19:10:02 - INFO - FINISHED -> TRANSIENT (total steps: 2130, successful: 2083, runtime: 739.58 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "20": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "elastic_pendulum_0.svg"
+      ]
+    },
+    "22": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "elastic_pendulum_1.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-07-26T19:10:03.441064+00:00",
+  "duration": 5831,
+  "success": true
+}

@@ -1,0 +1,26 @@
+{
+  "cells": {
+    "14": {
+      "stdout": "19:09:40 - INFO - LOGGING (log: True)\n19:09:40 - INFO - BLOCKS (total: 4, dynamic: 0, static: 4, eventful: 0)\n19:09:40 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 1, loop depth: 2, runtime: 0.129ms)\n19:09:40 - INFO - STARTING -> TRANSIENT (Duration: 5.00s)\n19:09:40 - INFO - --------------------   2% | 0.0s<0.1s | 416.5 it/s\n19:09:40 - INFO - ####----------------  21% | 0.0s<0.0s | 6924.9 it/s\n19:09:40 - INFO - ########------------  40% | 0.0s<0.0s | 7894.3 it/s\n19:09:40 - INFO - ############--------  60% | 0.0s<0.0s | 8008.7 it/s\n19:09:40 - INFO - ################----  80% | 0.0s<0.0s | 8086.9 it/s\n19:09:40 - INFO - #################### 100% | 0.0s<--:-- | 8070.9 it/s\n19:09:40 - INFO - FINISHED -> TRANSIENT (total steps: 51, successful: 51, runtime: 23.99 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "16": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "algebraic_loop_0.svg"
+      ]
+    },
+    "18": {
+      "stdout": "Maximum error: 2.22e-16\n",
+      "stderr": null,
+      "figures": [
+        "algebraic_loop_1.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-07-26T19:09:41.515320+00:00",
+  "duration": 5220,
+  "success": true
+}
