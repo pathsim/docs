@@ -3,7 +3,7 @@
     "type": "module",
     "name": "fastsim",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim",
+    "path": "fastsim/v0.24.1/api#fastsim",
     "packageId": "fastsim",
     "moduleName": "fastsim"
   },
@@ -11,7 +11,7 @@
     "type": "class",
     "name": "Connection",
     "description": "Class to handle input-output relations of blocks by connecting them (directed graph)",
-    "path": "fastsim/v0.17.0/api#Connection",
+    "path": "fastsim/v0.24.1/api#Connection",
     "packageId": "fastsim",
     "moduleName": "fastsim"
   },
@@ -19,7 +19,7 @@
     "type": "class",
     "name": "Interface",
     "description": "Bare-bone block that serves as a data interface for the 'Subsystem' class.",
-    "path": "fastsim/v0.17.0/api#Interface",
+    "path": "fastsim/v0.24.1/api#Interface",
     "packageId": "fastsim",
     "moduleName": "fastsim"
   },
@@ -27,7 +27,7 @@
     "type": "class",
     "name": "Subsystem",
     "description": "Subsystem class that holds its own blocks and connecions and",
-    "path": "fastsim/v0.17.0/api#Subsystem",
+    "path": "fastsim/v0.24.1/api#Subsystem",
     "packageId": "fastsim",
     "moduleName": "fastsim"
   },
@@ -35,7 +35,7 @@
     "type": "class",
     "name": "Simulation",
     "description": "Transient block-diagram simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation",
+    "path": "fastsim/v0.24.1/api#Simulation",
     "packageId": "fastsim",
     "moduleName": "fastsim"
   },
@@ -43,7 +43,7 @@
     "type": "method",
     "name": "to_ir",
     "description": "Export the assembled model as hierarchical IR.",
-    "path": "fastsim/v0.17.0/api#Simulation.to_ir",
+    "path": "fastsim/v0.24.1/api#Simulation.to_ir",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -52,7 +52,7 @@
     "type": "method",
     "name": "to_c",
     "description": "Generate standalone C99 source from the assembled model.",
-    "path": "fastsim/v0.17.0/api#Simulation.to_c",
+    "path": "fastsim/v0.24.1/api#Simulation.to_c",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -61,7 +61,7 @@
     "type": "method",
     "name": "verify_c",
     "description": "Software-in-the-loop verification of the generated C.",
-    "path": "fastsim/v0.17.0/api#Simulation.verify_c",
+    "path": "fastsim/v0.24.1/api#Simulation.verify_c",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -70,7 +70,7 @@
     "type": "method",
     "name": "run_streaming",
     "description": "Run the simulation as a generator, yielding at a fixed rate.",
-    "path": "fastsim/v0.17.0/api#Simulation.run_streaming",
+    "path": "fastsim/v0.24.1/api#Simulation.run_streaming",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -79,7 +79,7 @@
     "type": "method",
     "name": "add_block",
     "description": "Add a block, or a list of blocks.  Accepts either a single `Block`",
-    "path": "fastsim/v0.17.0/api#Simulation.add_block",
+    "path": "fastsim/v0.24.1/api#Simulation.add_block",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -88,7 +88,7 @@
     "type": "method",
     "name": "add_connection",
     "description": "Add a connection, or a list of connections.",
-    "path": "fastsim/v0.17.0/api#Simulation.add_connection",
+    "path": "fastsim/v0.24.1/api#Simulation.add_connection",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -97,7 +97,7 @@
     "type": "method",
     "name": "add_event",
     "description": "Add an event (or list of events) to the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.add_event",
+    "path": "fastsim/v0.24.1/api#Simulation.add_event",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -106,7 +106,7 @@
     "type": "method",
     "name": "compile",
     "description": "Statically compile this model into a fused `dX/dt = F(X, t)` tape (see",
-    "path": "fastsim/v0.17.0/api#Simulation.compile",
+    "path": "fastsim/v0.24.1/api#Simulation.compile",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -115,7 +115,7 @@
     "type": "method",
     "name": "delinearize",
     "description": "Revert a previous linearization, restoring the original nonlinear blocks.",
-    "path": "fastsim/v0.17.0/api#Simulation.delinearize",
+    "path": "fastsim/v0.24.1/api#Simulation.delinearize",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -124,7 +124,25 @@
     "type": "method",
     "name": "enable_wct_trace",
     "description": "Enable per-timestep wall-clock recording.  Subsequent `run` /",
-    "path": "fastsim/v0.17.0/api#Simulation.enable_wct_trace",
+    "path": "fastsim/v0.24.1/api#Simulation.enable_wct_trace",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "sensitivity",
+    "description": "Sensitivity of the tapped outputs to a set of model parameters,",
+    "path": "fastsim/v0.24.1/api#Simulation.sensitivity",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "solve_inverse",
+    "description": "Solve backwards for the parameter values that put the system at a",
+    "path": "fastsim/v0.24.1/api#Simulation.solve_inverse",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -132,8 +150,17 @@
   {
     "type": "method",
     "name": "linearize",
-    "description": "Linearize the system about the current operating point (state and inputs), replacing nonlinear blocks with their local linear approximation.",
-    "path": "fastsim/v0.17.0/api#Simulation.linearize",
+    "description": "Switch the system over to its linearized surrogate.",
+    "path": "fastsim/v0.24.1/api#Simulation.linearize",
+    "packageId": "fastsim",
+    "moduleName": "fastsim",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "to_statespace",
+    "description": "Assemble a global linear state space model of the interconnected",
+    "path": "fastsim/v0.24.1/api#Simulation.to_statespace",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -142,7 +169,7 @@
     "type": "method",
     "name": "pending_ops",
     "description": "Return a handle on the simulation's mutation queue.  Equivalent",
-    "path": "fastsim/v0.17.0/api#Simulation.pending_ops",
+    "path": "fastsim/v0.24.1/api#Simulation.pending_ops",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -151,7 +178,7 @@
     "type": "method",
     "name": "periodic_steady_state",
     "description": "Find the periodic steady-state limit cycle of period `period` by",
-    "path": "fastsim/v0.17.0/api#Simulation.periodic_steady_state",
+    "path": "fastsim/v0.24.1/api#Simulation.periodic_steady_state",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -160,7 +187,7 @@
     "type": "method",
     "name": "plot",
     "description": "Plot the recorded results from all Scope blocks in the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.plot",
+    "path": "fastsim/v0.24.1/api#Simulation.plot",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -169,7 +196,7 @@
     "type": "method",
     "name": "remove_block",
     "description": "Remove a block (or list of blocks) from the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.remove_block",
+    "path": "fastsim/v0.24.1/api#Simulation.remove_block",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -178,7 +205,7 @@
     "type": "method",
     "name": "remove_connection",
     "description": "Remove a connection (or list of connections) from the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.remove_connection",
+    "path": "fastsim/v0.24.1/api#Simulation.remove_connection",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -187,7 +214,7 @@
     "type": "method",
     "name": "remove_event",
     "description": "Remove an event (or list of events) from the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.remove_event",
+    "path": "fastsim/v0.24.1/api#Simulation.remove_event",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -196,7 +223,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset all blocks to their initial state and the simulation time to zero (or to ``time`` if given).",
-    "path": "fastsim/v0.17.0/api#Simulation.reset",
+    "path": "fastsim/v0.24.1/api#Simulation.reset",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -204,8 +231,8 @@
   {
     "type": "method",
     "name": "run",
-    "description": "Run the simulation for a given duration.",
-    "path": "fastsim/v0.17.0/api#Simulation.run",
+    "description": "Run the simulation for a given duration of simulation time.",
+    "path": "fastsim/v0.24.1/api#Simulation.run",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -214,7 +241,7 @@
     "type": "method",
     "name": "run_begin",
     "description": "Begin a chunked, cooperative run (for the streaming generator).",
-    "path": "fastsim/v0.17.0/api#Simulation.run_begin",
+    "path": "fastsim/v0.24.1/api#Simulation.run_begin",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -223,7 +250,7 @@
     "type": "method",
     "name": "run_end",
     "description": "Finalize a chunked streaming run (logs FINISHED/INTERRUPTED). Call once",
-    "path": "fastsim/v0.17.0/api#Simulation.run_end",
+    "path": "fastsim/v0.24.1/api#Simulation.run_end",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -231,8 +258,8 @@
   {
     "type": "method",
     "name": "run_realtime",
-    "description": "Run synchronized to wall-clock time with optional speed factor.",
-    "path": "fastsim/v0.17.0/api#Simulation.run_realtime",
+    "description": "Run synchronized to wall-clock time with an optional speed factor.",
+    "path": "fastsim/v0.24.1/api#Simulation.run_realtime",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -241,7 +268,7 @@
     "type": "method",
     "name": "run_until",
     "description": "Advance up to `target_time` (a chunk boundary). `end_time` is the true",
-    "path": "fastsim/v0.17.0/api#Simulation.run_until",
+    "path": "fastsim/v0.24.1/api#Simulation.run_until",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -249,8 +276,8 @@
   {
     "type": "method",
     "name": "steadystate",
-    "description": "Find the steady-state (DC operating point) of the system by root-finding on the residual rather than time integration.",
-    "path": "fastsim/v0.17.0/api#Simulation.steadystate",
+    "description": "Find the steady state (DC operating point) of the system.",
+    "path": "fastsim/v0.24.1/api#Simulation.steadystate",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -259,7 +286,7 @@
     "type": "method",
     "name": "stop",
     "description": "Signal a running simulation to stop cleanly at the next timestep boundary.",
-    "path": "fastsim/v0.17.0/api#Simulation.stop",
+    "path": "fastsim/v0.24.1/api#Simulation.stop",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -268,7 +295,7 @@
     "type": "method",
     "name": "take_wct_trace",
     "description": "Drain the per-timestep wall-clock buffer and return the recorded",
-    "path": "fastsim/v0.17.0/api#Simulation.take_wct_trace",
+    "path": "fastsim/v0.24.1/api#Simulation.take_wct_trace",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -277,7 +304,7 @@
     "type": "method",
     "name": "to_fmu",
     "description": "Export this model as a source FMU (FMI 3.0, Model Exchange) written to",
-    "path": "fastsim/v0.17.0/api#Simulation.to_fmu",
+    "path": "fastsim/v0.24.1/api#Simulation.to_fmu",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -286,7 +313,7 @@
     "type": "method",
     "name": "to_ir_json",
     "description": "Export the assembled model as hierarchical IR (JSON). Each block is",
-    "path": "fastsim/v0.17.0/api#Simulation.to_ir_json",
+    "path": "fastsim/v0.24.1/api#Simulation.to_ir_json",
     "packageId": "fastsim",
     "moduleName": "fastsim",
     "parentClass": "Simulation"
@@ -295,7 +322,7 @@
     "type": "class",
     "name": "StopSimulation",
     "description": "Raised by a block or model to signal that the simulation should stop",
-    "path": "fastsim/v0.17.0/api#StopSimulation",
+    "path": "fastsim/v0.24.1/api#StopSimulation",
     "packageId": "fastsim",
     "moduleName": "fastsim"
   },
@@ -303,7 +330,7 @@
     "type": "function",
     "name": "adapt",
     "description": "Clone `cls` onto the fastsim engine.",
-    "path": "fastsim/v0.17.0/api#adapt",
+    "path": "fastsim/v0.24.1/api#adapt",
     "packageId": "fastsim",
     "moduleName": "fastsim"
   },
@@ -311,7 +338,7 @@
     "type": "function",
     "name": "random_uniform",
     "description": "Stateless uniform draw in ``[0, 1)``, keyed by ``key``.",
-    "path": "fastsim/v0.17.0/api#random_uniform",
+    "path": "fastsim/v0.24.1/api#random_uniform",
     "packageId": "fastsim",
     "moduleName": "fastsim"
   },
@@ -319,7 +346,7 @@
     "type": "function",
     "name": "random_normal",
     "description": "Stateless standard-normal draw ``N(0, 1)``, keyed by ``key``.",
-    "path": "fastsim/v0.17.0/api#random_normal",
+    "path": "fastsim/v0.24.1/api#random_normal",
     "packageId": "fastsim",
     "moduleName": "fastsim"
   },
@@ -327,7 +354,7 @@
     "type": "module",
     "name": "fastsim.adapter",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-adapter",
+    "path": "fastsim/v0.24.1/api#fastsim-adapter",
     "packageId": "fastsim",
     "moduleName": "fastsim.adapter"
   },
@@ -335,7 +362,7 @@
     "type": "function",
     "name": "adapt",
     "description": "Clone `cls` onto the fastsim engine.",
-    "path": "fastsim/v0.17.0/api#adapt",
+    "path": "fastsim/v0.24.1/api#adapt",
     "packageId": "fastsim",
     "moduleName": "fastsim.adapter"
   },
@@ -343,7 +370,7 @@
     "type": "module",
     "name": "fastsim.connection",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-connection",
+    "path": "fastsim/v0.24.1/api#fastsim-connection",
     "packageId": "fastsim",
     "moduleName": "fastsim.connection"
   },
@@ -351,7 +378,7 @@
     "type": "class",
     "name": "Connection",
     "description": "Class to handle input-output relations of blocks by connecting them (directed graph)",
-    "path": "fastsim/v0.17.0/api#Connection",
+    "path": "fastsim/v0.24.1/api#Connection",
     "packageId": "fastsim",
     "moduleName": "fastsim.connection"
   },
@@ -359,7 +386,7 @@
     "type": "module",
     "name": "fastsim.exceptions",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-exceptions",
+    "path": "fastsim/v0.24.1/api#fastsim-exceptions",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -367,7 +394,7 @@
     "type": "class",
     "name": "StopSimulation",
     "description": "Raised by a block or model to signal that the simulation should stop",
-    "path": "fastsim/v0.17.0/api#StopSimulation",
+    "path": "fastsim/v0.24.1/api#StopSimulation",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -375,7 +402,7 @@
     "type": "class",
     "name": "FastSimError",
     "description": "Base class for every fastsim-specific error.",
-    "path": "fastsim/v0.17.0/api#FastSimError",
+    "path": "fastsim/v0.24.1/api#FastSimError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -383,7 +410,7 @@
     "type": "class",
     "name": "FastSimValueError",
     "description": "A configuration/lookup error (bad block, connection, event, or operation).",
-    "path": "fastsim/v0.17.0/api#FastSimValueError",
+    "path": "fastsim/v0.24.1/api#FastSimValueError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -391,7 +418,7 @@
     "type": "class",
     "name": "InvalidBlockParameterError",
     "description": "A block constructor was given an invalid parameter (bad LUT table, a",
-    "path": "fastsim/v0.17.0/api#InvalidBlockParameterError",
+    "path": "fastsim/v0.24.1/api#InvalidBlockParameterError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -399,7 +426,15 @@
     "type": "class",
     "name": "PortConnectionError",
     "description": "A connection references a port alias that does not exist on the block.",
-    "path": "fastsim/v0.17.0/api#PortConnectionError",
+    "path": "fastsim/v0.24.1/api#PortConnectionError",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.exceptions"
+  },
+  {
+    "type": "class",
+    "name": "LinearizationError",
+    "description": "The model has no linear state space model in the current operating point.",
+    "path": "fastsim/v0.24.1/api#LinearizationError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -407,7 +442,7 @@
     "type": "class",
     "name": "SolverError",
     "description": "Base class for numerical solver failures.",
-    "path": "fastsim/v0.17.0/api#SolverError",
+    "path": "fastsim/v0.24.1/api#SolverError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -415,7 +450,7 @@
     "type": "class",
     "name": "ConvergenceError",
     "description": "The implicit solver's inner Newton/fixed-point iteration did not converge.",
-    "path": "fastsim/v0.17.0/api#ConvergenceError",
+    "path": "fastsim/v0.24.1/api#ConvergenceError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -423,7 +458,7 @@
     "type": "class",
     "name": "AlgebraicLoopError",
     "description": "An algebraic (feedthrough) loop did not converge.",
-    "path": "fastsim/v0.17.0/api#AlgebraicLoopError",
+    "path": "fastsim/v0.24.1/api#AlgebraicLoopError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -431,7 +466,7 @@
     "type": "class",
     "name": "StepSizeError",
     "description": "The adaptive step controller required a step below ``dt_min``.",
-    "path": "fastsim/v0.17.0/api#StepSizeError",
+    "path": "fastsim/v0.24.1/api#StepSizeError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -439,7 +474,7 @@
     "type": "class",
     "name": "SingularJacobianError",
     "description": "A singular Jacobian was encountered during an implicit solve.",
-    "path": "fastsim/v0.17.0/api#SingularJacobianError",
+    "path": "fastsim/v0.24.1/api#SingularJacobianError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -447,7 +482,7 @@
     "type": "class",
     "name": "TruncatedTrajectoryError",
     "description": "Integration stopped before the requested end time (e.g. step floor hit).",
-    "path": "fastsim/v0.17.0/api#TruncatedTrajectoryError",
+    "path": "fastsim/v0.24.1/api#TruncatedTrajectoryError",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -455,7 +490,7 @@
     "type": "class",
     "name": "FastSimWarning",
     "description": "Base class for every fastsim-specific warning.",
-    "path": "fastsim/v0.17.0/api#FastSimWarning",
+    "path": "fastsim/v0.24.1/api#FastSimWarning",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -463,7 +498,7 @@
     "type": "class",
     "name": "FastSimConvergenceWarning",
     "description": "A run completed but a convergence subsystem reported a problem: an",
-    "path": "fastsim/v0.17.0/api#FastSimConvergenceWarning",
+    "path": "fastsim/v0.24.1/api#FastSimConvergenceWarning",
     "packageId": "fastsim",
     "moduleName": "fastsim.exceptions"
   },
@@ -471,7 +506,7 @@
     "type": "module",
     "name": "fastsim.ir",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-ir",
+    "path": "fastsim/v0.24.1/api#fastsim-ir",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -479,7 +514,7 @@
     "type": "class",
     "name": "Tagged",
     "description": "A serde-tagged enum value: a ``kind`` plus its payload fields.",
-    "path": "fastsim/v0.17.0/api#Tagged",
+    "path": "fastsim/v0.24.1/api#Tagged",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -487,7 +522,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Tagged.parse",
+    "path": "fastsim/v0.24.1/api#Tagged.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Tagged"
@@ -496,7 +531,7 @@
     "type": "class",
     "name": "Port",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Port",
+    "path": "fastsim/v0.24.1/api#Port",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -504,7 +539,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Port.parse",
+    "path": "fastsim/v0.24.1/api#Port.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Port"
@@ -513,7 +548,7 @@
     "type": "class",
     "name": "Ports",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Ports",
+    "path": "fastsim/v0.24.1/api#Ports",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -521,7 +556,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Ports.parse",
+    "path": "fastsim/v0.24.1/api#Ports.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Ports"
@@ -530,7 +565,7 @@
     "type": "class",
     "name": "Param",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Param",
+    "path": "fastsim/v0.24.1/api#Param",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -538,7 +573,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Param.parse",
+    "path": "fastsim/v0.24.1/api#Param.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Param"
@@ -547,7 +582,7 @@
     "type": "class",
     "name": "StateVar",
     "description": "",
-    "path": "fastsim/v0.17.0/api#StateVar",
+    "path": "fastsim/v0.24.1/api#StateVar",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -555,7 +590,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#StateVar.parse",
+    "path": "fastsim/v0.24.1/api#StateVar.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "StateVar"
@@ -564,7 +599,7 @@
     "type": "class",
     "name": "MemorySlot",
     "description": "",
-    "path": "fastsim/v0.17.0/api#MemorySlot",
+    "path": "fastsim/v0.24.1/api#MemorySlot",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -572,7 +607,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#MemorySlot.parse",
+    "path": "fastsim/v0.24.1/api#MemorySlot.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "MemorySlot"
@@ -581,7 +616,7 @@
     "type": "class",
     "name": "Region",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Region",
+    "path": "fastsim/v0.24.1/api#Region",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -589,7 +624,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Region.parse",
+    "path": "fastsim/v0.24.1/api#Region.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Region"
@@ -598,7 +633,7 @@
     "type": "class",
     "name": "Regions",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Regions",
+    "path": "fastsim/v0.24.1/api#Regions",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -606,7 +641,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Regions.parse",
+    "path": "fastsim/v0.24.1/api#Regions.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Regions"
@@ -615,7 +650,7 @@
     "type": "class",
     "name": "Event",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Event",
+    "path": "fastsim/v0.24.1/api#Event",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -623,7 +658,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Event.parse",
+    "path": "fastsim/v0.24.1/api#Event.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Event"
@@ -632,7 +667,7 @@
     "type": "class",
     "name": "Block",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Block",
+    "path": "fastsim/v0.24.1/api#Block",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -640,7 +675,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Block.parse",
+    "path": "fastsim/v0.24.1/api#Block.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Block"
@@ -649,7 +684,7 @@
     "type": "class",
     "name": "PortRef",
     "description": "",
-    "path": "fastsim/v0.17.0/api#PortRef",
+    "path": "fastsim/v0.24.1/api#PortRef",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -657,7 +692,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#PortRef.parse",
+    "path": "fastsim/v0.24.1/api#PortRef.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "PortRef"
@@ -666,7 +701,7 @@
     "type": "class",
     "name": "Connection",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Connection",
+    "path": "fastsim/v0.24.1/api#Connection",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -674,7 +709,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Connection.parse",
+    "path": "fastsim/v0.24.1/api#Connection.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Connection"
@@ -683,7 +718,7 @@
     "type": "class",
     "name": "Interface",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Interface",
+    "path": "fastsim/v0.24.1/api#Interface",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -691,7 +726,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Interface.parse",
+    "path": "fastsim/v0.24.1/api#Interface.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Interface"
@@ -700,7 +735,7 @@
     "type": "class",
     "name": "DagGroup",
     "description": "",
-    "path": "fastsim/v0.17.0/api#DagGroup",
+    "path": "fastsim/v0.24.1/api#DagGroup",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -708,7 +743,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#DagGroup.parse",
+    "path": "fastsim/v0.24.1/api#DagGroup.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "DagGroup"
@@ -717,7 +752,7 @@
     "type": "class",
     "name": "Scc",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Scc",
+    "path": "fastsim/v0.24.1/api#Scc",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -725,7 +760,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Scc.parse",
+    "path": "fastsim/v0.24.1/api#Scc.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Scc"
@@ -734,7 +769,7 @@
     "type": "class",
     "name": "Schedule",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Schedule",
+    "path": "fastsim/v0.24.1/api#Schedule",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -742,7 +777,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Schedule.parse",
+    "path": "fastsim/v0.24.1/api#Schedule.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Schedule"
@@ -751,7 +786,7 @@
     "type": "class",
     "name": "Subsystem",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Subsystem",
+    "path": "fastsim/v0.24.1/api#Subsystem",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -759,7 +794,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Subsystem.parse",
+    "path": "fastsim/v0.24.1/api#Subsystem.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Subsystem"
@@ -768,7 +803,7 @@
     "type": "method",
     "name": "blocks",
     "description": "Iterate every leaf :class:`Block` in this scope, recursing into",
-    "path": "fastsim/v0.17.0/api#Subsystem.blocks",
+    "path": "fastsim/v0.24.1/api#Subsystem.blocks",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Subsystem"
@@ -777,7 +812,7 @@
     "type": "method",
     "name": "subsystems",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Subsystem.subsystems",
+    "path": "fastsim/v0.24.1/api#Subsystem.subsystems",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Subsystem"
@@ -786,7 +821,7 @@
     "type": "class",
     "name": "ExternDecl",
     "description": "",
-    "path": "fastsim/v0.17.0/api#ExternDecl",
+    "path": "fastsim/v0.24.1/api#ExternDecl",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -794,7 +829,7 @@
     "type": "method",
     "name": "parse",
     "description": "",
-    "path": "fastsim/v0.17.0/api#ExternDecl.parse",
+    "path": "fastsim/v0.24.1/api#ExternDecl.parse",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "ExternDecl"
@@ -803,7 +838,7 @@
     "type": "class",
     "name": "Module",
     "description": "Top-level hierarchical IR of a model.",
-    "path": "fastsim/v0.17.0/api#Module",
+    "path": "fastsim/v0.24.1/api#Module",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir"
   },
@@ -811,7 +846,7 @@
     "type": "method",
     "name": "from_dict",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Module.from_dict",
+    "path": "fastsim/v0.24.1/api#Module.from_dict",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -820,7 +855,7 @@
     "type": "method",
     "name": "from_json",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Module.from_json",
+    "path": "fastsim/v0.24.1/api#Module.from_json",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -829,7 +864,7 @@
     "type": "method",
     "name": "from_json_file",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Module.from_json_file",
+    "path": "fastsim/v0.24.1/api#Module.from_json_file",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -838,7 +873,7 @@
     "type": "method",
     "name": "to_json",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Module.to_json",
+    "path": "fastsim/v0.24.1/api#Module.to_json",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -847,7 +882,7 @@
     "type": "method",
     "name": "to_json_file",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Module.to_json_file",
+    "path": "fastsim/v0.24.1/api#Module.to_json_file",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -856,7 +891,7 @@
     "type": "method",
     "name": "to_c",
     "description": "Generate standalone C99 source from this IR.",
-    "path": "fastsim/v0.17.0/api#Module.to_c",
+    "path": "fastsim/v0.24.1/api#Module.to_c",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -865,7 +900,7 @@
     "type": "method",
     "name": "blocks",
     "description": "Every leaf block in the whole model (recurses subsystems).",
-    "path": "fastsim/v0.17.0/api#Module.blocks",
+    "path": "fastsim/v0.24.1/api#Module.blocks",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -874,7 +909,7 @@
     "type": "method",
     "name": "find",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Module.find",
+    "path": "fastsim/v0.24.1/api#Module.find",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -883,7 +918,7 @@
     "type": "method",
     "name": "extern_blocks",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Module.extern_blocks",
+    "path": "fastsim/v0.24.1/api#Module.extern_blocks",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -892,7 +927,7 @@
     "type": "method",
     "name": "summary",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Module.summary",
+    "path": "fastsim/v0.24.1/api#Module.summary",
     "packageId": "fastsim",
     "moduleName": "fastsim.ir",
     "parentClass": "Module"
@@ -901,7 +936,7 @@
     "type": "module",
     "name": "fastsim.port",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-port",
+    "path": "fastsim/v0.24.1/api#fastsim-port",
     "packageId": "fastsim",
     "moduleName": "fastsim.port"
   },
@@ -909,7 +944,7 @@
     "type": "class",
     "name": "CaptureShim",
     "description": "Stand-in for a pathsim ``Solver`` that captures the RHS, never integrates.",
-    "path": "fastsim/v0.17.0/api#CaptureShim",
+    "path": "fastsim/v0.24.1/api#CaptureShim",
     "packageId": "fastsim",
     "moduleName": "fastsim.port"
   },
@@ -917,7 +952,7 @@
     "type": "method",
     "name": "get",
     "description": "",
-    "path": "fastsim/v0.17.0/api#CaptureShim.get",
+    "path": "fastsim/v0.24.1/api#CaptureShim.get",
     "packageId": "fastsim",
     "moduleName": "fastsim.port",
     "parentClass": "CaptureShim"
@@ -926,7 +961,7 @@
     "type": "method",
     "name": "set",
     "description": "",
-    "path": "fastsim/v0.17.0/api#CaptureShim.set",
+    "path": "fastsim/v0.24.1/api#CaptureShim.set",
     "packageId": "fastsim",
     "moduleName": "fastsim.port",
     "parentClass": "CaptureShim"
@@ -935,7 +970,7 @@
     "type": "method",
     "name": "step",
     "description": "",
-    "path": "fastsim/v0.17.0/api#CaptureShim.step",
+    "path": "fastsim/v0.24.1/api#CaptureShim.step",
     "packageId": "fastsim",
     "moduleName": "fastsim.port",
     "parentClass": "CaptureShim"
@@ -944,7 +979,7 @@
     "type": "method",
     "name": "solve",
     "description": "",
-    "path": "fastsim/v0.17.0/api#CaptureShim.solve",
+    "path": "fastsim/v0.24.1/api#CaptureShim.solve",
     "packageId": "fastsim",
     "moduleName": "fastsim.port",
     "parentClass": "CaptureShim"
@@ -953,7 +988,7 @@
     "type": "method",
     "name": "buffer",
     "description": "",
-    "path": "fastsim/v0.17.0/api#CaptureShim.buffer",
+    "path": "fastsim/v0.24.1/api#CaptureShim.buffer",
     "packageId": "fastsim",
     "moduleName": "fastsim.port",
     "parentClass": "CaptureShim"
@@ -962,7 +997,7 @@
     "type": "method",
     "name": "revert",
     "description": "",
-    "path": "fastsim/v0.17.0/api#CaptureShim.revert",
+    "path": "fastsim/v0.24.1/api#CaptureShim.revert",
     "packageId": "fastsim",
     "moduleName": "fastsim.port",
     "parentClass": "CaptureShim"
@@ -971,7 +1006,7 @@
     "type": "method",
     "name": "reset",
     "description": "",
-    "path": "fastsim/v0.17.0/api#CaptureShim.reset",
+    "path": "fastsim/v0.24.1/api#CaptureShim.reset",
     "packageId": "fastsim",
     "moduleName": "fastsim.port",
     "parentClass": "CaptureShim"
@@ -980,7 +1015,7 @@
     "type": "function",
     "name": "port",
     "description": "Port a pathsim block onto the fastsim engine, accelerating where possible.",
-    "path": "fastsim/v0.17.0/api#port",
+    "path": "fastsim/v0.24.1/api#port",
     "packageId": "fastsim",
     "moduleName": "fastsim.port"
   },
@@ -988,7 +1023,7 @@
     "type": "module",
     "name": "fastsim.random",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-random",
+    "path": "fastsim/v0.24.1/api#fastsim-random",
     "packageId": "fastsim",
     "moduleName": "fastsim.random"
   },
@@ -996,7 +1031,7 @@
     "type": "function",
     "name": "random_uniform",
     "description": "Stateless uniform draw in ``[0, 1)``, keyed by ``key``.",
-    "path": "fastsim/v0.17.0/api#random_uniform",
+    "path": "fastsim/v0.24.1/api#random_uniform",
     "packageId": "fastsim",
     "moduleName": "fastsim.random"
   },
@@ -1004,7 +1039,7 @@
     "type": "function",
     "name": "random_normal",
     "description": "Stateless standard-normal draw ``N(0, 1)``, keyed by ``key``.",
-    "path": "fastsim/v0.17.0/api#random_normal",
+    "path": "fastsim/v0.24.1/api#random_normal",
     "packageId": "fastsim",
     "moduleName": "fastsim.random"
   },
@@ -1012,7 +1047,7 @@
     "type": "module",
     "name": "fastsim.simulation",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-simulation",
+    "path": "fastsim/v0.24.1/api#fastsim-simulation",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation"
   },
@@ -1020,7 +1055,7 @@
     "type": "class",
     "name": "Simulation",
     "description": "Transient block-diagram simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation",
+    "path": "fastsim/v0.24.1/api#Simulation",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation"
   },
@@ -1028,7 +1063,7 @@
     "type": "method",
     "name": "to_ir",
     "description": "Export the assembled model as hierarchical IR.",
-    "path": "fastsim/v0.17.0/api#Simulation.to_ir",
+    "path": "fastsim/v0.24.1/api#Simulation.to_ir",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1037,7 +1072,7 @@
     "type": "method",
     "name": "to_c",
     "description": "Generate standalone C99 source from the assembled model.",
-    "path": "fastsim/v0.17.0/api#Simulation.to_c",
+    "path": "fastsim/v0.24.1/api#Simulation.to_c",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1046,7 +1081,7 @@
     "type": "method",
     "name": "verify_c",
     "description": "Software-in-the-loop verification of the generated C.",
-    "path": "fastsim/v0.17.0/api#Simulation.verify_c",
+    "path": "fastsim/v0.24.1/api#Simulation.verify_c",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1055,7 +1090,7 @@
     "type": "method",
     "name": "run_streaming",
     "description": "Run the simulation as a generator, yielding at a fixed rate.",
-    "path": "fastsim/v0.17.0/api#Simulation.run_streaming",
+    "path": "fastsim/v0.24.1/api#Simulation.run_streaming",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1064,7 +1099,7 @@
     "type": "method",
     "name": "add_block",
     "description": "Add a block, or a list of blocks.  Accepts either a single `Block`",
-    "path": "fastsim/v0.17.0/api#Simulation.add_block",
+    "path": "fastsim/v0.24.1/api#Simulation.add_block",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1073,7 +1108,7 @@
     "type": "method",
     "name": "add_connection",
     "description": "Add a connection, or a list of connections.",
-    "path": "fastsim/v0.17.0/api#Simulation.add_connection",
+    "path": "fastsim/v0.24.1/api#Simulation.add_connection",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1082,7 +1117,7 @@
     "type": "method",
     "name": "add_event",
     "description": "Add an event (or list of events) to the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.add_event",
+    "path": "fastsim/v0.24.1/api#Simulation.add_event",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1091,7 +1126,7 @@
     "type": "method",
     "name": "compile",
     "description": "Statically compile this model into a fused `dX/dt = F(X, t)` tape (see",
-    "path": "fastsim/v0.17.0/api#Simulation.compile",
+    "path": "fastsim/v0.24.1/api#Simulation.compile",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1100,7 +1135,7 @@
     "type": "method",
     "name": "delinearize",
     "description": "Revert a previous linearization, restoring the original nonlinear blocks.",
-    "path": "fastsim/v0.17.0/api#Simulation.delinearize",
+    "path": "fastsim/v0.24.1/api#Simulation.delinearize",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1109,7 +1144,25 @@
     "type": "method",
     "name": "enable_wct_trace",
     "description": "Enable per-timestep wall-clock recording.  Subsequent `run` /",
-    "path": "fastsim/v0.17.0/api#Simulation.enable_wct_trace",
+    "path": "fastsim/v0.24.1/api#Simulation.enable_wct_trace",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "sensitivity",
+    "description": "Sensitivity of the tapped outputs to a set of model parameters,",
+    "path": "fastsim/v0.24.1/api#Simulation.sensitivity",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "solve_inverse",
+    "description": "Solve backwards for the parameter values that put the system at a",
+    "path": "fastsim/v0.24.1/api#Simulation.solve_inverse",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1117,8 +1170,17 @@
   {
     "type": "method",
     "name": "linearize",
-    "description": "Linearize the system about the current operating point (state and inputs), replacing nonlinear blocks with their local linear approximation.",
-    "path": "fastsim/v0.17.0/api#Simulation.linearize",
+    "description": "Switch the system over to its linearized surrogate.",
+    "path": "fastsim/v0.24.1/api#Simulation.linearize",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "to_statespace",
+    "description": "Assemble a global linear state space model of the interconnected",
+    "path": "fastsim/v0.24.1/api#Simulation.to_statespace",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1127,7 +1189,7 @@
     "type": "method",
     "name": "pending_ops",
     "description": "Return a handle on the simulation's mutation queue.  Equivalent",
-    "path": "fastsim/v0.17.0/api#Simulation.pending_ops",
+    "path": "fastsim/v0.24.1/api#Simulation.pending_ops",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1136,7 +1198,7 @@
     "type": "method",
     "name": "periodic_steady_state",
     "description": "Find the periodic steady-state limit cycle of period `period` by",
-    "path": "fastsim/v0.17.0/api#Simulation.periodic_steady_state",
+    "path": "fastsim/v0.24.1/api#Simulation.periodic_steady_state",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1145,7 +1207,7 @@
     "type": "method",
     "name": "plot",
     "description": "Plot the recorded results from all Scope blocks in the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.plot",
+    "path": "fastsim/v0.24.1/api#Simulation.plot",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1154,7 +1216,7 @@
     "type": "method",
     "name": "remove_block",
     "description": "Remove a block (or list of blocks) from the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.remove_block",
+    "path": "fastsim/v0.24.1/api#Simulation.remove_block",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1163,7 +1225,7 @@
     "type": "method",
     "name": "remove_connection",
     "description": "Remove a connection (or list of connections) from the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.remove_connection",
+    "path": "fastsim/v0.24.1/api#Simulation.remove_connection",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1172,7 +1234,7 @@
     "type": "method",
     "name": "remove_event",
     "description": "Remove an event (or list of events) from the simulation.",
-    "path": "fastsim/v0.17.0/api#Simulation.remove_event",
+    "path": "fastsim/v0.24.1/api#Simulation.remove_event",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1181,7 +1243,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset all blocks to their initial state and the simulation time to zero (or to ``time`` if given).",
-    "path": "fastsim/v0.17.0/api#Simulation.reset",
+    "path": "fastsim/v0.24.1/api#Simulation.reset",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1189,8 +1251,8 @@
   {
     "type": "method",
     "name": "run",
-    "description": "Run the simulation for a given duration.",
-    "path": "fastsim/v0.17.0/api#Simulation.run",
+    "description": "Run the simulation for a given duration of simulation time.",
+    "path": "fastsim/v0.24.1/api#Simulation.run",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1199,7 +1261,7 @@
     "type": "method",
     "name": "run_begin",
     "description": "Begin a chunked, cooperative run (for the streaming generator).",
-    "path": "fastsim/v0.17.0/api#Simulation.run_begin",
+    "path": "fastsim/v0.24.1/api#Simulation.run_begin",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1208,7 +1270,7 @@
     "type": "method",
     "name": "run_end",
     "description": "Finalize a chunked streaming run (logs FINISHED/INTERRUPTED). Call once",
-    "path": "fastsim/v0.17.0/api#Simulation.run_end",
+    "path": "fastsim/v0.24.1/api#Simulation.run_end",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1216,8 +1278,8 @@
   {
     "type": "method",
     "name": "run_realtime",
-    "description": "Run synchronized to wall-clock time with optional speed factor.",
-    "path": "fastsim/v0.17.0/api#Simulation.run_realtime",
+    "description": "Run synchronized to wall-clock time with an optional speed factor.",
+    "path": "fastsim/v0.24.1/api#Simulation.run_realtime",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1226,7 +1288,7 @@
     "type": "method",
     "name": "run_until",
     "description": "Advance up to `target_time` (a chunk boundary). `end_time` is the true",
-    "path": "fastsim/v0.17.0/api#Simulation.run_until",
+    "path": "fastsim/v0.24.1/api#Simulation.run_until",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1234,8 +1296,8 @@
   {
     "type": "method",
     "name": "steadystate",
-    "description": "Find the steady-state (DC operating point) of the system by root-finding on the residual rather than time integration.",
-    "path": "fastsim/v0.17.0/api#Simulation.steadystate",
+    "description": "Find the steady state (DC operating point) of the system.",
+    "path": "fastsim/v0.24.1/api#Simulation.steadystate",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1244,7 +1306,7 @@
     "type": "method",
     "name": "stop",
     "description": "Signal a running simulation to stop cleanly at the next timestep boundary.",
-    "path": "fastsim/v0.17.0/api#Simulation.stop",
+    "path": "fastsim/v0.24.1/api#Simulation.stop",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1253,7 +1315,7 @@
     "type": "method",
     "name": "take_wct_trace",
     "description": "Drain the per-timestep wall-clock buffer and return the recorded",
-    "path": "fastsim/v0.17.0/api#Simulation.take_wct_trace",
+    "path": "fastsim/v0.24.1/api#Simulation.take_wct_trace",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1262,7 +1324,7 @@
     "type": "method",
     "name": "to_fmu",
     "description": "Export this model as a source FMU (FMI 3.0, Model Exchange) written to",
-    "path": "fastsim/v0.17.0/api#Simulation.to_fmu",
+    "path": "fastsim/v0.24.1/api#Simulation.to_fmu",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1271,7 +1333,7 @@
     "type": "method",
     "name": "to_ir_json",
     "description": "Export the assembled model as hierarchical IR (JSON). Each block is",
-    "path": "fastsim/v0.17.0/api#Simulation.to_ir_json",
+    "path": "fastsim/v0.24.1/api#Simulation.to_ir_json",
     "packageId": "fastsim",
     "moduleName": "fastsim.simulation",
     "parentClass": "Simulation"
@@ -1280,7 +1342,7 @@
     "type": "module",
     "name": "fastsim.subsystem",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-subsystem",
+    "path": "fastsim/v0.24.1/api#fastsim-subsystem",
     "packageId": "fastsim",
     "moduleName": "fastsim.subsystem"
   },
@@ -1288,7 +1350,7 @@
     "type": "class",
     "name": "Interface",
     "description": "Bare-bone block that serves as a data interface for the 'Subsystem' class.",
-    "path": "fastsim/v0.17.0/api#Interface",
+    "path": "fastsim/v0.24.1/api#Interface",
     "packageId": "fastsim",
     "moduleName": "fastsim.subsystem"
   },
@@ -1296,7 +1358,7 @@
     "type": "class",
     "name": "Subsystem",
     "description": "Subsystem class that holds its own blocks and connecions and",
-    "path": "fastsim/v0.17.0/api#Subsystem",
+    "path": "fastsim/v0.24.1/api#Subsystem",
     "packageId": "fastsim",
     "moduleName": "fastsim.subsystem"
   },
@@ -1304,7 +1366,7 @@
     "type": "module",
     "name": "fastsim.blocks",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-blocks",
+    "path": "fastsim/v0.24.1/api#fastsim-blocks",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1312,7 +1374,7 @@
     "type": "class",
     "name": "Scope",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Scope",
+    "path": "fastsim/v0.24.1/api#Scope",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1320,7 +1382,7 @@
     "type": "method",
     "name": "plot",
     "description": "Plot recorded data with interactive legend picking.",
-    "path": "fastsim/v0.17.0/api#Scope.plot",
+    "path": "fastsim/v0.24.1/api#Scope.plot",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks",
     "parentClass": "Scope"
@@ -1329,7 +1391,7 @@
     "type": "class",
     "name": "Spectrum",
     "description": "",
-    "path": "fastsim/v0.17.0/api#Spectrum",
+    "path": "fastsim/v0.24.1/api#Spectrum",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1337,7 +1399,7 @@
     "type": "method",
     "name": "plot",
     "description": "Plot frequency spectrum with interactive legend picking.",
-    "path": "fastsim/v0.17.0/api#Spectrum.plot",
+    "path": "fastsim/v0.24.1/api#Spectrum.plot",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks",
     "parentClass": "Spectrum"
@@ -1346,7 +1408,7 @@
     "type": "class",
     "name": "ADC",
     "description": "Models an ideal Analog-to-Digital Converter (ADC).",
-    "path": "fastsim/v0.17.0/api#ADC",
+    "path": "fastsim/v0.24.1/api#ADC",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1354,7 +1416,7 @@
     "type": "class",
     "name": "Abs",
     "description": "Absolute value operator block.",
-    "path": "fastsim/v0.17.0/api#Abs",
+    "path": "fastsim/v0.24.1/api#Abs",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1362,7 +1424,7 @@
     "type": "class",
     "name": "Adder",
     "description": "Summs / adds up all input signals to a single output signal (MISO)",
-    "path": "fastsim/v0.17.0/api#Adder",
+    "path": "fastsim/v0.24.1/api#Adder",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1370,7 +1432,7 @@
     "type": "class",
     "name": "Alias",
     "description": "Signal alias / pass-through block.",
-    "path": "fastsim/v0.17.0/api#Alias",
+    "path": "fastsim/v0.24.1/api#Alias",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1378,7 +1440,7 @@
     "type": "class",
     "name": "AllpassFilter",
     "description": "Direct implementation of a first order allpass filter, or a cascade",
-    "path": "fastsim/v0.17.0/api#AllpassFilter",
+    "path": "fastsim/v0.24.1/api#AllpassFilter",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1386,7 +1448,7 @@
     "type": "class",
     "name": "Amplifier",
     "description": "Amplifies the input signal by multiplication with a constant gain term.",
-    "path": "fastsim/v0.17.0/api#Amplifier",
+    "path": "fastsim/v0.24.1/api#Amplifier",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1394,7 +1456,7 @@
     "type": "class",
     "name": "AntiWindupPID",
     "description": "Proportional-Integral-Differentiation (PID) controller with anti-windup mechanism (back-calculation).",
-    "path": "fastsim/v0.17.0/api#AntiWindupPID",
+    "path": "fastsim/v0.24.1/api#AntiWindupPID",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1402,7 +1464,7 @@
     "type": "class",
     "name": "Atan",
     "description": "Arctangent operator block.",
-    "path": "fastsim/v0.17.0/api#Atan",
+    "path": "fastsim/v0.24.1/api#Atan",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1410,7 +1472,7 @@
     "type": "class",
     "name": "Atan2",
     "description": "Two-argument arctangent block.",
-    "path": "fastsim/v0.17.0/api#Atan2",
+    "path": "fastsim/v0.24.1/api#Atan2",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1418,7 +1480,7 @@
     "type": "class",
     "name": "Backlash",
     "description": "Backlash (mechanical play) element.",
-    "path": "fastsim/v0.17.0/api#Backlash",
+    "path": "fastsim/v0.24.1/api#Backlash",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1426,7 +1488,7 @@
     "type": "class",
     "name": "ButterworthBandpassFilter",
     "description": "Direct implementation of a bandpass butterworth filter block.",
-    "path": "fastsim/v0.17.0/api#ButterworthBandpassFilter",
+    "path": "fastsim/v0.24.1/api#ButterworthBandpassFilter",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1434,7 +1496,7 @@
     "type": "class",
     "name": "ButterworthBandstopFilter",
     "description": "Direct implementation of a bandstop butterworth filter block.",
-    "path": "fastsim/v0.17.0/api#ButterworthBandstopFilter",
+    "path": "fastsim/v0.24.1/api#ButterworthBandstopFilter",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1442,7 +1504,7 @@
     "type": "class",
     "name": "ButterworthHighpassFilter",
     "description": "Direct implementation of a high pass butterworth filter block.",
-    "path": "fastsim/v0.17.0/api#ButterworthHighpassFilter",
+    "path": "fastsim/v0.24.1/api#ButterworthHighpassFilter",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1450,7 +1512,7 @@
     "type": "class",
     "name": "ButterworthLowpassFilter",
     "description": "Direct implementation of a low pass butterworth filter block.",
-    "path": "fastsim/v0.17.0/api#ButterworthLowpassFilter",
+    "path": "fastsim/v0.24.1/api#ButterworthLowpassFilter",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1458,7 +1520,7 @@
     "type": "class",
     "name": "ChirpPhaseNoiseSource",
     "description": "Chirp source, sinusoid with frequency ramp up and ramp down, plus phase noise.",
-    "path": "fastsim/v0.17.0/api#ChirpPhaseNoiseSource",
+    "path": "fastsim/v0.24.1/api#ChirpPhaseNoiseSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1466,7 +1528,7 @@
     "type": "class",
     "name": "ChirpSource",
     "description": "Alias for ChirpPhaseNoiseSource.",
-    "path": "fastsim/v0.17.0/api#ChirpSource",
+    "path": "fastsim/v0.24.1/api#ChirpSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1474,7 +1536,7 @@
     "type": "class",
     "name": "Clip",
     "description": "Clipping/saturation operator block.",
-    "path": "fastsim/v0.17.0/api#Clip",
+    "path": "fastsim/v0.24.1/api#Clip",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1482,7 +1544,7 @@
     "type": "class",
     "name": "Clock",
     "description": "Alias for ClockSource.",
-    "path": "fastsim/v0.17.0/api#Clock",
+    "path": "fastsim/v0.24.1/api#Clock",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1490,15 +1552,15 @@
     "type": "class",
     "name": "ClockSource",
     "description": "Discrete time clock source block.",
-    "path": "fastsim/v0.17.0/api#ClockSource",
+    "path": "fastsim/v0.24.1/api#ClockSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
   {
     "type": "class",
     "name": "CoSimulationFMU",
-    "description": "CoSimulationFMU block",
-    "path": "fastsim/v0.17.0/api#CoSimulationFMU",
+    "description": "Co-Simulation FMU block (FMI 3.0).",
+    "path": "fastsim/v0.24.1/api#CoSimulationFMU",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1506,7 +1568,7 @@
     "type": "class",
     "name": "Comparator",
     "description": "Comparator block that sets output depending on predefined thresholds for the input.",
-    "path": "fastsim/v0.17.0/api#Comparator",
+    "path": "fastsim/v0.24.1/api#Comparator",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1514,7 +1576,7 @@
     "type": "class",
     "name": "Constant",
     "description": "Produces a constant output signal (SISO).",
-    "path": "fastsim/v0.17.0/api#Constant",
+    "path": "fastsim/v0.24.1/api#Constant",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1522,7 +1584,7 @@
     "type": "class",
     "name": "Cos",
     "description": "Cosine operator block.",
-    "path": "fastsim/v0.17.0/api#Cos",
+    "path": "fastsim/v0.24.1/api#Cos",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1530,7 +1592,7 @@
     "type": "class",
     "name": "Cosh",
     "description": "Hyperbolic cosine operator block.",
-    "path": "fastsim/v0.17.0/api#Cosh",
+    "path": "fastsim/v0.24.1/api#Cosh",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1538,7 +1600,7 @@
     "type": "class",
     "name": "Counter",
     "description": "Counts the number of detected bidirectional threshold crossings.",
-    "path": "fastsim/v0.17.0/api#Counter",
+    "path": "fastsim/v0.24.1/api#Counter",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1546,7 +1608,7 @@
     "type": "class",
     "name": "CounterDown",
     "description": "Counts the number of detected unidirectional (hi->lo) threshold crossings.",
-    "path": "fastsim/v0.17.0/api#CounterDown",
+    "path": "fastsim/v0.24.1/api#CounterDown",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1554,7 +1616,7 @@
     "type": "class",
     "name": "CounterUp",
     "description": "Counts the number of detected unidirectional (lo->hi) threshold crossings.",
-    "path": "fastsim/v0.17.0/api#CounterUp",
+    "path": "fastsim/v0.24.1/api#CounterUp",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1562,7 +1624,7 @@
     "type": "class",
     "name": "DAC",
     "description": "Models an ideal Digital-to-Analog Converter (DAC).",
-    "path": "fastsim/v0.17.0/api#DAC",
+    "path": "fastsim/v0.24.1/api#DAC",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1570,7 +1632,7 @@
     "type": "class",
     "name": "Deadband",
     "description": "Deadband (dead zone) element.",
-    "path": "fastsim/v0.17.0/api#Deadband",
+    "path": "fastsim/v0.24.1/api#Deadband",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1578,7 +1640,7 @@
     "type": "class",
     "name": "Delay",
     "description": "Delays the input signal by a time constant 'tau' in seconds.",
-    "path": "fastsim/v0.17.0/api#Delay",
+    "path": "fastsim/v0.24.1/api#Delay",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1586,7 +1648,7 @@
     "type": "class",
     "name": "Differentiator",
     "description": "Differentiates the input signal.",
-    "path": "fastsim/v0.17.0/api#Differentiator",
+    "path": "fastsim/v0.24.1/api#Differentiator",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1594,7 +1656,7 @@
     "type": "class",
     "name": "DiscreteDerivative",
     "description": "Discrete-time backward-difference derivative.",
-    "path": "fastsim/v0.17.0/api#DiscreteDerivative",
+    "path": "fastsim/v0.24.1/api#DiscreteDerivative",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1602,7 +1664,7 @@
     "type": "class",
     "name": "DiscreteIntegrator",
     "description": "Discrete-time integrator (forward Euler).",
-    "path": "fastsim/v0.17.0/api#DiscreteIntegrator",
+    "path": "fastsim/v0.24.1/api#DiscreteIntegrator",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1610,7 +1672,7 @@
     "type": "class",
     "name": "DiscreteStateSpace",
     "description": "Discrete-time MIMO state space block.",
-    "path": "fastsim/v0.17.0/api#DiscreteStateSpace",
+    "path": "fastsim/v0.24.1/api#DiscreteStateSpace",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1618,7 +1680,7 @@
     "type": "class",
     "name": "DiscreteTransferFunction",
     "description": "Discrete-time SISO transfer function in numerator/denominator form.",
-    "path": "fastsim/v0.17.0/api#DiscreteTransferFunction",
+    "path": "fastsim/v0.24.1/api#DiscreteTransferFunction",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1626,7 +1688,7 @@
     "type": "class",
     "name": "Divider",
     "description": "Multiplies and divides input signals (MISO).",
-    "path": "fastsim/v0.17.0/api#Divider",
+    "path": "fastsim/v0.24.1/api#Divider",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1634,7 +1696,7 @@
     "type": "class",
     "name": "DynamicalFunction",
     "description": "Arbitrary MIMO time and input dependent function block.",
-    "path": "fastsim/v0.17.0/api#DynamicalFunction",
+    "path": "fastsim/v0.24.1/api#DynamicalFunction",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1642,7 +1704,7 @@
     "type": "class",
     "name": "DynamicalSystem",
     "description": "This block implements a nonlinear dynamical system / nonlinear state space model.",
-    "path": "fastsim/v0.17.0/api#DynamicalSystem",
+    "path": "fastsim/v0.24.1/api#DynamicalSystem",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1650,7 +1712,7 @@
     "type": "class",
     "name": "Equal",
     "description": "Equality comparison block.",
-    "path": "fastsim/v0.17.0/api#Equal",
+    "path": "fastsim/v0.24.1/api#Equal",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1658,7 +1720,7 @@
     "type": "class",
     "name": "Exp",
     "description": "Exponential operator block.",
-    "path": "fastsim/v0.17.0/api#Exp",
+    "path": "fastsim/v0.24.1/api#Exp",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1666,7 +1728,7 @@
     "type": "class",
     "name": "FIR",
     "description": "Discrete-time Finite-Impulse-Response (FIR) filter.",
-    "path": "fastsim/v0.17.0/api#FIR",
+    "path": "fastsim/v0.24.1/api#FIR",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1674,7 +1736,7 @@
     "type": "class",
     "name": "FirstOrderHold",
     "description": "First-order hold reconstructor.",
-    "path": "fastsim/v0.17.0/api#FirstOrderHold",
+    "path": "fastsim/v0.24.1/api#FirstOrderHold",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1682,7 +1744,7 @@
     "type": "class",
     "name": "FullyImplicitDAE",
     "description": "Fully-implicit DAE block.",
-    "path": "fastsim/v0.17.0/api#FullyImplicitDAE",
+    "path": "fastsim/v0.24.1/api#FullyImplicitDAE",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1690,7 +1752,7 @@
     "type": "class",
     "name": "Function",
     "description": "Arbitrary MIMO function block, defined by a function or `lambda` expression.",
-    "path": "fastsim/v0.17.0/api#Function",
+    "path": "fastsim/v0.24.1/api#Function",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1698,7 +1760,7 @@
     "type": "class",
     "name": "GaussianPulseSource",
     "description": "Source block that generates a gaussian pulse",
-    "path": "fastsim/v0.17.0/api#GaussianPulseSource",
+    "path": "fastsim/v0.24.1/api#GaussianPulseSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1706,7 +1768,7 @@
     "type": "class",
     "name": "GreaterThan",
     "description": "Greater-than comparison block.",
-    "path": "fastsim/v0.17.0/api#GreaterThan",
+    "path": "fastsim/v0.24.1/api#GreaterThan",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1714,7 +1776,7 @@
     "type": "class",
     "name": "Integrator",
     "description": "Integrates the input signal.",
-    "path": "fastsim/v0.17.0/api#Integrator",
+    "path": "fastsim/v0.24.1/api#Integrator",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1722,7 +1784,7 @@
     "type": "class",
     "name": "LUT1D",
     "description": "One-dimensional lookup table with linear interpolation functionality.",
-    "path": "fastsim/v0.17.0/api#LUT1D",
+    "path": "fastsim/v0.24.1/api#LUT1D",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1730,7 +1792,7 @@
     "type": "class",
     "name": "LeadLag",
     "description": "Lead-Lag compensator.",
-    "path": "fastsim/v0.17.0/api#LeadLag",
+    "path": "fastsim/v0.24.1/api#LeadLag",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1738,7 +1800,7 @@
     "type": "class",
     "name": "LessThan",
     "description": "Less-than comparison block.",
-    "path": "fastsim/v0.17.0/api#LessThan",
+    "path": "fastsim/v0.24.1/api#LessThan",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1746,7 +1808,7 @@
     "type": "class",
     "name": "Log",
     "description": "Natural logarithm operator block.",
-    "path": "fastsim/v0.17.0/api#Log",
+    "path": "fastsim/v0.24.1/api#Log",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1754,7 +1816,7 @@
     "type": "class",
     "name": "Log10",
     "description": "Base-10 logarithm operator block.",
-    "path": "fastsim/v0.17.0/api#Log10",
+    "path": "fastsim/v0.24.1/api#Log10",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1762,7 +1824,7 @@
     "type": "class",
     "name": "LogicAnd",
     "description": "Logical AND block.",
-    "path": "fastsim/v0.17.0/api#LogicAnd",
+    "path": "fastsim/v0.24.1/api#LogicAnd",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1770,7 +1832,7 @@
     "type": "class",
     "name": "LogicNot",
     "description": "Logical NOT block.",
-    "path": "fastsim/v0.17.0/api#LogicNot",
+    "path": "fastsim/v0.24.1/api#LogicNot",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1778,7 +1840,7 @@
     "type": "class",
     "name": "LogicOr",
     "description": "Logical OR block.",
-    "path": "fastsim/v0.17.0/api#LogicOr",
+    "path": "fastsim/v0.24.1/api#LogicOr",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1786,7 +1848,7 @@
     "type": "class",
     "name": "MassMatrixDAE",
     "description": "Mass-matrix DAE block.",
-    "path": "fastsim/v0.17.0/api#MassMatrixDAE",
+    "path": "fastsim/v0.24.1/api#MassMatrixDAE",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1794,7 +1856,7 @@
     "type": "class",
     "name": "Matrix",
     "description": "Linear matrix operation (matrix-vector product).",
-    "path": "fastsim/v0.17.0/api#Matrix",
+    "path": "fastsim/v0.24.1/api#Matrix",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1802,7 +1864,7 @@
     "type": "class",
     "name": "Mod",
     "description": "Modulo operator block.",
-    "path": "fastsim/v0.17.0/api#Mod",
+    "path": "fastsim/v0.24.1/api#Mod",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1810,7 +1872,7 @@
     "type": "class",
     "name": "ModelExchangeFMU",
     "description": "ModelExchangeFMU block",
-    "path": "fastsim/v0.17.0/api#ModelExchangeFMU",
+    "path": "fastsim/v0.24.1/api#ModelExchangeFMU",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1818,7 +1880,7 @@
     "type": "class",
     "name": "Multiplier",
     "description": "Multiplies all signals from all input ports (MISO).",
-    "path": "fastsim/v0.17.0/api#Multiplier",
+    "path": "fastsim/v0.24.1/api#Multiplier",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1826,7 +1888,7 @@
     "type": "class",
     "name": "Norm",
     "description": "Vector norm operator block.",
-    "path": "fastsim/v0.17.0/api#Norm",
+    "path": "fastsim/v0.24.1/api#Norm",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1834,7 +1896,7 @@
     "type": "class",
     "name": "ODE",
     "description": "Ordinary differential equation (ODE) defined by its right hand side function.",
-    "path": "fastsim/v0.17.0/api#ODE",
+    "path": "fastsim/v0.24.1/api#ODE",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1842,7 +1904,7 @@
     "type": "class",
     "name": "PID",
     "description": "Proportional-Integral-Differentiation (PID) controller.",
-    "path": "fastsim/v0.17.0/api#PID",
+    "path": "fastsim/v0.24.1/api#PID",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1850,7 +1912,7 @@
     "type": "class",
     "name": "PT1",
     "description": "First-order lag element (PT1).",
-    "path": "fastsim/v0.17.0/api#PT1",
+    "path": "fastsim/v0.24.1/api#PT1",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1858,7 +1920,7 @@
     "type": "class",
     "name": "PT2",
     "description": "Second-order lag element (PT2).",
-    "path": "fastsim/v0.17.0/api#PT2",
+    "path": "fastsim/v0.24.1/api#PT2",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1866,7 +1928,7 @@
     "type": "class",
     "name": "PinkNoise",
     "description": "Pink noise (1/f noise) source using the Voss-McCartney algorithm.",
-    "path": "fastsim/v0.17.0/api#PinkNoise",
+    "path": "fastsim/v0.24.1/api#PinkNoise",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1874,7 +1936,7 @@
     "type": "class",
     "name": "Polynomial",
     "description": "Polynomial operator block.",
-    "path": "fastsim/v0.17.0/api#Polynomial",
+    "path": "fastsim/v0.24.1/api#Polynomial",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1882,7 +1944,7 @@
     "type": "class",
     "name": "Pow",
     "description": "Raise to power operator block.",
-    "path": "fastsim/v0.17.0/api#Pow",
+    "path": "fastsim/v0.24.1/api#Pow",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1890,7 +1952,7 @@
     "type": "class",
     "name": "PowProd",
     "description": "Power-Product operator block.",
-    "path": "fastsim/v0.17.0/api#PowProd",
+    "path": "fastsim/v0.24.1/api#PowProd",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1898,7 +1960,7 @@
     "type": "class",
     "name": "Pulse",
     "description": "Alias for PulseSource.",
-    "path": "fastsim/v0.17.0/api#Pulse",
+    "path": "fastsim/v0.24.1/api#Pulse",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1906,7 +1968,7 @@
     "type": "class",
     "name": "PulseSource",
     "description": "Generates a periodic pulse waveform with defined rise and fall times.",
-    "path": "fastsim/v0.17.0/api#PulseSource",
+    "path": "fastsim/v0.24.1/api#PulseSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1914,7 +1976,7 @@
     "type": "class",
     "name": "RandomNumberGenerator",
     "description": "Generates a random output value using `numpy.random.rand`.",
-    "path": "fastsim/v0.17.0/api#RandomNumberGenerator",
+    "path": "fastsim/v0.24.1/api#RandomNumberGenerator",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1922,7 +1984,7 @@
     "type": "class",
     "name": "RateLimiter",
     "description": "Rate limiter block that limits the rate of change of a signal.",
-    "path": "fastsim/v0.17.0/api#RateLimiter",
+    "path": "fastsim/v0.24.1/api#RateLimiter",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1930,7 +1992,7 @@
     "type": "class",
     "name": "Relay",
     "description": "Relay block with hysteresis (Schmitt trigger).",
-    "path": "fastsim/v0.17.0/api#Relay",
+    "path": "fastsim/v0.24.1/api#Relay",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1938,7 +2000,7 @@
     "type": "class",
     "name": "Rescale",
     "description": "Linear rescaling / mapping block.",
-    "path": "fastsim/v0.17.0/api#Rescale",
+    "path": "fastsim/v0.24.1/api#Rescale",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1946,7 +2008,7 @@
     "type": "class",
     "name": "SampleHold",
     "description": "Zero-order hold: samples the input periodically and holds it at the output.",
-    "path": "fastsim/v0.17.0/api#SampleHold",
+    "path": "fastsim/v0.24.1/api#SampleHold",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1954,7 +2016,7 @@
     "type": "class",
     "name": "SemiExplicitDAE",
     "description": "Semi-explicit Index-1 DAE block.",
-    "path": "fastsim/v0.17.0/api#SemiExplicitDAE",
+    "path": "fastsim/v0.24.1/api#SemiExplicitDAE",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1962,7 +2024,7 @@
     "type": "class",
     "name": "Sin",
     "description": "Sine operator block.",
-    "path": "fastsim/v0.17.0/api#Sin",
+    "path": "fastsim/v0.24.1/api#Sin",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1970,7 +2032,7 @@
     "type": "class",
     "name": "Sinh",
     "description": "Hyperbolic sine operator block.",
-    "path": "fastsim/v0.17.0/api#Sinh",
+    "path": "fastsim/v0.24.1/api#Sinh",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1978,7 +2040,7 @@
     "type": "class",
     "name": "SinusoidalPhaseNoiseSource",
     "description": "Sinusoidal source with cumulative and white phase noise.",
-    "path": "fastsim/v0.17.0/api#SinusoidalPhaseNoiseSource",
+    "path": "fastsim/v0.24.1/api#SinusoidalPhaseNoiseSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1986,7 +2048,7 @@
     "type": "class",
     "name": "SinusoidalSource",
     "description": "Source block that generates a sinusoid wave",
-    "path": "fastsim/v0.17.0/api#SinusoidalSource",
+    "path": "fastsim/v0.24.1/api#SinusoidalSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -1994,7 +2056,7 @@
     "type": "class",
     "name": "Source",
     "description": "Source that produces an arbitrary time dependent output defined by `func` (callable).",
-    "path": "fastsim/v0.17.0/api#Source",
+    "path": "fastsim/v0.24.1/api#Source",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2002,7 +2064,7 @@
     "type": "class",
     "name": "Sqrt",
     "description": "Square root operator block.",
-    "path": "fastsim/v0.17.0/api#Sqrt",
+    "path": "fastsim/v0.24.1/api#Sqrt",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2010,7 +2072,7 @@
     "type": "class",
     "name": "SquareWaveSource",
     "description": "Discrete time square wave source.",
-    "path": "fastsim/v0.17.0/api#SquareWaveSource",
+    "path": "fastsim/v0.24.1/api#SquareWaveSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2018,7 +2080,7 @@
     "type": "class",
     "name": "StateSpace",
     "description": "Linear time invariant (LTI) multi input multi output (MIMO) state space model.",
-    "path": "fastsim/v0.17.0/api#StateSpace",
+    "path": "fastsim/v0.24.1/api#StateSpace",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2026,7 +2088,7 @@
     "type": "class",
     "name": "Step",
     "description": "Alias for StepSource.",
-    "path": "fastsim/v0.17.0/api#Step",
+    "path": "fastsim/v0.24.1/api#Step",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2034,7 +2096,7 @@
     "type": "class",
     "name": "StepSource",
     "description": "Discrete time unit step (or multi step) source block.",
-    "path": "fastsim/v0.17.0/api#StepSource",
+    "path": "fastsim/v0.24.1/api#StepSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2042,7 +2104,7 @@
     "type": "class",
     "name": "Switch",
     "description": "Switch block that selects between its inputs.",
-    "path": "fastsim/v0.17.0/api#Switch",
+    "path": "fastsim/v0.24.1/api#Switch",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2050,7 +2112,7 @@
     "type": "class",
     "name": "Tan",
     "description": "Tangent operator block.",
-    "path": "fastsim/v0.17.0/api#Tan",
+    "path": "fastsim/v0.24.1/api#Tan",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2058,7 +2120,7 @@
     "type": "class",
     "name": "Tanh",
     "description": "Hyperbolic tangent operator block.",
-    "path": "fastsim/v0.17.0/api#Tanh",
+    "path": "fastsim/v0.24.1/api#Tanh",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2066,7 +2128,7 @@
     "type": "class",
     "name": "TappedDelay",
     "description": "Tapped delay line.",
-    "path": "fastsim/v0.17.0/api#TappedDelay",
+    "path": "fastsim/v0.24.1/api#TappedDelay",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2074,7 +2136,7 @@
     "type": "class",
     "name": "TransferFunction",
     "description": "Alias for TransferFunctionPRC.",
-    "path": "fastsim/v0.17.0/api#TransferFunction",
+    "path": "fastsim/v0.24.1/api#TransferFunction",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2082,7 +2144,7 @@
     "type": "class",
     "name": "TransferFunctionNumDen",
     "description": "This block defines a LTI (SISO) transfer function.",
-    "path": "fastsim/v0.17.0/api#TransferFunctionNumDen",
+    "path": "fastsim/v0.24.1/api#TransferFunctionNumDen",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2090,7 +2152,7 @@
     "type": "class",
     "name": "TransferFunctionPRC",
     "description": "This block defines a LTI (MIMO for pole residue) transfer function.",
-    "path": "fastsim/v0.17.0/api#TransferFunctionPRC",
+    "path": "fastsim/v0.24.1/api#TransferFunctionPRC",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2098,7 +2160,7 @@
     "type": "class",
     "name": "TransferFunctionZPG",
     "description": "This block defines a LTI (SISO) transfer function.",
-    "path": "fastsim/v0.17.0/api#TransferFunctionZPG",
+    "path": "fastsim/v0.24.1/api#TransferFunctionZPG",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2106,7 +2168,7 @@
     "type": "class",
     "name": "TriangleWaveSource",
     "description": "Source block that generates an analog triangle wave",
-    "path": "fastsim/v0.17.0/api#TriangleWaveSource",
+    "path": "fastsim/v0.24.1/api#TriangleWaveSource",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2114,7 +2176,7 @@
     "type": "class",
     "name": "WhiteNoise",
     "description": "White noise source with Gaussian distribution.",
-    "path": "fastsim/v0.17.0/api#WhiteNoise",
+    "path": "fastsim/v0.24.1/api#WhiteNoise",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2122,7 +2184,7 @@
     "type": "class",
     "name": "Wrapper",
     "description": "Wrapper block for discrete implementation and external code integration.",
-    "path": "fastsim/v0.17.0/api#Wrapper",
+    "path": "fastsim/v0.24.1/api#Wrapper",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
@@ -2130,15 +2192,31 @@
     "type": "class",
     "name": "ZeroOrderHold",
     "description": "Zero-order hold: samples the input periodically and holds it at the output.",
-    "path": "fastsim/v0.17.0/api#ZeroOrderHold",
+    "path": "fastsim/v0.24.1/api#ZeroOrderHold",
     "packageId": "fastsim",
     "moduleName": "fastsim.blocks"
   },
   {
     "type": "module",
+    "name": "fastsim.blocks._shim",
+    "description": "",
+    "path": "fastsim/v0.24.1/api#fastsim-blocks-_shim",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks._shim"
+  },
+  {
+    "type": "class",
+    "name": "Parameter",
+    "description": "A handle on one named constructor parameter of a block.",
+    "path": "fastsim/v0.24.1/api#Parameter",
+    "packageId": "fastsim",
+    "moduleName": "fastsim.blocks._shim"
+  },
+  {
+    "type": "module",
     "name": "fastsim.events",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-events",
+    "path": "fastsim/v0.24.1/api#fastsim-events",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
   },
@@ -2146,7 +2224,7 @@
     "type": "class",
     "name": "ZeroCrossing",
     "description": "Event that triggers when an event function crosses zero in either",
-    "path": "fastsim/v0.17.0/api#ZeroCrossing",
+    "path": "fastsim/v0.24.1/api#ZeroCrossing",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
   },
@@ -2154,7 +2232,7 @@
     "type": "class",
     "name": "ZeroCrossingUp",
     "description": "Event that triggers only on an upward (negative-to-positive) zero",
-    "path": "fastsim/v0.17.0/api#ZeroCrossingUp",
+    "path": "fastsim/v0.24.1/api#ZeroCrossingUp",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
   },
@@ -2162,7 +2240,7 @@
     "type": "class",
     "name": "ZeroCrossingDown",
     "description": "Event that triggers only on a downward (positive-to-negative) zero",
-    "path": "fastsim/v0.17.0/api#ZeroCrossingDown",
+    "path": "fastsim/v0.24.1/api#ZeroCrossingDown",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
   },
@@ -2170,7 +2248,7 @@
     "type": "class",
     "name": "Schedule",
     "description": "Event that triggers on a periodic time schedule (a fixed start time and",
-    "path": "fastsim/v0.17.0/api#Schedule",
+    "path": "fastsim/v0.24.1/api#Schedule",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
   },
@@ -2178,7 +2256,7 @@
     "type": "class",
     "name": "ScheduleList",
     "description": "Event that triggers at an explicit list of scheduled times, invoking its",
-    "path": "fastsim/v0.17.0/api#ScheduleList",
+    "path": "fastsim/v0.24.1/api#ScheduleList",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
   },
@@ -2186,7 +2264,7 @@
     "type": "class",
     "name": "Condition",
     "description": "Event that triggers when a user-supplied boolean condition becomes true,",
-    "path": "fastsim/v0.17.0/api#Condition",
+    "path": "fastsim/v0.24.1/api#Condition",
     "packageId": "fastsim",
     "moduleName": "fastsim.events"
   },
@@ -2194,7 +2272,7 @@
     "type": "module",
     "name": "fastsim.jit",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-jit",
+    "path": "fastsim/v0.24.1/api#fastsim-jit",
     "packageId": "fastsim",
     "moduleName": "fastsim.jit"
   },
@@ -2202,7 +2280,7 @@
     "type": "function",
     "name": "jit",
     "description": "Trace and compile a Python function to optimised Rust IR.",
-    "path": "fastsim/v0.17.0/api#jit",
+    "path": "fastsim/v0.24.1/api#jit",
     "packageId": "fastsim",
     "moduleName": "fastsim.jit"
   },
@@ -2210,7 +2288,7 @@
     "type": "function",
     "name": "jacobian",
     "description": "Compute the Jacobian of a Python function via symbolic AD.",
-    "path": "fastsim/v0.17.0/api#jacobian",
+    "path": "fastsim/v0.24.1/api#jacobian",
     "packageId": "fastsim",
     "moduleName": "fastsim.jit"
   },
@@ -2218,7 +2296,7 @@
     "type": "module",
     "name": "fastsim.solvers",
     "description": "",
-    "path": "fastsim/v0.17.0/api#fastsim-solvers",
+    "path": "fastsim/v0.24.1/api#fastsim-solvers",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2226,7 +2304,7 @@
     "type": "class",
     "name": "SSPRK22",
     "description": "Strong Stability Preserving Runge-Kutta, 2 stages, 2nd order (Heun).",
-    "path": "fastsim/v0.17.0/api#SSPRK22",
+    "path": "fastsim/v0.24.1/api#SSPRK22",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2234,7 +2312,7 @@
     "type": "class",
     "name": "SSPRK33",
     "description": "Strong Stability Preserving Runge-Kutta, 3 stages, 3rd order (Shu-Osher).",
-    "path": "fastsim/v0.17.0/api#SSPRK33",
+    "path": "fastsim/v0.24.1/api#SSPRK33",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2242,7 +2320,7 @@
     "type": "class",
     "name": "SSPRK34",
     "description": "Strong Stability Preserving Runge-Kutta, 4 stages, 3rd order, with an enlarged stability region.",
-    "path": "fastsim/v0.17.0/api#SSPRK34",
+    "path": "fastsim/v0.24.1/api#SSPRK34",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2250,7 +2328,7 @@
     "type": "class",
     "name": "RK4",
     "description": "Classic Runge-Kutta, 4 stages, 4th order.",
-    "path": "fastsim/v0.17.0/api#RK4",
+    "path": "fastsim/v0.24.1/api#RK4",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2258,7 +2336,7 @@
     "type": "class",
     "name": "EUF",
     "description": "Explicit (forward) Euler, 1st order. The simplest explicit integrator; fixed step, non-stiff.",
-    "path": "fastsim/v0.17.0/api#EUF",
+    "path": "fastsim/v0.24.1/api#EUF",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2266,7 +2344,7 @@
     "type": "class",
     "name": "EUB",
     "description": "Implicit (backward) Euler, 1st order. L-stable, fixed step; a robust choice for stiff problems.",
-    "path": "fastsim/v0.17.0/api#EUB",
+    "path": "fastsim/v0.24.1/api#EUB",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2274,7 +2352,7 @@
     "type": "class",
     "name": "RKF21",
     "description": "Runge-Kutta-Fehlberg embedded pair, orders 2 and 1, for adaptive step-size control.",
-    "path": "fastsim/v0.17.0/api#RKF21",
+    "path": "fastsim/v0.24.1/api#RKF21",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2282,7 +2360,7 @@
     "type": "class",
     "name": "RKBS32",
     "description": "Bogacki-Shampine embedded pair, orders 3 and 2 (the method behind MATLAB's ode23).",
-    "path": "fastsim/v0.17.0/api#RKBS32",
+    "path": "fastsim/v0.24.1/api#RKBS32",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2290,7 +2368,7 @@
     "type": "class",
     "name": "RKF45",
     "description": "Runge-Kutta-Fehlberg embedded pair, orders 4 and 5, for adaptive step-size control.",
-    "path": "fastsim/v0.17.0/api#RKF45",
+    "path": "fastsim/v0.24.1/api#RKF45",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2298,7 +2376,7 @@
     "type": "class",
     "name": "RKCK54",
     "description": "Cash-Karp embedded Runge-Kutta pair, orders 5 and 4, for adaptive step-size control.",
-    "path": "fastsim/v0.17.0/api#RKCK54",
+    "path": "fastsim/v0.24.1/api#RKCK54",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2306,7 +2384,7 @@
     "type": "class",
     "name": "RKDP54",
     "description": "Dormand-Prince embedded Runge-Kutta pair, orders 5 and 4 (the method behind MATLAB's ode45).",
-    "path": "fastsim/v0.17.0/api#RKDP54",
+    "path": "fastsim/v0.24.1/api#RKDP54",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2314,7 +2392,7 @@
     "type": "class",
     "name": "RKV65",
     "description": "Verner embedded Runge-Kutta pair, orders 6 and 5, for adaptive step-size control.",
-    "path": "fastsim/v0.17.0/api#RKV65",
+    "path": "fastsim/v0.24.1/api#RKV65",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2322,7 +2400,7 @@
     "type": "class",
     "name": "RKF78",
     "description": "Runge-Kutta-Fehlberg embedded pair, orders 7 and 8, for adaptive step-size control.",
-    "path": "fastsim/v0.17.0/api#RKF78",
+    "path": "fastsim/v0.24.1/api#RKF78",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2330,7 +2408,7 @@
     "type": "class",
     "name": "RKDP87",
     "description": "Dormand-Prince embedded Runge-Kutta pair, orders 8 and 7, for adaptive step-size control.",
-    "path": "fastsim/v0.17.0/api#RKDP87",
+    "path": "fastsim/v0.24.1/api#RKDP87",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2338,7 +2416,7 @@
     "type": "class",
     "name": "DIRK2",
     "description": "Diagonally Implicit Runge-Kutta, 2nd order.",
-    "path": "fastsim/v0.17.0/api#DIRK2",
+    "path": "fastsim/v0.24.1/api#DIRK2",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2346,7 +2424,7 @@
     "type": "class",
     "name": "DIRK3",
     "description": "Diagonally Implicit Runge-Kutta, 3rd order. L-stable, for stiff problems.",
-    "path": "fastsim/v0.17.0/api#DIRK3",
+    "path": "fastsim/v0.24.1/api#DIRK3",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2354,7 +2432,7 @@
     "type": "class",
     "name": "ESDIRK4",
     "description": "Explicit-first-stage Singly Diagonally Implicit Runge-Kutta, 4th order.",
-    "path": "fastsim/v0.17.0/api#ESDIRK4",
+    "path": "fastsim/v0.24.1/api#ESDIRK4",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2362,7 +2440,7 @@
     "type": "class",
     "name": "ESDIRK32",
     "description": "Explicit-first-stage Singly Diagonally Implicit Runge-Kutta embedded pair, orders 3 and 2, for adaptive step-size control.",
-    "path": "fastsim/v0.17.0/api#ESDIRK32",
+    "path": "fastsim/v0.24.1/api#ESDIRK32",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2370,7 +2448,7 @@
     "type": "class",
     "name": "ESDIRK43",
     "description": "Explicit-first-stage Singly Diagonally Implicit Runge-Kutta embedded pair, orders 4 and 3, for adaptive step-size control.",
-    "path": "fastsim/v0.17.0/api#ESDIRK43",
+    "path": "fastsim/v0.24.1/api#ESDIRK43",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2378,7 +2456,7 @@
     "type": "class",
     "name": "ESDIRK54",
     "description": "Explicit-first-stage Singly Diagonally Implicit Runge-Kutta embedded pair, orders 5 and 4, for adaptive step-size control.",
-    "path": "fastsim/v0.17.0/api#ESDIRK54",
+    "path": "fastsim/v0.24.1/api#ESDIRK54",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2386,7 +2464,7 @@
     "type": "class",
     "name": "GEAR52A",
     "description": "Gear-type backward differentiation formula (BDF) with adaptive order (up to 5) and adaptive step size.",
-    "path": "fastsim/v0.17.0/api#GEAR52A",
+    "path": "fastsim/v0.24.1/api#GEAR52A",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   },
@@ -2394,7 +2472,7 @@
     "type": "class",
     "name": "SteadyState",
     "description": "Steady-state (DC operating point) solver.",
-    "path": "fastsim/v0.17.0/api#SteadyState",
+    "path": "fastsim/v0.24.1/api#SteadyState",
     "packageId": "fastsim",
     "moduleName": "fastsim.solvers"
   }
