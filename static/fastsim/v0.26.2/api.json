@@ -4039,9 +4039,9 @@
           ],
           "methods": [
             {
-              "name": "plot",
-              "description": "Plot recorded data with interactive legend picking.",
-              "docstring_html": "<p>Plot recorded data with interactive legend picking.</p>\n",
+              "name": "read",
+              "description": "Recorded times and per-port data.",
+              "docstring_html": "<p>Recorded times and per-port data.</p>\n<p>Returns <tt class=\"docutils literal\">(time, data)</tt> with <cite>data</cite> an array of shape\n<tt class=\"docutils literal\">(n_ports, n_samples)</tt>, and <tt class=\"docutils literal\">(None, None)</tt> when nothing was\nrecorded — both as in pathsim, whose examples do array arithmetic on\nthe result (<tt class=\"docutils literal\">data_moon - data_earth</tt>) and test the empty case with\n<tt class=\"docutils literal\">if time is None</tt>.</p>\n",
               "source": null,
               "signature": "(args = (), kwargs = {})",
               "parameters": [
@@ -4049,6 +4049,87 @@
                   "name": "args",
                   "type": null,
                   "default": "()",
+                  "description": ""
+                },
+                {
+                  "name": "kwargs",
+                  "type": null,
+                  "default": "{}",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "plot",
+              "description": "Plot every recorded port against time.",
+              "docstring_html": "<p>Plot every recorded port against time.</p>\n",
+              "source": null,
+              "signature": "(args = (), kwargs = {})",
+              "parameters": [
+                {
+                  "name": "args",
+                  "type": null,
+                  "default": "()",
+                  "description": ""
+                },
+                {
+                  "name": "kwargs",
+                  "type": null,
+                  "default": "{}",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "plot2D",
+              "description": "Plot one recorded port against another (a phase portrait).",
+              "docstring_html": "<p>Plot one recorded port against another (a phase portrait).</p>\n",
+              "source": null,
+              "signature": "(args = (), axes = (0, 1), kwargs = {})",
+              "parameters": [
+                {
+                  "name": "args",
+                  "type": null,
+                  "default": "()",
+                  "description": ""
+                },
+                {
+                  "name": "axes",
+                  "type": null,
+                  "default": "(0, 1)",
+                  "description": ""
+                },
+                {
+                  "name": "kwargs",
+                  "type": null,
+                  "default": "{}",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "plot3D",
+              "description": "Plot three recorded ports against each other.",
+              "docstring_html": "<p>Plot three recorded ports against each other.</p>\n",
+              "source": null,
+              "signature": "(args = (), axes = (0, 1, 2), kwargs = {})",
+              "parameters": [
+                {
+                  "name": "args",
+                  "type": null,
+                  "default": "()",
+                  "description": ""
+                },
+                {
+                  "name": "axes",
+                  "type": null,
+                  "default": "(0, 1, 2)",
                   "description": ""
                 },
                 {
@@ -4095,8 +4176,8 @@
           "methods": [
             {
               "name": "plot",
-              "description": "Plot frequency spectrum with interactive legend picking.",
-              "docstring_html": "<p>Plot frequency spectrum with interactive legend picking.</p>\n",
+              "description": "Plot the magnitude of every recorded spectrum.",
+              "docstring_html": "<p>Plot the magnitude of every recorded spectrum.</p>\n<p>Keeps the figure and axis on the block (<tt class=\"docutils literal\">self.fig</tt> / <tt class=\"docutils literal\">self.ax</tt>) as\npathsim does, so a caller can adjust the plot afterwards —\n<tt class=\"docutils literal\"><span class=\"pre\">Spc.ax.set_yscale(&quot;log&quot;)</span></tt> in pathsim's <tt class=\"docutils literal\">example_noise.py</tt>.</p>\n",
               "source": null,
               "signature": "(args = (), kwargs = {})",
               "parameters": [
@@ -9377,6 +9458,26 @@
       ],
       "functions": []
     },
+    "fastsim.blocks._outputs": {
+      "name": "fastsim.blocks._outputs",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "OutputRegister",
+          "description": "A block's outputs as an ndarray; item assignment writes through.",
+          "docstring_html": "<p>A block's outputs as an ndarray; item assignment writes through.</p>\n<p>Indexing past the end grows the register, as pathsim's <cite>Register</cite> does —\nwhich is why an out-of-range index is forwarded to the block instead of\nbeing rejected by numpy's bounds check.</p>\n",
+          "source": null,
+          "bases": [
+            "numpy.ndarray"
+          ],
+          "methods": [],
+          "attributes": [],
+          "parameters": []
+        }
+      ],
+      "functions": []
+    },
     "fastsim.blocks._shim": {
       "name": "fastsim.blocks._shim",
       "description": "",
@@ -9799,6 +9900,18 @@
           "source": null,
           "bases": [
             "fastsim._fastsim.ESDIRK54"
+          ],
+          "methods": [],
+          "attributes": [],
+          "parameters": []
+        },
+        {
+          "name": "ESDIRK85",
+          "description": "Explicit-first-stage Singly Diagonally Implicit Runge-Kutta embedded pair, orders 8 and 5, for adaptive step-size control.",
+          "docstring_html": "<p>Explicit-first-stage Singly Diagonally Implicit Runge-Kutta embedded pair, orders 8 and 5, for adaptive step-size control. Sixteen stages, L-stable and stiffly accurate. Very expensive (15 implicit solves per step) — for stiff reference solutions at tight tolerances; ESDIRK54 is the better general choice.</p>\n",
+          "source": null,
+          "bases": [
+            "fastsim._fastsim.ESDIRK85"
           ],
           "methods": [],
           "attributes": [],

@@ -1,0 +1,101 @@
+{
+  "package": "fastsim",
+  "tag": "v0.26.2",
+  "notebooks": [
+    {
+      "slug": "one-script-two-engines",
+      "file": "one_script_two_engines.ipynb",
+      "title": "One Script, Two Engines",
+      "description": "Running the same model under PathSim and under FastSim, without changing it.",
+      "category": "getting-started",
+      "tags": [
+        "fastsim",
+        "drop-in"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "c-code-generation",
+      "file": "c_code_generation.ipynb",
+      "title": "C Code Generation",
+      "description": "Turning a block diagram into standalone C99, and proving the C still solves the same problem.",
+      "category": "advanced",
+      "tags": [
+        "fastsim",
+        "codegen",
+        "embedded"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "periodic-steady-state",
+      "file": "periodic_steady_state.ipynb",
+      "title": "Periodic Steady State",
+      "description": "Finding a limit cycle directly, instead of integrating until the transient has died away.",
+      "category": "advanced",
+      "tags": [
+        "fastsim",
+        "limit-cycle",
+        "shooting"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "standalone-jit",
+      "file": "standalone_jit.ipynb",
+      "title": "Standalone JIT",
+      "description": "Compiling a hand-written NumPy function to native Rust, and getting its exact Jacobian with it.",
+      "category": "advanced",
+      "tags": [
+        "fastsim",
+        "jit",
+        "jacobian"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "fmi-export",
+      "file": "fmi_export.ipynb",
+      "title": "FMI 3.0 Export",
+      "description": "Writing a model out as a Functional Mock-up Unit, for both interface types, and packaging a subsystem as a reusable component.",
+      "category": "fmu",
+      "tags": [
+        "fastsim",
+        "fmu",
+        "export"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "fmi-import",
+      "file": "fmi_import.ipynb",
+      "title": "FMI 3.0 Import",
+      "description": "Running Functional Mock-up Units as FastSim blocks, in both interface types.",
+      "category": "fmu",
+      "tags": [
+        "fastsim",
+        "fmu",
+        "model-exchange",
+        "cosim"
+      ],
+      "executable": false
+    }
+  ],
+  "categories": [
+    {
+      "id": "getting-started",
+      "title": "Getting Started",
+      "order": 1
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced Topics",
+      "order": 7
+    },
+    {
+      "id": "fmu",
+      "title": "FMU Integration",
+      "order": 9
+    }
+  ]
+}
