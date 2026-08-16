@@ -214,7 +214,18 @@ CATEGORY_MAPPINGS = {
     "transmission_line_reflection": ("rf-engineering", ["transmission-line", "propagation"]),
     "superheterodyne_receiver": ("rf-engineering", ["receiver", "system"]),
 
+    # FastSim — the compilation-oriented capabilities. These notebooks ship with
+    # stored outputs (see NON_EXECUTABLE): this build installs pathsim and the
+    # toolboxes, not fastsim, and the name `fastsim` on PyPI belongs to an
+    # unrelated project, so they cannot be executed here.
+    "one_script_two_engines": ("getting-started", ["fastsim", "drop-in"]),
+    "standalone_jit": ("advanced", ["fastsim", "jit", "jacobian"]),
+    "c_code_generation": ("advanced", ["fastsim", "codegen", "embedded"]),
+    "periodic_steady_state": ("advanced", ["fastsim", "limit-cycle", "shooting"]),
+
     # FMU Integration
+    "fmi_import": ("fmu", ["fastsim", "fmu", "model-exchange", "cosim"]),
+    "fmi_export": ("fmu", ["fastsim", "fmu", "export"]),
     "fmu_cosimulation": ("fmu", ["fmu", "cosim"]),
     "fmu_model_exchange_bouncing_ball": ("fmu", ["fmu", "model-exchange"]),
     "fmu_model_exchange_vanderpol": ("fmu", ["fmu", "model-exchange"]),
@@ -222,6 +233,13 @@ CATEGORY_MAPPINGS = {
 
 # Non-executable notebooks
 NON_EXECUTABLE = {
+    # fastsim is not installed in this build (see CATEGORY_MAPPINGS above).
+    "one_script_two_engines",
+    "standalone_jit",
+    "c_code_generation",
+    "periodic_steady_state",
+    "fmi_import",
+    "fmi_export",
     "fmu_cosimulation",
     "fmu_model_exchange_bouncing_ball",
     "fmu_model_exchange_vanderpol",
