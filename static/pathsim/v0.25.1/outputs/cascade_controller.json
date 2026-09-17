@@ -1,0 +1,26 @@
+{
+  "cells": {
+    "9": {
+      "stdout": "08:13:00 - INFO - LOGGING (log: True)\n08:13:00 - INFO - BLOCKS (total: 9, dynamic: 3, static: 6, eventful: 0)\n08:13:00 - INFO - GRAPH (nodes: 9, edges: 14, alg. depth: 5, loop depth: 0, runtime: 0.129ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "11": {
+      "stdout": "08:13:00 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n08:13:00 - INFO - --------------------   1% | 0.0s<3.0s | 732.2 it/s\n08:13:01 - INFO - ####----------------  20% | 0.7s<56:42 | 554.5 it/s\n08:13:01 - INFO - ########------------  40% | 1.3s<1.3s | 556.7 it/s\n08:13:02 - INFO - ############--------  60% | 1.9s<01:25:26 | 547.3 it/s\n08:13:02 - INFO - ################----  80% | 2.4s<0.4s | 582.8 it/s\n08:13:03 - INFO - #################### 100% | 2.9s<--:-- | 1199.5 it/s\n08:13:03 - INFO - FINISHED -> TRANSIENT (total steps: 1661, successful: 1238, runtime: 2910.77 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "13": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "cascade_controller_0.svg",
+        "cascade_controller_1.svg",
+        "cascade_controller_2.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-09-17T08:13:04.497792+00:00",
+  "duration": 8235,
+  "success": true
+}
