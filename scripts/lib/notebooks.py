@@ -43,10 +43,10 @@ def copy_notebooks(source_dir: Path, target_dir: Path, docs_root: Path | None = 
         except Exception as e:
             print(f"    Warning: Failed to process {nb_path.name}: {e}")
 
-    # Copy mplstyle file if it exists (notebooks reference ../pathsim_docs.mplstyle)
-    mplstyle_source = source_dir.parent / "pathsim_docs.mplstyle"
-    if mplstyle_source.exists():
-        shutil.copy2(mplstyle_source, target_dir / "pathsim_docs.mplstyle")
+    # Copy mplstyle files, notebooks reference them one level up
+    # (e.g. ../pathsim_docs.mplstyle, ../fastsim_docs.mplstyle)
+    for mplstyle_source in source_dir.parent.glob("*.mplstyle"):
+        shutil.copy2(mplstyle_source, target_dir / mplstyle_source.name)
 
     # Copy referenced figures by searching docs directory. Raster figures are
     # re-encoded to WebP, which renames foo.png -> foo.webp; the returned mapping
