@@ -174,13 +174,90 @@ def _execute_single_notebook(
     except Exception as e:
         return {"success": False, "error": f"Failed to read executed notebook: {e}", "cells": {}}
 
-    # Extract outputs from each cell
-    # Skip the first code cell (injected setup) when mapping indices
+    # Extract outputs from each cell, skipping the injected setup cell
+    cells_output = _extract_cell_outputs(executed_nb, name, figures_dir, skip_setup_cell=True)
+
+    # Clean up temporary executed notebook
+    if result.get("output_path"):
+        try:
+            result["output_path"].unlink()
+        except Exception:
+            pass
+
+    duration = int((time.time() - start_time) * 1000)
+
+    output_data = {
+        "cells": cells_output,
+        "executedAt": datetime.now(timezone.utc).isoformat(),
+        "duration": duration,
+        "success": True,
+    }
+
+    _save_output(outputs_dir / f"{name}.json", output_data)
+
+    return output_data
+
+
+def save_stored_outputs(notebook_path: Path, version_dir: Path) -> dict[str, Any] | None:
+    """
+    Save the outputs stored in a notebook that is not executed by this build.
+
+    Non-executable notebooks ship with their outputs, but the copied notebooks
+    are stripped. The stored outputs are written in the same format as the
+    outputs of executed notebooks, so the frontend shows them the same way.
+
+    Returns the output data, or None if the notebook has no stored outputs.
+    """
+    name = notebook_path.stem
+
+    try:
+        with open(notebook_path, "r", encoding="utf-8") as f:
+            notebook = json.load(f)
+    except Exception as e:
+        return {"success": False, "error": f"Failed to read notebook: {e}", "cells": {}}
+
+    outputs_dir = version_dir / "outputs"
+    figures_dir = version_dir / "figures"
+    figures_dir.mkdir(parents=True, exist_ok=True)
+
+    cells_output = _extract_cell_outputs(notebook, name, figures_dir, skip_setup_cell=False)
+    if not cells_output:
+        return None
+
+    output_data = {
+        "cells": cells_output,
+        "executedAt": datetime.now(timezone.utc).isoformat(),
+        "duration": 0,
+        "success": True,
+        "stored": True,
+    }
+
+    outputs_dir.mkdir(parents=True, exist_ok=True)
+    _save_output(outputs_dir / f"{name}.json", output_data)
+
+    return output_data
+
+
+def _extract_cell_outputs(
+    notebook: dict,
+    name: str,
+    figures_dir: Path,
+    skip_setup_cell: bool,
+) -> dict[str, dict]:
+    """
+    Extract stdout, stderr and figures of each code cell.
+
+    Cell indices refer to the original notebook. With skip_setup_cell the first
+    code cell is the injected setup cell, it is skipped and the indices are
+    shifted back by one.
+
+    Returns dict mapping cell index to its outputs, cells without output are omitted.
+    """
     cells_output = {}
     figure_count = 0
-    setup_cell_skipped = False
+    setup_cell_skipped = not skip_setup_cell
 
-    for i, cell in enumerate(executed_nb.get("cells", [])):
+    for i, cell in enumerate(notebook.get("cells", [])):
         if cell.get("cell_type") != "code":
             continue
 
@@ -190,7 +267,7 @@ def _execute_single_notebook(
             continue
 
         # Adjust index to match original notebook (subtract 1 for skipped setup cell)
-        original_index = i - 1
+        original_index = i - 1 if skip_setup_cell else i
 
         cell_output = {
             "stdout": None,
@@ -238,25 +315,7 @@ def _execute_single_notebook(
         if cell_output["stdout"] or cell_output["stderr"] or cell_output["figures"]:
             cells_output[str(original_index)] = cell_output
 
-    # Clean up temporary executed notebook
-    if result.get("output_path"):
-        try:
-            result["output_path"].unlink()
-        except Exception:
-            pass
-
-    duration = int((time.time() - start_time) * 1000)
-
-    output_data = {
-        "cells": cells_output,
-        "executedAt": datetime.now(timezone.utc).isoformat(),
-        "duration": duration,
-        "success": True,
-    }
-
-    _save_output(outputs_dir / f"{name}.json", output_data)
-
-    return output_data
+    return cells_output
 
 
 def _execute_with_nbconvert(notebook_path: Path) -> dict[str, Any]:

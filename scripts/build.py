@@ -47,7 +47,7 @@ from lib.notebooks import (
     copy_figures,
     generate_version_manifest,
 )
-from lib.executor import execute_notebooks
+from lib.executor import execute_notebooks, save_stored_outputs
 from lib.roadmap import build_roadmap
 
 # Optional: embeddings for semantic search
@@ -431,8 +431,17 @@ def build_version(
         else:
             print(f"      No notebooks found")
 
-        # 3. Execute notebooks
+        # 3. Execute notebooks, non-executable ones keep the outputs they ship with
         notebook_results: dict = {}
+        stored = [nb for nb in notebooks if not nb.get("executable", True)]
+        if stored:
+            print(f"    Saving stored outputs...")
+            n_stored = sum(
+                1 for nb in stored
+                if save_stored_outputs(notebooks_source / nb["file"], output_dir)
+            )
+            print(f"      {n_stored} of {len(stored)} notebooks with stored outputs")
+
         if execute and notebooks:
             print(f"    Executing notebooks...")
             notebook_results = execute_notebooks(output_dir, notebooks, parallel=True)
