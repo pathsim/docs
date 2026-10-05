@@ -1,0 +1,32 @@
+{
+  "cells": {
+    "15": {
+      "stdout": null,
+      "stderr": "2025-10-11 11:03:06,028 - INFO - LOGGING (log: True)\n2025-10-11 11:03:06,028 - INFO - BLOCK (type: CoSimulationFMU, dynamic: False, events: 1)\n2025-10-11 11:03:06,028 - INFO - BLOCK (type: Source, dynamic: False, events: 0)\n2025-10-11 11:03:06,029 - INFO - BLOCK (type: Scope, dynamic: False, events: 0)\n2025-10-11 11:03:06,029 - INFO - GRAPH (size: 3, alg. depth: 1, loop depth: 0, runtime: 0.071ms)\n2025-10-11 11:03:06,031 - INFO - STARTING -> TRANSIENT (Duration: 20.00s)\n2025-10-11 11:03:06,031 - INFO - TRANSIENT:   0% | elapsed: 00:00:00 (eta: --:--:--) | 0 steps (N/A steps/s)\n2025-10-11 11:03:06,055 - INFO - TRANSIENT:  20% | elapsed: 00:00:00 (eta: --:--:--) | 2001 steps (83596.2 steps/s)\n2025-10-11 11:03:06,078 - INFO - TRANSIENT:  40% | elapsed: 00:00:00 (eta: --:--:--) | 4001 steps (84763.4 steps/s)\n2025-10-11 11:03:06,102 - INFO - TRANSIENT:  60% | elapsed: 00:00:00 (eta: --:--:--) | 6000 steps (84356.3 steps/s)\n2025-10-11 11:03:06,125 - INFO - TRANSIENT:  80% | elapsed: 00:00:00 (eta: --:--:--) | 8000 steps (86421.1 steps/s)\n2025-10-11 11:03:06,146 - INFO - TRANSIENT: 100% | elapsed: 00:00:00 (eta: 00:00:00) | 10001 steps (93754.0 steps/s)\n2025-10-11 11:03:06,147 - INFO - TRANSIENT: 100% | elapsed: 00:00:00 (eta: 00:00:00) | 10001 steps (85916.8 avg steps/s)\n2025-10-11 11:03:06,147 - INFO - FINISHED -> TRANSIENT (total steps: 10001, successful: 10001, runtime: 116.40 ms)\n",
+      "figures": []
+    },
+    "17": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmu_cosimulation_0.webp"
+      ]
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmu_cosimulation_1.webp"
+      ]
+    },
+    "21": {
+      "stdout": "Total FMU steps: 2001\nExpected steps: 2001\n",
+      "stderr": null,
+      "figures": []
+    }
+  },
+  "executedAt": "2026-10-05T13:29:08.330656+00:00",
+  "duration": 0,
+  "success": true,
+  "stored": true
+}
