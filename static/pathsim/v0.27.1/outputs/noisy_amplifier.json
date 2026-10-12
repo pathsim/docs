@@ -1,0 +1,31 @@
+{
+  "cells": {
+    "11": {
+      "stdout": "14:17:29 - INFO - LOGGING (log: True)\n14:17:29 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n14:17:29 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.043ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "13": {
+      "stdout": "14:17:29 - INFO - STARTING -> TRANSIENT (Duration: 0.00s)\n14:17:29 - INFO - --------------------   1% | 0.0s<1.5s | 2169.7 it/s\n14:17:29 - INFO - ####----------------  20% | 0.3s<1.2s | 2179.4 it/s\n14:17:29 - INFO - ########------------  40% | 0.6s<1.0s | 2092.3 it/s\n14:17:30 - INFO - ############--------  60% | 0.9s<0.6s | 2177.5 it/s\n14:17:30 - INFO - ################----  80% | 1.2s<0.3s | 2167.9 it/s\n14:17:30 - INFO - #################### 100% | 1.6s<--:-- | 2196.5 it/s\n14:17:30 - INFO - FINISHED -> TRANSIENT (total steps: 3334, successful: 3334, runtime: 1561.60 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "15": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "noisy_amplifier_0.svg"
+      ]
+    },
+    "17": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "noisy_amplifier_1.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-10-12T14:17:32.583147+00:00",
+  "duration": 7613,
+  "success": true
+}
