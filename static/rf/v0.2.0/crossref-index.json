@@ -1,0 +1,609 @@
+{
+  "pathsim_rf": {
+    "name": "pathsim_rf",
+    "type": "module",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "path": "rf/v0.2.0/api#pathsim_rf"
+  },
+  "NetlistStateSpace": {
+    "name": "NetlistStateSpace",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#NetlistStateSpace"
+  },
+  "pathsim_rf.NetlistStateSpace": {
+    "name": "NetlistStateSpace",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "path": "rf/v0.2.0/api#NetlistStateSpace"
+  },
+  "rf.NetlistStateSpace": {
+    "name": "NetlistStateSpace",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#NetlistStateSpace"
+  },
+  "NetlistStateSpace.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "NetlistStateSpace",
+    "path": "rf/v0.2.0/api#NetlistStateSpace.__init__"
+  },
+  "TransmissionLine": {
+    "name": "TransmissionLine",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "path": "rf/v0.2.0/api#TransmissionLine"
+  },
+  "pathsim_rf.TransmissionLine": {
+    "name": "TransmissionLine",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "path": "rf/v0.2.0/api#TransmissionLine"
+  },
+  "rf.TransmissionLine": {
+    "name": "TransmissionLine",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "path": "rf/v0.2.0/api#TransmissionLine"
+  },
+  "TransmissionLine.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine",
+    "path": "rf/v0.2.0/api#TransmissionLine.__init__"
+  },
+  "TransmissionLine.reset": {
+    "name": "reset",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine",
+    "path": "rf/v0.2.0/api#TransmissionLine.reset"
+  },
+  "TransmissionLine.sample": {
+    "name": "sample",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine",
+    "path": "rf/v0.2.0/api#TransmissionLine.sample"
+  },
+  "TransmissionLine.update": {
+    "name": "update",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine",
+    "path": "rf/v0.2.0/api#TransmissionLine.update"
+  },
+  "RFAmplifier": {
+    "name": "RFAmplifier",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "path": "rf/v0.2.0/api#RFAmplifier"
+  },
+  "pathsim_rf.RFAmplifier": {
+    "name": "RFAmplifier",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "path": "rf/v0.2.0/api#RFAmplifier"
+  },
+  "rf.RFAmplifier": {
+    "name": "RFAmplifier",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "path": "rf/v0.2.0/api#RFAmplifier"
+  },
+  "RFAmplifier.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "parentClass": "RFAmplifier",
+    "path": "rf/v0.2.0/api#RFAmplifier.__init__"
+  },
+  "RFAmplifier._eval": {
+    "name": "_eval",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "parentClass": "RFAmplifier",
+    "path": "rf/v0.2.0/api#RFAmplifier._eval"
+  },
+  "RFMixer": {
+    "name": "RFMixer",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "path": "rf/v0.2.0/api#RFMixer"
+  },
+  "pathsim_rf.RFMixer": {
+    "name": "RFMixer",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "path": "rf/v0.2.0/api#RFMixer"
+  },
+  "rf.RFMixer": {
+    "name": "RFMixer",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "path": "rf/v0.2.0/api#RFMixer"
+  },
+  "RFMixer.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "parentClass": "RFMixer",
+    "path": "rf/v0.2.0/api#RFMixer.__init__"
+  },
+  "RFMixer._eval": {
+    "name": "_eval",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "parentClass": "RFMixer",
+    "path": "rf/v0.2.0/api#RFMixer._eval"
+  },
+  "RFNetwork": {
+    "name": "RFNetwork",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "path": "rf/v0.2.0/api#RFNetwork"
+  },
+  "pathsim_rf.RFNetwork": {
+    "name": "RFNetwork",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "path": "rf/v0.2.0/api#RFNetwork"
+  },
+  "rf.RFNetwork": {
+    "name": "RFNetwork",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "path": "rf/v0.2.0/api#RFNetwork"
+  },
+  "RFNetwork.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "parentClass": "RFNetwork",
+    "path": "rf/v0.2.0/api#RFNetwork.__init__"
+  },
+  "RFNetwork.s": {
+    "name": "s",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "parentClass": "RFNetwork",
+    "path": "rf/v0.2.0/api#RFNetwork.s"
+  },
+  "NetlistCircuit": {
+    "name": "NetlistCircuit",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "path": "rf/v0.2.0/api#NetlistCircuit"
+  },
+  "pathsim_rf.NetlistCircuit": {
+    "name": "NetlistCircuit",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "path": "rf/v0.2.0/api#NetlistCircuit"
+  },
+  "rf.NetlistCircuit": {
+    "name": "NetlistCircuit",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "path": "rf/v0.2.0/api#NetlistCircuit"
+  },
+  "NetlistCircuit.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "parentClass": "NetlistCircuit",
+    "path": "rf/v0.2.0/api#NetlistCircuit.__init__"
+  },
+  "pathsim_rf.amplifier": {
+    "name": "pathsim_rf.amplifier",
+    "type": "module",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "path": "rf/v0.2.0/api#pathsim_rf-amplifier"
+  },
+  "pathsim_rf.amplifier.RFAmplifier": {
+    "name": "RFAmplifier",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "path": "rf/v0.2.0/api#RFAmplifier"
+  },
+  "_dbm_to_vpeak": {
+    "name": "_dbm_to_vpeak",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "path": "rf/v0.2.0/api#_dbm_to_vpeak"
+  },
+  "pathsim_rf.amplifier._dbm_to_vpeak": {
+    "name": "_dbm_to_vpeak",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "path": "rf/v0.2.0/api#_dbm_to_vpeak"
+  },
+  "pathsim_rf.circuit": {
+    "name": "pathsim_rf.circuit",
+    "type": "module",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "path": "rf/v0.2.0/api#pathsim_rf-circuit"
+  },
+  "pathsim_rf.circuit.NetlistCircuit": {
+    "name": "NetlistCircuit",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "path": "rf/v0.2.0/api#NetlistCircuit"
+  },
+  "_source_matrix": {
+    "name": "_source_matrix",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "path": "rf/v0.2.0/api#_source_matrix"
+  },
+  "pathsim_rf.circuit._source_matrix": {
+    "name": "_source_matrix",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "path": "rf/v0.2.0/api#_source_matrix"
+  },
+  "_import_elecsolver": {
+    "name": "_import_elecsolver",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "path": "rf/v0.2.0/api#_import_elecsolver"
+  },
+  "pathsim_rf.circuit._import_elecsolver": {
+    "name": "_import_elecsolver",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "path": "rf/v0.2.0/api#_import_elecsolver"
+  },
+  "pathsim_rf.mixer": {
+    "name": "pathsim_rf.mixer",
+    "type": "module",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "path": "rf/v0.2.0/api#pathsim_rf-mixer"
+  },
+  "pathsim_rf.mixer.RFMixer": {
+    "name": "RFMixer",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "path": "rf/v0.2.0/api#RFMixer"
+  },
+  "pathsim_rf.netlist_to_statespace": {
+    "name": "pathsim_rf.netlist_to_statespace",
+    "type": "module",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#pathsim_rf-netlist_to_statespace"
+  },
+  "Element": {
+    "name": "Element",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#Element"
+  },
+  "pathsim_rf.netlist_to_statespace.Element": {
+    "name": "Element",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#Element"
+  },
+  "rf.Element": {
+    "name": "Element",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#Element"
+  },
+  "Element.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "Element",
+    "path": "rf/v0.2.0/api#Element.__init__"
+  },
+  "CircuitModel": {
+    "name": "CircuitModel",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#CircuitModel"
+  },
+  "pathsim_rf.netlist_to_statespace.CircuitModel": {
+    "name": "CircuitModel",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#CircuitModel"
+  },
+  "rf.CircuitModel": {
+    "name": "CircuitModel",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#CircuitModel"
+  },
+  "CircuitModel.__init__": {
+    "name": "__init__",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel.__init__"
+  },
+  "CircuitModel._set_state_labels": {
+    "name": "_set_state_labels",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel._set_state_labels"
+  },
+  "CircuitModel._raise_algebraic_singular": {
+    "name": "_raise_algebraic_singular",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel._raise_algebraic_singular"
+  },
+  "CircuitModel._raise_state_singular": {
+    "name": "_raise_state_singular",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel._raise_state_singular"
+  },
+  "CircuitModel._safe_matmul": {
+    "name": "_safe_matmul",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel._safe_matmul"
+  },
+  "CircuitModel._solve_with_scipy": {
+    "name": "_solve_with_scipy",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel._solve_with_scipy"
+  },
+  "CircuitModel._reduce": {
+    "name": "_reduce",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel._reduce"
+  },
+  "CircuitModel._build_output_rows": {
+    "name": "_build_output_rows",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel._build_output_rows"
+  },
+  "CircuitModel._build_output_row": {
+    "name": "_build_output_row",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel._build_output_row"
+  },
+  "CircuitModel._state_derivative_row": {
+    "name": "_state_derivative_row",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel._state_derivative_row"
+  },
+  "CircuitModel.add_node_voltage_output": {
+    "name": "add_node_voltage_output",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel.add_node_voltage_output"
+  },
+  "CircuitModel.add_dipole_current_output": {
+    "name": "add_dipole_current_output",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel.add_dipole_current_output"
+  },
+  "CircuitModel.get_system": {
+    "name": "get_system",
+    "type": "method",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel",
+    "path": "rf/v0.2.0/api#CircuitModel.get_system"
+  },
+  "pathsim_rf.netlist_to_statespace.NetlistStateSpace": {
+    "name": "NetlistStateSpace",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#NetlistStateSpace"
+  },
+  "_normalize_node": {
+    "name": "_normalize_node",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#_normalize_node"
+  },
+  "pathsim_rf.netlist_to_statespace._normalize_node": {
+    "name": "_normalize_node",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#_normalize_node"
+  },
+  "_get_si_multiplier": {
+    "name": "_get_si_multiplier",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#_get_si_multiplier"
+  },
+  "pathsim_rf.netlist_to_statespace._get_si_multiplier": {
+    "name": "_get_si_multiplier",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#_get_si_multiplier"
+  },
+  "parse_value_with_units": {
+    "name": "parse_value_with_units",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#parse_value_with_units"
+  },
+  "pathsim_rf.netlist_to_statespace.parse_value_with_units": {
+    "name": "parse_value_with_units",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#parse_value_with_units"
+  },
+  "_parse_optional_source_value": {
+    "name": "_parse_optional_source_value",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#_parse_optional_source_value"
+  },
+  "pathsim_rf.netlist_to_statespace._parse_optional_source_value": {
+    "name": "_parse_optional_source_value",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#_parse_optional_source_value"
+  },
+  "_parse_behavioral_source": {
+    "name": "_parse_behavioral_source",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#_parse_behavioral_source"
+  },
+  "pathsim_rf.netlist_to_statespace._parse_behavioral_source": {
+    "name": "_parse_behavioral_source",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#_parse_behavioral_source"
+  },
+  "parse_netlist": {
+    "name": "parse_netlist",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#parse_netlist"
+  },
+  "pathsim_rf.netlist_to_statespace.parse_netlist": {
+    "name": "parse_netlist",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#parse_netlist"
+  },
+  "parse_netlist_file": {
+    "name": "parse_netlist_file",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#parse_netlist_file"
+  },
+  "pathsim_rf.netlist_to_statespace.parse_netlist_file": {
+    "name": "parse_netlist_file",
+    "type": "function",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "path": "rf/v0.2.0/api#parse_netlist_file"
+  },
+  "pathsim_rf.network": {
+    "name": "pathsim_rf.network",
+    "type": "module",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "path": "rf/v0.2.0/api#pathsim_rf-network"
+  },
+  "pathsim_rf.network.RFNetwork": {
+    "name": "RFNetwork",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "path": "rf/v0.2.0/api#RFNetwork"
+  },
+  "pathsim_rf.transmission_line": {
+    "name": "pathsim_rf.transmission_line",
+    "type": "module",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "path": "rf/v0.2.0/api#pathsim_rf-transmission_line"
+  },
+  "pathsim_rf.transmission_line.TransmissionLine": {
+    "name": "TransmissionLine",
+    "type": "class",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "path": "rf/v0.2.0/api#TransmissionLine"
+  }
+}

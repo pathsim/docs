@@ -1,0 +1,681 @@
+[
+  {
+    "type": "module",
+    "name": "pathsim_rf",
+    "description": "PathSim-RF: RF Engineering toolbox for PathSim",
+    "path": "rf/v0.2.0/api#pathsim_rf",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf"
+  },
+  {
+    "type": "class",
+    "name": "NetlistStateSpace",
+    "description": "PathSim state-space block constructed directly from a linear netlist.",
+    "path": "rf/v0.2.0/api#NetlistStateSpace",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#NetlistStateSpace.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "NetlistStateSpace"
+  },
+  {
+    "type": "class",
+    "name": "TransmissionLine",
+    "description": "Lossy transmission line modeled as a delayed scattering two-port.",
+    "path": "rf/v0.2.0/api#TransmissionLine",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#TransmissionLine.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "rf/v0.2.0/api#TransmissionLine.reset",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Store current incident waves into the delay buffer.",
+    "path": "rf/v0.2.0/api#TransmissionLine.sample",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Read delayed waves, cross and scale.",
+    "path": "rf/v0.2.0/api#TransmissionLine.update",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "class",
+    "name": "RFAmplifier",
+    "description": "RF amplifier with optional nonlinearity (IP3 / P1dB compression).",
+    "path": "rf/v0.2.0/api#RFAmplifier",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFAmplifier.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "RFAmplifier"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFAmplifier._eval",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "RFAmplifier"
+  },
+  {
+    "type": "class",
+    "name": "RFMixer",
+    "description": "Ideal RF mixer (frequency converter).",
+    "path": "rf/v0.2.0/api#RFMixer",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFMixer.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "RFMixer"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFMixer._eval",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "RFMixer"
+  },
+  {
+    "type": "class",
+    "name": "RFNetwork",
+    "description": "N-port RF network linear time invariant (LTI) MIMO state-space model.",
+    "path": "rf/v0.2.0/api#RFNetwork",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFNetwork.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "RFNetwork"
+  },
+  {
+    "type": "method",
+    "name": "s",
+    "description": "S-matrix of the vector fitted N-port model from its state-space representation.",
+    "path": "rf/v0.2.0/api#RFNetwork.s",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "RFNetwork"
+  },
+  {
+    "type": "class",
+    "name": "NetlistCircuit",
+    "description": "Sparse linear circuit block from a SPICE-like netlist, parsed and solved",
+    "path": "rf/v0.2.0/api#NetlistCircuit",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#NetlistCircuit.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf",
+    "parentClass": "NetlistCircuit"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_rf.amplifier",
+    "description": "",
+    "path": "rf/v0.2.0/api#pathsim_rf-amplifier",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier"
+  },
+  {
+    "type": "class",
+    "name": "RFAmplifier",
+    "description": "RF amplifier with optional nonlinearity (IP3 / P1dB compression).",
+    "path": "rf/v0.2.0/api#RFAmplifier",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFAmplifier.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "parentClass": "RFAmplifier"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFAmplifier._eval",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier",
+    "parentClass": "RFAmplifier"
+  },
+  {
+    "type": "function",
+    "name": "_dbm_to_vpeak",
+    "description": "Convert power in dBm to peak voltage amplitude.",
+    "path": "rf/v0.2.0/api#_dbm_to_vpeak",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.amplifier"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_rf.circuit",
+    "description": "",
+    "path": "rf/v0.2.0/api#pathsim_rf-circuit",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit"
+  },
+  {
+    "type": "class",
+    "name": "NetlistCircuit",
+    "description": "Sparse linear circuit block from a SPICE-like netlist, parsed and solved",
+    "path": "rf/v0.2.0/api#NetlistCircuit",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#NetlistCircuit.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit",
+    "parentClass": "NetlistCircuit"
+  },
+  {
+    "type": "function",
+    "name": "_source_matrix",
+    "description": "Superposition matrix 'B' of an ElecSolver 'TemporalSystemBuilder'.",
+    "path": "rf/v0.2.0/api#_source_matrix",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit"
+  },
+  {
+    "type": "function",
+    "name": "_import_elecsolver",
+    "description": "Import the netlist parser of `ElecSolver`",
+    "path": "rf/v0.2.0/api#_import_elecsolver",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.circuit"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_rf.mixer",
+    "description": "",
+    "path": "rf/v0.2.0/api#pathsim_rf-mixer",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer"
+  },
+  {
+    "type": "class",
+    "name": "RFMixer",
+    "description": "Ideal RF mixer (frequency converter).",
+    "path": "rf/v0.2.0/api#RFMixer",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFMixer.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "parentClass": "RFMixer"
+  },
+  {
+    "type": "method",
+    "name": "_eval",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFMixer._eval",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.mixer",
+    "parentClass": "RFMixer"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_rf.netlist_to_statespace",
+    "description": "netlist_to_statespace.py",
+    "path": "rf/v0.2.0/api#pathsim_rf-netlist_to_statespace",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "class",
+    "name": "Element",
+    "description": "",
+    "path": "rf/v0.2.0/api#Element",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#Element.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "Element"
+  },
+  {
+    "type": "class",
+    "name": "CircuitModel",
+    "description": "Build an explicit state-space model from a linear circuit netlist.",
+    "path": "rf/v0.2.0/api#CircuitModel",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#CircuitModel.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "_set_state_labels",
+    "description": "Set labels for the differential state vector in `self.diff_cols` order.",
+    "path": "rf/v0.2.0/api#CircuitModel._set_state_labels",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "_raise_algebraic_singular",
+    "description": "",
+    "path": "rf/v0.2.0/api#CircuitModel._raise_algebraic_singular",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "_raise_state_singular",
+    "description": "",
+    "path": "rf/v0.2.0/api#CircuitModel._raise_state_singular",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "_safe_matmul",
+    "description": "Matrix multiply without relying on NumPy BLAS-backed matmul.",
+    "path": "rf/v0.2.0/api#CircuitModel._safe_matmul",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "_solve_with_scipy",
+    "description": "Solve right-hand sides with SciPy sparse LU and bounded regularization.",
+    "path": "rf/v0.2.0/api#CircuitModel._solve_with_scipy",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "_reduce",
+    "description": "Eliminate algebraic variables and solve the mass system with SciPy.",
+    "path": "rf/v0.2.0/api#CircuitModel._reduce",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "_build_output_rows",
+    "description": "Project raw MNA output expressions to state-space rows.",
+    "path": "rf/v0.2.0/api#CircuitModel._build_output_rows",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "_build_output_row",
+    "description": "Project one raw MNA expression to one state-space output row.",
+    "path": "rf/v0.2.0/api#CircuitModel._build_output_row",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "_state_derivative_row",
+    "description": "Return rows representing ``dV(node)/dt = C*x + D*u``.",
+    "path": "rf/v0.2.0/api#CircuitModel._state_derivative_row",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "add_node_voltage_output",
+    "description": "Add a node-to-ground voltage to the selected system outputs.",
+    "path": "rf/v0.2.0/api#CircuitModel.add_node_voltage_output",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "add_dipole_current_output",
+    "description": "Add the current through a two-terminal netlist element.",
+    "path": "rf/v0.2.0/api#CircuitModel.add_dipole_current_output",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "method",
+    "name": "get_system",
+    "description": "Return the reduced system with all selected outputs.",
+    "path": "rf/v0.2.0/api#CircuitModel.get_system",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "CircuitModel"
+  },
+  {
+    "type": "class",
+    "name": "NetlistStateSpace",
+    "description": "PathSim state-space block constructed directly from a linear netlist.",
+    "path": "rf/v0.2.0/api#NetlistStateSpace",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#NetlistStateSpace.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace",
+    "parentClass": "NetlistStateSpace"
+  },
+  {
+    "type": "function",
+    "name": "_normalize_node",
+    "description": "Normalize ground aliases to canonical node '0'.",
+    "path": "rf/v0.2.0/api#_normalize_node",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "function",
+    "name": "_get_si_multiplier",
+    "description": "Return numeric multiplier for an SI prefix/suffix string.",
+    "path": "rf/v0.2.0/api#_get_si_multiplier",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "function",
+    "name": "parse_value_with_units",
+    "description": "Parse SPICE-like numeric tokens with SI prefixes and optional unit tails.",
+    "path": "rf/v0.2.0/api#parse_value_with_units",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "function",
+    "name": "_parse_optional_source_value",
+    "description": "Parse source literal values, returning None for waveform expressions.",
+    "path": "rf/v0.2.0/api#_parse_optional_source_value",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "function",
+    "name": "_parse_behavioral_source",
+    "description": "Parse LTspice behavioral source shorthand:",
+    "path": "rf/v0.2.0/api#_parse_behavioral_source",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "function",
+    "name": "parse_netlist",
+    "description": "Parse netlist text into linear element records.",
+    "path": "rf/v0.2.0/api#parse_netlist",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "function",
+    "name": "parse_netlist_file",
+    "description": "Load and parse a netlist file.",
+    "path": "rf/v0.2.0/api#parse_netlist_file",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.netlist_to_statespace"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_rf.network",
+    "description": "",
+    "path": "rf/v0.2.0/api#pathsim_rf-network",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network"
+  },
+  {
+    "type": "class",
+    "name": "RFNetwork",
+    "description": "N-port RF network linear time invariant (LTI) MIMO state-space model.",
+    "path": "rf/v0.2.0/api#RFNetwork",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#RFNetwork.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "parentClass": "RFNetwork"
+  },
+  {
+    "type": "method",
+    "name": "s",
+    "description": "S-matrix of the vector fitted N-port model from its state-space representation.",
+    "path": "rf/v0.2.0/api#RFNetwork.s",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.network",
+    "parentClass": "RFNetwork"
+  },
+  {
+    "type": "module",
+    "name": "pathsim_rf.transmission_line",
+    "description": "",
+    "path": "rf/v0.2.0/api#pathsim_rf-transmission_line",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line"
+  },
+  {
+    "type": "class",
+    "name": "TransmissionLine",
+    "description": "Lossy transmission line modeled as a delayed scattering two-port.",
+    "path": "rf/v0.2.0/api#TransmissionLine",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "rf/v0.2.0/api#TransmissionLine.__init__",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "rf/v0.2.0/api#TransmissionLine.reset",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Store current incident waves into the delay buffer.",
+    "path": "rf/v0.2.0/api#TransmissionLine.sample",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Read delayed waves, cross and scale.",
+    "path": "rf/v0.2.0/api#TransmissionLine.update",
+    "packageId": "rf",
+    "moduleName": "pathsim_rf.transmission_line",
+    "parentClass": "TransmissionLine"
+  },
+  {
+    "type": "example",
+    "name": "RF Network - One Port",
+    "description": "This is an example of a simulation of a Radio Frequency (RF) network with PathSim.",
+    "path": "rf/v0.2.0/examples/rf-network-oneport",
+    "packageId": "rf",
+    "moduleName": "signal-processing",
+    "tags": [
+      "rf",
+      "network"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Netlist State-Space Validation",
+    "description": "This example validates the NetlistStateSpace block against an equivalent PathSim implementation of an LC filter with a resistive load.",
+    "path": "rf/v0.2.0/examples/netlist-import",
+    "packageId": "rf",
+    "moduleName": "advanced",
+    "tags": []
+  },
+  {
+    "type": "example",
+    "name": "Sparse Circuit from a Netlist",
+    "description": "This example simulates a pulse-driven LC low-pass filter with a resistive load using the NetlistCircuit block. ElecSolver parses the SPICE-like netlist; PathSim then integrates the circuit as a spa...",
+    "path": "rf/v0.2.0/examples/sparse-netlist-circuit",
+    "packageId": "rf",
+    "moduleName": "advanced",
+    "tags": []
+  },
+  {
+    "type": "example",
+    "name": "Transformer with a thermal model in PathSim (`NetlistCircuit`)",
+    "description": "> Note: the component values used in this notebook are not representative of a real transformer; they are chosen for illustration only (visible losses, short simulation time).",
+    "path": "rf/v0.2.0/examples/transformer-thermal-pathsim",
+    "packageId": "rf",
+    "moduleName": "advanced",
+    "tags": []
+  },
+  {
+    "type": "example",
+    "name": "RF Amplifier Compression",
+    "description": "Simulation of an RF amplifier with gain compression demonstrating the third-order nonlinearity model. We sweep the input power and observe the 1 dB compression point and gain saturation behavior.",
+    "path": "rf/v0.2.0/examples/rf-amplifier-compression",
+    "packageId": "rf",
+    "moduleName": "rf-engineering",
+    "tags": [
+      "amplifier",
+      "nonlinear",
+      "compression"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "RF Mixer Downconversion",
+    "description": "Simulation of a superheterodyne downconversion stage using the RFMixer block. A high-frequency RF signal is mixed with a local oscillator (LO) to produce an intermediate frequency (IF) output.",
+    "path": "rf/v0.2.0/examples/rf-mixer-downconversion",
+    "packageId": "rf",
+    "moduleName": "rf-engineering",
+    "tags": [
+      "mixer",
+      "frequency",
+      "downconversion"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Superheterodyne Receiver Chain",
+    "description": "Simulation of a basic superheterodyne receiver front-end combining multiple PathSim-RF blocks: an RF amplifier (LNA), a mixer for downconversion, and an IF amplifier. This demonstrates how the bloc...",
+    "path": "rf/v0.2.0/examples/superheterodyne-receiver",
+    "packageId": "rf",
+    "moduleName": "rf-engineering",
+    "tags": [
+      "receiver",
+      "system"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Transmission Line Pulse Propagation",
+    "description": "Simulation of pulse propagation through a lossy transmission line using the TransmissionLine block. We observe the propagation delay and attenuation of a Gaussian pulse traveling through the line.",
+    "path": "rf/v0.2.0/examples/transmission-line-reflection",
+    "packageId": "rf",
+    "moduleName": "rf-engineering",
+    "tags": [
+      "transmission-line",
+      "propagation"
+    ]
+  }
+]
