@@ -126,6 +126,19 @@ PACKAGES = {
         ],
         "required": False,
     },
+    "fusion": {
+        "repo": ROOT_DIR / "pathsim-fusion",
+        "source": ROOT_DIR / "pathsim-fusion" / "src",
+        "notebooks": ROOT_DIR / "pathsim-fusion" / "docs" / "source" / "examples",
+        "figures": ROOT_DIR / "pathsim-fusion" / "docs" / "source" / "examples" / "figures",
+        "display_name": "PathSim-Fusion",
+        "griffe_package": "pathsim_fusion",
+        "github_repo": "pathsim/pathsim-fusion",
+        "root_modules": [
+            "pathsim_fusion",
+        ],
+        "required": False,
+    },
 }
 
 # Minimum supported versions per package
@@ -139,6 +152,7 @@ MIN_SUPPORTED_VERSIONS = {
     "flight": "0.1",
     "rf": "0.1",
     "fmi": "0.1",
+    "fusion": "0.1",
 }
 
 # Patterns to skip during API extraction. Substring match against the dotted
@@ -229,6 +243,10 @@ CATEGORY_MAPPINGS = {
     "fmu_cosimulation": ("fmu", ["fmu", "cosim"]),
     "fmu_model_exchange_bouncing_ball": ("fmu", ["fmu", "model-exchange"]),
     "fmu_model_exchange_vanderpol": ("fmu", ["fmu", "model-exchange"]),
+
+    # Fusion
+    "bubbler": ("fusion", ["tritium", "events", "fuel-cycle"]),
+    "ionisation_chamber": ("fusion", ["tritium", "diagnostics", "fuel-cycle"]),
 }
 
 # Non-executable notebooks
@@ -257,6 +275,7 @@ CATEGORIES = [
     {"id": "advanced", "title": "Advanced Topics", "order": 7},
     {"id": "rf-engineering", "title": "RF Engineering", "order": 8},
     {"id": "fmu", "title": "FMU Integration", "order": 9},
+    {"id": "fusion", "title": "Fusion Fuel Cycle", "order": 10},
 ]
 
 # Execution settings

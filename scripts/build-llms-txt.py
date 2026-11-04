@@ -219,6 +219,7 @@ def generate_llms_full_txt() -> str:
     lines.append("pip install pathsim-vehicle   # Vehicle dynamics toolbox")
     lines.append("pip install pathsim-flight    # Flight dynamics toolbox")
     lines.append("pip install pathsim-rf        # RF/microwave toolbox")
+    lines.append("pip install pathsim-fusion    # Fusion fuel cycle toolbox")
     lines.append("```")
     lines.append("")
 
