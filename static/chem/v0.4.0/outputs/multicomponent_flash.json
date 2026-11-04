@@ -1,0 +1,31 @@
+{
+  "cells": {
+    "3": {
+      "stdout": "23:13:51 - INFO - LOGGING (log: True)\n23:13:51 - INFO - BLOCKS (total: 7, dynamic: 1, static: 6, eventful: 0)\n23:13:51 - INFO - GRAPH (nodes: 7, edges: 11, alg. depth: 2, loop depth: 0, runtime: 1.216ms)\n23:13:51 - INFO - STARTING -> TRANSIENT (Duration: 80.00s)\n23:13:51 - INFO - --------------------   1% | 0.0s<0.1s | 1127.9 it/s\n23:13:51 - INFO - ####----------------  20% | 0.0s<0.1s | 1949.0 it/s\n23:13:51 - INFO - ########------------  40% | 0.0s<0.1s | 1196.3 it/s\n23:13:51 - INFO - ############--------  60% | 0.1s<0.0s | 1467.2 it/s\n23:13:51 - INFO - ################----  80% | 0.1s<0.0s | 4060.5 it/s\n23:13:51 - INFO - #################### 100% | 0.1s<--:-- | 4085.8 it/s\n23:13:51 - INFO - FINISHED -> TRANSIENT (total steps: 160, successful: 160, runtime: 103.21 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "5": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "multicomponent_flash_0.svg"
+      ]
+    },
+    "7": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "multicomponent_flash_1.svg"
+      ]
+    },
+    "9": {
+      "stdout": "23:13:52 - INFO - LOGGING (log: True)\n23:13:52 - INFO - BLOCKS (total: 7, dynamic: 1, static: 6, eventful: 0)\n23:13:52 - INFO - GRAPH (nodes: 7, edges: 11, alg. depth: 2, loop depth: 0, runtime: 1.054ms)\n23:13:52 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n23:13:52 - INFO - --------------------   1% | 0.0s<0.6s | 314.5 it/s\n23:13:52 - INFO - ####----------------  20% | 0.1s<0.2s | 640.2 it/s\n23:13:52 - INFO - ########------------  40% | 0.1s<0.2s | 645.2 it/s\n23:13:52 - INFO - ############--------  60% | 0.2s<0.1s | 643.3 it/s\n23:13:52 - INFO - ################----  80% | 0.3s<0.1s | 656.2 it/s\n23:13:52 - INFO - #################### 100% | 0.3s<--:-- | 699.2 it/s\n23:13:52 - INFO - FINISHED -> TRANSIENT (total steps: 200, successful: 200, runtime: 320.44 ms)\nBTX Flash at 380 K, 1 atm\n========================================\n                          Vapor     Liquid\n----------------------------------------\nFlow rate [mol/s]         5.083      4.917\nBenzene                  0.6766     0.3176\nToluene                  0.0947     0.1072\np-Xylene                 0.2288     0.5752\n",
+      "stderr": null,
+      "figures": []
+    }
+  },
+  "executedAt": "2026-11-04T23:13:53.525216+00:00",
+  "duration": 5900,
+  "success": true
+}
