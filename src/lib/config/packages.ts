@@ -187,7 +187,7 @@ scope.plot()`,
 		id: 'chem',
 		name: 'PathSim-Chem',
 		shortName: 'chem',
-		description: 'Thermodynamic property correlations, activity coefficients, equations of state, and tritium processing.',
+		description: 'Thermodynamic property correlations, activity coefficients, equations of state, and process units.',
 		logo: 'pathsim_chem_logo.png',
 		docs: 'chem',
 		api: 'chem/api',
@@ -200,7 +200,7 @@ scope.plot()`,
 			{ title: 'Activity Coefficients', description: 'NRTL, Wilson, UNIQUAC, and Flory-Huggins models' },
 			{ title: 'Equations of State', description: 'Peng-Robinson and Soave-Redlich-Kwong cubic EoS' },
 			{ title: 'Fugacity & Enthalpy', description: 'Fugacity coefficients, excess enthalpy, departure functions' },
-			{ title: 'Tritium Processing', description: 'GLC columns, TCAP cascades, bubblers, and splitters' }
+			{ title: 'Residence Time Models', description: 'First-order residence time blocks for process and fuel cycle models' }
 		],
 		installation: [
 			{ name: 'pip', command: 'pip install pathsim-chem' }
@@ -235,7 +235,7 @@ scope.plot()`,
 			{ name: 'pathsim_chem.thermodynamics.fugacity_coefficients', description: 'RKS, PR, and virial fugacity coefficients' },
 			{ name: 'pathsim_chem.thermodynamics.enthalpy', description: 'Excess enthalpy and enthalpy departure' },
 			{ name: 'pathsim_chem.thermodynamics.reactions', description: 'Equilibrium constants, rate constants, power-law rates' },
-			{ name: 'pathsim_chem.tritium', description: 'GLC, TCAP, bubbler, splitter blocks' }
+			{ name: 'pathsim_chem.tritium', description: 'ResidenceTime and Process blocks' }
 		],
 		pyodidePackages: [
 			{ pip: 'pathsim', import: 'pathsim', pre: true },
