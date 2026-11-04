@@ -3,7 +3,7 @@
     "type": "module",
     "name": "pathsim_fusion",
     "description": "PathSim-Fusion: Fusion fuel cycle and balance-of-plant blocks for PathSim",
-    "path": "fusion/v0.1.1/api#pathsim_fusion",
+    "path": "fusion/v0.1.2/api#pathsim_fusion",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion"
   },
@@ -11,7 +11,7 @@
     "type": "class",
     "name": "GLC",
     "description": "Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.",
-    "path": "fusion/v0.1.1/api#GLC",
+    "path": "fusion/v0.1.2/api#GLC",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion"
   },
@@ -19,7 +19,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "fusion/v0.1.1/api#GLC.__init__",
+    "path": "fusion/v0.1.2/api#GLC.__init__",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "GLC"
@@ -28,7 +28,7 @@
     "type": "method",
     "name": "_physics",
     "description": "Physical properties and dimensionless groups for the input `u`.",
-    "path": "fusion/v0.1.1/api#GLC._physics",
+    "path": "fusion/v0.1.2/api#GLC._physics",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "GLC"
@@ -37,7 +37,7 @@
     "type": "method",
     "name": "_ode",
     "description": "Malara right-hand side, with dimensionless groups derived from `u`.",
-    "path": "fusion/v0.1.1/api#GLC._ode",
+    "path": "fusion/v0.1.2/api#GLC._ode",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "GLC"
@@ -46,7 +46,7 @@
     "type": "method",
     "name": "_bc",
     "description": "Malara boundary conditions, with groups derived from `u`.",
-    "path": "fusion/v0.1.1/api#GLC._bc",
+    "path": "fusion/v0.1.2/api#GLC._bc",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "GLC"
@@ -55,7 +55,7 @@
     "type": "method",
     "name": "update",
     "description": "Solve the BVP and expose the dimensional results at the output ports.",
-    "path": "fusion/v0.1.1/api#GLC.update",
+    "path": "fusion/v0.1.2/api#GLC.update",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "GLC"
@@ -64,7 +64,7 @@
     "type": "method",
     "name": "results",
     "description": "Post-process the current BVP solution into dimensional results.",
-    "path": "fusion/v0.1.1/api#GLC.results",
+    "path": "fusion/v0.1.2/api#GLC.results",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "GLC"
@@ -73,7 +73,7 @@
     "type": "class",
     "name": "Bubbler4",
     "description": "Tritium bubbling system with sequential vial collection stages.",
-    "path": "fusion/v0.1.1/api#Bubbler4",
+    "path": "fusion/v0.1.2/api#Bubbler4",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion"
   },
@@ -81,7 +81,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "fusion/v0.1.1/api#Bubbler4.__init__",
+    "path": "fusion/v0.1.2/api#Bubbler4.__init__",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "Bubbler4"
@@ -90,7 +90,7 @@
     "type": "method",
     "name": "_create_reset_event_vial",
     "description": "Define event action function and return a `ScheduleList` event",
-    "path": "fusion/v0.1.1/api#Bubbler4._create_reset_event_vial",
+    "path": "fusion/v0.1.2/api#Bubbler4._create_reset_event_vial",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "Bubbler4"
@@ -99,7 +99,7 @@
     "type": "method",
     "name": "_create_reset_events",
     "description": "Create reset events for all vials based on the replacement times.",
-    "path": "fusion/v0.1.1/api#Bubbler4._create_reset_events",
+    "path": "fusion/v0.1.2/api#Bubbler4._create_reset_events",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "Bubbler4"
@@ -108,7 +108,7 @@
     "type": "class",
     "name": "IonisationChamber",
     "description": "Flow-through ionisation chamber for tritium detection.",
-    "path": "fusion/v0.1.1/api#IonisationChamber",
+    "path": "fusion/v0.1.2/api#IonisationChamber",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion"
   },
@@ -116,7 +116,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "fusion/v0.1.1/api#IonisationChamber.__init__",
+    "path": "fusion/v0.1.2/api#IonisationChamber.__init__",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "IonisationChamber"
@@ -125,7 +125,7 @@
     "type": "method",
     "name": "_efficiency",
     "description": "Detection efficiency at a given concentration.",
-    "path": "fusion/v0.1.1/api#IonisationChamber._efficiency",
+    "path": "fusion/v0.1.2/api#IonisationChamber._efficiency",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "IonisationChamber"
@@ -134,7 +134,7 @@
     "type": "method",
     "name": "_eval",
     "description": "",
-    "path": "fusion/v0.1.1/api#IonisationChamber._eval",
+    "path": "fusion/v0.1.2/api#IonisationChamber._eval",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion",
     "parentClass": "IonisationChamber"
@@ -143,7 +143,7 @@
     "type": "module",
     "name": "pathsim_fusion.tritium.bubbler",
     "description": "",
-    "path": "fusion/v0.1.1/api#pathsim_fusion-tritium-bubbler",
+    "path": "fusion/v0.1.2/api#pathsim_fusion-tritium-bubbler",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.bubbler"
   },
@@ -151,7 +151,7 @@
     "type": "class",
     "name": "Bubbler4",
     "description": "Tritium bubbling system with sequential vial collection stages.",
-    "path": "fusion/v0.1.1/api#Bubbler4",
+    "path": "fusion/v0.1.2/api#Bubbler4",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.bubbler"
   },
@@ -159,7 +159,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "fusion/v0.1.1/api#Bubbler4.__init__",
+    "path": "fusion/v0.1.2/api#Bubbler4.__init__",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.bubbler",
     "parentClass": "Bubbler4"
@@ -168,7 +168,7 @@
     "type": "method",
     "name": "_create_reset_event_vial",
     "description": "Define event action function and return a `ScheduleList` event",
-    "path": "fusion/v0.1.1/api#Bubbler4._create_reset_event_vial",
+    "path": "fusion/v0.1.2/api#Bubbler4._create_reset_event_vial",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.bubbler",
     "parentClass": "Bubbler4"
@@ -177,7 +177,7 @@
     "type": "method",
     "name": "_create_reset_events",
     "description": "Create reset events for all vials based on the replacement times.",
-    "path": "fusion/v0.1.1/api#Bubbler4._create_reset_events",
+    "path": "fusion/v0.1.2/api#Bubbler4._create_reset_events",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.bubbler",
     "parentClass": "Bubbler4"
@@ -186,7 +186,7 @@
     "type": "module",
     "name": "pathsim_fusion.tritium.glc",
     "description": "Bubble column gas-liquid contactor model solver.",
-    "path": "fusion/v0.1.1/api#pathsim_fusion-tritium-glc",
+    "path": "fusion/v0.1.2/api#pathsim_fusion-tritium-glc",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc"
   },
@@ -194,7 +194,7 @@
     "type": "class",
     "name": "GLC",
     "description": "Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.",
-    "path": "fusion/v0.1.1/api#GLC",
+    "path": "fusion/v0.1.2/api#GLC",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc"
   },
@@ -202,7 +202,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "fusion/v0.1.1/api#GLC.__init__",
+    "path": "fusion/v0.1.2/api#GLC.__init__",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc",
     "parentClass": "GLC"
@@ -211,7 +211,7 @@
     "type": "method",
     "name": "_physics",
     "description": "Physical properties and dimensionless groups for the input `u`.",
-    "path": "fusion/v0.1.1/api#GLC._physics",
+    "path": "fusion/v0.1.2/api#GLC._physics",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc",
     "parentClass": "GLC"
@@ -220,7 +220,7 @@
     "type": "method",
     "name": "_ode",
     "description": "Malara right-hand side, with dimensionless groups derived from `u`.",
-    "path": "fusion/v0.1.1/api#GLC._ode",
+    "path": "fusion/v0.1.2/api#GLC._ode",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc",
     "parentClass": "GLC"
@@ -229,7 +229,7 @@
     "type": "method",
     "name": "_bc",
     "description": "Malara boundary conditions, with groups derived from `u`.",
-    "path": "fusion/v0.1.1/api#GLC._bc",
+    "path": "fusion/v0.1.2/api#GLC._bc",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc",
     "parentClass": "GLC"
@@ -238,7 +238,7 @@
     "type": "method",
     "name": "update",
     "description": "Solve the BVP and expose the dimensional results at the output ports.",
-    "path": "fusion/v0.1.1/api#GLC.update",
+    "path": "fusion/v0.1.2/api#GLC.update",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc",
     "parentClass": "GLC"
@@ -247,7 +247,7 @@
     "type": "method",
     "name": "results",
     "description": "Post-process the current BVP solution into dimensional results.",
-    "path": "fusion/v0.1.1/api#GLC.results",
+    "path": "fusion/v0.1.2/api#GLC.results",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc",
     "parentClass": "GLC"
@@ -256,7 +256,7 @@
     "type": "function",
     "name": "_calculate_properties",
     "description": "Calculate temperature-dependent and geometry-dependent physical properties.",
-    "path": "fusion/v0.1.1/api#_calculate_properties",
+    "path": "fusion/v0.1.2/api#_calculate_properties",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc"
   },
@@ -264,7 +264,7 @@
     "type": "function",
     "name": "_calculate_dimensionless_groups",
     "description": "Calculate the dimensionless groups for the ODE system.",
-    "path": "fusion/v0.1.1/api#_calculate_dimensionless_groups",
+    "path": "fusion/v0.1.2/api#_calculate_dimensionless_groups",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc"
   },
@@ -272,7 +272,7 @@
     "type": "function",
     "name": "_ode_system",
     "description": "First-order ODE system (4 equations) of the dimensionless GLC model.",
-    "path": "fusion/v0.1.1/api#_ode_system",
+    "path": "fusion/v0.1.2/api#_ode_system",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc"
   },
@@ -280,7 +280,7 @@
     "type": "function",
     "name": "_boundary_conditions",
     "description": "Boundary-condition residuals at xi=0 (Sa) and xi=1 (Sb).",
-    "path": "fusion/v0.1.1/api#_boundary_conditions",
+    "path": "fusion/v0.1.2/api#_boundary_conditions",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc"
   },
@@ -288,7 +288,7 @@
     "type": "function",
     "name": "_process_results",
     "description": "Process the BVP solution to produce dimensional results.",
-    "path": "fusion/v0.1.1/api#_process_results",
+    "path": "fusion/v0.1.2/api#_process_results",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.glc"
   },
@@ -296,7 +296,7 @@
     "type": "module",
     "name": "pathsim_fusion.tritium.ionisation_chamber",
     "description": "",
-    "path": "fusion/v0.1.1/api#pathsim_fusion-tritium-ionisation_chamber",
+    "path": "fusion/v0.1.2/api#pathsim_fusion-tritium-ionisation_chamber",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.ionisation_chamber"
   },
@@ -304,7 +304,7 @@
     "type": "class",
     "name": "IonisationChamber",
     "description": "Flow-through ionisation chamber for tritium detection.",
-    "path": "fusion/v0.1.1/api#IonisationChamber",
+    "path": "fusion/v0.1.2/api#IonisationChamber",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.ionisation_chamber"
   },
@@ -312,7 +312,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "fusion/v0.1.1/api#IonisationChamber.__init__",
+    "path": "fusion/v0.1.2/api#IonisationChamber.__init__",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.ionisation_chamber",
     "parentClass": "IonisationChamber"
@@ -321,7 +321,7 @@
     "type": "method",
     "name": "_efficiency",
     "description": "Detection efficiency at a given concentration.",
-    "path": "fusion/v0.1.1/api#IonisationChamber._efficiency",
+    "path": "fusion/v0.1.2/api#IonisationChamber._efficiency",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.ionisation_chamber",
     "parentClass": "IonisationChamber"
@@ -330,21 +330,34 @@
     "type": "method",
     "name": "_eval",
     "description": "",
-    "path": "fusion/v0.1.1/api#IonisationChamber._eval",
+    "path": "fusion/v0.1.2/api#IonisationChamber._eval",
     "packageId": "fusion",
     "moduleName": "pathsim_fusion.tritium.ionisation_chamber",
     "parentClass": "IonisationChamber"
   },
   {
     "type": "example",
-    "name": "Linear Feedback System",
-    "description": "Simulation of a simple linear feedback system with step response.",
-    "path": "fusion/v0.1.1/examples/linear-feedback",
+    "name": "Tritium Detection with an Ionisation Chamber",
+    "description": "A flow-through ionisation chamber measures the tritium concentration of a gas stream, for example the purge gas of a breeding blanket. The stream passes through the chamber unchanged, and the chamb...",
+    "path": "fusion/v0.1.2/examples/ionisation-chamber",
     "packageId": "fusion",
-    "moduleName": "getting-started",
+    "moduleName": "fusion",
     "tags": [
-      "ode",
-      "feedback"
+      "tritium",
+      "detection"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Tritium Sampling with a Bubbler",
+    "description": "A bubbler collects tritium from a gas stream for measurement and inventory tracking. The gas bubbles through a series of liquid filled vials. Soluble tritium (HTO) is retained in the vials, insolub...",
+    "path": "fusion/v0.1.2/examples/bubbler",
+    "packageId": "fusion",
+    "moduleName": "fusion",
+    "tags": [
+      "tritium",
+      "sampling",
+      "events"
     ]
   }
 ]
