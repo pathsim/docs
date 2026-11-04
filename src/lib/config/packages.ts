@@ -11,7 +11,7 @@ export const external = {
 	consulting: 'https://milanrother.com/#services'
 };
 
-export type PackageId = 'pathsim' | 'fastsim' | 'chem' | 'batt' | 'vehicle' | 'flight' | 'rf' | 'fmi';
+export type PackageId = 'pathsim' | 'fastsim' | 'chem' | 'batt' | 'vehicle' | 'flight' | 'rf' | 'fmi' | 'fusion';
 
 export interface Feature {
 	title: string;
@@ -187,7 +187,7 @@ scope.plot()`,
 		id: 'chem',
 		name: 'PathSim-Chem',
 		shortName: 'chem',
-		description: 'Thermodynamic property correlations, activity coefficients, equations of state, and tritium processing.',
+		description: 'Thermodynamic property correlations, activity coefficients, equations of state, and process unit operations.',
 		logo: 'pathsim_chem_logo.png',
 		docs: 'chem',
 		api: 'chem/api',
@@ -200,7 +200,7 @@ scope.plot()`,
 			{ title: 'Activity Coefficients', description: 'NRTL, Wilson, UNIQUAC, and Flory-Huggins models' },
 			{ title: 'Equations of State', description: 'Peng-Robinson and Soave-Redlich-Kwong cubic EoS' },
 			{ title: 'Fugacity & Enthalpy', description: 'Fugacity coefficients, excess enthalpy, departure functions' },
-			{ title: 'Tritium Processing', description: 'GLC columns, TCAP cascades, bubblers, and splitters' }
+			{ title: 'Process Units', description: 'CSTR, PFR, heat exchanger, flash drum, and distillation tray blocks' }
 		],
 		installation: [
 			{ name: 'pip', command: 'pip install pathsim-chem' }
@@ -235,7 +235,8 @@ scope.plot()`,
 			{ name: 'pathsim_chem.thermodynamics.fugacity_coefficients', description: 'RKS, PR, and virial fugacity coefficients' },
 			{ name: 'pathsim_chem.thermodynamics.enthalpy', description: 'Excess enthalpy and enthalpy departure' },
 			{ name: 'pathsim_chem.thermodynamics.reactions', description: 'Equilibrium constants, rate constants, power-law rates' },
-			{ name: 'pathsim_chem.tritium', description: 'GLC, TCAP, bubbler, splitter blocks' }
+			{ name: 'pathsim_chem.process', description: 'Process unit operation blocks' },
+			{ name: 'pathsim_chem.tritium', description: 'Residence time blocks' }
 		],
 		pyodidePackages: [
 			{ pip: 'pathsim', import: 'pathsim', pre: true },
@@ -391,11 +392,63 @@ sco.plot()`,
 			{ name: 'pathsim_fmi', description: 'FMU blocks (CoSimulationFMU, ModelExchangeFMU) and low-level FMUWrapper' }
 		],
 		pyodidePackages: []
+	},
+	fusion: {
+		id: 'fusion',
+		name: 'PathSim-Fusion',
+		shortName: 'fusion',
+		description: 'Fusion fuel cycle and balance-of-plant blocks for tritium extraction, sampling and detection.',
+		logo: 'pathsim_fusion_logo.png',
+		docs: 'fusion',
+		api: 'fusion/api',
+		pypi: `${external.pypi}/pathsim-fusion`,
+		conda: null,
+		github: `${external.github}/pathsim-fusion`,
+		features: [
+			{ title: 'Tritium Extraction', description: 'Bubble column gas-liquid contactor for tritium extraction from LiPb' },
+			{ title: 'Tritium Sampling', description: 'Four-vial bubbler with catalytic conversion and vial replacement' },
+			{ title: 'Tritium Detection', description: 'Flow-through ionisation chamber with detection limit' },
+			{ title: 'PathView', description: 'Preloaded in PathView, the graphical editor for PathSim' }
+		],
+		installation: [
+			{ name: 'pip', command: 'pip install pathsim-fusion' }
+		],
+		quickstart: {
+			description: 'PathSim-Fusion blocks plug into PathSim simulations like any other block.',
+			code: `from pathsim import Simulation, Connection
+from pathsim.blocks import Constant, Source, Scope
+from pathsim_fusion import IonisationChamber
+
+flux = Source(lambda t: 1e-3 * float(t > 1))  # tritium flux, step at t = 1
+flow = Constant(0.5)  # carrier gas flow rate
+ic = IonisationChamber(detection_efficiency=0.9)
+sco = Scope(labels=["flux", "signal"])
+
+sim = Simulation(
+    blocks=[flux, flow, ic, sco],
+    connections=[
+        Connection(flux, ic["flux_in"], sco[0]),
+        Connection(flow, ic["flow_rate"]),
+        Connection(ic["signal"], sco[1]),
+    ],
+    dt=0.01,
+)
+sim.run(5)
+sco.plot()`,
+			title: 'Example'
+		},
+		apiModules: [
+			{ name: 'pathsim_fusion.tritium', description: 'GLC, Bubbler4 and IonisationChamber blocks' }
+		],
+		pyodidePackages: [
+			{ pip: 'pathsim', import: 'pathsim', pre: true },
+			{ pip: 'pathsim-fusion', import: 'pathsim_fusion', pre: true }
+		]
 	}
 };
 
 // Ordered list for tabs/navigation
-export const packageOrder: PackageId[] = ['pathsim', 'fastsim', 'chem', 'batt', 'vehicle', 'flight', 'rf', 'fmi'];
+export const packageOrder: PackageId[] = ['pathsim', 'fastsim', 'chem', 'batt', 'vehicle', 'flight', 'rf', 'fmi', 'fusion'];
 
 // Sidebar navigation (auto-generated from package config)
 export interface SidebarItem {
