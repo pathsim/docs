@@ -1,0 +1,1202 @@
+{
+  "package": "fusion",
+  "modules": {
+    "pathsim_fusion": {
+      "name": "pathsim_fusion",
+      "description": "PathSim-Fusion: Fusion fuel cycle and balance-of-plant blocks for PathSim",
+      "docstring_html": "<p>PathSim-Fusion: Fusion fuel cycle and balance-of-plant blocks for PathSim</p>\n<p>Specialized simulation blocks for the PathSim framework. All blocks follow\nthe standard PathSim block interface and can be connected into simulation\ndiagrams.</p>\n",
+      "classes": [
+        {
+          "name": "GLC",
+          "description": "Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.",
+          "docstring_html": "<p>Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.</p>\n<p>Solves the coupled, non-linear, second-order boundary value problem that\ndescribes tritium transport between a liquid metal (LiPb) stream and a\npurge gas in a counter-current bubble column. The model is based on\nC. Malara (1995) and accounts for axial dispersion, interfacial mass\ntransfer via Sieverts' law, and hydrostatic pressure variation along\nthe column.</p>\n<p>The block is a specialisation of the native :class:`~pathsim.blocks.BVP1D`\nblock: the constructor seeds the parent with the Malara right-hand side and\nboundary conditions, and the four block inputs supply the per-evaluation\nboundary data. The hydrodynamic correlations and dimensionless groups are\ncomputed from the current input inside the collocation callbacks. As for any\n<tt class=\"docutils literal\">BVP1D</tt>, the solve is warm-started from the previous mesh and skipped\nentirely when the input is unchanged. After each solve the dimensionless\nendpoint solution is post-processed into the dimensional output ports.</p>\n<p>Use :meth:`results` to retrieve the full dimensional result dictionary,\nwhich additionally contains partial pressures, physical properties and the\ndimensionless groups.</p>\n<p>Reference: <a class=\"reference external\" href=\"https://doi.org/10.13182/FST95-A30485\">https://doi.org/10.13182/FST95-A30485</a></p>\n<p><strong>Input ports:</strong>\n<tt class=\"docutils literal\">c_T_in</tt> -- dissolved tritium concentration in liquid inlet [mol/m³],\n<tt class=\"docutils literal\">flow_l</tt> -- liquid mass flow rate [kg/s],\n<tt class=\"docutils literal\">y_T2_inlet</tt> -- T₂ mole fraction in inlet gas [-],\n<tt class=\"docutils literal\">flow_g</tt> -- gas mass flow rate [kg/s].</p>\n<p><strong>Output ports:</strong>\n<tt class=\"docutils literal\">c_T_out</tt> -- dissolved tritium concentration in liquid outlet [mol/m³],\n<tt class=\"docutils literal\">y_T2_out</tt> -- T₂ mole fraction in outlet gas [-],\n<tt class=\"docutils literal\">eff</tt> -- extraction efficiency [-],\n<tt class=\"docutils literal\">P_out</tt> -- total gas outlet pressure [Pa],\n<tt class=\"docutils literal\">Q_l</tt> -- liquid volumetric flow rate [m³/s],\n<tt class=\"docutils literal\">Q_g_out</tt> -- gas volumetric flow rate at outlet [m³/s],\n<tt class=\"docutils literal\">n_T_out_liquid</tt> -- tritium molar flow in liquid outlet [mol/s],\n<tt class=\"docutils literal\">n_T_out_gas</tt> -- tritium molar flow in gas outlet [mol/s].</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>P_in <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Inlet operating pressure [Pa].</dd>\n<dt>L <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Column height [m].</dd>\n<dt>D <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Column diameter [m].</dd>\n<dt>T <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Operating temperature [K]. Used to compute temperature-dependent\nLiPb properties (density, viscosity, Sieverts' constant, etc.).</dd>\n<dt>BCs <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>Boundary condition type for the BVP: <tt class=\"docutils literal\"><span class=\"pre\">&quot;C-C&quot;</span></tt> (closed-closed) or\n<tt class=\"docutils literal\"><span class=\"pre\">&quot;O-C&quot;</span></tt> (open-closed).</dd>\n<dt>g <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>Gravitational acceleration [m/s²]. Default: <tt class=\"docutils literal\">scipy.constants.g</tt>.</dd>\n<dt>initial_nb_of_elements <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int, optional</span></dt>\n<dd>Number of mesh elements for the initial BVP grid. Default: 20.</dd>\n<dt>tol <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>Solver tolerance for the BVP. Default: 1e-5.</dd>\n<dt>max_nodes <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int, optional</span></dt>\n<dd>Maximum number of mesh nodes allowed during BVP refinement. Default:\n10000.</dd>\n</dl>\n",
+          "source": "class GLC(BVP1D):\n    r\"\"\"Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.\n\n    Solves the coupled, non-linear, second-order boundary value problem that\n    describes tritium transport between a liquid metal (LiPb) stream and a\n    purge gas in a counter-current bubble column. The model is based on\n    C. Malara (1995) and accounts for axial dispersion, interfacial mass\n    transfer via Sieverts' law, and hydrostatic pressure variation along\n    the column.\n\n    The block is a specialisation of the native :class:`~pathsim.blocks.BVP1D`\n    block: the constructor seeds the parent with the Malara right-hand side and\n    boundary conditions, and the four block inputs supply the per-evaluation\n    boundary data. The hydrodynamic correlations and dimensionless groups are\n    computed from the current input inside the collocation callbacks. As for any\n    ``BVP1D``, the solve is warm-started from the previous mesh and skipped\n    entirely when the input is unchanged. After each solve the dimensionless\n    endpoint solution is post-processed into the dimensional output ports.\n\n    Use :meth:`results` to retrieve the full dimensional result dictionary,\n    which additionally contains partial pressures, physical properties and the\n    dimensionless groups.\n\n    Reference: https://doi.org/10.13182/FST95-A30485\n\n    **Input ports:**\n    ``c_T_in`` -- dissolved tritium concentration in liquid inlet [mol/m³],\n    ``flow_l`` -- liquid mass flow rate [kg/s],\n    ``y_T2_inlet`` -- T₂ mole fraction in inlet gas [-],\n    ``flow_g`` -- gas mass flow rate [kg/s].\n\n    **Output ports:**\n    ``c_T_out`` -- dissolved tritium concentration in liquid outlet [mol/m³],\n    ``y_T2_out`` -- T₂ mole fraction in outlet gas [-],\n    ``eff`` -- extraction efficiency [-],\n    ``P_out`` -- total gas outlet pressure [Pa],\n    ``Q_l`` -- liquid volumetric flow rate [m³/s],\n    ``Q_g_out`` -- gas volumetric flow rate at outlet [m³/s],\n    ``n_T_out_liquid`` -- tritium molar flow in liquid outlet [mol/s],\n    ``n_T_out_gas`` -- tritium molar flow in gas outlet [mol/s].\n\n    Parameters\n    ----------\n    P_in : float\n        Inlet operating pressure [Pa].\n    L : float\n        Column height [m].\n    D : float\n        Column diameter [m].\n    T : float\n        Operating temperature [K]. Used to compute temperature-dependent\n        LiPb properties (density, viscosity, Sieverts' constant, etc.).\n    BCs : str\n        Boundary condition type for the BVP: ``\"C-C\"`` (closed-closed) or\n        ``\"O-C\"`` (open-closed).\n    g : float, optional\n        Gravitational acceleration [m/s²]. Default: ``scipy.constants.g``.\n    initial_nb_of_elements : int, optional\n        Number of mesh elements for the initial BVP grid. Default: 20.\n    tol : float, optional\n        Solver tolerance for the BVP. Default: 1e-5.\n    max_nodes : int, optional\n        Maximum number of mesh nodes allowed during BVP refinement. Default:\n        10000.\n    \"\"\"\n\n    input_port_labels: ClassVar[dict[str, int]] = {\n        \"c_T_in\": 0,\n        \"flow_l\": 1,\n        \"y_T2_inlet\": 2,\n        \"flow_g\": 3,\n    }\n    output_port_labels: ClassVar[dict[str, int]] = {\n        \"c_T_out\": 0,\n        \"y_T2_out\": 1,\n        \"eff\": 2,\n        \"P_out\": 3,\n        \"Q_l\": 4,\n        \"Q_g_out\": 5,\n        \"n_T_out_liquid\": 6,\n        \"n_T_out_gas\": 7,\n    }\n\n    def __init__(\n        self,\n        P_in,\n        L,\n        D,\n        T,\n        BCs,\n        g=const.g,\n        initial_nb_of_elements=20,\n        tol=1e-5,\n        max_nodes=10000,\n    ):\n        # fixed operating point and geometry; the four block inputs supply the\n        # per-evaluation boundary data (c_T_in, flow_l, y_T2_inlet, flow_g)\n        self.params = {\n            \"P_in\": P_in,\n            \"L\": L,\n            \"g\": g,\n            \"D\": D,\n            \"T\": T,\n            \"elements\": initial_nb_of_elements,\n            \"BCs\": BCs,\n        }\n        self.BCs = BCs\n\n        # cache of (physical properties, dimensionless groups) keyed on the input\n        # so the hydrodynamic correlations run once per operating point instead of\n        # on every collocation mesh point\n        self._u_cache = None\n        self._phys = None\n        self._dim = None\n\n        # seed the native BVP block with the Malara model physics; sample the two\n        # domain endpoints so the dimensionless outlet/inlet states are available\n        super().__init__(\n            fun=self._ode,\n            bc=self._bc,\n            n=4,\n            domain=(0.0, 1.0),\n            n_nodes=initial_nb_of_elements + 1,\n            x_eval=np.array([0.0, 1.0]),\n            tol=tol,\n            max_nodes=max_nodes,\n        )\n\n    def _physics(self, u):\n        \"\"\"Physical properties and dimensionless groups for the input `u`.\n\n        Cached on `u` so the hydrodynamic correlations (and the gas hold-up\n        root solve) run once per operating point rather than on every mesh\n        point of the collocation solve.\n        \"\"\"\n        if self._u_cache is not None and np.array_equal(u, self._u_cache):\n            return self._phys, self._dim\n\n        c_T_in, flow_l, y_T2_inlet, flow_g = u\n        p = dict(self.params)\n        p[\"c_T_in\"] = c_T_in\n        p[\"flow_l\"] = flow_l\n        p[\"flow_g\"] = flow_g\n        p[\"y_T2_in\"] = y_T2_inlet\n\n        phys = _calculate_properties(p)\n\n        # guard against a non-physical (non-positive) gas outlet pressure\n        P_out = p[\"P_in\"] - phys[\"rho_l\"] * (1 - phys[\"epsilon_g\"]) * g * p[\"L\"]\n        if P_out <= 0:\n            raise ValueError(\n                f\"Calculated gas outlet pressure is non-positive ({P_out:.2e} Pa). \"\n                \"Check input parameters P_in, L, etc.\"\n            )\n\n        dim = _calculate_dimensionless_groups(p, phys)\n\n        self._u_cache = np.array(u, dtype=float)\n        self._phys, self._dim = phys, dim\n        return phys, dim\n\n    def _ode(self, xi, S, p, u):\n        \"\"\"Malara right-hand side, with dimensionless groups derived from `u`.\"\"\"\n        _, dim = self._physics(u)\n        return _ode_system(xi, S, dim)\n\n    def _bc(self, Sa, Sb, p, u):\n        \"\"\"Malara boundary conditions, with groups derived from `u`.\"\"\"\n        _, dim = self._physics(u)\n        y_T2_in = max(u[2], 1e-20)\n        return _boundary_conditions(Sa, Sb, dim, y_T2_in, self.BCs)\n\n    def update(self, t):\n        \"\"\"Solve the BVP and expose the dimensional results at the output ports.\n\n        Delegates the solve to :class:`~pathsim.blocks.BVP1D` (warm-started, and\n        skipped when the input is unchanged), then post-processes the\n        dimensionless endpoint solution into the eight dimensional output ports.\n\n        Parameters\n        ----------\n        t : float\n            evaluation time\n\n        Raises\n        ------\n        RuntimeError\n            if the BVP solve did not converge\n        \"\"\"\n        super().update(t)\n        if not self.success:\n            raise RuntimeError(\"BVP solver failed to converge.\")\n\n        res = self.results()\n        self.outputs.update_from_array(\n            np.array(\n                [\n                    res[\"c_T_outlet [mol/m^3]\"],\n                    res[\"y_T2_outlet_gas\"],\n                    res[\"extraction_efficiency [fraction]\"],\n                    res[\"total_gas_P_outlet [Pa]\"],\n                    res[\"liquid_vol_flow [m^3/s]\"],\n                    res[\"gas_vol_flow_outlet [m^3/s]\"],\n                    res[\"tritium_out_liquid [mol/s]\"],\n                    res[\"tritium_out_gas [mol/s]\"],\n                ]\n            )\n        )\n\n    def results(self):\n        \"\"\"Post-process the current BVP solution into dimensional results.\n\n        Returns\n        -------\n        dict, None\n            Dimensional results (outlet concentration, extraction efficiency,\n            outlet pressure, volumetric flows, tritium molar flows and the mass\n            balance) for the most recent input, or ``None`` if no successful\n            solve has happened yet.\n        \"\"\"\n        if not self.success:\n            return None\n\n        u = self.inputs.to_array()\n        c_T_in, flow_l, y_T2_inlet, flow_g = u\n        p = dict(self.params)\n        p[\"c_T_in\"] = c_T_in\n        p[\"flow_l\"] = flow_l\n        p[\"flow_g\"] = flow_g\n        p[\"y_T2_in\"] = y_T2_inlet\n\n        phys, dim = self._physics(u)\n        return _process_results(self.solution(), p, phys, dim)",
+          "bases": [
+            "pathsim.blocks.BVP1D"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    P_in,\n    L,\n    D,\n    T,\n    BCs,\n    g=const.g,\n    initial_nb_of_elements=20,\n    tol=1e-5,\n    max_nodes=10000,\n):\n    # fixed operating point and geometry; the four block inputs supply the\n    # per-evaluation boundary data (c_T_in, flow_l, y_T2_inlet, flow_g)\n    self.params = {\n        \"P_in\": P_in,\n        \"L\": L,\n        \"g\": g,\n        \"D\": D,\n        \"T\": T,\n        \"elements\": initial_nb_of_elements,\n        \"BCs\": BCs,\n    }\n    self.BCs = BCs\n\n    # cache of (physical properties, dimensionless groups) keyed on the input\n    # so the hydrodynamic correlations run once per operating point instead of\n    # on every collocation mesh point\n    self._u_cache = None\n    self._phys = None\n    self._dim = None\n\n    # seed the native BVP block with the Malara model physics; sample the two\n    # domain endpoints so the dimensionless outlet/inlet states are available\n    super().__init__(\n        fun=self._ode,\n        bc=self._bc,\n        n=4,\n        domain=(0.0, 1.0),\n        n_nodes=initial_nb_of_elements + 1,\n        x_eval=np.array([0.0, 1.0]),\n        tol=tol,\n        max_nodes=max_nodes,\n    )",
+              "signature": "(P_in, L, D, T, BCs, g = const.g, initial_nb_of_elements = 20, tol = 1e-05, max_nodes = 10000)",
+              "parameters": [
+                {
+                  "name": "P_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "L",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "D",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "BCs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "g",
+                  "type": null,
+                  "default": "const.g",
+                  "description": ""
+                },
+                {
+                  "name": "initial_nb_of_elements",
+                  "type": null,
+                  "default": "20",
+                  "description": ""
+                },
+                {
+                  "name": "tol",
+                  "type": null,
+                  "default": "1e-05",
+                  "description": ""
+                },
+                {
+                  "name": "max_nodes",
+                  "type": null,
+                  "default": "10000",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_physics",
+              "description": "Physical properties and dimensionless groups for the input `u`.",
+              "docstring_html": "<p>Physical properties and dimensionless groups for the input <cite>u</cite>.</p>\n<p>Cached on <cite>u</cite> so the hydrodynamic correlations (and the gas hold-up\nroot solve) run once per operating point rather than on every mesh\npoint of the collocation solve.</p>\n",
+              "source": "def _physics(self, u):\n    \"\"\"Physical properties and dimensionless groups for the input `u`.\n\n    Cached on `u` so the hydrodynamic correlations (and the gas hold-up\n    root solve) run once per operating point rather than on every mesh\n    point of the collocation solve.\n    \"\"\"\n    if self._u_cache is not None and np.array_equal(u, self._u_cache):\n        return self._phys, self._dim\n\n    c_T_in, flow_l, y_T2_inlet, flow_g = u\n    p = dict(self.params)\n    p[\"c_T_in\"] = c_T_in\n    p[\"flow_l\"] = flow_l\n    p[\"flow_g\"] = flow_g\n    p[\"y_T2_in\"] = y_T2_inlet\n\n    phys = _calculate_properties(p)\n\n    # guard against a non-physical (non-positive) gas outlet pressure\n    P_out = p[\"P_in\"] - phys[\"rho_l\"] * (1 - phys[\"epsilon_g\"]) * g * p[\"L\"]\n    if P_out <= 0:\n        raise ValueError(\n            f\"Calculated gas outlet pressure is non-positive ({P_out:.2e} Pa). \"\n            \"Check input parameters P_in, L, etc.\"\n        )\n\n    dim = _calculate_dimensionless_groups(p, phys)\n\n    self._u_cache = np.array(u, dtype=float)\n    self._phys, self._dim = phys, dim\n    return phys, dim",
+              "signature": "(u)",
+              "parameters": [
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_ode",
+              "description": "Malara right-hand side, with dimensionless groups derived from `u`.",
+              "docstring_html": "<p>Malara right-hand side, with dimensionless groups derived from <cite>u</cite>.</p>\n",
+              "source": "def _ode(self, xi, S, p, u):\n    \"\"\"Malara right-hand side, with dimensionless groups derived from `u`.\"\"\"\n    _, dim = self._physics(u)\n    return _ode_system(xi, S, dim)",
+              "signature": "(xi, S, p, u)",
+              "parameters": [
+                {
+                  "name": "xi",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "S",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "p",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_bc",
+              "description": "Malara boundary conditions, with groups derived from `u`.",
+              "docstring_html": "<p>Malara boundary conditions, with groups derived from <cite>u</cite>.</p>\n",
+              "source": "def _bc(self, Sa, Sb, p, u):\n    \"\"\"Malara boundary conditions, with groups derived from `u`.\"\"\"\n    _, dim = self._physics(u)\n    y_T2_in = max(u[2], 1e-20)\n    return _boundary_conditions(Sa, Sb, dim, y_T2_in, self.BCs)",
+              "signature": "(Sa, Sb, p, u)",
+              "parameters": [
+                {
+                  "name": "Sa",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "Sb",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "p",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "update",
+              "description": "Solve the BVP and expose the dimensional results at the output ports.",
+              "docstring_html": "<p>Solve the BVP and expose the dimensional results at the output ports.</p>\n<p>Delegates the solve to :class:`~pathsim.blocks.BVP1D` (warm-started, and\nskipped when the input is unchanged), then post-processes the\ndimensionless endpoint solution into the eight dimensional output ports.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>t <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>evaluation time</dd>\n</dl>\n<p><strong>Raises</strong></p>\n<dl class=\"docutils\">\n<dt>RuntimeError</dt>\n<dd>if the BVP solve did not converge</dd>\n</dl>\n",
+              "source": "def update(self, t):\n    \"\"\"Solve the BVP and expose the dimensional results at the output ports.\n\n    Delegates the solve to :class:`~pathsim.blocks.BVP1D` (warm-started, and\n    skipped when the input is unchanged), then post-processes the\n    dimensionless endpoint solution into the eight dimensional output ports.\n\n    Parameters\n    ----------\n    t : float\n        evaluation time\n\n    Raises\n    ------\n    RuntimeError\n        if the BVP solve did not converge\n    \"\"\"\n    super().update(t)\n    if not self.success:\n        raise RuntimeError(\"BVP solver failed to converge.\")\n\n    res = self.results()\n    self.outputs.update_from_array(\n        np.array(\n            [\n                res[\"c_T_outlet [mol/m^3]\"],\n                res[\"y_T2_outlet_gas\"],\n                res[\"extraction_efficiency [fraction]\"],\n                res[\"total_gas_P_outlet [Pa]\"],\n                res[\"liquid_vol_flow [m^3/s]\"],\n                res[\"gas_vol_flow_outlet [m^3/s]\"],\n                res[\"tritium_out_liquid [mol/s]\"],\n                res[\"tritium_out_gas [mol/s]\"],\n            ]\n        )\n    )",
+              "signature": "(t)",
+              "parameters": [
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": "evaluation time"
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "results",
+              "description": "Post-process the current BVP solution into dimensional results.",
+              "docstring_html": "<p>Post-process the current BVP solution into dimensional results.</p>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>dict, None</dt>\n<dd>Dimensional results (outlet concentration, extraction efficiency,\noutlet pressure, volumetric flows, tritium molar flows and the mass\nbalance) for the most recent input, or <tt class=\"docutils literal\">None</tt> if no successful\nsolve has happened yet.</dd>\n</dl>\n",
+              "source": "def results(self):\n    \"\"\"Post-process the current BVP solution into dimensional results.\n\n    Returns\n    -------\n    dict, None\n        Dimensional results (outlet concentration, extraction efficiency,\n        outlet pressure, volumetric flows, tritium molar flows and the mass\n        balance) for the most recent input, or ``None`` if no successful\n        solve has happened yet.\n    \"\"\"\n    if not self.success:\n        return None\n\n    u = self.inputs.to_array()\n    c_T_in, flow_l, y_T2_inlet, flow_g = u\n    p = dict(self.params)\n    p[\"c_T_in\"] = c_T_in\n    p[\"flow_l\"] = flow_l\n    p[\"flow_g\"] = flow_g\n    p[\"y_T2_in\"] = y_T2_inlet\n\n    phys, dim = self._physics(u)\n    return _process_results(self.solution(), p, phys, dim)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'c_T_in': 0, 'flow_l': 1, 'y_T2_inlet': 2, 'flow_g': 3}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'c_T_out': 0, 'y_T2_out': 1, 'eff': 2, 'P_out': 3, 'Q_l': 4, 'Q_g_out': 5, 'n_T_out_liquid': 6, 'n_T_out_gas': 7}"
+            },
+            {
+              "name": "params",
+              "description": "",
+              "type": null,
+              "value": "{'P_in': P_in, 'L': L, 'g': g, 'D': D, 'T': T, 'elements': initial_nb_of_elements, 'BCs': BCs}"
+            },
+            {
+              "name": "BCs",
+              "description": "",
+              "type": null,
+              "value": "BCs"
+            },
+            {
+              "name": "_u_cache",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "_phys",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "_dim",
+              "description": "",
+              "type": null,
+              "value": "None"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "P_in",
+              "type": null,
+              "default": null,
+              "description": "Inlet operating pressure [Pa]."
+            },
+            {
+              "name": "L",
+              "type": null,
+              "default": null,
+              "description": "Column height [m]."
+            },
+            {
+              "name": "D",
+              "type": null,
+              "default": null,
+              "description": "Column diameter [m]."
+            },
+            {
+              "name": "T",
+              "type": null,
+              "default": null,
+              "description": "Operating temperature [K]. Used to compute temperature-dependent LiPb properties (density, viscosity, Sieverts' constant, etc.)."
+            },
+            {
+              "name": "BCs",
+              "type": null,
+              "default": null,
+              "description": "Boundary condition type for the BVP: ``\"C-C\"`` (closed-closed) or ``\"O-C\"`` (open-closed)."
+            },
+            {
+              "name": "g",
+              "type": null,
+              "default": "const.g",
+              "description": "Gravitational acceleration [m/s²]. Default: ``scipy.constants.g``."
+            },
+            {
+              "name": "initial_nb_of_elements",
+              "type": null,
+              "default": "20",
+              "description": "Number of mesh elements for the initial BVP grid. Default: 20."
+            },
+            {
+              "name": "tol",
+              "type": null,
+              "default": "1e-05",
+              "description": "Solver tolerance for the BVP. Default: 1e-5."
+            },
+            {
+              "name": "max_nodes",
+              "type": null,
+              "default": "10000",
+              "description": "Maximum number of mesh nodes allowed during BVP refinement. Default: 10000."
+            }
+          ]
+        },
+        {
+          "name": "Bubbler4",
+          "description": "Tritium bubbling system with sequential vial collection stages.",
+          "docstring_html": "<p>Tritium bubbling system with sequential vial collection stages.</p>\n<p>This block models a tritium collection system used in fusion reactor blanket\npurge gas processing. The system bubbles tritium-containing gas through a series\nof liquid-filled vials to capture and concentrate tritium for measurement and\ninventory tracking.</p>\n<div class=\"section\" id=\"physical-description\">\n<h4>Physical Description</h4>\n<p>The bubbler consists of two parallel processing chains:</p>\n<p><strong>Soluble Chain (Vials 1-2):</strong>\nTritium already in soluble forms (HTO, HT) flows sequentially through\nvials 1 and 2. Each vial has a collection efficiency <tt class=\"math\">\\eta_{vial}</tt>,\nrepresenting the fraction of tritium that dissolves into the liquid phase\nand is retained.</p>\n<p><strong>Insoluble Chain (Vials 3-4):</strong>\nTritium in insoluble forms (T₂, organically bound) first undergoes catalytic\nconversion to soluble forms with efficiency <tt class=\"math\">\\alpha_{conv}</tt>. The\nconverted tritium, along with uncaptured soluble tritium from the first chain,\nthen flows through vials 3 and 4 with the same collection efficiency.</p>\n</div>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<p>The system is governed by the following differential equations for the\nvial inventories <tt class=\"math\">x_i</tt>:</p>\n<pre class=\"math\">\n\\begin{align}\n    \\frac{dx_1}{dt} &amp;= \\eta_{vial} \\cdot u_{sol} \\\\\n    \\frac{dx_2}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot u_{sol} \\\\\n    \\frac{dx_3}{dt} &amp;= \\eta_{vial} \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}] \\\\\n    \\frac{dx_4}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n\\end{align}\n</pre>\n<p>The sample output represents uncaptured tritium exiting the system:</p>\n<pre class=\"math\">\ny_{sample} = (1-\\alpha_{conv}) \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n</pre>\n<dl class=\"docutils\">\n<dt>Where:</dt>\n<dd><ul class=\"first last simple\">\n<li><tt class=\"math\">u_{sol}</tt> = soluble tritium input flow rate</li>\n<li><tt class=\"math\">u_{insol}</tt> = insoluble tritium input flow rate</li>\n<li><tt class=\"math\">\\eta_{vial}</tt> = vial collection efficiency</li>\n<li><tt class=\"math\">\\alpha_{conv}</tt> = conversion efficiency from insoluble to soluble</li>\n<li><tt class=\"math\">x_i</tt> = tritium inventory in vial i</li>\n</ul>\n</dd>\n</dl>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>conversion_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Conversion efficiency from insoluble to soluble forms (<tt class=\"math\">\\alpha_{conv}</tt>),\nbetween 0 and 1.</dd>\n<dt>vial_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Collection efficiency of each vial (<tt class=\"math\">\\eta_{vial}</tt>), between 0 and 1.</dd>\n<dt>replacement_times <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float | list[float] | list[list[float]] | None</span></dt>\n<dd>Times at which each vial is replaced with a fresh one. If None, no\nreplacement events are created. If a single value is provided, it is\nused for all vials. If a single list of floats is provided, it will be\nused for all vials. If a list of four lists is provided, each sublist\ncorresponds to the replacement times for each vial.</dd>\n</dl>\n</div>\n<div class=\"section\" id=\"inputs\">\n<h4>Inputs</h4>\n<p>sample_in_soluble (0) : soluble tritium flow rate into the bubbler\nsample_in_insoluble (1) : insoluble tritium flow rate into the bubbler</p>\n</div>\n<div class=\"section\" id=\"outputs\">\n<h4>Outputs</h4>\n<p>vial1 (0) : tritium inventory in vial 1\nvial2 (1) : tritium inventory in vial 2\nvial3 (2) : tritium inventory in vial 3\nvial4 (3) : tritium inventory in vial 4\nsample_out (4) : uncaptured tritium flow rate leaving the bubbler</p>\n</div>\n<div class=\"section\" id=\"note\">\n<h4>Note</h4>\n<p>Vial replacement is modeled as instantaneous reset events that set the\ncorresponding vial inventory to zero, simulating the physical replacement\nof a full vial with an empty one.</p>\n</div>\n",
+          "source": "class Bubbler4(DynamicalSystem):\n    \"\"\"Tritium bubbling system with sequential vial collection stages.\n\n    This block models a tritium collection system used in fusion reactor blanket\n    purge gas processing. The system bubbles tritium-containing gas through a series\n    of liquid-filled vials to capture and concentrate tritium for measurement and\n    inventory tracking.\n\n\n    Physical Description\n    --------------------\n    The bubbler consists of two parallel processing chains:\n\n    **Soluble Chain (Vials 1-2):**\n    Tritium already in soluble forms (HTO, HT) flows sequentially through\n    vials 1 and 2. Each vial has a collection efficiency :math:`\\\\eta_{vial}`,\n    representing the fraction of tritium that dissolves into the liquid phase\n    and is retained.\n\n    **Insoluble Chain (Vials 3-4):**\n    Tritium in insoluble forms (T₂, organically bound) first undergoes catalytic\n    conversion to soluble forms with efficiency :math:`\\\\alpha_{conv}`. The\n    converted tritium, along with uncaptured soluble tritium from the first chain,\n    then flows through vials 3 and 4 with the same collection efficiency.\n\n\n    Mathematical Formulation\n    -------------------------\n    The system is governed by the following differential equations for the\n    vial inventories :math:`x_i`:\n\n    .. math::\n\n        \\\\begin{align}\n            \\\\frac{dx_1}{dt} &= \\\\eta_{vial} \\\\cdot u_{sol} \\\\\\\\\n            \\\\frac{dx_2}{dt} &= \\\\eta_{vial} \\\\cdot (1-\\\\eta_{vial}) \\\\cdot u_{sol} \\\\\\\\\n            \\\\frac{dx_3}{dt} &= \\\\eta_{vial} \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}] \\\\\\\\\n            \\\\frac{dx_4}{dt} &= \\\\eta_{vial} \\\\cdot (1-\\\\eta_{vial}) \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n        \\\\end{align}\n\n\n    The sample output represents uncaptured tritium exiting the system:\n\n    .. math::\n\n        y_{sample} = (1-\\\\alpha_{conv}) \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n\n\n    Where:\n        - :math:`u_{sol}` = soluble tritium input flow rate\n        - :math:`u_{insol}` = insoluble tritium input flow rate\n        - :math:`\\\\eta_{vial}` = vial collection efficiency\n        - :math:`\\\\alpha_{conv}` = conversion efficiency from insoluble to soluble\n        - :math:`x_i` = tritium inventory in vial i\n\n    Parameters\n    ----------\n    conversion_efficiency : float\n       Conversion efficiency from insoluble to soluble forms (:math:`\\\\alpha_{conv}`),\n       between 0 and 1.\n    vial_efficiency : float\n       Collection efficiency of each vial (:math:`\\\\eta_{vial}`), between 0 and 1.\n    replacement_times : float | list[float] | list[list[float]] | None\n        Times at which each vial is replaced with a fresh one. If None, no\n        replacement events are created. If a single value is provided, it is\n        used for all vials. If a single list of floats is provided, it will be\n        used for all vials. If a list of four lists is provided, each sublist\n        corresponds to the replacement times for each vial.\n\n    Inputs\n    ------\n    sample_in_soluble (0) : soluble tritium flow rate into the bubbler\n    sample_in_insoluble (1) : insoluble tritium flow rate into the bubbler\n\n    Outputs\n    -------\n    vial1 (0) : tritium inventory in vial 1\n    vial2 (1) : tritium inventory in vial 2\n    vial3 (2) : tritium inventory in vial 3\n    vial4 (3) : tritium inventory in vial 4\n    sample_out (4) : uncaptured tritium flow rate leaving the bubbler\n\n    Note\n    ----\n    Vial replacement is modeled as instantaneous reset events that set the\n    corresponding vial inventory to zero, simulating the physical replacement\n    of a full vial with an empty one.\n    \"\"\"\n\n    input_port_labels: ClassVar[dict[str, int]] = {\n        \"sample_in_soluble\": 0,\n        \"sample_in_insoluble\": 1,\n    }\n    output_port_labels: ClassVar[dict[str, int]] = {\n        \"vial1\": 0,\n        \"vial2\": 1,\n        \"vial3\": 2,\n        \"vial4\": 3,\n        \"sample_out\": 4,\n    }\n\n    def __init__(\n        self,\n        conversion_efficiency=0.9,\n        vial_efficiency=0.9,\n        replacement_times=None,\n    ):\n\n        # input validation\n        if not 0 <= conversion_efficiency <= 1:\n            raise ValueError(\n                \"'conversion_efficiency' must be between 0 and 1 \"\n                f\"but is {conversion_efficiency}\"\n            )\n        if not 0 <= vial_efficiency <= 1:\n            raise ValueError(\n                f\"'vial_efficiency' must be between 0 and 1 but is {vial_efficiency}\"\n            )\n\n        # bubbler parameters\n        self.replacement_times = replacement_times\n        self.vial_efficiency = vial_efficiency\n        self.conversion_efficiency = conversion_efficiency\n\n        # dynamical component, ode rhs\n        def _fn_d(x, u, t):\n\n            # short\n            ve = self.vial_efficiency\n            ce = self.conversion_efficiency\n\n            # unpack inputs\n            sol, ins = u\n\n            # compute vial content change rates\n            dv1 = ve * sol\n            dv2 = dv1 * (1 - ve)\n            dv3 = ve * (ce * ins + (1 - ve) ** 2 * sol)\n            dv4 = dv3 * (1 - ve)\n\n            return np.array([dv1, dv2, dv3, dv4])\n\n        # algebraic output component\n        def _fn_a(x, u, t):\n\n            # short\n            ve = self.vial_efficiency\n            ce = self.conversion_efficiency\n\n            # unpack inputs\n            sol, ins = u\n\n            sample_out = (1 - ce) * ins + (1 - ve) ** 2 * (\n                ce * ins + (1 - ve) ** 2 * sol\n            )\n\n            return np.hstack([x, sample_out])\n\n        # initialization just like `DynamicalSystem` block\n        super().__init__(\n            func_dyn=_fn_d,\n            func_alg=_fn_a,\n            initial_value=np.zeros(4),\n        )\n\n        # create internal vial reset events\n        self._create_reset_events()\n\n    def _create_reset_event_vial(self, i, reset_times):\n        \"\"\"Define event action function and return a `ScheduleList` event\n        per vial `i` that triggers at predefined `reset_times`.\n        \"\"\"\n\n        def reset_vial_i(_):\n            # get the full engine state\n            x = self.engine.get()\n            # set index 'i' to zero\n            x[i] = 0.0\n            # set the full engine state\n            self.engine.set(x)\n\n        return ScheduleList(times_evt=reset_times, func_act=reset_vial_i)\n\n    def _create_reset_events(self):\n        \"\"\"Create reset events for all vials based on the replacement times.\n\n        Raises\n        ------\n        ValueError : If reset_times is not valid.\n        \"\"\"\n\n        replacement_times = self.replacement_times\n        self.events = []\n\n        # no replacement\n        if replacement_times is None:\n            return\n\n        # a single time is used for all vials (numbers.Real also covers numpy scalars)\n        if isinstance(replacement_times, numbers.Real):\n            replacement_times = [[replacement_times]] * 4\n\n        # a flat list of times is used for all vials\n        elif isinstance(replacement_times, (list, tuple)) and all(\n            isinstance(t, numbers.Real) for t in replacement_times\n        ):\n            replacement_times = [list(replacement_times)] * 4\n\n        elif isinstance(replacement_times, np.ndarray) and replacement_times.ndim == 1:\n            replacement_times = [replacement_times.tolist()] * 4\n\n        # otherwise one list of times per vial\n        elif len(replacement_times) != 4:\n            raise ValueError(\n                \"replacement_times must be a single value or a list with the same length as the number of vials\"\n            )\n\n        # create the internal events\n        self.events = [\n            self._create_reset_event_vial(i, ts)\n            for i, ts in enumerate(replacement_times)\n        ]",
+          "bases": [
+            "pathsim.blocks.dynsys.DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    conversion_efficiency=0.9,\n    vial_efficiency=0.9,\n    replacement_times=None,\n):\n\n    # input validation\n    if not 0 <= conversion_efficiency <= 1:\n        raise ValueError(\n            \"'conversion_efficiency' must be between 0 and 1 \"\n            f\"but is {conversion_efficiency}\"\n        )\n    if not 0 <= vial_efficiency <= 1:\n        raise ValueError(\n            f\"'vial_efficiency' must be between 0 and 1 but is {vial_efficiency}\"\n        )\n\n    # bubbler parameters\n    self.replacement_times = replacement_times\n    self.vial_efficiency = vial_efficiency\n    self.conversion_efficiency = conversion_efficiency\n\n    # dynamical component, ode rhs\n    def _fn_d(x, u, t):\n\n        # short\n        ve = self.vial_efficiency\n        ce = self.conversion_efficiency\n\n        # unpack inputs\n        sol, ins = u\n\n        # compute vial content change rates\n        dv1 = ve * sol\n        dv2 = dv1 * (1 - ve)\n        dv3 = ve * (ce * ins + (1 - ve) ** 2 * sol)\n        dv4 = dv3 * (1 - ve)\n\n        return np.array([dv1, dv2, dv3, dv4])\n\n    # algebraic output component\n    def _fn_a(x, u, t):\n\n        # short\n        ve = self.vial_efficiency\n        ce = self.conversion_efficiency\n\n        # unpack inputs\n        sol, ins = u\n\n        sample_out = (1 - ce) * ins + (1 - ve) ** 2 * (\n            ce * ins + (1 - ve) ** 2 * sol\n        )\n\n        return np.hstack([x, sample_out])\n\n    # initialization just like `DynamicalSystem` block\n    super().__init__(\n        func_dyn=_fn_d,\n        func_alg=_fn_a,\n        initial_value=np.zeros(4),\n    )\n\n    # create internal vial reset events\n    self._create_reset_events()",
+              "signature": "(conversion_efficiency = 0.9, vial_efficiency = 0.9, replacement_times = None)",
+              "parameters": [
+                {
+                  "name": "conversion_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "vial_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "replacement_times",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_create_reset_event_vial",
+              "description": "Define event action function and return a `ScheduleList` event",
+              "docstring_html": "<p>Define event action function and return a <cite>ScheduleList</cite> event\nper vial <cite>i</cite> that triggers at predefined <cite>reset_times</cite>.</p>\n",
+              "source": "def _create_reset_event_vial(self, i, reset_times):\n    \"\"\"Define event action function and return a `ScheduleList` event\n    per vial `i` that triggers at predefined `reset_times`.\n    \"\"\"\n\n    def reset_vial_i(_):\n        # get the full engine state\n        x = self.engine.get()\n        # set index 'i' to zero\n        x[i] = 0.0\n        # set the full engine state\n        self.engine.set(x)\n\n    return ScheduleList(times_evt=reset_times, func_act=reset_vial_i)",
+              "signature": "(i, reset_times)",
+              "parameters": [
+                {
+                  "name": "i",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "reset_times",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_create_reset_events",
+              "description": "Create reset events for all vials based on the replacement times.",
+              "docstring_html": "<p>Create reset events for all vials based on the replacement times.</p>\n<p><strong>Raises</strong></p>\n<p>ValueError : If reset_times is not valid.</p>\n",
+              "source": "def _create_reset_events(self):\n    \"\"\"Create reset events for all vials based on the replacement times.\n\n    Raises\n    ------\n    ValueError : If reset_times is not valid.\n    \"\"\"\n\n    replacement_times = self.replacement_times\n    self.events = []\n\n    # no replacement\n    if replacement_times is None:\n        return\n\n    # a single time is used for all vials (numbers.Real also covers numpy scalars)\n    if isinstance(replacement_times, numbers.Real):\n        replacement_times = [[replacement_times]] * 4\n\n    # a flat list of times is used for all vials\n    elif isinstance(replacement_times, (list, tuple)) and all(\n        isinstance(t, numbers.Real) for t in replacement_times\n    ):\n        replacement_times = [list(replacement_times)] * 4\n\n    elif isinstance(replacement_times, np.ndarray) and replacement_times.ndim == 1:\n        replacement_times = [replacement_times.tolist()] * 4\n\n    # otherwise one list of times per vial\n    elif len(replacement_times) != 4:\n        raise ValueError(\n            \"replacement_times must be a single value or a list with the same length as the number of vials\"\n        )\n\n    # create the internal events\n    self.events = [\n        self._create_reset_event_vial(i, ts)\n        for i, ts in enumerate(replacement_times)\n    ]",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'sample_in_soluble': 0, 'sample_in_insoluble': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'vial1': 0, 'vial2': 1, 'vial3': 2, 'vial4': 3, 'sample_out': 4}"
+            },
+            {
+              "name": "replacement_times",
+              "description": "",
+              "type": null,
+              "value": "replacement_times"
+            },
+            {
+              "name": "vial_efficiency",
+              "description": "",
+              "type": null,
+              "value": "vial_efficiency"
+            },
+            {
+              "name": "conversion_efficiency",
+              "description": "",
+              "type": null,
+              "value": "conversion_efficiency"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "conversion_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Conversion efficiency from insoluble to soluble forms (:math:`\\alpha_{conv}`), between 0 and 1."
+            },
+            {
+              "name": "vial_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Collection efficiency of each vial (:math:`\\eta_{vial}`), between 0 and 1."
+            },
+            {
+              "name": "replacement_times",
+              "type": null,
+              "default": "None",
+              "description": "Times at which each vial is replaced with a fresh one. If None, no replacement events are created. If a single value is provided, it is used for all vials. If a single list of floats is provided, it will be used for all vials. If a list of four lists is provided, each sublist corresponds to the replacement times for each vial."
+            }
+          ]
+        },
+        {
+          "name": "IonisationChamber",
+          "description": "Ionisation chamber for tritium detection.",
+          "docstring_html": "<p>Ionisation chamber for tritium detection.</p>\n<p>Algebraic block that models a flow-through ionisation chamber. The sample\npasses through unchanged while the chamber produces a signal proportional\nto the tritium concentration, scaled by a detection efficiency.</p>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<p>The chamber receives a tritium flux and flow rate, computes the\nconcentration, and applies the detection efficiency:</p>\n<pre class=\"math\">\nc = \\frac{\\Phi_{in}}{\\dot{V}}\n</pre>\n<pre class=\"math\">\n\\text{signal} = \\varepsilon(c) \\cdot c\n</pre>\n<pre class=\"math\">\n\\Phi_{out} = \\Phi_{in}\n</pre>\n<p>where <tt class=\"math\">\\varepsilon</tt> is the detection efficiency (constant or\nconcentration-dependent).</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>detection_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float or callable, optional</span></dt>\n<dd>Constant efficiency factor or a function <tt class=\"docutils literal\">f(c) <span class=\"pre\">-&gt;</span> float</tt> that\nreturns the efficiency for a given concentration. Mutually\nexclusive with <em>detection_threshold</em>.</dd>\n<dt>detection_threshold <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>If provided, the efficiency is a step function: 1 above the\nthreshold, 0 below. Mutually exclusive with <em>detection_efficiency</em>.</dd>\n</dl>\n</div>\n",
+          "source": "class IonisationChamber(Function):\n    \"\"\"Ionisation chamber for tritium detection.\n\n    Algebraic block that models a flow-through ionisation chamber. The sample\n    passes through unchanged while the chamber produces a signal proportional\n    to the tritium concentration, scaled by a detection efficiency.\n\n    Mathematical Formulation\n    -------------------------\n    The chamber receives a tritium flux and flow rate, computes the\n    concentration, and applies the detection efficiency:\n\n    .. math::\n\n        c = \\\\frac{\\\\Phi_{in}}{\\\\dot{V}}\n\n    .. math::\n\n        \\\\text{signal} = \\\\varepsilon(c) \\\\cdot c\n\n    .. math::\n\n        \\\\Phi_{out} = \\\\Phi_{in}\n\n    where :math:`\\\\varepsilon` is the detection efficiency (constant or\n    concentration-dependent).\n\n    Parameters\n    ----------\n    detection_efficiency : float or callable, optional\n        Constant efficiency factor or a function ``f(c) -> float`` that\n        returns the efficiency for a given concentration. Mutually\n        exclusive with *detection_threshold*.\n    detection_threshold : float, optional\n        If provided, the efficiency is a step function: 1 above the\n        threshold, 0 below. Mutually exclusive with *detection_efficiency*.\n    \"\"\"\n\n    input_port_labels: ClassVar[dict[str, int]] = {\n        \"flux_in\": 0,\n        \"flow_rate\": 1,\n    }\n\n    output_port_labels: ClassVar[dict[str, int]] = {\n        \"flux_out\": 0,\n        \"signal\": 1,\n    }\n\n    def __init__(self, detection_efficiency=None, detection_threshold=None):\n\n        # input validation\n        if detection_efficiency is not None and detection_threshold is not None:\n            raise ValueError(\n                \"Specify either 'detection_efficiency' or 'detection_threshold', not both\"\n            )\n        if detection_efficiency is None and detection_threshold is None:\n            raise ValueError(\n                \"One of 'detection_efficiency' or 'detection_threshold' must be provided\"\n            )\n\n        if detection_threshold is not None:\n            self.detection_efficiency = lambda c: (\n                1.0 if c >= detection_threshold else 0.0\n            )\n        else:\n            self.detection_efficiency = detection_efficiency\n\n        self.detection_threshold = detection_threshold\n\n        super().__init__(func=self._eval)\n\n    def _eval(self, flux_in, flow_rate):\n        concentration = flux_in / flow_rate if flow_rate > 0 else 0.0\n\n        eff = self.detection_efficiency\n        epsilon = eff(concentration) if callable(eff) else eff\n\n        signal = epsilon * concentration\n        flux_out = flux_in\n\n        return (flux_out, signal)",
+          "bases": [
+            "pathsim.blocks.function.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, detection_efficiency=None, detection_threshold=None):\n\n    # input validation\n    if detection_efficiency is not None and detection_threshold is not None:\n        raise ValueError(\n            \"Specify either 'detection_efficiency' or 'detection_threshold', not both\"\n        )\n    if detection_efficiency is None and detection_threshold is None:\n        raise ValueError(\n            \"One of 'detection_efficiency' or 'detection_threshold' must be provided\"\n        )\n\n    if detection_threshold is not None:\n        self.detection_efficiency = lambda c: (\n            1.0 if c >= detection_threshold else 0.0\n        )\n    else:\n        self.detection_efficiency = detection_efficiency\n\n    self.detection_threshold = detection_threshold\n\n    super().__init__(func=self._eval)",
+              "signature": "(detection_efficiency = None, detection_threshold = None)",
+              "parameters": [
+                {
+                  "name": "detection_efficiency",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "detection_threshold",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _eval(self, flux_in, flow_rate):\n    concentration = flux_in / flow_rate if flow_rate > 0 else 0.0\n\n    eff = self.detection_efficiency\n    epsilon = eff(concentration) if callable(eff) else eff\n\n    signal = epsilon * concentration\n    flux_out = flux_in\n\n    return (flux_out, signal)",
+              "signature": "(flux_in, flow_rate)",
+              "parameters": [
+                {
+                  "name": "flux_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "flow_rate",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'flux_in': 0, 'flow_rate': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'flux_out': 0, 'signal': 1}"
+            },
+            {
+              "name": "detection_efficiency",
+              "description": "",
+              "type": null,
+              "value": "lambda c: 1.0 if c >= detection_threshold else 0.0"
+            },
+            {
+              "name": "detection_threshold",
+              "description": "",
+              "type": null,
+              "value": "detection_threshold"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "detection_efficiency",
+              "type": null,
+              "default": "None",
+              "description": "Constant efficiency factor or a function ``f(c) -> float`` that returns the efficiency for a given concentration. Mutually exclusive with *detection_threshold*."
+            },
+            {
+              "name": "detection_threshold",
+              "type": null,
+              "default": "None",
+              "description": "If provided, the efficiency is a step function: 1 above the threshold, 0 below. Mutually exclusive with *detection_efficiency*."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_fusion.tritium.bubbler": {
+      "name": "pathsim_fusion.tritium.bubbler",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "Bubbler4",
+          "description": "Tritium bubbling system with sequential vial collection stages.",
+          "docstring_html": "<p>Tritium bubbling system with sequential vial collection stages.</p>\n<p>This block models a tritium collection system used in fusion reactor blanket\npurge gas processing. The system bubbles tritium-containing gas through a series\nof liquid-filled vials to capture and concentrate tritium for measurement and\ninventory tracking.</p>\n<div class=\"section\" id=\"physical-description\">\n<h4>Physical Description</h4>\n<p>The bubbler consists of two parallel processing chains:</p>\n<p><strong>Soluble Chain (Vials 1-2):</strong>\nTritium already in soluble forms (HTO, HT) flows sequentially through\nvials 1 and 2. Each vial has a collection efficiency <tt class=\"math\">\\eta_{vial}</tt>,\nrepresenting the fraction of tritium that dissolves into the liquid phase\nand is retained.</p>\n<p><strong>Insoluble Chain (Vials 3-4):</strong>\nTritium in insoluble forms (T₂, organically bound) first undergoes catalytic\nconversion to soluble forms with efficiency <tt class=\"math\">\\alpha_{conv}</tt>. The\nconverted tritium, along with uncaptured soluble tritium from the first chain,\nthen flows through vials 3 and 4 with the same collection efficiency.</p>\n</div>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<p>The system is governed by the following differential equations for the\nvial inventories <tt class=\"math\">x_i</tt>:</p>\n<pre class=\"math\">\n\\begin{align}\n    \\frac{dx_1}{dt} &amp;= \\eta_{vial} \\cdot u_{sol} \\\\\n    \\frac{dx_2}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot u_{sol} \\\\\n    \\frac{dx_3}{dt} &amp;= \\eta_{vial} \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}] \\\\\n    \\frac{dx_4}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n\\end{align}\n</pre>\n<p>The sample output represents uncaptured tritium exiting the system:</p>\n<pre class=\"math\">\ny_{sample} = (1-\\alpha_{conv}) \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n</pre>\n<dl class=\"docutils\">\n<dt>Where:</dt>\n<dd><ul class=\"first last simple\">\n<li><tt class=\"math\">u_{sol}</tt> = soluble tritium input flow rate</li>\n<li><tt class=\"math\">u_{insol}</tt> = insoluble tritium input flow rate</li>\n<li><tt class=\"math\">\\eta_{vial}</tt> = vial collection efficiency</li>\n<li><tt class=\"math\">\\alpha_{conv}</tt> = conversion efficiency from insoluble to soluble</li>\n<li><tt class=\"math\">x_i</tt> = tritium inventory in vial i</li>\n</ul>\n</dd>\n</dl>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>conversion_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Conversion efficiency from insoluble to soluble forms (<tt class=\"math\">\\alpha_{conv}</tt>),\nbetween 0 and 1.</dd>\n<dt>vial_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Collection efficiency of each vial (<tt class=\"math\">\\eta_{vial}</tt>), between 0 and 1.</dd>\n<dt>replacement_times <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float | list[float] | list[list[float]] | None</span></dt>\n<dd>Times at which each vial is replaced with a fresh one. If None, no\nreplacement events are created. If a single value is provided, it is\nused for all vials. If a single list of floats is provided, it will be\nused for all vials. If a list of four lists is provided, each sublist\ncorresponds to the replacement times for each vial.</dd>\n</dl>\n</div>\n<div class=\"section\" id=\"inputs\">\n<h4>Inputs</h4>\n<p>sample_in_soluble (0) : soluble tritium flow rate into the bubbler\nsample_in_insoluble (1) : insoluble tritium flow rate into the bubbler</p>\n</div>\n<div class=\"section\" id=\"outputs\">\n<h4>Outputs</h4>\n<p>vial1 (0) : tritium inventory in vial 1\nvial2 (1) : tritium inventory in vial 2\nvial3 (2) : tritium inventory in vial 3\nvial4 (3) : tritium inventory in vial 4\nsample_out (4) : uncaptured tritium flow rate leaving the bubbler</p>\n</div>\n<div class=\"section\" id=\"note\">\n<h4>Note</h4>\n<p>Vial replacement is modeled as instantaneous reset events that set the\ncorresponding vial inventory to zero, simulating the physical replacement\nof a full vial with an empty one.</p>\n</div>\n",
+          "source": "class Bubbler4(DynamicalSystem):\n    \"\"\"Tritium bubbling system with sequential vial collection stages.\n\n    This block models a tritium collection system used in fusion reactor blanket\n    purge gas processing. The system bubbles tritium-containing gas through a series\n    of liquid-filled vials to capture and concentrate tritium for measurement and\n    inventory tracking.\n\n\n    Physical Description\n    --------------------\n    The bubbler consists of two parallel processing chains:\n\n    **Soluble Chain (Vials 1-2):**\n    Tritium already in soluble forms (HTO, HT) flows sequentially through\n    vials 1 and 2. Each vial has a collection efficiency :math:`\\\\eta_{vial}`,\n    representing the fraction of tritium that dissolves into the liquid phase\n    and is retained.\n\n    **Insoluble Chain (Vials 3-4):**\n    Tritium in insoluble forms (T₂, organically bound) first undergoes catalytic\n    conversion to soluble forms with efficiency :math:`\\\\alpha_{conv}`. The\n    converted tritium, along with uncaptured soluble tritium from the first chain,\n    then flows through vials 3 and 4 with the same collection efficiency.\n\n\n    Mathematical Formulation\n    -------------------------\n    The system is governed by the following differential equations for the\n    vial inventories :math:`x_i`:\n\n    .. math::\n\n        \\\\begin{align}\n            \\\\frac{dx_1}{dt} &= \\\\eta_{vial} \\\\cdot u_{sol} \\\\\\\\\n            \\\\frac{dx_2}{dt} &= \\\\eta_{vial} \\\\cdot (1-\\\\eta_{vial}) \\\\cdot u_{sol} \\\\\\\\\n            \\\\frac{dx_3}{dt} &= \\\\eta_{vial} \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}] \\\\\\\\\n            \\\\frac{dx_4}{dt} &= \\\\eta_{vial} \\\\cdot (1-\\\\eta_{vial}) \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n        \\\\end{align}\n\n\n    The sample output represents uncaptured tritium exiting the system:\n\n    .. math::\n\n        y_{sample} = (1-\\\\alpha_{conv}) \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n\n\n    Where:\n        - :math:`u_{sol}` = soluble tritium input flow rate\n        - :math:`u_{insol}` = insoluble tritium input flow rate\n        - :math:`\\\\eta_{vial}` = vial collection efficiency\n        - :math:`\\\\alpha_{conv}` = conversion efficiency from insoluble to soluble\n        - :math:`x_i` = tritium inventory in vial i\n\n    Parameters\n    ----------\n    conversion_efficiency : float\n       Conversion efficiency from insoluble to soluble forms (:math:`\\\\alpha_{conv}`),\n       between 0 and 1.\n    vial_efficiency : float\n       Collection efficiency of each vial (:math:`\\\\eta_{vial}`), between 0 and 1.\n    replacement_times : float | list[float] | list[list[float]] | None\n        Times at which each vial is replaced with a fresh one. If None, no\n        replacement events are created. If a single value is provided, it is\n        used for all vials. If a single list of floats is provided, it will be\n        used for all vials. If a list of four lists is provided, each sublist\n        corresponds to the replacement times for each vial.\n\n    Inputs\n    ------\n    sample_in_soluble (0) : soluble tritium flow rate into the bubbler\n    sample_in_insoluble (1) : insoluble tritium flow rate into the bubbler\n\n    Outputs\n    -------\n    vial1 (0) : tritium inventory in vial 1\n    vial2 (1) : tritium inventory in vial 2\n    vial3 (2) : tritium inventory in vial 3\n    vial4 (3) : tritium inventory in vial 4\n    sample_out (4) : uncaptured tritium flow rate leaving the bubbler\n\n    Note\n    ----\n    Vial replacement is modeled as instantaneous reset events that set the\n    corresponding vial inventory to zero, simulating the physical replacement\n    of a full vial with an empty one.\n    \"\"\"\n\n    input_port_labels: ClassVar[dict[str, int]] = {\n        \"sample_in_soluble\": 0,\n        \"sample_in_insoluble\": 1,\n    }\n    output_port_labels: ClassVar[dict[str, int]] = {\n        \"vial1\": 0,\n        \"vial2\": 1,\n        \"vial3\": 2,\n        \"vial4\": 3,\n        \"sample_out\": 4,\n    }\n\n    def __init__(\n        self,\n        conversion_efficiency=0.9,\n        vial_efficiency=0.9,\n        replacement_times=None,\n    ):\n\n        # input validation\n        if not 0 <= conversion_efficiency <= 1:\n            raise ValueError(\n                \"'conversion_efficiency' must be between 0 and 1 \"\n                f\"but is {conversion_efficiency}\"\n            )\n        if not 0 <= vial_efficiency <= 1:\n            raise ValueError(\n                f\"'vial_efficiency' must be between 0 and 1 but is {vial_efficiency}\"\n            )\n\n        # bubbler parameters\n        self.replacement_times = replacement_times\n        self.vial_efficiency = vial_efficiency\n        self.conversion_efficiency = conversion_efficiency\n\n        # dynamical component, ode rhs\n        def _fn_d(x, u, t):\n\n            # short\n            ve = self.vial_efficiency\n            ce = self.conversion_efficiency\n\n            # unpack inputs\n            sol, ins = u\n\n            # compute vial content change rates\n            dv1 = ve * sol\n            dv2 = dv1 * (1 - ve)\n            dv3 = ve * (ce * ins + (1 - ve) ** 2 * sol)\n            dv4 = dv3 * (1 - ve)\n\n            return np.array([dv1, dv2, dv3, dv4])\n\n        # algebraic output component\n        def _fn_a(x, u, t):\n\n            # short\n            ve = self.vial_efficiency\n            ce = self.conversion_efficiency\n\n            # unpack inputs\n            sol, ins = u\n\n            sample_out = (1 - ce) * ins + (1 - ve) ** 2 * (\n                ce * ins + (1 - ve) ** 2 * sol\n            )\n\n            return np.hstack([x, sample_out])\n\n        # initialization just like `DynamicalSystem` block\n        super().__init__(\n            func_dyn=_fn_d,\n            func_alg=_fn_a,\n            initial_value=np.zeros(4),\n        )\n\n        # create internal vial reset events\n        self._create_reset_events()\n\n    def _create_reset_event_vial(self, i, reset_times):\n        \"\"\"Define event action function and return a `ScheduleList` event\n        per vial `i` that triggers at predefined `reset_times`.\n        \"\"\"\n\n        def reset_vial_i(_):\n            # get the full engine state\n            x = self.engine.get()\n            # set index 'i' to zero\n            x[i] = 0.0\n            # set the full engine state\n            self.engine.set(x)\n\n        return ScheduleList(times_evt=reset_times, func_act=reset_vial_i)\n\n    def _create_reset_events(self):\n        \"\"\"Create reset events for all vials based on the replacement times.\n\n        Raises\n        ------\n        ValueError : If reset_times is not valid.\n        \"\"\"\n\n        replacement_times = self.replacement_times\n        self.events = []\n\n        # no replacement\n        if replacement_times is None:\n            return\n\n        # a single time is used for all vials (numbers.Real also covers numpy scalars)\n        if isinstance(replacement_times, numbers.Real):\n            replacement_times = [[replacement_times]] * 4\n\n        # a flat list of times is used for all vials\n        elif isinstance(replacement_times, (list, tuple)) and all(\n            isinstance(t, numbers.Real) for t in replacement_times\n        ):\n            replacement_times = [list(replacement_times)] * 4\n\n        elif isinstance(replacement_times, np.ndarray) and replacement_times.ndim == 1:\n            replacement_times = [replacement_times.tolist()] * 4\n\n        # otherwise one list of times per vial\n        elif len(replacement_times) != 4:\n            raise ValueError(\n                \"replacement_times must be a single value or a list with the same length as the number of vials\"\n            )\n\n        # create the internal events\n        self.events = [\n            self._create_reset_event_vial(i, ts)\n            for i, ts in enumerate(replacement_times)\n        ]",
+          "bases": [
+            "pathsim.blocks.dynsys.DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    conversion_efficiency=0.9,\n    vial_efficiency=0.9,\n    replacement_times=None,\n):\n\n    # input validation\n    if not 0 <= conversion_efficiency <= 1:\n        raise ValueError(\n            \"'conversion_efficiency' must be between 0 and 1 \"\n            f\"but is {conversion_efficiency}\"\n        )\n    if not 0 <= vial_efficiency <= 1:\n        raise ValueError(\n            f\"'vial_efficiency' must be between 0 and 1 but is {vial_efficiency}\"\n        )\n\n    # bubbler parameters\n    self.replacement_times = replacement_times\n    self.vial_efficiency = vial_efficiency\n    self.conversion_efficiency = conversion_efficiency\n\n    # dynamical component, ode rhs\n    def _fn_d(x, u, t):\n\n        # short\n        ve = self.vial_efficiency\n        ce = self.conversion_efficiency\n\n        # unpack inputs\n        sol, ins = u\n\n        # compute vial content change rates\n        dv1 = ve * sol\n        dv2 = dv1 * (1 - ve)\n        dv3 = ve * (ce * ins + (1 - ve) ** 2 * sol)\n        dv4 = dv3 * (1 - ve)\n\n        return np.array([dv1, dv2, dv3, dv4])\n\n    # algebraic output component\n    def _fn_a(x, u, t):\n\n        # short\n        ve = self.vial_efficiency\n        ce = self.conversion_efficiency\n\n        # unpack inputs\n        sol, ins = u\n\n        sample_out = (1 - ce) * ins + (1 - ve) ** 2 * (\n            ce * ins + (1 - ve) ** 2 * sol\n        )\n\n        return np.hstack([x, sample_out])\n\n    # initialization just like `DynamicalSystem` block\n    super().__init__(\n        func_dyn=_fn_d,\n        func_alg=_fn_a,\n        initial_value=np.zeros(4),\n    )\n\n    # create internal vial reset events\n    self._create_reset_events()",
+              "signature": "(conversion_efficiency = 0.9, vial_efficiency = 0.9, replacement_times = None)",
+              "parameters": [
+                {
+                  "name": "conversion_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "vial_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "replacement_times",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_create_reset_event_vial",
+              "description": "Define event action function and return a `ScheduleList` event",
+              "docstring_html": "<p>Define event action function and return a <cite>ScheduleList</cite> event\nper vial <cite>i</cite> that triggers at predefined <cite>reset_times</cite>.</p>\n",
+              "source": "def _create_reset_event_vial(self, i, reset_times):\n    \"\"\"Define event action function and return a `ScheduleList` event\n    per vial `i` that triggers at predefined `reset_times`.\n    \"\"\"\n\n    def reset_vial_i(_):\n        # get the full engine state\n        x = self.engine.get()\n        # set index 'i' to zero\n        x[i] = 0.0\n        # set the full engine state\n        self.engine.set(x)\n\n    return ScheduleList(times_evt=reset_times, func_act=reset_vial_i)",
+              "signature": "(i, reset_times)",
+              "parameters": [
+                {
+                  "name": "i",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "reset_times",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_create_reset_events",
+              "description": "Create reset events for all vials based on the replacement times.",
+              "docstring_html": "<p>Create reset events for all vials based on the replacement times.</p>\n<p><strong>Raises</strong></p>\n<p>ValueError : If reset_times is not valid.</p>\n",
+              "source": "def _create_reset_events(self):\n    \"\"\"Create reset events for all vials based on the replacement times.\n\n    Raises\n    ------\n    ValueError : If reset_times is not valid.\n    \"\"\"\n\n    replacement_times = self.replacement_times\n    self.events = []\n\n    # no replacement\n    if replacement_times is None:\n        return\n\n    # a single time is used for all vials (numbers.Real also covers numpy scalars)\n    if isinstance(replacement_times, numbers.Real):\n        replacement_times = [[replacement_times]] * 4\n\n    # a flat list of times is used for all vials\n    elif isinstance(replacement_times, (list, tuple)) and all(\n        isinstance(t, numbers.Real) for t in replacement_times\n    ):\n        replacement_times = [list(replacement_times)] * 4\n\n    elif isinstance(replacement_times, np.ndarray) and replacement_times.ndim == 1:\n        replacement_times = [replacement_times.tolist()] * 4\n\n    # otherwise one list of times per vial\n    elif len(replacement_times) != 4:\n        raise ValueError(\n            \"replacement_times must be a single value or a list with the same length as the number of vials\"\n        )\n\n    # create the internal events\n    self.events = [\n        self._create_reset_event_vial(i, ts)\n        for i, ts in enumerate(replacement_times)\n    ]",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'sample_in_soluble': 0, 'sample_in_insoluble': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'vial1': 0, 'vial2': 1, 'vial3': 2, 'vial4': 3, 'sample_out': 4}"
+            },
+            {
+              "name": "replacement_times",
+              "description": "",
+              "type": null,
+              "value": "replacement_times"
+            },
+            {
+              "name": "vial_efficiency",
+              "description": "",
+              "type": null,
+              "value": "vial_efficiency"
+            },
+            {
+              "name": "conversion_efficiency",
+              "description": "",
+              "type": null,
+              "value": "conversion_efficiency"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "conversion_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Conversion efficiency from insoluble to soluble forms (:math:`\\alpha_{conv}`), between 0 and 1."
+            },
+            {
+              "name": "vial_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Collection efficiency of each vial (:math:`\\eta_{vial}`), between 0 and 1."
+            },
+            {
+              "name": "replacement_times",
+              "type": null,
+              "default": "None",
+              "description": "Times at which each vial is replaced with a fresh one. If None, no replacement events are created. If a single value is provided, it is used for all vials. If a single list of floats is provided, it will be used for all vials. If a list of four lists is provided, each sublist corresponds to the replacement times for each vial."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_fusion.tritium.glc": {
+      "name": "pathsim_fusion.tritium.glc",
+      "description": "Bubble column gas-liquid contactor model solver.",
+      "docstring_html": "<p>Bubble column gas-liquid contactor model solver.</p>\n<p>This module solves the coupled, non-linear, second-order ordinary differential\nequations that describe tritium transport in a counter-current bubble column,\nbased on the model by C. Malara (1995). The boundary value problem is solved\nwith the native :class:`~pathsim.blocks.BVP1D` block, which warm-starts the\nmesh between evaluations and skips the re-solve when the boundary data is\nunchanged.</p>\n",
+      "classes": [
+        {
+          "name": "GLC",
+          "description": "Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.",
+          "docstring_html": "<p>Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.</p>\n<p>Solves the coupled, non-linear, second-order boundary value problem that\ndescribes tritium transport between a liquid metal (LiPb) stream and a\npurge gas in a counter-current bubble column. The model is based on\nC. Malara (1995) and accounts for axial dispersion, interfacial mass\ntransfer via Sieverts' law, and hydrostatic pressure variation along\nthe column.</p>\n<p>The block is a specialisation of the native :class:`~pathsim.blocks.BVP1D`\nblock: the constructor seeds the parent with the Malara right-hand side and\nboundary conditions, and the four block inputs supply the per-evaluation\nboundary data. The hydrodynamic correlations and dimensionless groups are\ncomputed from the current input inside the collocation callbacks. As for any\n<tt class=\"docutils literal\">BVP1D</tt>, the solve is warm-started from the previous mesh and skipped\nentirely when the input is unchanged. After each solve the dimensionless\nendpoint solution is post-processed into the dimensional output ports.</p>\n<p>Use :meth:`results` to retrieve the full dimensional result dictionary,\nwhich additionally contains partial pressures, physical properties and the\ndimensionless groups.</p>\n<p>Reference: <a class=\"reference external\" href=\"https://doi.org/10.13182/FST95-A30485\">https://doi.org/10.13182/FST95-A30485</a></p>\n<p><strong>Input ports:</strong>\n<tt class=\"docutils literal\">c_T_in</tt> -- dissolved tritium concentration in liquid inlet [mol/m³],\n<tt class=\"docutils literal\">flow_l</tt> -- liquid mass flow rate [kg/s],\n<tt class=\"docutils literal\">y_T2_inlet</tt> -- T₂ mole fraction in inlet gas [-],\n<tt class=\"docutils literal\">flow_g</tt> -- gas mass flow rate [kg/s].</p>\n<p><strong>Output ports:</strong>\n<tt class=\"docutils literal\">c_T_out</tt> -- dissolved tritium concentration in liquid outlet [mol/m³],\n<tt class=\"docutils literal\">y_T2_out</tt> -- T₂ mole fraction in outlet gas [-],\n<tt class=\"docutils literal\">eff</tt> -- extraction efficiency [-],\n<tt class=\"docutils literal\">P_out</tt> -- total gas outlet pressure [Pa],\n<tt class=\"docutils literal\">Q_l</tt> -- liquid volumetric flow rate [m³/s],\n<tt class=\"docutils literal\">Q_g_out</tt> -- gas volumetric flow rate at outlet [m³/s],\n<tt class=\"docutils literal\">n_T_out_liquid</tt> -- tritium molar flow in liquid outlet [mol/s],\n<tt class=\"docutils literal\">n_T_out_gas</tt> -- tritium molar flow in gas outlet [mol/s].</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>P_in <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Inlet operating pressure [Pa].</dd>\n<dt>L <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Column height [m].</dd>\n<dt>D <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Column diameter [m].</dd>\n<dt>T <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Operating temperature [K]. Used to compute temperature-dependent\nLiPb properties (density, viscosity, Sieverts' constant, etc.).</dd>\n<dt>BCs <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">str</span></dt>\n<dd>Boundary condition type for the BVP: <tt class=\"docutils literal\"><span class=\"pre\">&quot;C-C&quot;</span></tt> (closed-closed) or\n<tt class=\"docutils literal\"><span class=\"pre\">&quot;O-C&quot;</span></tt> (open-closed).</dd>\n<dt>g <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>Gravitational acceleration [m/s²]. Default: <tt class=\"docutils literal\">scipy.constants.g</tt>.</dd>\n<dt>initial_nb_of_elements <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int, optional</span></dt>\n<dd>Number of mesh elements for the initial BVP grid. Default: 20.</dd>\n<dt>tol <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>Solver tolerance for the BVP. Default: 1e-5.</dd>\n<dt>max_nodes <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">int, optional</span></dt>\n<dd>Maximum number of mesh nodes allowed during BVP refinement. Default:\n10000.</dd>\n</dl>\n",
+          "source": "class GLC(BVP1D):\n    r\"\"\"Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.\n\n    Solves the coupled, non-linear, second-order boundary value problem that\n    describes tritium transport between a liquid metal (LiPb) stream and a\n    purge gas in a counter-current bubble column. The model is based on\n    C. Malara (1995) and accounts for axial dispersion, interfacial mass\n    transfer via Sieverts' law, and hydrostatic pressure variation along\n    the column.\n\n    The block is a specialisation of the native :class:`~pathsim.blocks.BVP1D`\n    block: the constructor seeds the parent with the Malara right-hand side and\n    boundary conditions, and the four block inputs supply the per-evaluation\n    boundary data. The hydrodynamic correlations and dimensionless groups are\n    computed from the current input inside the collocation callbacks. As for any\n    ``BVP1D``, the solve is warm-started from the previous mesh and skipped\n    entirely when the input is unchanged. After each solve the dimensionless\n    endpoint solution is post-processed into the dimensional output ports.\n\n    Use :meth:`results` to retrieve the full dimensional result dictionary,\n    which additionally contains partial pressures, physical properties and the\n    dimensionless groups.\n\n    Reference: https://doi.org/10.13182/FST95-A30485\n\n    **Input ports:**\n    ``c_T_in`` -- dissolved tritium concentration in liquid inlet [mol/m³],\n    ``flow_l`` -- liquid mass flow rate [kg/s],\n    ``y_T2_inlet`` -- T₂ mole fraction in inlet gas [-],\n    ``flow_g`` -- gas mass flow rate [kg/s].\n\n    **Output ports:**\n    ``c_T_out`` -- dissolved tritium concentration in liquid outlet [mol/m³],\n    ``y_T2_out`` -- T₂ mole fraction in outlet gas [-],\n    ``eff`` -- extraction efficiency [-],\n    ``P_out`` -- total gas outlet pressure [Pa],\n    ``Q_l`` -- liquid volumetric flow rate [m³/s],\n    ``Q_g_out`` -- gas volumetric flow rate at outlet [m³/s],\n    ``n_T_out_liquid`` -- tritium molar flow in liquid outlet [mol/s],\n    ``n_T_out_gas`` -- tritium molar flow in gas outlet [mol/s].\n\n    Parameters\n    ----------\n    P_in : float\n        Inlet operating pressure [Pa].\n    L : float\n        Column height [m].\n    D : float\n        Column diameter [m].\n    T : float\n        Operating temperature [K]. Used to compute temperature-dependent\n        LiPb properties (density, viscosity, Sieverts' constant, etc.).\n    BCs : str\n        Boundary condition type for the BVP: ``\"C-C\"`` (closed-closed) or\n        ``\"O-C\"`` (open-closed).\n    g : float, optional\n        Gravitational acceleration [m/s²]. Default: ``scipy.constants.g``.\n    initial_nb_of_elements : int, optional\n        Number of mesh elements for the initial BVP grid. Default: 20.\n    tol : float, optional\n        Solver tolerance for the BVP. Default: 1e-5.\n    max_nodes : int, optional\n        Maximum number of mesh nodes allowed during BVP refinement. Default:\n        10000.\n    \"\"\"\n\n    input_port_labels: ClassVar[dict[str, int]] = {\n        \"c_T_in\": 0,\n        \"flow_l\": 1,\n        \"y_T2_inlet\": 2,\n        \"flow_g\": 3,\n    }\n    output_port_labels: ClassVar[dict[str, int]] = {\n        \"c_T_out\": 0,\n        \"y_T2_out\": 1,\n        \"eff\": 2,\n        \"P_out\": 3,\n        \"Q_l\": 4,\n        \"Q_g_out\": 5,\n        \"n_T_out_liquid\": 6,\n        \"n_T_out_gas\": 7,\n    }\n\n    def __init__(\n        self,\n        P_in,\n        L,\n        D,\n        T,\n        BCs,\n        g=const.g,\n        initial_nb_of_elements=20,\n        tol=1e-5,\n        max_nodes=10000,\n    ):\n        # fixed operating point and geometry; the four block inputs supply the\n        # per-evaluation boundary data (c_T_in, flow_l, y_T2_inlet, flow_g)\n        self.params = {\n            \"P_in\": P_in,\n            \"L\": L,\n            \"g\": g,\n            \"D\": D,\n            \"T\": T,\n            \"elements\": initial_nb_of_elements,\n            \"BCs\": BCs,\n        }\n        self.BCs = BCs\n\n        # cache of (physical properties, dimensionless groups) keyed on the input\n        # so the hydrodynamic correlations run once per operating point instead of\n        # on every collocation mesh point\n        self._u_cache = None\n        self._phys = None\n        self._dim = None\n\n        # seed the native BVP block with the Malara model physics; sample the two\n        # domain endpoints so the dimensionless outlet/inlet states are available\n        super().__init__(\n            fun=self._ode,\n            bc=self._bc,\n            n=4,\n            domain=(0.0, 1.0),\n            n_nodes=initial_nb_of_elements + 1,\n            x_eval=np.array([0.0, 1.0]),\n            tol=tol,\n            max_nodes=max_nodes,\n        )\n\n    def _physics(self, u):\n        \"\"\"Physical properties and dimensionless groups for the input `u`.\n\n        Cached on `u` so the hydrodynamic correlations (and the gas hold-up\n        root solve) run once per operating point rather than on every mesh\n        point of the collocation solve.\n        \"\"\"\n        if self._u_cache is not None and np.array_equal(u, self._u_cache):\n            return self._phys, self._dim\n\n        c_T_in, flow_l, y_T2_inlet, flow_g = u\n        p = dict(self.params)\n        p[\"c_T_in\"] = c_T_in\n        p[\"flow_l\"] = flow_l\n        p[\"flow_g\"] = flow_g\n        p[\"y_T2_in\"] = y_T2_inlet\n\n        phys = _calculate_properties(p)\n\n        # guard against a non-physical (non-positive) gas outlet pressure\n        P_out = p[\"P_in\"] - phys[\"rho_l\"] * (1 - phys[\"epsilon_g\"]) * g * p[\"L\"]\n        if P_out <= 0:\n            raise ValueError(\n                f\"Calculated gas outlet pressure is non-positive ({P_out:.2e} Pa). \"\n                \"Check input parameters P_in, L, etc.\"\n            )\n\n        dim = _calculate_dimensionless_groups(p, phys)\n\n        self._u_cache = np.array(u, dtype=float)\n        self._phys, self._dim = phys, dim\n        return phys, dim\n\n    def _ode(self, xi, S, p, u):\n        \"\"\"Malara right-hand side, with dimensionless groups derived from `u`.\"\"\"\n        _, dim = self._physics(u)\n        return _ode_system(xi, S, dim)\n\n    def _bc(self, Sa, Sb, p, u):\n        \"\"\"Malara boundary conditions, with groups derived from `u`.\"\"\"\n        _, dim = self._physics(u)\n        y_T2_in = max(u[2], 1e-20)\n        return _boundary_conditions(Sa, Sb, dim, y_T2_in, self.BCs)\n\n    def update(self, t):\n        \"\"\"Solve the BVP and expose the dimensional results at the output ports.\n\n        Delegates the solve to :class:`~pathsim.blocks.BVP1D` (warm-started, and\n        skipped when the input is unchanged), then post-processes the\n        dimensionless endpoint solution into the eight dimensional output ports.\n\n        Parameters\n        ----------\n        t : float\n            evaluation time\n\n        Raises\n        ------\n        RuntimeError\n            if the BVP solve did not converge\n        \"\"\"\n        super().update(t)\n        if not self.success:\n            raise RuntimeError(\"BVP solver failed to converge.\")\n\n        res = self.results()\n        self.outputs.update_from_array(\n            np.array(\n                [\n                    res[\"c_T_outlet [mol/m^3]\"],\n                    res[\"y_T2_outlet_gas\"],\n                    res[\"extraction_efficiency [fraction]\"],\n                    res[\"total_gas_P_outlet [Pa]\"],\n                    res[\"liquid_vol_flow [m^3/s]\"],\n                    res[\"gas_vol_flow_outlet [m^3/s]\"],\n                    res[\"tritium_out_liquid [mol/s]\"],\n                    res[\"tritium_out_gas [mol/s]\"],\n                ]\n            )\n        )\n\n    def results(self):\n        \"\"\"Post-process the current BVP solution into dimensional results.\n\n        Returns\n        -------\n        dict, None\n            Dimensional results (outlet concentration, extraction efficiency,\n            outlet pressure, volumetric flows, tritium molar flows and the mass\n            balance) for the most recent input, or ``None`` if no successful\n            solve has happened yet.\n        \"\"\"\n        if not self.success:\n            return None\n\n        u = self.inputs.to_array()\n        c_T_in, flow_l, y_T2_inlet, flow_g = u\n        p = dict(self.params)\n        p[\"c_T_in\"] = c_T_in\n        p[\"flow_l\"] = flow_l\n        p[\"flow_g\"] = flow_g\n        p[\"y_T2_in\"] = y_T2_inlet\n\n        phys, dim = self._physics(u)\n        return _process_results(self.solution(), p, phys, dim)",
+          "bases": [
+            "pathsim.blocks.BVP1D"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    P_in,\n    L,\n    D,\n    T,\n    BCs,\n    g=const.g,\n    initial_nb_of_elements=20,\n    tol=1e-5,\n    max_nodes=10000,\n):\n    # fixed operating point and geometry; the four block inputs supply the\n    # per-evaluation boundary data (c_T_in, flow_l, y_T2_inlet, flow_g)\n    self.params = {\n        \"P_in\": P_in,\n        \"L\": L,\n        \"g\": g,\n        \"D\": D,\n        \"T\": T,\n        \"elements\": initial_nb_of_elements,\n        \"BCs\": BCs,\n    }\n    self.BCs = BCs\n\n    # cache of (physical properties, dimensionless groups) keyed on the input\n    # so the hydrodynamic correlations run once per operating point instead of\n    # on every collocation mesh point\n    self._u_cache = None\n    self._phys = None\n    self._dim = None\n\n    # seed the native BVP block with the Malara model physics; sample the two\n    # domain endpoints so the dimensionless outlet/inlet states are available\n    super().__init__(\n        fun=self._ode,\n        bc=self._bc,\n        n=4,\n        domain=(0.0, 1.0),\n        n_nodes=initial_nb_of_elements + 1,\n        x_eval=np.array([0.0, 1.0]),\n        tol=tol,\n        max_nodes=max_nodes,\n    )",
+              "signature": "(P_in, L, D, T, BCs, g = const.g, initial_nb_of_elements = 20, tol = 1e-05, max_nodes = 10000)",
+              "parameters": [
+                {
+                  "name": "P_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "L",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "D",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "BCs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "g",
+                  "type": null,
+                  "default": "const.g",
+                  "description": ""
+                },
+                {
+                  "name": "initial_nb_of_elements",
+                  "type": null,
+                  "default": "20",
+                  "description": ""
+                },
+                {
+                  "name": "tol",
+                  "type": null,
+                  "default": "1e-05",
+                  "description": ""
+                },
+                {
+                  "name": "max_nodes",
+                  "type": null,
+                  "default": "10000",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_physics",
+              "description": "Physical properties and dimensionless groups for the input `u`.",
+              "docstring_html": "<p>Physical properties and dimensionless groups for the input <cite>u</cite>.</p>\n<p>Cached on <cite>u</cite> so the hydrodynamic correlations (and the gas hold-up\nroot solve) run once per operating point rather than on every mesh\npoint of the collocation solve.</p>\n",
+              "source": "def _physics(self, u):\n    \"\"\"Physical properties and dimensionless groups for the input `u`.\n\n    Cached on `u` so the hydrodynamic correlations (and the gas hold-up\n    root solve) run once per operating point rather than on every mesh\n    point of the collocation solve.\n    \"\"\"\n    if self._u_cache is not None and np.array_equal(u, self._u_cache):\n        return self._phys, self._dim\n\n    c_T_in, flow_l, y_T2_inlet, flow_g = u\n    p = dict(self.params)\n    p[\"c_T_in\"] = c_T_in\n    p[\"flow_l\"] = flow_l\n    p[\"flow_g\"] = flow_g\n    p[\"y_T2_in\"] = y_T2_inlet\n\n    phys = _calculate_properties(p)\n\n    # guard against a non-physical (non-positive) gas outlet pressure\n    P_out = p[\"P_in\"] - phys[\"rho_l\"] * (1 - phys[\"epsilon_g\"]) * g * p[\"L\"]\n    if P_out <= 0:\n        raise ValueError(\n            f\"Calculated gas outlet pressure is non-positive ({P_out:.2e} Pa). \"\n            \"Check input parameters P_in, L, etc.\"\n        )\n\n    dim = _calculate_dimensionless_groups(p, phys)\n\n    self._u_cache = np.array(u, dtype=float)\n    self._phys, self._dim = phys, dim\n    return phys, dim",
+              "signature": "(u)",
+              "parameters": [
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_ode",
+              "description": "Malara right-hand side, with dimensionless groups derived from `u`.",
+              "docstring_html": "<p>Malara right-hand side, with dimensionless groups derived from <cite>u</cite>.</p>\n",
+              "source": "def _ode(self, xi, S, p, u):\n    \"\"\"Malara right-hand side, with dimensionless groups derived from `u`.\"\"\"\n    _, dim = self._physics(u)\n    return _ode_system(xi, S, dim)",
+              "signature": "(xi, S, p, u)",
+              "parameters": [
+                {
+                  "name": "xi",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "S",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "p",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_bc",
+              "description": "Malara boundary conditions, with groups derived from `u`.",
+              "docstring_html": "<p>Malara boundary conditions, with groups derived from <cite>u</cite>.</p>\n",
+              "source": "def _bc(self, Sa, Sb, p, u):\n    \"\"\"Malara boundary conditions, with groups derived from `u`.\"\"\"\n    _, dim = self._physics(u)\n    y_T2_in = max(u[2], 1e-20)\n    return _boundary_conditions(Sa, Sb, dim, y_T2_in, self.BCs)",
+              "signature": "(Sa, Sb, p, u)",
+              "parameters": [
+                {
+                  "name": "Sa",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "Sb",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "p",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "u",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "update",
+              "description": "Solve the BVP and expose the dimensional results at the output ports.",
+              "docstring_html": "<p>Solve the BVP and expose the dimensional results at the output ports.</p>\n<p>Delegates the solve to :class:`~pathsim.blocks.BVP1D` (warm-started, and\nskipped when the input is unchanged), then post-processes the\ndimensionless endpoint solution into the eight dimensional output ports.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>t <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>evaluation time</dd>\n</dl>\n<p><strong>Raises</strong></p>\n<dl class=\"docutils\">\n<dt>RuntimeError</dt>\n<dd>if the BVP solve did not converge</dd>\n</dl>\n",
+              "source": "def update(self, t):\n    \"\"\"Solve the BVP and expose the dimensional results at the output ports.\n\n    Delegates the solve to :class:`~pathsim.blocks.BVP1D` (warm-started, and\n    skipped when the input is unchanged), then post-processes the\n    dimensionless endpoint solution into the eight dimensional output ports.\n\n    Parameters\n    ----------\n    t : float\n        evaluation time\n\n    Raises\n    ------\n    RuntimeError\n        if the BVP solve did not converge\n    \"\"\"\n    super().update(t)\n    if not self.success:\n        raise RuntimeError(\"BVP solver failed to converge.\")\n\n    res = self.results()\n    self.outputs.update_from_array(\n        np.array(\n            [\n                res[\"c_T_outlet [mol/m^3]\"],\n                res[\"y_T2_outlet_gas\"],\n                res[\"extraction_efficiency [fraction]\"],\n                res[\"total_gas_P_outlet [Pa]\"],\n                res[\"liquid_vol_flow [m^3/s]\"],\n                res[\"gas_vol_flow_outlet [m^3/s]\"],\n                res[\"tritium_out_liquid [mol/s]\"],\n                res[\"tritium_out_gas [mol/s]\"],\n            ]\n        )\n    )",
+              "signature": "(t)",
+              "parameters": [
+                {
+                  "name": "t",
+                  "type": null,
+                  "default": null,
+                  "description": "evaluation time"
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "results",
+              "description": "Post-process the current BVP solution into dimensional results.",
+              "docstring_html": "<p>Post-process the current BVP solution into dimensional results.</p>\n<p><strong>Returns</strong></p>\n<dl class=\"docutils\">\n<dt>dict, None</dt>\n<dd>Dimensional results (outlet concentration, extraction efficiency,\noutlet pressure, volumetric flows, tritium molar flows and the mass\nbalance) for the most recent input, or <tt class=\"docutils literal\">None</tt> if no successful\nsolve has happened yet.</dd>\n</dl>\n",
+              "source": "def results(self):\n    \"\"\"Post-process the current BVP solution into dimensional results.\n\n    Returns\n    -------\n    dict, None\n        Dimensional results (outlet concentration, extraction efficiency,\n        outlet pressure, volumetric flows, tritium molar flows and the mass\n        balance) for the most recent input, or ``None`` if no successful\n        solve has happened yet.\n    \"\"\"\n    if not self.success:\n        return None\n\n    u = self.inputs.to_array()\n    c_T_in, flow_l, y_T2_inlet, flow_g = u\n    p = dict(self.params)\n    p[\"c_T_in\"] = c_T_in\n    p[\"flow_l\"] = flow_l\n    p[\"flow_g\"] = flow_g\n    p[\"y_T2_in\"] = y_T2_inlet\n\n    phys, dim = self._physics(u)\n    return _process_results(self.solution(), p, phys, dim)",
+              "signature": "()",
+              "parameters": [],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'c_T_in': 0, 'flow_l': 1, 'y_T2_inlet': 2, 'flow_g': 3}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'c_T_out': 0, 'y_T2_out': 1, 'eff': 2, 'P_out': 3, 'Q_l': 4, 'Q_g_out': 5, 'n_T_out_liquid': 6, 'n_T_out_gas': 7}"
+            },
+            {
+              "name": "params",
+              "description": "",
+              "type": null,
+              "value": "{'P_in': P_in, 'L': L, 'g': g, 'D': D, 'T': T, 'elements': initial_nb_of_elements, 'BCs': BCs}"
+            },
+            {
+              "name": "BCs",
+              "description": "",
+              "type": null,
+              "value": "BCs"
+            },
+            {
+              "name": "_u_cache",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "_phys",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "_dim",
+              "description": "",
+              "type": null,
+              "value": "None"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "P_in",
+              "type": null,
+              "default": null,
+              "description": "Inlet operating pressure [Pa]."
+            },
+            {
+              "name": "L",
+              "type": null,
+              "default": null,
+              "description": "Column height [m]."
+            },
+            {
+              "name": "D",
+              "type": null,
+              "default": null,
+              "description": "Column diameter [m]."
+            },
+            {
+              "name": "T",
+              "type": null,
+              "default": null,
+              "description": "Operating temperature [K]. Used to compute temperature-dependent LiPb properties (density, viscosity, Sieverts' constant, etc.)."
+            },
+            {
+              "name": "BCs",
+              "type": null,
+              "default": null,
+              "description": "Boundary condition type for the BVP: ``\"C-C\"`` (closed-closed) or ``\"O-C\"`` (open-closed)."
+            },
+            {
+              "name": "g",
+              "type": null,
+              "default": "const.g",
+              "description": "Gravitational acceleration [m/s²]. Default: ``scipy.constants.g``."
+            },
+            {
+              "name": "initial_nb_of_elements",
+              "type": null,
+              "default": "20",
+              "description": "Number of mesh elements for the initial BVP grid. Default: 20."
+            },
+            {
+              "name": "tol",
+              "type": null,
+              "default": "1e-05",
+              "description": "Solver tolerance for the BVP. Default: 1e-5."
+            },
+            {
+              "name": "max_nodes",
+              "type": null,
+              "default": "10000",
+              "description": "Maximum number of mesh nodes allowed during BVP refinement. Default: 10000."
+            }
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "_calculate_properties",
+          "description": "Calculate temperature-dependent and geometry-dependent physical properties.",
+          "docstring_html": "<p>Calculate temperature-dependent and geometry-dependent physical properties.</p>\n<p>This function computes fluid properties, flow characteristics,\ndimensionless numbers, and hydrodynamic parameters based on the input\ngeometry and operating conditions.</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>params (dict): Dictionary of input parameters including T, D, Flow_l,</dt>\n<dd>Flow_g, and P_0.</dd>\n</dl>\n</dd>\n<dt>Returns:</dt>\n<dd>dict: A dictionary containing the calculated physical properties.</dd>\n</dl>\n",
+          "source": "def _calculate_properties(params):\n    \"\"\"\n    Calculate temperature-dependent and geometry-dependent physical properties.\n\n    This function computes fluid properties, flow characteristics,\n    dimensionless numbers, and hydrodynamic parameters based on the input\n    geometry and operating conditions.\n\n    Args:\n        params (dict): Dictionary of input parameters including T, D, Flow_l,\n                       Flow_g, and P_0.\n\n    Returns:\n        dict: A dictionary containing the calculated physical properties.\n    \"\"\"\n    T = params[\"T\"]\n    D = params[\"D\"]\n    flow_l = params[\"flow_l\"]\n    flow_g = params[\"flow_g\"]\n    P_in = params[\"P_in\"]\n\n    # --- Fluid Properties (Temperature Dependent) ---\n    # TODO add references\n    rho_l = 10.45e3 * (1 - 1.61e-4 * T)  # kg/m^3, Liquid (LiPb) density\n    sigma_l = 0.52 - 0.11e-3 * T  # N/m, Surface tension, liquid-gas interface\n    mu_l = 1.87e-4 * np.exp(11640 / (R * T))  # Pa.s, Dynamic viscosity of liquid\n    nu_l = mu_l / rho_l  # m^2/s, Kinematic viscosity of liquid\n    D_T = 2.5e-7 * np.exp(-27000 / (R * T))  # m^2/s, Tritium diffusion coeff\n    K_s_at = 2.32e-8 * np.exp(-1350 / (R * T))  # atfrac*Pa^0.5, Sievert's const\n    K_s = K_s_at * (rho_l / (M_LiPb * N_A))  # mol/(m^3·Pa^0.5)\n\n    # --- Flow Properties ---\n    A = np.pi * (D / 2) ** 2  # m^2, Cross-sectional area\n    Q_l = flow_l / rho_l  # m^3/s, Volumetric liquid flow rate\n    Q_g = (flow_g * R * T) / P_in  # m^3/s, Volumetric gas flow rate at inlet\n    u_l = Q_l / A  # m/s, Superficial liquid velocity\n    u_g0 = Q_g / A  # m/s, Superficial gas velocity at inlet\n\n    # --- Dimensionless Numbers for Correlations ---\n    Bn = (g * D**2 * rho_l) / sigma_l  # Bond number\n    Ga = (g * D**3) / nu_l**2  # Galilei number\n    Sc = nu_l / D_T  # Schmidt number\n    Fr = u_g0 / (g * D) ** 0.5  # Froude number\n\n    # --- Hydrodynamic and Mass Transfer Parameters ---\n    # Gas hold-up (ε_g) from correlation: C = ε_g / (1 - ε_g)^4\n    C = 0.2 * (Bn ** (1 / 8)) * (Ga ** (1 / 12)) * Fr\n\n    def _f_holdup(e, C_val):\n        return e / (1 - e) ** 4 - C_val\n\n    try:\n        sol = root_scalar(_f_holdup, args=(C,), bracket=[1e-12, 1 - 1e-12])\n        epsilon_g = sol.root\n    except Exception as exc:\n        raise RuntimeError(\"Failed to solve for gas hold-up ε_g\") from exc\n\n    epsilon_l = 1 - epsilon_g  # Liquid phase fraction\n\n    # Dispersion coefficients\n    E_l = (D * u_g0) / ((13 * Fr) / (1 + 6.5 * (Fr**0.8)))\n    E_g = (0.2 * D**2) * u_g0\n\n    # Interfacial area and mass transfer coefficients\n    d_b = (26 * (Bn**-0.5) * (Ga**-0.12) * (Fr**-0.12)) * D\n    a = 6 * epsilon_g / d_b\n    h_l_a = D_T * (0.6 * Sc**0.5 * Bn**0.62 * Ga**0.31 * epsilon_g**1.1) / (D**2)\n    h_l = h_l_a / a  # Mass transfer coefficient\n\n    return {\n        \"rho_l\": rho_l,\n        \"sigma_l\": sigma_l,\n        \"mu_l\": mu_l,\n        \"nu_l\": nu_l,\n        \"K_s\": K_s,\n        \"Q_l\": Q_l,\n        \"Q_g\": Q_g,\n        \"u_l\": u_l,\n        \"u_g0\": u_g0,\n        \"epsilon_g\": epsilon_g,\n        \"epsilon_l\": epsilon_l,\n        \"E_l\": E_l,\n        \"E_g\": E_g,\n        \"a\": a,\n        \"h_l\": h_l,\n    }",
+          "signature": "(params)",
+          "parameters": [
+            {
+              "name": "params",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        },
+        {
+          "name": "_calculate_dimensionless_groups",
+          "description": "Calculate the dimensionless groups for the ODE system.",
+          "docstring_html": "<p>Calculate the dimensionless groups for the ODE system.</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>params (dict): Dictionary of input parameters including L, T, P_in,</dt>\n<dd>and c_T_inlet.</dd>\n<dt>phys_props (dict): Dictionary of physical properties calculated by</dt>\n<dd>_calculate_properties.</dd>\n</dl>\n</dd>\n<dt>Returns:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>dict: A dictionary containing the dimensionless groups (Bo_l, phi_l,</dt>\n<dd>Bo_g, phi_g, psi, nu).</dd>\n</dl>\n</dd>\n</dl>\n",
+          "source": "def _calculate_dimensionless_groups(params, phys_props):\n    \"\"\"\n    Calculate the dimensionless groups for the ODE system.\n\n    Args:\n        params (dict): Dictionary of input parameters including L, T, P_in,\n                       and c_T_inlet.\n        phys_props (dict): Dictionary of physical properties calculated by\n                           _calculate_properties.\n\n    Returns:\n        dict: A dictionary containing the dimensionless groups (Bo_l, phi_l,\n              Bo_g, phi_g, psi, nu).\n    \"\"\"\n    # Unpack parameters\n    L, T, P_in, c_T_in = (\n        params[\"L\"],\n        params[\"T\"],\n        params[\"P_in\"],\n        params[\"c_T_in\"],\n    )\n\n    # Unpack physical properties\n    rho_l, K_s, u_l, u_g0, epsilon_g, epsilon_l, E_l, E_g, a, h_l = (\n        phys_props[\"rho_l\"],\n        phys_props[\"K_s\"],\n        phys_props[\"u_l\"],\n        phys_props[\"u_g0\"],\n        phys_props[\"epsilon_g\"],\n        phys_props[\"epsilon_l\"],\n        phys_props[\"E_l\"],\n        phys_props[\"E_g\"],\n        phys_props[\"a\"],\n        phys_props[\"h_l\"],\n    )\n\n    # Calculate dimensionless groups\n    psi = (rho_l * g * epsilon_l * L) / P_in  # Hydrostatic pressure ratio\n    nu = ((c_T_in / K_s) ** 2) / P_in  # Equilibrium ratio\n    Bo_l = u_l * L / (epsilon_l * E_l)  # Bodenstein number, liquid\n    phi_l = a * h_l * L / u_l  # Transfer units, liquid\n    Bo_g = u_g0 * L / (epsilon_g * E_g)  # Bodenstein number, gas\n    phi_g = 0.5 * (R * T * c_T_in / P_in) * (a * h_l * L / u_g0)\n\n    return {\n        \"Bo_l\": Bo_l,\n        \"phi_l\": phi_l,\n        \"Bo_g\": Bo_g,\n        \"phi_g\": phi_g,\n        \"psi\": psi,\n        \"nu\": nu,\n    }",
+          "signature": "(params, phys_props)",
+          "parameters": [
+            {
+              "name": "params",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "phys_props",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        },
+        {
+          "name": "_ode_system",
+          "description": "First-order ODE system (4 equations) of the dimensionless GLC model.",
+          "docstring_html": "<p>First-order ODE system (4 equations) of the dimensionless GLC model.</p>\n<p>The state is <tt class=\"docutils literal\">S = [x_T, dx_T/d(xi), y_T2, dy_T2/d(xi)]</tt>. The signature\nmatches what the native :class:`~pathsim.blocks.BVP1D` block expects, with\nthe spatial mesh <tt class=\"docutils literal\">xi</tt> of shape <tt class=\"docutils literal\">(m,)</tt> and the state <tt class=\"docutils literal\">S</tt> of shape\n<tt class=\"docutils literal\">(4, m)</tt>.</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd>xi (numpy.ndarray): Dimensionless axial coordinate, shape <tt class=\"docutils literal\">(m,)</tt>.\nS (numpy.ndarray): State, shape <tt class=\"docutils literal\">(4, m)</tt>.\ndim (dict): Dimensionless groups (Bo_l, phi_l, Bo_g, phi_g, psi, nu).</dd>\n<dt>Returns:</dt>\n<dd>numpy.ndarray: Derivatives <tt class=\"docutils literal\">dS/d(xi)</tt>, shape <tt class=\"docutils literal\">(4, m)</tt>.</dd>\n</dl>\n",
+          "source": "def _ode_system(xi, S, dim):\n    \"\"\"First-order ODE system (4 equations) of the dimensionless GLC model.\n\n    The state is ``S = [x_T, dx_T/d(xi), y_T2, dy_T2/d(xi)]``. The signature\n    matches what the native :class:`~pathsim.blocks.BVP1D` block expects, with\n    the spatial mesh ``xi`` of shape ``(m,)`` and the state ``S`` of shape\n    ``(4, m)``.\n\n    Args:\n        xi (numpy.ndarray): Dimensionless axial coordinate, shape ``(m,)``.\n        S (numpy.ndarray): State, shape ``(4, m)``.\n        dim (dict): Dimensionless groups (Bo_l, phi_l, Bo_g, phi_g, psi, nu).\n\n    Returns:\n        numpy.ndarray: Derivatives ``dS/d(xi)``, shape ``(4, m)``.\n    \"\"\"\n    Bo_l, phi_l, Bo_g, phi_g, psi, nu = (\n        dim[\"Bo_l\"],\n        dim[\"phi_l\"],\n        dim[\"Bo_g\"],\n        dim[\"phi_g\"],\n        dim[\"psi\"],\n        dim[\"nu\"],\n    )\n\n    x_T, dx_T_dxi, y_T2, dy_T2_dxi = S\n    theta = x_T - np.sqrt(np.maximum(0, (1 - psi * xi) * y_T2 / nu))\n\n    dS0_dxi = dx_T_dxi  # d(x_T)/d(xi)\n    dS1_dxi = Bo_l * (phi_l * theta - dx_T_dxi)  # d^2(x_T)/d(xi)^2\n    dS2_dxi = dy_T2_dxi  # d(y_T2)/d(xi)\n    term1 = (1 + 2 * psi / Bo_g) * dy_T2_dxi\n    term2 = phi_g * theta\n    dS3_dxi = (Bo_g / (1 - psi * xi)) * (term1 - term2)  # d^2(y_T2)/d(xi)^2\n\n    return np.vstack((dS0_dxi, dS1_dxi, dS2_dxi, dS3_dxi))",
+          "signature": "(xi, S, dim)",
+          "parameters": [
+            {
+              "name": "xi",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "S",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "dim",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        },
+        {
+          "name": "_boundary_conditions",
+          "description": "Boundary-condition residuals at xi=0 (Sa) and xi=1 (Sb).",
+          "docstring_html": "<p>Boundary-condition residuals at xi=0 (Sa) and xi=1 (Sb).</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd>Sa (numpy.ndarray): State at xi=0 (liquid outlet).\nSb (numpy.ndarray): State at xi=1 (liquid inlet).\ndim (dict): Dimensionless groups (uses Bo_l, Bo_g).\ny_T2_in (float): Inlet mole fraction of T2 in the gas phase.\nBCs (str): Boundary-condition type, <tt class=\"docutils literal\"><span class=\"pre\">&quot;C-C&quot;</span></tt> or <tt class=\"docutils literal\"><span class=\"pre\">&quot;O-C&quot;</span></tt>.</dd>\n<dt>Returns:</dt>\n<dd>numpy.ndarray: The four boundary-condition residuals.</dd>\n<dt>Raises:</dt>\n<dd>ValueError: If <tt class=\"docutils literal\">BCs</tt> is not a recognised type.</dd>\n</dl>\n",
+          "source": "def _boundary_conditions(Sa, Sb, dim, y_T2_in, BCs):\n    \"\"\"Boundary-condition residuals at xi=0 (Sa) and xi=1 (Sb).\n\n    Args:\n        Sa (numpy.ndarray): State at xi=0 (liquid outlet).\n        Sb (numpy.ndarray): State at xi=1 (liquid inlet).\n        dim (dict): Dimensionless groups (uses Bo_l, Bo_g).\n        y_T2_in (float): Inlet mole fraction of T2 in the gas phase.\n        BCs (str): Boundary-condition type, ``\"C-C\"`` or ``\"O-C\"``.\n\n    Returns:\n        numpy.ndarray: The four boundary-condition residuals.\n\n    Raises:\n        ValueError: If ``BCs`` is not a recognised type.\n    \"\"\"\n    Bo_l, Bo_g = dim[\"Bo_l\"], dim[\"Bo_g\"]\n\n    if BCs == \"C-C\":  # Closed-Closed\n        res1 = Sa[1]  # dx_T/d(xi) = 0 at xi=0\n        res2 = Sb[0] - (1 - (1 / Bo_l) * Sb[1])  # x_T(1) = 1 - ...\n        res3 = Sa[2] - y_T2_in - (1 / Bo_g) * Sa[3]  # y_T2(0) = y_T2_in + ...\n        res4 = Sb[3]  # dy_T2/d(xi) = 0 at xi=1\n    elif BCs == \"O-C\":  # Open-Closed\n        res1 = Sa[1]  # dx_T/d(xi) = 0 at xi=0\n        res2 = Sb[0] - 1.0  # x_T(1) = 1\n        res3 = Sa[2] - y_T2_in  # y_T2(0) = y_T2_in\n        res4 = Sb[3]  # dy_T2/d(xi) = 0 at xi=1\n    else:\n        raise ValueError(f\"Unknown boundary condition type: {BCs!r}\")\n\n    return np.array([res1, res2, res3, res4])",
+          "signature": "(Sa, Sb, dim, y_T2_in, BCs)",
+          "parameters": [
+            {
+              "name": "Sa",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "Sb",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "dim",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "y_T2_in",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "BCs",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        },
+        {
+          "name": "_process_results",
+          "description": "Process the BVP solution to produce dimensional results.",
+          "docstring_html": "<p>Process the BVP solution to produce dimensional results.</p>\n<p>This function converts the dimensionless solution of the BVP back into\ndimensional quantities, calculates the extraction efficiency, performs a\nmass balance check, and aggregates all results.</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd><dl class=\"first docutils\">\n<dt>S_ends (numpy.ndarray): Solution sampled at the domain endpoints,</dt>\n<dd>shape <tt class=\"docutils literal\">(4, 2)</tt> with column 0 at xi=0 (liquid outlet) and column 1\nat xi=1 (liquid inlet).</dd>\n</dl>\n<p class=\"last\">params (dict): The original input parameters.\nphys_props (dict): The calculated physical properties.\ndim_params (dict): The calculated dimensionless groups.</p>\n</dd>\n<dt>Returns:</dt>\n<dd>dict: The dimensional results dictionary.</dd>\n</dl>\n",
+          "source": "def _process_results(S_ends, params, phys_props, dim_params):\n    \"\"\"\n    Process the BVP solution to produce dimensional results.\n\n    This function converts the dimensionless solution of the BVP back into\n    dimensional quantities, calculates the extraction efficiency, performs a\n    mass balance check, and aggregates all results.\n\n    Args:\n        S_ends (numpy.ndarray): Solution sampled at the domain endpoints,\n            shape ``(4, 2)`` with column 0 at xi=0 (liquid outlet) and column 1\n            at xi=1 (liquid inlet).\n        params (dict): The original input parameters.\n        phys_props (dict): The calculated physical properties.\n        dim_params (dict): The calculated dimensionless groups.\n\n    Returns:\n        dict: The dimensional results dictionary.\n    \"\"\"\n\n    # Unpack parameters\n    c_T_in, P_in, T = params[\"c_T_in\"], params[\"P_in\"], params[\"T\"]\n    y_T2_in = params[\"y_T2_in\"]\n\n    # Dimensionless results (xi=0 -> column 0, xi=1 -> column 1)\n    x_T_outlet_dimless = S_ends[0, 0]\n    Q_l, Q_g = phys_props[\"Q_l\"], phys_props[\"Q_g\"]\n    y_T2_out = S_ends[2, 1]\n    efficiency = 1 - x_T_outlet_dimless\n\n    # Dimensional results\n    c_T_out = x_T_outlet_dimless * c_T_in\n    P_out = P_in * (1 - dim_params[\"psi\"])\n    P_T2_out = y_T2_out * P_out\n    P_T2_in = y_T2_in * P_in\n\n    # Tritium molar flows from the converged solution (mol/s). Each T2 molecule\n    # carries two tritium atoms.\n    n_T_in_liquid = c_T_in * Q_l\n    n_T_in_gas = 2 * P_T2_in * Q_g / (R * T)\n    n_T_out_liquid = c_T_out * Q_l\n    Q_g_out = Q_g * (P_in / P_out)  # m3/s\n    n_T_out_gas = 2 * P_T2_out * Q_g_out / (R * T)\n\n    n_T_in = n_T_in_liquid + n_T_in_gas\n    n_T_out = n_T_out_liquid + n_T_out_gas\n\n    # Mass-balance residual reported as a diagnostic. For closed-closed (C-C)\n    # boundary conditions it is at numerical-noise level; for open-closed (O-C)\n    # it reflects the dispersive flux neglected by the open inlet condition.\n    return {\n        \"c_T_outlet [mol/m^3]\": c_T_out,\n        \"y_T2_outlet_gas\": y_T2_out,\n        \"extraction_efficiency [fraction]\": efficiency,\n        \"total_gas_P_outlet [Pa]\": P_out,\n        \"liquid_vol_flow [m^3/s]\": Q_l,\n        \"gas_vol_flow_outlet [m^3/s]\": Q_g_out,\n        \"tritium_out_liquid [mol/s]\": n_T_out_liquid,\n        \"tritium_out_gas [mol/s]\": n_T_out_gas,\n        \"Total tritium in [mol/s]\": n_T_in,\n        \"Total tritium out [mol/s]\": n_T_out,\n        \"mass_balance_residual [mol/s]\": n_T_in - n_T_out,\n    }",
+          "signature": "(S_ends, params, phys_props, dim_params)",
+          "parameters": [
+            {
+              "name": "S_ends",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "params",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "phys_props",
+              "type": null,
+              "default": null,
+              "description": ""
+            },
+            {
+              "name": "dim_params",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        }
+      ]
+    },
+    "pathsim_fusion.tritium.ionisation_chamber": {
+      "name": "pathsim_fusion.tritium.ionisation_chamber",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "IonisationChamber",
+          "description": "Ionisation chamber for tritium detection.",
+          "docstring_html": "<p>Ionisation chamber for tritium detection.</p>\n<p>Algebraic block that models a flow-through ionisation chamber. The sample\npasses through unchanged while the chamber produces a signal proportional\nto the tritium concentration, scaled by a detection efficiency.</p>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<p>The chamber receives a tritium flux and flow rate, computes the\nconcentration, and applies the detection efficiency:</p>\n<pre class=\"math\">\nc = \\frac{\\Phi_{in}}{\\dot{V}}\n</pre>\n<pre class=\"math\">\n\\text{signal} = \\varepsilon(c) \\cdot c\n</pre>\n<pre class=\"math\">\n\\Phi_{out} = \\Phi_{in}\n</pre>\n<p>where <tt class=\"math\">\\varepsilon</tt> is the detection efficiency (constant or\nconcentration-dependent).</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>detection_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float or callable, optional</span></dt>\n<dd>Constant efficiency factor or a function <tt class=\"docutils literal\">f(c) <span class=\"pre\">-&gt;</span> float</tt> that\nreturns the efficiency for a given concentration. Mutually\nexclusive with <em>detection_threshold</em>.</dd>\n<dt>detection_threshold <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float, optional</span></dt>\n<dd>If provided, the efficiency is a step function: 1 above the\nthreshold, 0 below. Mutually exclusive with <em>detection_efficiency</em>.</dd>\n</dl>\n</div>\n",
+          "source": "class IonisationChamber(Function):\n    \"\"\"Ionisation chamber for tritium detection.\n\n    Algebraic block that models a flow-through ionisation chamber. The sample\n    passes through unchanged while the chamber produces a signal proportional\n    to the tritium concentration, scaled by a detection efficiency.\n\n    Mathematical Formulation\n    -------------------------\n    The chamber receives a tritium flux and flow rate, computes the\n    concentration, and applies the detection efficiency:\n\n    .. math::\n\n        c = \\\\frac{\\\\Phi_{in}}{\\\\dot{V}}\n\n    .. math::\n\n        \\\\text{signal} = \\\\varepsilon(c) \\\\cdot c\n\n    .. math::\n\n        \\\\Phi_{out} = \\\\Phi_{in}\n\n    where :math:`\\\\varepsilon` is the detection efficiency (constant or\n    concentration-dependent).\n\n    Parameters\n    ----------\n    detection_efficiency : float or callable, optional\n        Constant efficiency factor or a function ``f(c) -> float`` that\n        returns the efficiency for a given concentration. Mutually\n        exclusive with *detection_threshold*.\n    detection_threshold : float, optional\n        If provided, the efficiency is a step function: 1 above the\n        threshold, 0 below. Mutually exclusive with *detection_efficiency*.\n    \"\"\"\n\n    input_port_labels: ClassVar[dict[str, int]] = {\n        \"flux_in\": 0,\n        \"flow_rate\": 1,\n    }\n\n    output_port_labels: ClassVar[dict[str, int]] = {\n        \"flux_out\": 0,\n        \"signal\": 1,\n    }\n\n    def __init__(self, detection_efficiency=None, detection_threshold=None):\n\n        # input validation\n        if detection_efficiency is not None and detection_threshold is not None:\n            raise ValueError(\n                \"Specify either 'detection_efficiency' or 'detection_threshold', not both\"\n            )\n        if detection_efficiency is None and detection_threshold is None:\n            raise ValueError(\n                \"One of 'detection_efficiency' or 'detection_threshold' must be provided\"\n            )\n\n        if detection_threshold is not None:\n            self.detection_efficiency = lambda c: (\n                1.0 if c >= detection_threshold else 0.0\n            )\n        else:\n            self.detection_efficiency = detection_efficiency\n\n        self.detection_threshold = detection_threshold\n\n        super().__init__(func=self._eval)\n\n    def _eval(self, flux_in, flow_rate):\n        concentration = flux_in / flow_rate if flow_rate > 0 else 0.0\n\n        eff = self.detection_efficiency\n        epsilon = eff(concentration) if callable(eff) else eff\n\n        signal = epsilon * concentration\n        flux_out = flux_in\n\n        return (flux_out, signal)",
+          "bases": [
+            "pathsim.blocks.function.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(self, detection_efficiency=None, detection_threshold=None):\n\n    # input validation\n    if detection_efficiency is not None and detection_threshold is not None:\n        raise ValueError(\n            \"Specify either 'detection_efficiency' or 'detection_threshold', not both\"\n        )\n    if detection_efficiency is None and detection_threshold is None:\n        raise ValueError(\n            \"One of 'detection_efficiency' or 'detection_threshold' must be provided\"\n        )\n\n    if detection_threshold is not None:\n        self.detection_efficiency = lambda c: (\n            1.0 if c >= detection_threshold else 0.0\n        )\n    else:\n        self.detection_efficiency = detection_efficiency\n\n    self.detection_threshold = detection_threshold\n\n    super().__init__(func=self._eval)",
+              "signature": "(detection_efficiency = None, detection_threshold = None)",
+              "parameters": [
+                {
+                  "name": "detection_efficiency",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "detection_threshold",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "_eval",
+              "description": "",
+              "docstring_html": "",
+              "source": "def _eval(self, flux_in, flow_rate):\n    concentration = flux_in / flow_rate if flow_rate > 0 else 0.0\n\n    eff = self.detection_efficiency\n    epsilon = eff(concentration) if callable(eff) else eff\n\n    signal = epsilon * concentration\n    flux_out = flux_in\n\n    return (flux_out, signal)",
+              "signature": "(flux_in, flow_rate)",
+              "parameters": [
+                {
+                  "name": "flux_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "flow_rate",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'flux_in': 0, 'flow_rate': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": "dict[str, int]",
+              "value": "{'flux_out': 0, 'signal': 1}"
+            },
+            {
+              "name": "detection_efficiency",
+              "description": "",
+              "type": null,
+              "value": "lambda c: 1.0 if c >= detection_threshold else 0.0"
+            },
+            {
+              "name": "detection_threshold",
+              "description": "",
+              "type": null,
+              "value": "detection_threshold"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "detection_efficiency",
+              "type": null,
+              "default": "None",
+              "description": "Constant efficiency factor or a function ``f(c) -> float`` that returns the efficiency for a given concentration. Mutually exclusive with *detection_threshold*."
+            },
+            {
+              "name": "detection_threshold",
+              "type": null,
+              "default": "None",
+              "description": "If provided, the efficiency is a step function: 1 above the threshold, 0 below. Mutually exclusive with *detection_efficiency*."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    }
+  }
+}
