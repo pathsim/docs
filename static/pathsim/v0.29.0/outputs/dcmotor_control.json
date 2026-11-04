@@ -1,0 +1,20 @@
+{
+  "cells": {
+    "20": {
+      "stdout": "13:45:28 - INFO - LOGGING (log: True)\n13:45:28 - INFO - BLOCKS (total: 17, dynamic: 3, static: 14, eventful: 2)\n13:45:28 - INFO - GRAPH (nodes: 17, edges: 22, alg. depth: 6, loop depth: 0, runtime: 0.197ms)\n13:45:28 - INFO - STARTING -> TRANSIENT (Duration: 30.00s)\n13:45:28 - INFO - --------------------   1% | 0.1s<3.6s | 1617.9 it/s\n13:45:29 - INFO - ####----------------  20% | 0.7s<2.1s | 1825.6 it/s\n13:45:30 - INFO - ########------------  40% | 1.5s<2.8s | 1431.6 it/s\n13:45:30 - INFO - ############--------  60% | 2.1s<1.2s | 1643.2 it/s\n13:45:31 - INFO - ################----  80% | 2.9s<1.0s | 1482.3 it/s\n13:45:32 - INFO - #################### 100% | 3.6s<--:-- | 1499.5 it/s\n13:45:32 - INFO - FINISHED -> TRANSIENT (total steps: 5826, successful: 4938, runtime: 3649.42 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "22": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "dcmotor_control_0.svg",
+        "dcmotor_control_1.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-11-04T13:45:33.291441+00:00",
+  "duration": 6896,
+  "success": true
+}

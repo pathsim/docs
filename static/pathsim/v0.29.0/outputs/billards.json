@@ -1,0 +1,31 @@
+{
+  "cells": {
+    "11": {
+      "stdout": "13:45:19 - INFO - LOGGING (log: True)\n13:45:19 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n13:45:19 - INFO - GRAPH (nodes: 4, edges: 3, alg. depth: 1, loop depth: 0, runtime: 0.060ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "12": {
+      "stdout": "13:45:19 - INFO - STARTING -> TRANSIENT (Duration: 7.00s)\n13:45:19 - INFO - --------------------   1% | 0.0s<0.1s | 5442.3 it/s\n13:45:19 - INFO - ####----------------  20% | 0.0s<0.1s | 6096.1 it/s\n13:45:19 - INFO - ########------------  40% | 0.1s<0.1s | 9477.7 it/s\n13:45:19 - INFO - ############--------  60% | 0.1s<0.0s | 8379.6 it/s\n13:45:19 - INFO - ################----  80% | 0.1s<0.0s | 6362.7 it/s\n13:45:19 - INFO - #################### 100% | 0.1s<--:-- | 6415.1 it/s\n13:45:19 - INFO - FINISHED -> TRANSIENT (total steps: 818, successful: 778, runtime: 148.59 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "14": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "billards_0.svg"
+      ]
+    },
+    "16": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "billards_1.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-11-04T13:45:20.618008+00:00",
+  "duration": 3614,
+  "success": true
+}
