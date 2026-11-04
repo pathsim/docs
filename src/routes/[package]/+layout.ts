@@ -2,13 +2,12 @@ import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 import { packages, type PackageId } from '$lib/config/packages';
 import { getPackageManifest } from '$lib/api/versions';
-import { versionStore } from '$lib/stores/versionStore';
 
 const validPackageIds = new Set<string>(Object.keys(packages));
 
 /**
  * Top-level loader for an unversioned package URL like /pathsim or /batt.
- * Loads the package manifest and picks a tag (stored preference or latest)
+ * Loads the package manifest and picks the latest tag
  * so the overview page can show the version selector + sidebar links.
  *
  * The deeper /[package]/[version]/ layout supersedes the `selectedTag` value
@@ -23,8 +22,7 @@ export const load: LayoutLoad = async ({ params, fetch }) => {
 
 	try {
 		const manifest = await getPackageManifest(packageId, fetch);
-		const stored = versionStore.getVersionSync(packageId as PackageId);
-		const selectedTag = stored || manifest.latestTag;
+		const selectedTag = manifest.latestTag;
 
 		return {
 			packageId: packageId as PackageId,
