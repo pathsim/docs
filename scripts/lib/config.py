@@ -126,6 +126,19 @@ PACKAGES = {
         ],
         "required": False,
     },
+    "fusion": {
+        "repo": ROOT_DIR / "pathsim-fusion",
+        "source": ROOT_DIR / "pathsim-fusion" / "src",
+        "notebooks": ROOT_DIR / "pathsim-fusion" / "docs" / "source" / "examples",
+        "figures": ROOT_DIR / "pathsim-fusion" / "docs" / "source" / "examples" / "figures",
+        "display_name": "PathSim-Fusion",
+        "griffe_package": "pathsim_fusion",
+        "github_repo": "pathsim/pathsim-fusion",
+        "root_modules": [
+            "pathsim_fusion",
+        ],
+        "required": False,
+    },
 }
 
 # Minimum supported versions per package
@@ -139,6 +152,7 @@ MIN_SUPPORTED_VERSIONS = {
     "flight": "0.1",
     "rf": "0.1",
     "fmi": "0.1",
+    "fusion": "0.1",
 }
 
 # Patterns to skip during API extraction. Substring match against the dotted
