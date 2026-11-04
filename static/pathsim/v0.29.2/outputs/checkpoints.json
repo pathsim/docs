@@ -1,0 +1,36 @@
+{
+  "cells": {
+    "9": {
+      "stdout": "17:24:42 - INFO - LOGGING (log: True)\n17:24:42 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n17:24:42 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.058ms)\n17:24:42 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n17:24:42 - INFO - --------------------   1% | 0.0s<0.6s | 10444.5 it/s\n17:24:42 - INFO - ####----------------  20% | 0.1s<0.4s | 10824.0 it/s\n17:24:42 - INFO - ########------------  40% | 0.2s<0.3s | 10563.7 it/s\n17:24:42 - INFO - ############--------  60% | 0.3s<0.2s | 10677.7 it/s\n17:24:42 - INFO - ################----  80% | 0.5s<0.1s | 10584.3 it/s\n17:24:42 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 574.42 ms)\n",
+      "stderr": null,
+      "figures": [
+        "checkpoints_0.svg"
+      ]
+    },
+    "12": {
+      "stdout": "Checkpoint saved at t = 60.0s\n",
+      "stderr": null,
+      "figures": []
+    },
+    "14": {
+      "stdout": "PathSim version: 0.29.2\nSimulation time: 60.0s\nSolver: SSPRK22\nBlocks saved:\n  ODE_0 (ODE)\n  ODE_1 (ODE)\n  Function_0 (Function)\n  Scope_0 (Scope)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "17": {
+      "stdout": "17:24:42 - INFO - LOGGING (log: True)\n17:24:42 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n17:24:42 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.053ms)\n17:24:42 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n17:24:42 - INFO - --------------------   1% | 0.0s<0.6s | 10198.6 it/s\n17:24:42 - INFO - ####----------------  20% | 0.1s<0.4s | 10937.6 it/s\n17:24:43 - INFO - ########------------  40% | 0.2s<0.3s | 10304.4 it/s\n17:24:43 - INFO - ############--------  60% | 0.3s<0.2s | 10831.2 it/s\n17:24:43 - INFO - ################----  80% | 0.5s<0.1s | 18349.6 it/s\n17:24:43 - INFO - #################### 100% | 0.5s<--:-- | 17087.9 it/s\n17:24:43 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 523.11 ms)\n17:24:43 - INFO - LOGGING (log: True)\n17:24:43 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n17:24:43 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.049ms)\n17:24:43 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n17:24:43 - INFO - --------------------   1% | 0.0s<0.6s | 10175.4 it/s\n17:24:43 - INFO - ####----------------  20% | 0.1s<0.3s | 15199.9 it/s\n17:24:43 - INFO - ########------------  40% | 0.2s<0.4s | 10178.6 it/s\n17:24:43 - INFO - ############--------  60% | 0.3s<0.2s | 10700.9 it/s\n17:24:43 - INFO - ################----  80% | 0.4s<0.1s | 10876.7 it/s\n17:24:43 - INFO - #################### 100% | 0.5s<--:-- | 15677.9 it/s\n17:24:43 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 544.09 ms)\n17:24:43 - INFO - LOGGING (log: True)\n17:24:43 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n17:24:43 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.040ms)\n17:24:43 - INFO - STARTING -> TRANSIENT (Duration: 60.00s)\n17:24:43 - INFO - --------------------   1% | 0.0s<0.5s | 12334.9 it/s\n17:24:44 - INFO - ####----------------  20% | 0.1s<0.5s | 10651.6 it/s\n17:24:44 - INFO - ########------------  40% | 0.2s<0.4s | 10160.9 it/s\n17:24:44 - INFO - ############--------  60% | 0.3s<0.2s | 10713.0 it/s\n17:24:44 - INFO - ################----  80% | 0.4s<0.1s | 10586.9 it/s\n17:24:44 - INFO - #################### 100% | 0.6s<--:-- | 10551.5 it/s\n17:24:44 - INFO - FINISHED -> TRANSIENT (total steps: 6000, successful: 6000, runtime: 560.63 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "checkpoints_1.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-11-04T17:24:45.114127+00:00",
+  "duration": 5624,
+  "success": true
+}
