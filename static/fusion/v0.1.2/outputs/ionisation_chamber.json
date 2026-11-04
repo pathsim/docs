@@ -1,7 +1,20 @@
 {
-  "cells": {},
-  "executedAt": "2026-11-04T15:13:38.900283+00:00",
-  "duration": 6907,
-  "success": false,
-  "error": "cessors/execute.py\", line 124, in preprocess_cell\n    cell = self.execute_cell(cell, index, store_history=True)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py\", line 165, in wrapped\n    return loop.run_until_complete(inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/nbclient/client.py\", line 1062, in async_execute_cell\n    await self._check_raise_for_error(cell, cell_index, exec_reply)\n  File \"/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/nbclient/client.py\", line 918, in _check_raise_for_error\n    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)\nnbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:\n------------------\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nplt.style.use(\"../pathsim_docs.mplstyle\")\n\nfrom pathsim import Connection, Simulation\nfrom pathsim.blocks import Constant, Scope, Source\n\nfrom pathsim_fusion import IonisationChamber\n------------------\n\n\n\u001b[31m---------------------------------------------------------------------------\u001b[39m\n\u001b[31mModuleNotFoundError\u001b[39m                       Traceback (most recent call last)\n\u001b[36mCell\u001b[39m\u001b[36m \u001b[39m\u001b[32mIn[2]\u001b[39m\u001b[32m, line 9\u001b[39m\n\u001b[32m      5\u001b[39m \n\u001b[32m      6\u001b[39m \u001b[38;5;28;01mfrom\u001b[39;00m pathsim \u001b[38;5;28;01mimport\u001b[39;00m Connection, Simulation\n\u001b[32m      7\u001b[39m \u001b[38;5;28;01mfrom\u001b[39;00m pathsim.blocks \u001b[38;5;28;01mimport\u001b[39;00m Constant, Scope, Source\n\u001b[32m      8\u001b[39m \n\u001b[32m----> \u001b[39m\u001b[32m9\u001b[39m \u001b[38;5;28;01mfrom\u001b[39;00m pathsim_fusion \u001b[38;5;28;01mimport\u001b[39;00m IonisationChamber\n\n\u001b[31mModuleNotFoundError\u001b[39m: No module named 'pathsim_fusion'"
+  "cells": {
+    "4": {
+      "stdout": "15:20:44 - INFO - LOGGING (log: True)\n15:20:44 - INFO - BLOCKS (total: 6, dynamic: 0, static: 6, eventful: 0)\n15:20:44 - INFO - GRAPH (nodes: 6, edges: 9, alg. depth: 2, loop depth: 0, runtime: 0.076ms)\n15:20:44 - INFO - STARTING -> TRANSIENT (Duration: 40.00s)\n15:20:44 - INFO - --------------------   1% | 0.0s<0.1s | 8914.9 it/s\n15:20:44 - INFO - ####----------------  20% | 0.0s<0.0s | 19495.9 it/s\n15:20:44 - INFO - ########------------  40% | 0.0s<0.0s | 20066.3 it/s\n15:20:44 - INFO - ############--------  60% | 0.0s<0.0s | 20020.9 it/s\n15:20:44 - INFO - ################----  80% | 0.0s<0.0s | 19315.6 it/s\n15:20:44 - INFO - FINISHED -> TRANSIENT (total steps: 800, successful: 800, runtime: 56.23 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "5": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "ionisation_chamber_0.svg",
+        "ionisation_chamber_1.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-11-04T15:20:45.106824+00:00",
+  "duration": 4726,
+  "success": true
 }
