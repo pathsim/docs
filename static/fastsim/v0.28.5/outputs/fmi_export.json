@@ -1,0 +1,59 @@
+{
+  "cells": {
+    "9": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmi_export_0.webp"
+      ]
+    },
+    "11": {
+      "stdout": "modelDescription.xml\nsources/buildDescription.xml\nsources/fmi3.h\nsources/fmu.c\nsources/oscillator.c\nsources/oscillator.h\n",
+      "stderr": null,
+      "figures": []
+    },
+    "13": {
+      "stdout": "fmiVersion=\"3.0\"\n<ModelExchange modelIdentifier=\"oscillator\" needsCompletedIntegratorStep=\"false\" providesDirectionalDerivative\n<CoSimulation modelIdentifier=\"oscillator\" canHandleVariableCommunicationStepSize=\"true\" hasEventMode=\"false\" \n<Float64 name=\"time\" valueReference=\"6\" causality=\"independent\" variability=\"continuous\" description=\"Simulati\n<Float64 name=\"ODE_x0\" valueReference=\"0\" causality=\"local\" variability=\"continuous\" initial=\"exact\" start=\"1\"\n<Float64 name=\"der(ODE_x0)\" valueReference=\"4\" causality=\"local\" variability=\"continuous\" initial=\"calculated\"\n<Float64 name=\"ODE_x1\" valueReference=\"1\" causality=\"local\" variability=\"continuous\" initial=\"exact\" start=\"0\"\n<Float64 name=\"der(ODE_x1)\" valueReference=\"5\" causality=\"local\" variability=\"continuous\" initial=\"calculated\"\n<Float64 name=\"ODE_y0\" valueReference=\"2\" causality=\"output\" variability=\"continuous\" initial=\"calculated\"/>\n<Float64 name=\"ODE_y1\" valueReference=\"3\" causality=\"output\" variability=\"continuous\" initial=\"calculated\"/>\n",
+      "stderr": null,
+      "figures": []
+    },
+    "15": {
+      "stdout": "validate_fmu: no problems\n  fmiVersion    3.0\n  ModelExchange True\n  CoSimulation  True\n",
+      "stderr": null,
+      "figures": []
+    },
+    "21": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmi_export_1.webp"
+      ]
+    },
+    "23": {
+      "stdout": "FastSim                worst |x - analytic| = 3.206e-11\nFMU, Model Exchange    worst |x - analytic| = 6.151e-09\nFMU, Co-Simulation     worst |x - analytic| = 2.374e-11\n",
+      "stderr": null,
+      "figures": []
+    },
+    "27": {
+      "stdout": "  output   ODE_y0\n  output   ODE_y1\n  input    in\n",
+      "stderr": null,
+      "figures": []
+    },
+    "29": {
+      "stdout": "measured steady-state amplitude : 0.499809 m\nF0 / (c * omega_n)              : 0.500000 m\n",
+      "stderr": null,
+      "figures": []
+    },
+    "30": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmi_export_2.webp"
+      ]
+    }
+  },
+  "executedAt": "2026-11-05T13:58:35.934117+00:00",
+  "duration": 0,
+  "success": true,
+  "stored": true
+}

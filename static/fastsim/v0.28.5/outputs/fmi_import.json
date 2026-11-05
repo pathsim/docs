@@ -1,0 +1,69 @@
+{
+  "cells": {
+    "3": {
+      "stdout": "fastsim 0.25.0\n",
+      "stderr": null,
+      "figures": []
+    },
+    "5": {
+      "stdout": "Dahlquist        224 KiB\nBouncingBall     232 KiB\n",
+      "stderr": null,
+      "figures": []
+    },
+    "7": {
+      "stdout": "501 samples, x(5) = 0.006737947\n",
+      "stderr": null,
+      "figures": []
+    },
+    "9": {
+      "stdout": "worst |x - exp(-t)| over the run: 4.829e-15\n",
+      "stderr": null,
+      "figures": [
+        "fmi_import_0.webp"
+      ]
+    },
+    "11": {
+      "stdout": "k=3: worst |x - exp(-3t)| = 1.225e-12\n",
+      "stderr": null,
+      "figures": []
+    },
+    "13": {
+      "stdout": "ValueError: variable not found: not_a_variable\n",
+      "stderr": null,
+      "figures": []
+    },
+    "15": {
+      "stdout": "3001 samples\n",
+      "stderr": null,
+      "figures": []
+    },
+    "16": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmi_import_1.webp"
+      ]
+    },
+    "18": {
+      "stdout": "deepest penetration below the floor: 2.23e-308 m\napexes found: 9\n  apex 1 at t = 0.7680 s   h = 0.489999 m\n  apex 2 at t = 1.3050 s   h = 0.240100 m\n  apex 3 at t = 1.6810 s   h = 0.117649 m\n  apex 4 at t = 1.9440 s   h = 0.057648 m\n  apex 5 at t = 2.1290 s   h = 0.028247 m\n  apex 6 at t = 2.2580 s   h = 0.013841 m\n  apex 7 at t = 2.3480 s   h = 0.006782 m\n  apex 8 at t = 2.4110 s   h = 0.003323 m\n  apex 9 at t = 2.4550 s   h = 0.001628 m\nheight ratios h[n+1]/h[n]: [0.49   0.49   0.49   0.49   0.49   0.49   0.49   0.4898]\nimplied restitution e = sqrt(ratio): [0.7    0.7    0.7    0.7    0.7    0.7    0.7    0.6999]\nspread in e across bounces: 1.63e-04\n",
+      "stderr": null,
+      "figures": []
+    },
+    "20": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "fmi_import_2.webp"
+      ]
+    },
+    "22": {
+      "stdout": "before the first bounce (t < 0.428 s): 2.102e-03 m\n  forward-Euler lag 0.5*g*dt*t at that t:  2.102e-03 m\nover the whole run:                2.585e-02 m\ncommunication step:                1e-03 s\n",
+      "stderr": null,
+      "figures": []
+    }
+  },
+  "executedAt": "2026-11-05T13:58:36.370303+00:00",
+  "duration": 0,
+  "success": true,
+  "stored": true
+}

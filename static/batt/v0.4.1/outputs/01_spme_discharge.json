@@ -1,0 +1,36 @@
+{
+  "cells": {
+    "2": {
+      "stdout": null,
+      "stderr": "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html\n  from .autonotebook import tqdm as notebook_tqdm\n",
+      "figures": []
+    },
+    "4": {
+      "stdout": "13:58:47 - INFO - LOGGING (log: True)\n13:58:47 - INFO - BLOCKS (total: 4, dynamic: 1, static: 3, eventful: 0)\n13:58:47 - INFO - GRAPH (nodes: 4, edges: 6, alg. depth: 2, loop depth: 0, runtime: 0.067ms)\n13:58:47 - INFO - STARTING -> TRANSIENT (Duration: 3600.00s)\n13:58:47 - INFO - --------------------   1% | 0.3s<17.1s | 15.8 it/s\n13:58:48 - INFO - #####---------------  28% | 0.7s<0.7s | 17.4 it/s\n13:58:48 - INFO - ########------------  44% | 0.7s<0.4s | 17.2 it/s\n13:58:48 - INFO - #############-------  67% | 0.8s<0.1s | 17.1 it/s\n13:58:48 - INFO - #################### 100% | 0.8s<--:-- | 16.4 it/s\n13:58:48 - INFO - FINISHED -> TRANSIENT (total steps: 14, successful: 14, runtime: 846.46 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "5": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "01_spme_discharge_0.svg"
+      ]
+    },
+    "7": {
+      "stdout": "13:58:49 - INFO - LOGGING (log: True)\n13:58:49 - INFO - BLOCKS (total: 4, dynamic: 1, static: 3, eventful: 0)\n13:58:49 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 2, loop depth: 0, runtime: 0.058ms)\n13:58:49 - INFO - STARTING -> TRANSIENT (Duration: 1800.00s)\n13:58:49 - INFO - --------------------   1% | 0.1s<11.3s | 15.4 it/s\n13:58:49 - INFO - ####----------------  24% | 0.5s<0.8s | 17.0 it/s\n13:58:49 - INFO - #########-----------  45% | 0.6s<0.4s | 15.7 it/s\n13:58:49 - INFO - ###############-----  79% | 0.6s<0.1s | 15.9 it/s\n13:58:49 - INFO - #################### 100% | 0.7s<--:-- | 16.1 it/s\n13:58:49 - INFO - FINISHED -> TRANSIENT (total steps: 11, successful: 11, runtime: 685.93 ms)\n13:58:50 - INFO - LOGGING (log: True)\n13:58:50 - INFO - BLOCKS (total: 4, dynamic: 1, static: 3, eventful: 0)\n13:58:50 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 2, loop depth: 0, runtime: 0.058ms)\n13:58:50 - INFO - STARTING -> TRANSIENT (Duration: 1800.00s)\n13:58:50 - INFO - --------------------   1% | 0.1s<12.0s | 15.4 it/s\n13:58:50 - INFO - ####----------------  20% | 0.5s<1.2s | 16.9 it/s\n13:58:50 - INFO - ###########---------  56% | 0.7s<0.2s | 16.9 it/s\n13:58:51 - INFO - #################---  88% | 0.7s<0.0s | 16.8 it/s\n13:58:51 - INFO - #################### 100% | 0.8s<--:-- | 17.1 it/s\n13:58:51 - INFO - FINISHED -> TRANSIENT (total steps: 13, successful: 13, runtime: 783.99 ms)\n13:58:51 - INFO - LOGGING (log: True)\n13:58:51 - INFO - BLOCKS (total: 4, dynamic: 1, static: 3, eventful: 0)\n13:58:51 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 2, loop depth: 0, runtime: 0.072ms)\n13:58:51 - INFO - STARTING -> TRANSIENT (Duration: 1800.00s)\n13:58:51 - INFO - --------------------   1% | 0.4s<19.0s | 16.1 it/s\n13:58:52 - INFO - ####----------------  24% | 1.3s<1.7s | 11.5 it/s\n13:58:52 - INFO - ############--------  61% | 1.5s<0.3s | 11.0 it/s\n13:58:53 - INFO - ##################--  90% | 1.6s<0.1s | 10.8 it/s\n13:58:53 - INFO - STOP (StopSimulation: 'undervoltage: V=1.8737 V <= 2.5 V')\n13:58:53 - INFO - INTERRUPTED -> TRANSIENT (total steps: 20, successful: 17, runtime: 1641.49 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "8": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "01_spme_discharge_1.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-11-05T13:58:55.050347+00:00",
+  "duration": 12158,
+  "success": true
+}

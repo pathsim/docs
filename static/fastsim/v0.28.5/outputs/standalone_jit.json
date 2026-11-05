@@ -1,0 +1,45 @@
+{
+  "cells": {
+    "9": {
+      "stdout": "python: [-0.014   -0.00052  0.01452]\njit   : [-0.014   -0.00052  0.01452]\n",
+      "stderr": null,
+      "figures": []
+    },
+    "11": {
+      "stdout": "28.0\n3.0\n",
+      "stderr": null,
+      "figures": []
+    },
+    "13": {
+      "stdout": "[[-4.00e-02  1.00e+03  2.20e-01]\n [ 4.00e-02 -2.32e+03 -2.20e-01]\n [ 0.00e+00  1.32e+03  0.00e+00]]\n",
+      "stderr": null,
+      "figures": []
+    },
+    "15": {
+      "stdout": "worst difference from the analytic Jacobian: 0.000e+00\n",
+      "stderr": null,
+      "figures": []
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "standalone_jit_0.webp"
+      ]
+    },
+    "21": {
+      "stdout": "worst deviation from unit mass: 4.469e-10\n",
+      "stderr": null,
+      "figures": []
+    },
+    "23": {
+      "stdout": "  arithmetic       traced\n  np.where         traced\n  np.sin / np.exp  traced\n  np.linalg.norm   traced\n  matrix product   traced\n  np.clip          traced\n  python if        JitTracer cannot be used in if/else during JIT tracing\n  float() cast     JitTracer cannot be converted to float during tracing\n",
+      "stderr": null,
+      "figures": []
+    }
+  },
+  "executedAt": "2026-11-05T13:58:37.625095+00:00",
+  "duration": 0,
+  "success": true,
+  "stored": true
+}

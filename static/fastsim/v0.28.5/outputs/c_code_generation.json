@@ -1,0 +1,62 @@
+{
+  "cells": {
+    "3": {
+      "stdout": "fastsim 0.25.0\n",
+      "stderr": null,
+      "figures": []
+    },
+    "6": {
+      "stdout": "ω(2.0) = 98.353527 rad/s\n",
+      "stderr": null,
+      "figures": [
+        "c_code_generation_0.webp"
+      ]
+    },
+    "8": {
+      "stdout": "motor.h         93 lines, 3.4 KiB\nmotor.c        278 lines, 9.0 KiB\n",
+      "stderr": null,
+      "figures": []
+    },
+    "10": {
+      "stdout": "typedef struct {\n    double time;        /* simulation time */\n    double x[2];   /* continuous states */\n    double sig[7];   /* block output signals */\n    double p[2];   /* tunable parameters */\n} motor_t;\n\n/* Addressable signals: states (read/write), outputs (read), params (read/write). */\nenum {\n    MOTOR_SIG_Integrator = 0u,\n    MOTOR_SIG_ODE = 1u,\n    MOTOR_SIG_Source_y = 2u,\n    MOTOR_SIG_Integrator_y = 3u,\n    MOTOR_SIG_ODE_y = 4u,\n    MOTOR_SIG_Adder_y = 5u,\n    MOTOR_SIG_Amplifier_y = 6u,\n    MOTOR_SIG_Amplifier_y_1 = 7u,\n    MOTOR_SIG_Adder_y_1 = 8u,\n    MOTOR_SIG_Amplifier_p0 = 9u,\n    MOTOR_SIG_Amplifier_p0_1 = 10u,\n    MOTOR_SIG_COUNT = 11u\n};\n\nvoid motor_init(motor_t * restrict m);\nvoid motor_run(motor_t * restrict m, double t_end, double dt);\n/* Advance by exactly ONE step of `dt` (events + step + output refresh).\n   Fixed work per call — no time loops, no allocation — f\n",
+      "stderr": null,
+      "figures": []
+    },
+    "11": {
+      "stdout": "void motor_init(motor_t * restrict m);\nvoid motor_run(motor_t * restrict m, double t_end, double dt);\nvoid motor_step(motor_t * restrict m, double dt);\ndouble motor_get_signal(const motor_t * restrict m, uint16_t id);\nint motor_set_signal(motor_t * restrict m, uint16_t id, double value);\nvoid motor_jvp(motor_t * restrict m,\n",
+      "stderr": null,
+      "figures": []
+    },
+    "14": {
+      "stdout": "  passed             True\n  compiler           C:\\MinGW\\bin\\gcc.exe\n  n_steps            2000\n  n_states           2\n  max_scaled_error   5.477687598375871e-10\n  worst_state        ODE\n  worst_time         0.012000000000000004\n",
+      "stderr": null,
+      "figures": []
+    },
+    "16": {
+      "stdout": "compiler: C:\\MinGW\\bin\\gcc.exe\n#include <stdio.h>\n#include \"motor.h\"\n\nint main(void) {\n    motor_t m;\n    motor_init(&m); ...\n",
+      "stderr": null,
+      "figures": []
+    },
+    "17": {
+      "stdout": "compile: ok\n2000 steps from the compiled binary, ω(end) = 98.352557 rad/s\n",
+      "stderr": null,
+      "figures": []
+    },
+    "18": {
+      "stdout": "at t = 2.000000 s\n  engine : 98.352557002 rad/s\n  C      : 98.352557002 rad/s\n  differ : 0.000e+00 rad/s\n",
+      "stderr": null,
+      "figures": [
+        "c_code_generation_1.webp"
+      ]
+    },
+    "20": {
+      "stdout": "  double, hierarchical     371 lines\n  double, flat             335 lines\n  float,  hierarchical     371 lines\n  double, vectorized       383 lines\n",
+      "stderr": null,
+      "figures": []
+    }
+  },
+  "executedAt": "2026-11-05T13:58:35.494504+00:00",
+  "duration": 0,
+  "success": true,
+  "stored": true
+}

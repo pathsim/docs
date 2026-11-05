@@ -1,0 +1,57 @@
+{
+  "cells": {
+    "5": {
+      "stdout": "forcing period: 4.4880 s\n",
+      "stderr": null,
+      "figures": []
+    },
+    "9": {
+      "stdout": "converged in 5 ms\none period recorded: 201 samples over 4.4880 s\n",
+      "stderr": null,
+      "figures": []
+    },
+    "11": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "periodic_steady_state_0.webp"
+      ]
+    },
+    "14": {
+      "stdout": "x(0), v(0) = [-0.40570743  1.87268318]\nx(T), v(T) = [-0.40570743  1.87268318]\nclosure residual ||x(T) - x(0)|| = 8.006e-16\n",
+      "stderr": null,
+      "figures": []
+    },
+    "16": {
+      "stdout": "  periods   ||state_n - state_{n-1}||\n        1                   2.442e+00\n        5                   5.871e-01\n       10                   6.385e-02\n       20                   7.326e-04\n       50                   9.646e-10\n      100                   8.207e-14\n",
+      "stderr": null,
+      "figures": []
+    },
+    "17": {
+      "stdout": "transient run: 100 periods in 17 ms\n",
+      "stderr": null,
+      "figures": []
+    },
+    "18": {
+      "stdout": "worst |x_pss - x_transient| = 7.441e-13\nworst |v_pss - v_transient| = 1.975e-12\n",
+      "stderr": null,
+      "figures": []
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "periodic_steady_state_1.webp"
+      ]
+    },
+    "21": {
+      "stdout": "periodic_steady_state :       5 ms\n100-period transient  :      17 ms\n",
+      "stderr": null,
+      "figures": []
+    }
+  },
+  "executedAt": "2026-11-05T13:58:36.838693+00:00",
+  "duration": 0,
+  "success": true,
+  "stored": true
+}
