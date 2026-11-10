@@ -1,7 +1,7 @@
 {
   "package": "pathsim",
   "repo": "pathsim/pathsim",
-  "updated": "2026-11-10T14:16:34Z",
+  "updated": "2026-11-10T22:50:22Z",
   "issues": [
     {
       "number": 160,
@@ -14,16 +14,6 @@
       ],
       "url": "https://github.com/pathsim/pathsim/issues/160",
       "created": "2025-12-02T08:53:24Z"
-    },
-    {
-      "number": 146,
-      "title": "FSAL for ode solvers",
-      "body": "Some runge kutta solvers such as `RKBS32` and `RKDP54` have the first-same-as-last (FSAL) property, where the last slope of the previous stage is the first slope of the next one. This saves one function evaluation per successful step and therefore increases solver efficiency. \n\nCurrently this is not implemented in pathsim, but it would give some additional 5% to 20% speedup for some solvers.",
-      "labels": [
-        "numerics"
-      ],
-      "url": "https://github.com/pathsim/pathsim/issues/146",
-      "created": "2025-11-04T15:00:43Z"
     },
     {
       "number": 124,
