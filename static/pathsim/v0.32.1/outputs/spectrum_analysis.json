@@ -1,0 +1,27 @@
+{
+  "cells": {
+    "9": {
+      "stdout": "23:54:12 - INFO - LOGGING (log: True)\n23:54:12 - INFO - BLOCKS (total: 4, dynamic: 2, static: 2, eventful: 0)\n23:54:12 - INFO - GRAPH (nodes: 4, edges: 5, alg. depth: 1, loop depth: 0, runtime: 0.097ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "11": {
+      "stdout": "23:54:12 - INFO - STARTING -> TRANSIENT (Duration: 3.00s)\n23:54:12 - INFO - --------------------   3% | 0.0s<0.1s | 632.6 it/s\n23:54:12 - INFO - ####----------------  20% | 0.1s<0.2s | 1782.0 it/s\n23:54:12 - INFO - ########------------  40% | 0.1s<0.1s | 1828.1 it/s\n23:54:12 - INFO - ############--------  60% | 0.1s<0.0s | 1772.3 it/s\n23:54:12 - INFO - ################----  80% | 0.1s<0.0s | 1773.3 it/s\n23:54:12 - INFO - #################### 100% | 0.1s<--:-- | 1789.8 it/s\n23:54:12 - INFO - FINISHED -> TRANSIENT (total steps: 204, successful: 174, runtime: 132.04 ms)\n",
+      "stderr": null,
+      "figures": [
+        "spectrum_analysis_0.svg",
+        "spectrum_analysis_1.svg"
+      ]
+    },
+    "17": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "spectrum_analysis_2.svg"
+      ]
+    }
+  },
+  "executedAt": "2026-11-18T23:54:13.691292+00:00",
+  "duration": 4678,
+  "success": true
+}
